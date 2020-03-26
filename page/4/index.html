@@ -13,6 +13,8 @@
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
   <meta name="theme-color" content="#2f4154">
   <meta name="description" content="">
   <meta name="author" content="John Doe">
@@ -149,6 +151,94 @@
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2020/03/26/%E7%AE%97%E6%B3%95/%E4%BA%8C%E5%8F%89%E5%A0%86/">
+        <p class="h4 index-header">二叉堆</p>
+      </a>
+
+      <a href="/2020/03/26/%E7%AE%97%E6%B3%95/%E4%BA%8C%E5%8F%89%E5%A0%86/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">《数据结构与算法：java语言描述》源码
+package DataStructureAndAlgor;
+
+import java.nio.BufferUnderflowException;
+
+/**
+ * 由数组实现的堆，小根堆。
+ * &lt;p&gt;
+ * 堆的定义：
+ * 1. 堆中某个节点的值总是不大于或不小于其父节点的值（将根节点最大的堆叫做最大堆或大根堆，根节点最小的堆叫做最小堆或小根堆）
+ * 2. 堆总是一棵完全二叉树
+ * &lt;p&gt;
+ * 当堆用数组实现：
+ * 1. 位置0不放元素，从位置1开始放。
+ * 2. 数组任一位置i上的元素，左子树在位置2i，右子树在</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-26&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E7%AE%97%E6%B3%95/">算法</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2020/03/26/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/Volley%E5%85%B7%E4%BD%93%E6%B5%81%E7%A8%8B%E5%9B%BE%EF%BC%88%E9%85%8D%E4%BB%A3%E7%A0%81%EF%BC%89/">
+        <p class="h4 index-header">Volley具体流程图（配代码）</p>
+      </a>
+
+      <a href="/2020/03/26/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/Volley%E5%85%B7%E4%BD%93%E6%B5%81%E7%A8%8B%E5%9B%BE%EF%BC%88%E9%85%8D%E4%BB%A3%E7%A0%81%EF%BC%89/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">只简要分析Volley大体原理，无细节，无Volley使用教程。
+
+使用Volley时必要的两步：
+RequestQueue queue= Volley.newRequestQueue(context);1
+queue.add(request);  //request可以是StringRequest,ImageRequest,JsonRequestd等。第一步通过Volley.newRequestQueue(Context)初始化queue，第二步往queue中添加具体请求。
+第一步
+第二步
+本地磁盘缓存==&gt;Cache接口的实现类：DiskBasedCache  
+Cache接口中定义</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-26&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/">第三方库</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
       <a href="/2020/03/26/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/OkHttp%E6%8B%A6%E6%88%AA%E5%99%A8%E8%A2%96%E7%8F%8D%E9%87%8D%E5%86%99%E7%89%88/">
         <p class="h4 index-header">OkHttp拦截器袖珍重写版</p>
       </a>
@@ -236,41 +326,6 @@ OkHttp回顾OkHttp的拦截器工作原理如下图，每一个拦截器都有�
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/26/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/Dagger2%E8%84%91%E5%9B%BE/">
-        <p class="h4 index-header">Dagger2脑图</p>
-      </a>
-
-      <a href="/2020/03/26/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/Dagger2%E8%84%91%E5%9B%BE/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">
-查看原图会非常清晰。对于@Component的依赖，不理解就对着这篇博客敲一遍就懂了
-                                                                                                                                                                                                                                                                </div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-26&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/">第三方库</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
       <a href="/2020/03/26/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/Dagger2%E9%85%8D%E5%90%88Application%E6%8B%93%E5%B1%95%E7%B1%BB%E5%AE%9E%E7%8E%B0%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">
         <p class="h4 index-header">Dagger2配合Application拓展类实现单例模式</p>
       </a>
@@ -317,106 +372,19 @@ onCreate()中初始化的10个单例类，并不是马上就要用的，更好�
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/26/ndk/JNI%E5%88%9B%E5%BB%BA%E5%8F%98%E9%87%8F%E5%92%8C%E9%87%8A%E6%94%BE%E5%8F%98%E9%87%8F/">
-        <p class="h4 index-header">JNI创建变量和释放变量</p>
+      <a href="/2020/03/26/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/Dagger2%E8%84%91%E5%9B%BE/">
+        <p class="h4 index-header">Dagger2脑图</p>
       </a>
 
-      <a href="/2020/03/26/ndk/JNI%E5%88%9B%E5%BB%BA%E5%8F%98%E9%87%8F%E5%92%8C%E9%87%8A%E6%94%BE%E5%8F%98%E9%87%8F/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">jni中的数据传递就两种：c层传到java层；java层传到c层。
-1 当数据从java传递到c1.1 传递基本数据类型在Java层定义jni代码：
-public static native void inputInt(int intData);
-c层实现：
-JNIEXPORT void JNICALL
-Java_com_hwilliam_jnilearncmake_NDKTools_inputInt(JNIEnv *env, jclass clazz, jint int_data) {
-    int data = int_data;
-    LOGD(&quot;input int dat</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-26&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/ndk/">ndk</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/26/RxJava-2-x/%E9%98%B2%E6%AD%A2%E8%BF%B7%E8%B7%AF/">
-        <p class="h4 index-header">防止迷路</p>
-      </a>
-
-      <a href="/2020/03/26/RxJava-2-x/%E9%98%B2%E6%AD%A2%E8%BF%B7%E8%B7%AF/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">防止迷路
-
-简书Season_zlc（用水管和上游下游比喻rxjava）
-扔物线：给 Android 开发者的 RxJava 详解                                                                                                                                                                                                                                           </div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-26&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/RxJava-2-x/">RxJava-2-x</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/26/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/Dagger2/">
-        <p class="h4 index-header">Dagger2</p>
-      </a>
-
-      <a href="/2020/03/26/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/Dagger2/">
+      <a href="/2020/03/26/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/Dagger2%E8%84%91%E5%9B%BE/">
         
         
           
         
         <div class="index-excerpt" >
           <div class="index-text mb-1">
-例子来自https://www.jianshu.com/p/24af4c102f62
-
-只用@Inject和@Component完成依赖注入：
-在gradle添加依赖，用@Inject和@Component为相应的字段和类打上注解
-build project
-Dagger2会在app.build.generated.source.apt.debug.com.text.包名生成代码。
-DaggerXXXComponent.java
-XXX_MembersInjector.java
-XXX_Factory.java
-
-
-
-举一个例子：MainAcitvity对象依赖Pot对象，Pot对象依赖Ro</div>
+查看原图会非常清晰。对于@Component的依赖，不理解就对着这篇博客敲一遍就懂了
+                                                                                                                                                                                                                                                                </div>
         </div>
       </a>
 
@@ -520,6 +488,39 @@ XXX_Factory.java
           <div class="index-text mb-1">
 
                                                                                                                                                                                                                                                                                                           </div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-26&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E6%97%A5%E8%AE%B0%E6%9C%AC/">日记本</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2020/03/26/%E6%97%A5%E8%AE%B0%E6%9C%AC/2018-04-21/">
+        <p class="h4 index-header">Sat Apr 21 2018 00:00:00 GMT+0000 (Coordinated Universal Time)</p>
+      </a>
+
+      <a href="/2020/03/26/%E6%97%A5%E8%AE%B0%E6%9C%AC/2018-04-21/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">今天晚上做了虎牙的安卓的线上笔试，前面选择题都还好，问的算法都不算难，也考了一些计算机网络的问题，好在之前也了解过计算机网络的东西，但是了解的不是很详细，也没有自己写总结，导致当时看的东西现在又忘了，回头还是要找机会把网络的知识补回来。第二大题三个算法题全崩了，一个都不会，真是感叹啊，之前学的几个排序算法一个都用不上，真心不喜欢算法这一块的内容，不过以后还是慢慢地想办法补起来吧。今天是4月21号了，还有两个月就要暑假了，目前还不知道暑假我能去哪里去实习，如果我很厉害的话，早就可以找到实习了。唉…我还欠缺好多必要的东西啊。比如数据结构，树的一些算法，java集合也只懂ArrayList和Link</div>
         </div>
       </a>
 

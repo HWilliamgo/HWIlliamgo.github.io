@@ -13,6 +13,8 @@
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
   <meta name="theme-color" content="#2f4154">
   <meta name="description" content="">
   <meta name="author" content="John Doe">
@@ -149,6 +151,177 @@
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2020/03/26/Android/Message-obtain()%E4%B8%AD%E7%9A%84%E5%8D%95%E9%93%BE%E8%A1%A8%E6%A0%88%E7%BC%93%E5%AD%98/">
+        <p class="h4 index-header">Message-obtain()中的单链表栈缓存</p>
+      </a>
+
+      <a href="/2020/03/26/Android/Message-obtain()%E4%B8%AD%E7%9A%84%E5%8D%95%E9%93%BE%E8%A1%A8%E6%A0%88%E7%BC%93%E5%AD%98/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">Message.obtain()中的单链表栈缓存Android中的Message.java用单链表实现了一个size=50的栈，用作缓存。以下结合源码和图分析存取过程。
+存void recycleUnchecked() {
+    // Mark the message as in use while it remains in the recycled object pool.
+    // Clear out all other details.
+    flags = FLAG_IN_USE;
+    what = 0;
+    arg1 = 0;
+    arg2 = 0;
+    o</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-26&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Android/">Android</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2020/03/26/Android/MediaMetadataRetriever%E8%8E%B7%E5%8F%96mp3%E6%96%87%E4%BB%B6%E4%BF%A1%E6%81%AF/">
+        <p class="h4 index-header">MediaMetadataRetriever获取mp3文件信息</p>
+      </a>
+
+      <a href="/2020/03/26/Android/MediaMetadataRetriever%E8%8E%B7%E5%8F%96mp3%E6%96%87%E4%BB%B6%E4%BF%A1%E6%81%AF/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">转发：http://blog.csdn.net/xiao5678yun/article/details/53838362
+MediaMetadataRetriever mmr = new MediaMetadataRetriever();  
+String str = getExternalStorageDirectory() + &quot;1.mp3&quot;;  
+Log.d(TAG, &quot;str:&quot; + str);  
+try 
+{  
+    mmr.setDataSource(str);  
+    String title = mmr.extractMetad</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-26&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Android/">Android</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2020/03/26/Android/JitPack%E6%9E%81%E9%80%9F%E5%8F%91%E5%B8%83Library%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/">
+        <p class="h4 index-header">JitPack极速发布Library使用手册</p>
+      </a>
+
+      <a href="/2020/03/26/Android/JitPack%E6%9E%81%E9%80%9F%E5%8F%91%E5%B8%83Library%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">
+新建一个library
+添加项目android-maven插件
+
+
+在project的gradle文件中
+buildscript { 
+dependencies {
+  classpath &#39;com.github.dcendents:android-maven-gradle-plugin:2.0&#39; // Add this line
+
+在Library的gradle文件中
+apply plugin: &#39;com.github.dcendents.android-maven&#39;  
+
+group=&#39;com.github.YourUsername&#39;这里的</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-26&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Android/">Android</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2020/03/26/Android/JSONObject%EF%BC%8CJSONArray%E8%A7%A3%E6%9E%90/">
+        <p class="h4 index-header">JSONObject，JSONArray解析</p>
+      </a>
+
+      <a href="/2020/03/26/Android/JSONObject%EF%BC%8CJSONArray%E8%A7%A3%E6%9E%90/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">参考博客：李双喆的JSONObject、JSONArray
+
+这玩意弄得我迷迷糊糊的，今天终于搞明白了，记录之。
+
+看图先首先搞明白两个概念：
+
+JSONObject是用｛｝来表示的，没有｛｝不是JSONObject。
+JSONArray使用[]来表示的，没有[]不是JSONArray。
+
+解释一下上图，比如上图，直接出来一个[ ]，[ ]就是数组，数组里有两个元素，也就是两个{}，也就是两个JSONObject。注意这里第二个{}是空的。
+好的，整明白了之后，比如我们要拿到键name4对应的值value2时，怎么操作？
+                    JSONArray jsonAr</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-26&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Android/">Android</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
       <a href="/2020/03/26/Android/Handler%E5%8F%AF%E8%83%BD%E5%BC%95%E8%B5%B7%E7%9A%84%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/">
         <p class="h4 index-header">Handler可能引起的内存泄漏</p>
       </a>
@@ -192,6 +365,50 @@ public class MainActivity extends AppCompatActivity {
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2020/03/26/Android/Handler%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E5%86%8D%E6%8E%A2%E7%B4%A2/">
+        <p class="h4 index-header">Handler内存泄漏再探索</p>
+      </a>
+
+      <a href="/2020/03/26/Android/Handler%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E5%86%8D%E6%8E%A2%E7%B4%A2/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">情景
+使用主线程单例Handler的post()，想要实现全局都可以往主线程post代码。
+在post()中传入了一个Runnable对象，该Runnable对象在Activity中非静态，是局部匿名内部类的形式存在。
+
+代码//单例类，提供一个主线程单例Handler。
+object ExecutorsHelper {
+    val mainThread = MainThreadExecutor()
+    class MainThreadExecutor {
+
+        private val handler = Handler(Looper.getMainLooper())
+
+ </div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-26&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Android/">Android</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
       <a href="/2020/03/26/Android/GreenDao%E5%AE%89%E5%85%A8%E5%9C%B0%E5%8D%87%E7%BA%A7%E6%95%B0%E6%8D%AE%E5%BA%93/">
         <p class="h4 index-header">GreenDao安全地升级数据库</p>
       </a>
@@ -213,6 +430,50 @@ public class MainActivity extends AppCompatActivity {
 GreenDao：问题：greendao里面没有那种指定版本号就升级的方法，摸索之后如下：在这里更改数据库版本，然后点击make project，下次安装的时候就升级了~
 
 然而，默认情况下GreenDao升级数据库也是会直接dr</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-26&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Android/">Android</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2020/03/26/Android/GreenDao-2-0%E5%88%9D%E5%A7%8B%E5%8C%96%E6%96%B9%E6%B3%95/">
+        <p class="h4 index-header">GreenDao-2-0初始化方法</p>
+      </a>
+
+      <a href="/2020/03/26/Android/GreenDao-2-0%E5%88%9D%E5%A7%8B%E5%8C%96%E6%96%B9%E6%B3%95/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">因为我以前都是用3.0的注解来生成Entity实体类的， 没有用过2.0用代码操作的方式，所以记录一下。
+
+官网图如上：第一点：在你的generator类里面添加依赖。那么打开AS,新建一个Module，类型为Java Library.
+在Module的gradle中复制粘贴依赖
+
+看官网的第三点：在app中添加依赖：
+
+写一个类用来生成GreenDao。
+public class ExampleDaoGenerator {
+
+    private static final String packageName=&quot;GreenDao&quot;;
+    private static</div>
         </div>
       </a>
 
@@ -281,50 +542,6 @@ GreenDao：问题：greendao里面没有那种指定版本号就升级的方法�
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/26/Android/GreenDao-2-0%E5%88%9D%E5%A7%8B%E5%8C%96%E6%96%B9%E6%B3%95/">
-        <p class="h4 index-header">GreenDao-2-0初始化方法</p>
-      </a>
-
-      <a href="/2020/03/26/Android/GreenDao-2-0%E5%88%9D%E5%A7%8B%E5%8C%96%E6%96%B9%E6%B3%95/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">因为我以前都是用3.0的注解来生成Entity实体类的， 没有用过2.0用代码操作的方式，所以记录一下。
-
-官网图如上：第一点：在你的generator类里面添加依赖。那么打开AS,新建一个Module，类型为Java Library.
-在Module的gradle中复制粘贴依赖
-
-看官网的第三点：在app中添加依赖：
-
-写一个类用来生成GreenDao。
-public class ExampleDaoGenerator {
-
-    private static final String packageName=&quot;GreenDao&quot;;
-    private static</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-26&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/Android/">Android</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
       <a href="/2020/03/26/Android/Fragment%E7%8A%B6%E6%80%81%E4%BF%9D%E5%AD%98/">
         <p class="h4 index-header">Fragment状态保存</p>
       </a>
@@ -336,198 +553,6 @@ public class ExampleDaoGenerator {
         
         <div class="index-excerpt" >
           <div class="index-text mb-1">译］Android Activity 和 Fragment 状态保存与恢复的最佳实践                                                                                                                                                                                                                                                                  </div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-26&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/Android/">Android</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/26/Android/Fragment%E6%B6%89%E5%8F%8A%E7%9A%84add%E3%80%81remove%E5%92%8Creplace%E6%96%B9%E6%B3%95%E5%92%8C%E5%9B%9E%E9%80%80%E6%A0%88%E7%9A%84%E5%85%B3%E7%B3%BB%E8%AF%A6%E8%A7%A3/">
-        <p class="h4 index-header">Fragment涉及的add、remove和replace方法和回退栈的关系详解</p>
-      </a>
-
-      <a href="/2020/03/26/Android/Fragment%E6%B6%89%E5%8F%8A%E7%9A%84add%E3%80%81remove%E5%92%8Creplace%E6%96%B9%E6%B3%95%E5%92%8C%E5%9B%9E%E9%80%80%E6%A0%88%E7%9A%84%E5%85%B3%E7%B3%BB%E8%AF%A6%E8%A7%A3/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">前部分参考：Fragment涉及的add、remove和replace方法和回退栈的关系详解
-划重点：
-
-add方法不会加入回退栈，只会在container的view里面一层一层不断往上面涂layout。
-this.layout = (FrameLayout) this.findViewById(R.id.contentFrame);
-
-     button.setOnClickListener(new View.OnClickListener() {
-         @Override
-         public void onClick(View v) {
-            </div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-26&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/Android/">Android</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/26/Android/CoordinatorLayout%E9%85%8D%E5%90%88AppBarLayout%E3%80%81CollapsingToolbarLayout%E3%80%81Toolbar%E4%BD%BF%E7%94%A8/">
-        <p class="h4 index-header">CoordinatorLayout配合AppBarLayout、CollapsingToolbarLayout、Toolbar使用</p>
-      </a>
-
-      <a href="/2020/03/26/Android/CoordinatorLayout%E9%85%8D%E5%90%88AppBarLayout%E3%80%81CollapsingToolbarLayout%E3%80%81Toolbar%E4%BD%BF%E7%94%A8/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">这篇文章主要介绍的是CoordinatorLayout，AppBarLayout,CollapsingToolbarLayout和Toolbar的结合表现出的动态效果。效果如图：
-首先介绍上述几个控件在使用的时候的注意点：
-
-CoordinatorLayout：
-是一个FrameLayout
-
-
-AppBarLayout：
-是一个vertical的LinearLayout，其子View应通过setScrollFlags(int)或者xmL中的app:layout_scrollFlags来提供他们的Behavior。
-具体的app:layout_scrollFlags有这么几个： scroll,</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-26&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/Android/">Android</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/26/Android/DialogFragment%E8%87%AA%E5%B7%B1%E7%88%AC%E8%BF%87%E7%9A%84%E5%9D%91/">
-        <p class="h4 index-header">DialogFragment自己爬过的坑</p>
-      </a>
-
-      <a href="/2020/03/26/Android/DialogFragment%E8%87%AA%E5%B7%B1%E7%88%AC%E8%BF%87%E7%9A%84%E5%9D%91/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">DialogFragment在显示之后如何从屏幕消除？
-
-直接按手机的返回键
-自己的代码里处理 ，调用DialogFragment的对象的dismiss()；
-从外部处理MyDialogFragment dialog=(MyDialogFragment)getFragmentManager.findFragmentByTag();
-dialog.dismiss();
-//摸索了我好久好久，各种查资料，最后自己试出来了，妈的                                                                                       </div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-26&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/Android/">Android</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/26/Android/CoordinatorLayout%E5%85%A8%E9%9D%A2%E8%A7%A3%E6%9E%90/">
-        <p class="h4 index-header">CoordinatorLayout全面解析</p>
-      </a>
-
-      <a href="/2020/03/26/Android/CoordinatorLayout%E5%85%A8%E9%9D%A2%E8%A7%A3%E6%9E%90/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">Absfree的文章：彻底搞懂CoordinatorLayout
-                                                                                                                                                                                                                                                                           </div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-26&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/Android/">Android</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/26/Android/CoodinatorLayout%E9%87%8C%E6%94%BE%E5%B8%83%E5%B1%80%E9%97%AE%E9%A2%98/">
-        <p class="h4 index-header">CoodinatorLayout里放布局问题</p>
-      </a>
-
-      <a href="/2020/03/26/Android/CoodinatorLayout%E9%87%8C%E6%94%BE%E5%B8%83%E5%B1%80%E9%97%AE%E9%A2%98/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">CoordinatorLayout是一个FrameLayout，也就是说如果不做特殊处理，里面的子布局是无法控制的，超过一个，就会糊在一起，但是CoordiatorLayout又很特殊，只有在作为layout.xml的顶层布局才能发挥他协调子view的作用。因此要控制他的多个子View，比如除了AppBarLayout之外，要在下面加一个TabLayout或者RecyclerView,就要在他们里面加上app:layout_behavior=&quot;&quot;属性
-&lt;android.support.v7.widget.RecyclerView
-    android:id=&quo</div>
         </div>
       </a>
 
