@@ -8,7 +8,7 @@ subtitle: ''
 description: ''
 keywords:
 author: John Doe
-language: en
+language: zh-CN
 timezone: ''
 
 # URL
@@ -45,7 +45,7 @@ post_asset_folder: false
 relative_link: false
 future: true
 highlight:
-  enable: true
+  enable: false #使用主题中指定的代码高亮样式，因此要把这里关了。
   line_number: true
   auto_detect: false
   tab_replace: ''
@@ -93,7 +93,7 @@ ignore:
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: landscape
+theme: fluid
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
