@@ -1,0 +1,1 @@
+getWidth()和getHeight()方法在onLayout之后才能拿到返回值，因此不要在自定义View的构造函数中调用这两个方法，否则返回0，要在onDraw中去调用这两个方法。
