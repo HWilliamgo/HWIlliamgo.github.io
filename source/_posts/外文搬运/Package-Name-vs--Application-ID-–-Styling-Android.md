@@ -1,3 +1,9 @@
+---
+title: Package-Name-vs--Application-ID-–-Styling-Android
+categories:
+  - 外文搬运
+---
+
 > 原文地址 https://blog.stylingandroid.com/package-name-vs-application-id/
 
 All Android developers should understand that the Package Name that we choose for our app is very important. I’m referring to the Package Name of the application itself (which gets declared in the Manifest) rather than the Java package name (although often they will be identical. It was only recently, when I was tackling a somewhat obscure issue as part of my day job, that I realised that there is actually a subtle, but important, difference between the Package Name and the Application ID. In this article we’ll look at the difference between the two.  
@@ -155,3 +161,4 @@ As I have said, an understanding of precisely how this all works is not necessar
 The source code for this article is available [here](https://github.com/StylingAndroid/PackageName).
 
 © 2017, [Mark Allison](https://blog.stylingandroid.com/). All rights reserved.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      

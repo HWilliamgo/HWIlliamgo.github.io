@@ -1,3 +1,9 @@
+---
+title: 理解ijkplayer（六）Vout、Aout、FFPipeLine
+categories:
+  - 音视频开发
+---
+
 ``` c
 // ijkmedia/ijkplayer/ff_ffplay_def.h
 typedef struct FFPlayer {
@@ -1196,3 +1202,308 @@ int ffp_video_thread(FFPlayer *ffp)
 ```
 
 
+        = func_destroy;
+    pipeline->func_open_video_decoder   = func_open_video_decoder;
+    pipeline->func_open_audio_output    = func_open_audio_output;
+    pipeline->func_init_video_decoder   = func_init_video_decoder;
+    pipeline->func_config_video_decoder = func_config_video_decoder;
+
+    return pipeline;
+fail:
+    ffpipeline_free_p(&pipeline);
+    return NULL;
+}
+```
+
+
+
+一个一个来看一下pipeline中的函数的作用：
+
+##### 2.1 func_destroy()
+
+``` c
+static void func_destroy(IJKFF_Pipeline *pipeline)
+{
+    IJKFF_Pipeline_Opaque *opaque = pipeline->opaque;
+    JNIEnv *env = NULL;
+
+    SDL_DestroyMutexP(&opaque->surface_mutex);
+
+    if (JNI_OK != SDL_JNI_SetupThreadEnv(&env)) {
+        ALOGE("amediacodec-pipeline:destroy: SetupThreadEnv failed\n");
+        goto fail;
+    }
+    //变量并释放IJKFF_Pipeline_Opaque.jsurface
+    SDL_JNI_DeleteGlobalRefP(env, &opaque->jsurface);
+fail:
+    return;
+}
+```
+
+``` c
+//用env指针变量，删除obj_ptr的jni全局引用
+void SDL_JNI_DeleteGlobalRefP(JNIEnv *env, jobject *obj_ptr)
+{
+    if (!obj_ptr || !*obj_ptr)
+        return;
+		//jni方法，删除全局引用
+    (*env)->DeleteGlobalRef(env, *obj_ptr);
+    *obj_ptr = NULL;
+}
+```
+
+
+
+##### 2.2 func_open_video_decoder()
+
+``` c
+static IJKFF_Pipenode *func_open_video_decoder(IJKFF_Pipeline *pipeline, FFPlayer *ffp)
+{
+    IJKFF_Pipeline_Opaque *opaque = pipeline->opaque;
+    IJKFF_Pipenode        *node = NULL;
+
+    if (ffp->mediacodec_all_videos || ffp->mediacodec_avc || ffp->mediacodec_hevc || ffp->mediacodec_mpeg2)
+        //从硬解中创建解码器
+        node = ffpipenode_create_video_decoder_from_android_mediacodec(ffp, pipeline, opaque->weak_vout);
+    if (!node) {
+        //从ffplay中创建解码器，即ffmpeg的解码器
+        node = ffpipenode_create_video_decoder_from_ffplay(ffp);
+    }
+
+    return node;
+}
+```
+
+这里很有意思，创建解码器，而返回的对象是`IJKFF_Pipenode`，这是否说明``IJKFF_Pipenode``就是一个解码器的抽象？
+
+
+
+##### 2.3 func_open_audio_output
+
+``` c
+static SDL_Aout *func_open_audio_output(IJKFF_Pipeline *pipeline, FFPlayer *ffp)
+{
+    SDL_Aout *aout = NULL;
+    if (ffp->opensles) {
+        aout = SDL_AoutAndroid_CreateForOpenSLES();
+    } else {
+      	//一般不会用opensles，都是默认用的android的AudioTrack来创建Aout
+        aout = SDL_AoutAndroid_CreateForAudioTrack();
+    }
+    if (aout)
+        SDL_AoutSetStereoVolume(aout, pipeline->opaque->left_volume, pipeline->opaque->right_volume);
+    return aout;
+}
+```
+
+
+
+``` c
+SDL_Aout *SDL_AoutAndroid_CreateForAudioTrack()
+{
+  	//在这里创建并分配了SDL_Aout结构体
+    SDL_Aout *aout = SDL_Aout_CreateInternal(sizeof(SDL_Aout_Opaque));
+    if (!aout)
+        return NULL;
+
+    SDL_Aout_Opaque *opaque = aout->opaque;
+    opaque->wakeup_cond  = SDL_CreateCond();
+    opaque->wakeup_mutex = SDL_CreateMutex();
+    opaque->speed        = 1.0f;
+
+    aout->opaque_class = &g_audiotrack_class;
+    aout->free_l       = aout_free_l;
+    aout->open_audio   = aout_open_audio;
+    aout->pause_audio  = aout_pause_audio;
+    aout->flush_audio  = aout_flush_audio;
+    aout->set_volume   = aout_set_volume;
+    aout->close_audio  = aout_close_audio;
+    aout->func_get_audio_session_id = aout_get_audio_session_id;
+    aout->func_set_playback_rate    = func_set_playback_rate;
+
+    return aout;
+}
+```
+
+
+
+##### 2.4 func_init_video_decoder
+
+``` c
+static IJKFF_Pipenode *func_init_video_decoder(IJKFF_Pipeline *pipeline, FFPlayer *ffp)
+{
+    IJKFF_Pipeline_Opaque *opaque = pipeline->opaque;
+    IJKFF_Pipenode        *node = NULL;
+
+    if (ffp->mediacodec_all_videos || ffp->mediacodec_avc || ffp->mediacodec_hevc || ffp->mediacodec_mpeg2)
+      	//如果是硬解，则要再初始化一下，如果是ffmpeg的软解，就不需要了。
+        node = ffpipenode_init_decoder_from_android_mediacodec(ffp, pipeline, opaque->weak_vout);
+
+    return node;
+}
+```
+
+
+
+##### 2.5 func_config_video_decoder
+
+``` c
+static int func_config_video_decoder(IJKFF_Pipeline *pipeline, FFPlayer *ffp)
+{
+    IJKFF_Pipeline_Opaque *opaque = pipeline->opaque;
+    int                       ret = NULL;
+
+    if (ffp->node_vdec) {
+        ret = ffpipenode_config_from_android_mediacodec(ffp, pipeline, opaque->weak_vout, ffp->node_vdec);
+    }
+
+    return ret;
+}
+```
+
+
+
+
+
+#### 3. 使用
+
+视频解码线程开始之前，用`ffpipeline_open_video_decoder`创建一个解码器。
+
+``` c
+static int stream_component_open(FFPlayer *ffp, int stream_index)
+{
+  //...
+  case AVMEDIA_TYPE_VIDEO:
+  	//decoder初始化
+		decoder_init(&is->viddec, avctx, &is->videoq, is->continue_read_thread);
+    ffp->node_vdec = ffpipeline_open_video_decoder(ffp->pipeline, ffp);
+	  //解码器开始
+    if ((ret = decoder_start(&is->viddec, video_thread, ffp, "ff_video_dec")) < 0)
+    	goto out;
+  //...
+}
+```
+
+
+
+### IJKFF_Pipenode
+
+这个称为管道节点结构体包含的`func_run_sync()`函数是用来运行解码线程的。因此该结构体对底层ffmpeg来说，也是底层ffmpeg的一层抽象了。
+
+#### 1. 结构体
+
+``` c
+typedef struct IJKFF_Pipenode IJKFF_Pipenode;
+struct IJKFF_Pipenode {
+    SDL_mutex *mutex;
+    void *opaque;
+
+    void (*func_destroy) (IJKFF_Pipenode *node);
+    int  (*func_run_sync)(IJKFF_Pipenode *node);
+    int  (*func_flush)   (IJKFF_Pipenode *node); // optional
+};
+```
+
+
+
+#### 2. 初始化
+
+``` c
+IJKFF_Pipenode *ffpipenode_create_video_decoder_from_ffplay(FFPlayer *ffp)
+{
+    //分配IJKFF_Pipenode的内存
+    IJKFF_Pipenode *node = ffpipenode_alloc(sizeof(IJKFF_Pipenode_Opaque));
+    if (!node)
+        return node;
+
+    IJKFF_Pipenode_Opaque *opaque = node->opaque;
+    opaque->ffp         = ffp;
+		//为node的函数赋值
+    node->func_destroy  = func_destroy;
+    node->func_run_sync = func_run_sync;
+  
+    ffp_set_video_codec_info(ffp, AVCODEC_MODULE_NAME, avcodec_get_name(ffp->is->viddec.avctx->codec_id));
+    ffp->stat.vdec_type = FFP_PROPV_DECODER_AVCODEC;
+    return node;
+}
+```
+
+
+
+``` c
+static void func_destroy(IJKFF_Pipenode *node)
+{
+    // do nothing
+}
+static int func_run_sync(IJKFF_Pipenode *node)
+{
+    IJKFF_Pipenode_Opaque *opaque = node->opaque;
+
+    return ffp_video_thread(opaque->ffp);
+}
+```
+
+``` c
+int ffp_video_thread(FFPlayer *ffp)
+{
+    return ffplay_video_thread(ffp);
+}
+```
+
+
+
+``` c
+static int ffplay_video_thread(void *arg)
+{
+    FFPlayer *ffp = arg;
+    VideoState *is = ffp->is;
+    AVFrame *frame = av_frame_alloc();
+    double pts;
+    double duration;
+    int ret;
+    AVRational tb = is->video_st->time_base;
+    AVRational frame_rate = av_guess_frame_rate(is->ic, is->video_st, NULL);
+    int64_t dst_pts = -1;
+    int64_t last_dst_pts = -1;
+    int retry_convert_image = 0;
+    int convert_frame_count = 0;
+
+    ffp_notify_msg2(ffp, FFP_MSG_VIDEO_ROTATION_CHANGED, ffp_get_video_rotate_degrees(ffp));
+
+    if (!frame) {
+        return AVERROR(ENOMEM);
+    }
+
+    for (;;) {
+      	//获取解码后的数据AVFrame数据
+        ret = get_video_frame(ffp, frame);
+        if (ret < 0)
+            goto the_end;
+        if (!ret)
+            continue;
+
+        if (ffp->get_frame_mode) {
+            if (!ffp->get_img_info || ffp->get_img_info->count <= 0) {
+                av_frame_unref(frame);
+                continue;
+            }
+
+            last_dst_pts = dst_pts;
+
+            if (dst_pts < 0) {
+                dst_pts = ffp->get_img_info->start_time;
+            } else {
+                dst_pts += (ffp->get_img_info->end_time - ffp->get_img_info->start_time) / (ffp->get_img_info->num - 1);
+            }
+
+            pts = (frame->pts == AV_NOPTS_VALUE) ? NAN : frame->pts * av_q2d(tb);
+            pts = pts * 1000;
+            if (pts >= dst_pts) {
+                while (retry_convert_image <= MAX_RETRY_CONVERT_IMAGE) {
+                    ret = convert_image(ffp, frame, (int64_t)pts, frame->width, frame->height);
+                    if (!ret) {
+                        convert_frame_count++;
+                        break;
+                    }
+                    retry_convert_image++;
+                    av_log(NULL, AV_L

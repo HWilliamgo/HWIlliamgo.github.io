@@ -1,3 +1,9 @@
+---
+title: ScrollView嵌套ScrollView的滑动冲突
+categories:
+  - View
+---
+
 
 结论： 在自定义控件中如下重写`onInterceptTouchEvent`就告诉所有父View：**不要拦截事件，让我消费！！**
 ``` java
@@ -252,3 +258,4 @@ buildProject,然后在xml中将里面的ScrollView修改成这个MyScrollView。
 
 
 
+                                                                                                          

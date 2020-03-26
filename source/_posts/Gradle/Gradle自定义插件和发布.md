@@ -1,3 +1,9 @@
+---
+title: Gradle自定义插件和发布
+categories:
+  - Gradle
+---
+
 # Gradle自定义插件和发布
 
 这篇文章讲解的是如何自定义gradle插件，并以本地依赖和远程依赖的方式来集成。
@@ -503,3 +509,229 @@ https://stackoverflow.com/questions/35302414/adding-local-plugin-to-a-gradle-pro
 [gradle官方文档：publishing artifact](https://docs.gradle.org/current/userguide/publishing_overview.html)
 
 [gradle官方文档：maven publish plugin](https://docs.gradle.org/current/userguide/publishing_maven.html#publishing_maven)
+��到插件消费者项目。
+2. 用gradle的`maven`或者`maven-publish`插件，来将打包的jar包发布到指定的本地路径中。
+
+
+
+我们先看第一种方式：
+
+##### 2.2.1 用build类型的gradle脚本打包
+
+执行
+
+``` shell
+/customPlugin
+$ gradlew build
+```
+
+构建产物在：`./build/libs/customPlugin.jar`
+
+此时拿到了jar包。其中包含了我们写的`org.gradle.Plugin`接口的实现类。
+
+
+
+##### 2.2.2 用maven类型的脚本打包并发布在指定的本地路径
+
+打开插件开发项目，我们需要发布一个maven类型的软件包。gradle为maven类型的软件包发布提供了两种插件：`maven`和`maven-publish`，前者已经被废弃，现在最新的是后者，我们这里用后者插件来实现构件一个maven类型的软件包。
+
+我们参考的是[`maven-publish`文档](https://docs.gradle.org/current/userguide/publishing_overview.html)的最简单的发版配置：
+
+``` groovy
+group = 'org.example'
+version = '1.0'
+
+publishing {
+    publications {
+        myLibrary(MavenPublication) {
+            from components.java
+        }
+    }
+
+    repositories {
+        maven {
+            name = 'myRepo'
+            url = "file://${buildDir}/repo"
+        }
+    }
+}
+```
+
+将上述的配置移植到我们的插件开发项目的build.gradle中，如下：
+
+``` groovy
+plugins {
+    id 'groovy'
+    id 'maven-publish'
+}
+
+group = "com.william.customplugin"
+version = "1.0"
+
+publishing {
+    publications {
+        myLibrary(MavenPublication) {
+            from components.java
+        }
+    }
+
+    //仓库配置
+    repositories {
+        maven {
+            //name这个属性是用来指定仓库名字的，貌似在这里没什么用，注释掉。
+            //name = 'myRepo'
+            
+            //指定发布仓库的路径
+            url = "./build/repo"
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation gradleApi()
+    implementation localGroovy()
+}
+
+sourceCompatibility = "7"
+targetCompatibility = "7"
+
+```
+
+接下来就是执行一个task，来构建并发布了。
+
+`maven-publish`脚本带来了task `publish`，他会执行所有的发布任务。而我们这里只有一个发布任务，所以执行他就好了。
+
+``` shell
+gradlew publish
+
+===>
+
+14:45:49: Executing task 'publish'...
+
+Executing tasks: [publish] in project C:\AndroidProject\KotlinSimpleTest\customPlugin
+
+> Task :customPlugin:generatePomFileForMyLibraryPublication
+> Task :customPlugin:compileJava UP-TO-DATE
+> Task :customPlugin:compileGroovy NO-SOURCE
+> Task :customPlugin:processResources UP-TO-DATE
+> Task :customPlugin:classes UP-TO-DATE
+> Task :customPlugin:jar UP-TO-DATE
+> Task :customPlugin:publishMyLibraryPublicationToMavenRepository
+> Task :customPlugin:publish
+
+BUILD SUCCESSFUL in 4s
+5 actionable tasks: 2 executed, 3 up-to-date
+14:45:53: Task execution finished 'publish'.
+
+```
+
+OK，现在跑去`./build/repo`下面找我们的软件包吧。
+
+``` 
+├─repo
+│  └─com
+│      └─william
+│          └─customplugin
+│              └─customPlugin
+│                  │  maven-metadata.xml
+│                  │  maven-metadata.xml.md5
+│                  │  maven-metadata.xml.sha1
+│                  │
+│                  └─1.0
+│                          customPlugin-1.0.jar
+│                          customPlugin-1.0.jar.md5
+│                          customPlugin-1.0.jar.sha1
+│                          customPlugin-1.0.pom
+│                          customPlugin-1.0.pom.md5
+│                          customPlugin-1.0.pom.sha1
+```
+
+输出的整个包多了很多东西~，我们用普通的`build`命令打出来的jar包，只有一个单独的jar包，而用`maven-publish`插件打出来的包，囊括了完整的全路径名，带有pom文件用于描述依赖，带有maven元数据等等，这是一个完整的、可用于分发的软件了~
+
+
+
+#### 2.3 在插件消费者项目中使用插件
+
+##### 2.3.1 直接使用本地的jar包中的插件。
+
+拿到jar包后，把他放在一个可以被找到的路径，我把他放在了插件消费者项目的根目录的`gradle_plugin_libs/`目录下。
+
+``` 
+└─gradle_plugin_libs
+        customPlugin.jar
+```
+
+一般来说，安卓项目都采用的是gradle的multi-project-build组织类型，所以我打算在根目录下让gradle对我的脚本进行一个依赖，以便子项目不需要再自己去声明对脚本的依赖。
+
+即`rootProject/build.gradle`下：
+
+``` groovy
+buildscript{
+    repositories{
+        //...
+    }
+    dependencies{
+		classpath 'com.android.tools.build:gradle:3.4.1'
+        //...
+        
+        //注意，之类不能用classpath，因为classpath指定的是以标准的maven格式构建的软件包。
+        //我们这里是直接用jar的，classpath识别不了，会报错。因此用classpath files()
+        classpath files ('./gradle_plugin_libs/customPlugin.jar')
+    }
+}
+//..
+```
+
+随意地找一个项目的构建脚本，写上：`apply plugin: 'com.william.customplugin'`。（注意，插件Id是properties文件的名字）
+
+执行命令：`gradlew hello`-->  输出： task hello---doLast
+
+大功告成~
+
+
+
+##### 2.3.2 使用本地maven仓库下的jar包中的插件
+
+将2.2.2节构建出的软件包整个复制到`gradle_plugin_libs/`中。
+
+修改根目录构建脚本：`rootProject/build.gradle`
+
+``` groovy
+buildscript{
+    repositories{
+        //...
+
+        //指定一个maven仓库的路径
+        maven {
+    		url uri('./gradle_plugin_libs')
+		}
+    }
+    dependencies{
+        //...
+        
+        //用标准的classpath方法，来找到我们的插件
+        classpath('com.william.customplugin:customPlugin:1.0')
+    }
+}
+//..
+```
+
+执行`gradlew hello`，输出和上一节一样。
+
+大功告成~
+
+
+
+#### 2.4 如何测试插件？
+
+待补充
+
+
+
+### 3 在独立的项目中开发一个插件，远程依赖
+
+上面我们对插件进行了本地依赖的方式来使用，现在我们将我们的插件打出的软件包上传到远程仓库上，让别的开发者也能快速地集成。
+
+#### 3.1 

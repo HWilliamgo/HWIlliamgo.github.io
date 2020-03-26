@@ -1,3 +1,9 @@
+---
+title: 理解ijkplayer（四）拉流
+categories:
+  - 音视频开发
+---
+
 > 前言
 >
 > 我是一名打算走音视频路线的android开发者。以此系列文章开始，记录我的音视频开发学习之路
@@ -1379,3 +1385,227 @@ static int read_thread(void *arg)
 
 
 
+tex);
+            if (ffp->auto_resume) {
+                is->pause_req = 0;
+                if (ffp->packet_buffering)
+                    is->buffering_on = 1;
+                ffp->auto_resume = 0;
+                stream_update_pause_l(ffp);
+            }
+            if (is->pause_req)
+                step_to_next_frame_l(ffp);
+            SDL_UnlockMutex(ffp->is->play_mutex);
+
+            if (ffp->enable_accurate_seek) {
+                is->drop_aframe_count = 0;
+                is->drop_vframe_count = 0;
+                SDL_LockMutex(is->accurate_seek_mutex);
+                if (is->video_stream >= 0) {
+                    is->video_accurate_seek_req = 1;
+                }
+                if (is->audio_stream >= 0) {
+                    is->audio_accurate_seek_req = 1;
+                }
+                SDL_CondSignal(is->audio_accurate_seek_cond);
+                SDL_CondSignal(is->video_accurate_seek_cond);
+                SDL_UnlockMutex(is->accurate_seek_mutex);
+            }
+
+            ffp_notify_msg3(ffp, FFP_MSG_SEEK_COMPLETE, (int)fftime_to_milliseconds(seek_target), ret);
+            ffp_toggle_buffering(ffp, 1);
+        }
+        if (is->queue_attachments_req) {
+            if (is->video_st && (is->video_st->disposition & AV_DISPOSITION_ATTACHED_PIC)) {
+                AVPacket copy = { 0 };
+                if ((ret = av_packet_ref(&copy, &is->video_st->attached_pic)) < 0)
+                    goto fail;
+                packet_queue_put(&is->videoq, &copy);
+                packet_queue_put_nullpacket(&is->videoq, is->video_stream);
+            }
+            is->queue_attachments_req = 0;
+        }
+
+        /* if the queue are full, no need to read more */
+        if (ffp->infinite_buffer<1 && !is->seek_req &&
+#ifdef FFP_MERGE
+              (is->audioq.size + is->videoq.size + is->subtitleq.size > MAX_QUEUE_SIZE
+#else
+              (is->audioq.size + is->videoq.size + is->subtitleq.size > ffp->dcc.max_buffer_size
+#endif
+                    //内部逻辑为queue->nb_packets > min_frames
+            || (   stream_has_enough_packets(is->audio_st, is->audio_stream, &is->audioq, MIN_FRAMES)
+                && stream_has_enough_packets(is->video_st, is->video_stream, &is->videoq, MIN_FRAMES)
+                && stream_has_enough_packets(is->subtitle_st, is->subtitle_stream, &is->subtitleq, MIN_FRAMES)))) {
+            if (!is->eof) {
+                ffp_toggle_buffering(ffp, 0);
+            }
+            /* wait 10 ms */
+            SDL_LockMutex(wait_mutex);
+            SDL_CondWaitTimeout(is->continue_read_thread, wait_mutex, 10);
+            SDL_UnlockMutex(wait_mutex);
+            //进入到下一次循环
+            continue;
+        }
+        //处理播放结束
+        if ((!is->paused || completed) &&
+            (!is->audio_st || (is->auddec.finished == is->audioq.serial && frame_queue_nb_remaining(&is->sampq) == 0)) &&
+            (!is->video_st || (is->viddec.finished == is->videoq.serial && frame_queue_nb_remaining(&is->pictq) == 0))) {
+            if (ffp->loop != 1 && (!ffp->loop || --ffp->loop)) {
+                stream_seek(is, ffp->start_time != AV_NOPTS_VALUE ? ffp->start_time : 0, 0, 0);
+            } else if (ffp->autoexit) {
+                ret = AVERROR_EOF;
+                goto fail;
+            } else {
+                ffp_statistic_l(ffp);
+                if (completed) {
+                    av_log(ffp, AV_LOG_INFO, "ffp_toggle_buffering: eof\n");
+                    SDL_LockMutex(wait_mutex);
+                    // infinite wait may block shutdown
+                    while(!is->abort_request && !is->seek_req)
+                        SDL_CondWaitTimeout(is->continue_read_thread, wait_mutex, 100);
+                    SDL_UnlockMutex(wait_mutex);
+                    if (!is->abort_request)
+                        continue;
+                } else {
+                    completed = 1;
+                    ffp->auto_resume = 0;
+
+                    // TODO: 0 it's a bit early to notify complete here
+                    ffp_toggle_buffering(ffp, 0);
+                    toggle_pause(ffp, 1);
+                    if (ffp->error) {
+                        av_log(ffp, AV_LOG_INFO, "ffp_toggle_buffering: error: %d\n", ffp->error);
+                        ffp_notify_msg1(ffp, FFP_MSG_ERROR);
+                    } else {
+                        av_log(ffp, AV_LOG_INFO, "ffp_toggle_buffering: completed: OK\n");
+                        ffp_notify_msg1(ffp, FFP_MSG_COMPLETED);
+                    }
+                }
+            }
+        }
+        pkt->flags = 0;
+        //读帧，读到这个pkt包里面？
+        //0 if OK, < 0 on error or end of file
+        ret = av_read_frame(ic, pkt);
+        if (ret < 0) {
+            int pb_eof = 0;
+            int pb_error = 0;
+            //EOF表示：end of file
+            if ((ret == AVERROR_EOF || avio_feof(ic->pb)) && !is->eof) {
+                ffp_check_buffering_l(ffp);
+                pb_eof = 1;
+                // check error later
+            }
+            if (ic->pb && ic->pb->error) {
+                pb_eof = 1;
+                pb_error = ic->pb->error;
+            }
+            if (ret == AVERROR_EXIT) {
+                pb_eof = 1;
+                pb_error = AVERROR_EXIT;
+            }
+
+            if (pb_eof) {
+                if (is->video_stream >= 0)
+                    packet_queue_put_nullpacket(&is->videoq, is->video_stream);
+                if (is->audio_stream >= 0)
+                    packet_queue_put_nullpacket(&is->audioq, is->audio_stream);
+                if (is->subtitle_stream >= 0)
+                    packet_queue_put_nullpacket(&is->subtitleq, is->subtitle_stream);
+                is->eof = 1;
+            }
+            if (pb_error) {
+                if (is->video_stream >= 0)
+                    packet_queue_put_nullpacket(&is->videoq, is->video_stream);
+                if (is->audio_stream >= 0)
+                    packet_queue_put_nullpacket(&is->audioq, is->audio_stream);
+                if (is->subtitle_stream >= 0)
+                    packet_queue_put_nullpacket(&is->subtitleq, is->subtitle_stream);
+                is->eof = 1;
+                ffp->error = pb_error;
+                av_log(ffp, AV_LOG_ERROR, "av_read_frame error: %s\n", ffp_get_error_string(ffp->error));
+                // break;
+            } else {
+                ffp->error = 0;
+            }
+            if (is->eof) {
+                ffp_toggle_buffering(ffp, 0);
+                SDL_Delay(100);
+            }
+            SDL_LockMutex(wait_mutex);
+            SDL_CondWaitTimeout(is->continue_read_thread, wait_mutex, 10);
+            SDL_UnlockMutex(wait_mutex);
+            ffp_statistic_l(ffp);
+            continue;
+        } else {
+            is->eof = 0;
+        }
+
+        //flush_pkt是用来做什么的？
+        if (pkt->flags & AV_PKT_FLAG_DISCONTINUITY) {
+            if (is->audio_stream >= 0) {
+                packet_queue_put(&is->audioq, &flush_pkt);
+            }
+            if (is->subtitle_stream >= 0) {
+                packet_queue_put(&is->subtitleq, &flush_pkt);
+            }
+            if (is->video_stream >= 0) {
+                packet_queue_put(&is->videoq, &flush_pkt);
+            }
+        }
+
+        /* check if packet is in play range specified by user, then queue, otherwise discard */
+        stream_start_time = ic->streams[pkt->stream_index]->start_time;
+        pkt_ts = pkt->pts == AV_NOPTS_VALUE ? pkt->dts : pkt->pts;
+        pkt_in_play_range = ffp->duration == AV_NOPTS_VALUE ||
+                (pkt_ts - (stream_start_time != AV_NOPTS_VALUE ? stream_start_time : 0)) *
+                av_q2d(ic->streams[pkt->stream_index]->time_base) -
+                (double)(ffp->start_time != AV_NOPTS_VALUE ? ffp->start_time : 0) / 1000000
+                <= ((double)ffp->duration / 1000000);
+        if (pkt->stream_index == is->audio_stream && pkt_in_play_range) {
+            packet_queue_put(&is->audioq, pkt);
+        } else if (pkt->stream_index == is->video_stream && pkt_in_play_range
+                   && !(is->video_st && (is->video_st->disposition & AV_DISPOSITION_ATTACHED_PIC))) {
+            packet_queue_put(&is->videoq, pkt);
+        } else if (pkt->stream_index == is->subtitle_stream && pkt_in_play_range) {
+            packet_queue_put(&is->subtitleq, pkt);
+        } else {
+            av_packet_unref(pkt);
+        }
+
+        ffp_statistic_l(ffp);
+
+        if (ffp->ijkmeta_delay_init && !init_ijkmeta &&
+                (ffp->first_video_frame_rendered || !is->video_st) && (ffp->first_audio_frame_rendered || !is->audio_st)) {
+            ijkmeta_set_avformat_context_l(ffp->meta, ic);
+            init_ijkmeta = 1;
+        }
+
+        if (ffp->packet_buffering) {
+            io_tick_counter = SDL_GetTickHR();
+            if ((!ffp->first_video_frame_rendered && is->video_st) || (!ffp->first_audio_frame_rendered && is->audio_st)) {
+                if (abs((int)(io_tick_counter - prev_io_tick_counter)) > FAST_BUFFERING_CHECK_PER_MILLISECONDS) {
+                    prev_io_tick_counter = io_tick_counter;
+                    ffp->dcc.current_high_water_mark_in_ms = ffp->dcc.first_high_water_mark_in_ms;
+                    ffp_check_buffering_l(ffp);
+                }
+            } else {
+                if (abs((int)(io_tick_counter - prev_io_tick_counter)) > BUFFERING_CHECK_PER_MILLISECONDS) {
+                    prev_io_tick_counter = io_tick_counter;
+                    ffp_check_buffering_l(ffp);
+                }
+            }
+        }
+    }
+
+    ret = 0;
+ fail:
+    if (ic && !is->ic)
+        avformat_close_input(&ic);
+
+    if (!ffp->prepared || !is->abort_request) {
+        ffp->last_error = last_error;
+        ffp_notify_msg2(ffp, FFP_MSG_ERROR, last_error);
+    }
+    SDL_D

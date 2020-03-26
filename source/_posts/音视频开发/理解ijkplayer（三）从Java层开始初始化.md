@@ -1,3 +1,9 @@
+---
+title: 理解ijkplayer（三）从Java层开始初始化
+categories:
+  - 音视频开发
+---
+
 > 前言
 >
 > 我是一名打算走音视频路线的android开发者。以此系列文章开始，记录我的音视频开发学习之路
@@ -1095,3 +1101,133 @@ void ijkmp_android_set_surface_l(JNIEnv *env, IjkMediaPlayer *mp, jobject androi
 
 不过可以肯定的是，这是个函数是用于将c层的视频渲染器和java层设置进来的Surface（来自SurfaceView或者TextureView）。
 
+Width, player.mVideoHeight,
+                        player.mVideoSarNum, player.mVideoSarDen);
+                break;
+
+            default:
+                DebugLog.e(TAG, "Unknown message type " + msg.what);
+            }
+        }
+    }
+```
+
+到这里，从java到c和从c到java的事件通信和传送大概就是这些了，然而种类面涉及到一些细节例如：线程转换等，并没有去探究，
+
+
+
+注意,`message_loop()`方法是创建一个消息循环机制，那么回到`message_loop()`函数被使用的地方：
+
+``` c
+static void
+IjkMediaPlayer_native_setup(JNIEnv *env, jobject thiz, jobject weak_this)
+{
+    MPTRACE("%s\n", __func__);
+    //创建IjkMediaPlayer，并传入message_loop()方法作为参数
+    IjkMediaPlayer *mp = ijkmp_android_create(message_loop);
+    JNI_CHECK_GOTO(mp, env, "java/lang/OutOfMemoryError", "mpjni: native_setup: ijkmp_create() failed", LABEL_RETURN);
+
+    jni_set_media_player(env, thiz, mp);
+    ijkmp_set_weak_thiz(mp, (*env)->NewGlobalRef(env, weak_this));
+    ijkmp_set_inject_opaque(mp, ijkmp_get_weak_thiz(mp));
+    ijkmp_set_ijkio_inject_opaque(mp, ijkmp_get_weak_thiz(mp));
+    ijkmp_android_set_mediacodec_select_callback(mp, mediacodec_select_callback, ijkmp_get_weak_thiz(mp));
+
+LABEL_RETURN:
+    ijkmp_dec_ref_p(&mp);
+}
+```
+
+`message_loop`这个函数作为参数被传递，在这里依然还没有调用，即没有开启循环读队列。那么猜想`message_loop`函数一定是被传递下去，在某个地方被调用了，并且需要在一个独立的线程中调用，就像模拟Android的`HandlerThread`类做的那样，一个独立的线程中开启了循环。
+
+
+
+#### 3.3.2 创建IjkMediaPlayer
+
+依然看到上面的代码块，通过`ijkmp_android_create(message_loop)`方法创建了`IjkMediaPlayer`播放器结构体，在看具体创建代码之前，我们先看一下结构体：
+
+``` c
+//	ijkmedia/ijkplayer/ijkplayer_internal.h
+struct IjkMediaPlayer {
+    volatile int ref_count;
+  	//互斥锁，用于保证线程安全
+    pthread_mutex_t mutex;
+  	//ffplayer，位于ijkmedia/ijkplayer/ff_ffplay_def.h，他会直接调用ffmpeg的方法了
+    FFPlayer *ffplayer;
+		
+  	//一个函数指针，指向的是谁？指向的其实就是刚才创建的message_loop，即消息循环函数
+    int (*msg_loop)(void*);
+  	//消息机制线程
+    SDL_Thread *msg_thread;
+    SDL_Thread _msg_thread;
+		//播放器状态，例如prepared,resumed,error,completed等
+    int mp_state;
+  	//字符串，就是一个播放url
+    char *data_source;
+  	//弱引用
+    void *weak_thiz;
+
+    int restart;
+    int restart_from_beginning;
+    int seek_req;
+    long seek_msec;
+};
+```
+
+结构体的说明如注释所示。
+
+那么现在看创建播放器的函数：
+
+``` c
+//	ijkmedia/ijkplayer/android/ijkplayer_android.c
+IjkMediaPlayer *ijkmp_android_create(int(*msg_loop)(void*))
+{
+    //创建IjkMediaPlayer
+    IjkMediaPlayer *mp = ijkmp_create(msg_loop);
+    if (!mp)
+        goto fail;
+    //创建视频输出设备，会根据根据硬解还是软件，硬解用MediaCodec创建，软解用FFmpeg创建
+    mp->ffplayer->vout = SDL_VoutAndroid_CreateForAndroidSurface();
+    if (!mp->ffplayer->vout)
+        goto fail;
+    //暂时不太理解这个叫做”管道“的东西是什么
+    mp->ffplayer->pipeline = ffpipeline_create_from_android(mp->ffplayer);
+    if (!mp->ffplayer->pipeline)
+        goto fail;
+    //将创建的视频输出设备vout，赋值到ffplayer->pipeline中
+    ffpipeline_set_vout(mp->ffplayer->pipeline, mp->ffplayer->vout);
+
+    return mp;
+
+fail:
+    ijkmp_dec_ref_p(&mp);
+    return NULL;
+}
+```
+
+那么看到创建`IjkMediaPlayer`的函数
+
+``` c
+//	ijkmedia/ijkplayer/ff_ffplay.c
+IjkMediaPlayer *ijkmp_create(int (*msg_loop)(void*))
+{
+    //分配内存
+    IjkMediaPlayer *mp = (IjkMediaPlayer *) mallocz(sizeof(IjkMediaPlayer));
+    if (!mp)
+        goto fail;
+    //创建IjkMediaPlayer内部的FFPlayer
+    mp->ffplayer = ffp_create();
+    if (!mp->ffplayer)
+        goto fail;
+    //注意：将msg_loop函数赋值给IjkMediaPlayer的函数引用，在创建的时候赋值，在另一处被调用。
+    //在哪里被调用呢？在prepareAsync()里面，后面分析prepare方法的时候就会再见到消息循环函数了。
+    mp->msg_loop = msg_loop;
+
+    ijkmp_inc_ref(mp);
+    pthread_mutex_init(&mp->mutex, NULL);
+
+    return mp;
+
+    fail:
+    ijkmp_destroy_p(&mp);
+    return NULL;

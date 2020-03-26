@@ -1,3 +1,9 @@
+---
+title: RxJava1源码分析
+categories:
+  - 第三方库
+---
+
 我对于RxJava的异常处理和上抛方式有一些不解，而上网查找的文章都是RxJava的一些用于处理异常的操作符，所以只能自己去源码里面找答案了。
 
 虽然RxJava1已经过时了，但是鉴于RxJava1的源码会比RxJava2的简洁一些，因此易于分析。所以我在这里对RxJava1的源码进行分析。
@@ -917,3 +923,339 @@ public final class OperatorMap<T, R> implements Operator<R, T> {
 
 
 
+}
+    .doOnNext {
+        LogUtils.d("doOnNext=$it")
+    }
+    .subscribe { it: String ->
+        LogUtils.d(it)
+    }
+```
+
+这里我们看一下doOnNext中的代码块是如何追加到调用链上的。
+
+看实现：
+
+``` java
+public final Observable<T> doOnNext(final Action1<? super T> onNext) {
+    Observer<T> observer = new Observer<T>() {
+        @Override
+        public final void onCompleted() {
+        }
+        @Override
+        public final void onError(Throwable e) {
+        }
+        @Override
+        public final void onNext(T args) {
+            onNext.call(args);
+        }
+    };
+    //上述代码是将onNext封装到了一个Observer里面。
+    return lift(new OperatorDoOnEach<T>(observer));
+}
+```
+
+这个封装过的observer，作为`OperatorDoOnEach`类的构造器的参数被传递进去，然后又作为`lift()`方法被调用，并返回一个`Observable`类型。（是的，因为这个操作符是可以直接调用subscribe()的）
+
+#### 4.2 OperatorDoOnEach类型
+
+``` java
+public class OperatorDoOnEach<T> implements Operator<T, T>
+```
+
+
+
+他的父类型是Operator：
+
+``` java
+/**
+ * Operator function for lifting into an Observable.
+ */
+public interface Operator<R, T> extends Func1<Subscriber<? super R>, Subscriber<? super T>> {
+    // cover for generics insanity
+}
+```
+
+Operator实现了Func1接口：
+
+``` java
+public interface Func1<T, R> extends Function {
+    R call(T t);
+}
+```
+
+Func1接口的作用是：转化
+
+调用call方法的时候：输入T，返回R。
+
+那么Operator的作用也可以说是：转化。但是他是Func1<Subscriber<? super R>, Subscriber<? super T>>，因此他的转化是：输入一个观察者T，返回另一个观察者R。
+
+那么我们也可以说Operator的作用是：给原有的观察者添加额外的逻辑。
+
+
+
+那么说具体点：客户端的调用是：
+
+``` java
+Operator concreteOperator ;
+SubscriberB = concreteOperator.call(SubscriberA);
+```
+
+即获取到Operator接口，然后调用call方法，进行转换。
+
+
+
+而`doOnNext()`方法用的是`OperatorDoOnEach`：
+
+``` java
+public class OperatorDoOnEach<T> implements Operator<T, T> {
+    private final Observer<? super T> doOnEachObserver;
+
+    //构造方法中，保存了一个观察者，称为doOnEachObserver
+    public OperatorDoOnEach(Observer<? super T> doOnEachObserver) {
+        this.doOnEachObserver = doOnEachObserver;
+    }
+
+    //调用call方法，开始转换。call方法返回的新的观察者的每个实现，都是在参数observer的方法之前
+    //拼接上构造函数的doOnEachObserver的对应的方法。
+    @Override
+    public Subscriber<? super T> call(final Subscriber<? super T> observer) {
+        //传入的是observer
+        return new Subscriber<T>(observer) {
+
+            private boolean done = false;
+
+            @Override
+            public void onCompleted() {
+                if (done) {
+                    return;
+                }
+                //先调用doOnEachObserver.onCompleted()
+                try {
+                    doOnEachObserver.onCompleted();
+                } catch (Throwable e) {
+                    onError(e);
+                    return;
+                }
+                // Set `done` here so that the error in `doOnEachObserver.onCompleted()` can be noticed by observer
+                done = true;
+                //再调用observer.onCompleted()
+                observer.onCompleted();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                // need to throwIfFatal since we swallow errors after terminated
+                Exceptions.throwIfFatal(e);
+                if (done) {
+                    return;
+                }
+                done = true;
+                //先调用doOnEachObserver.onError
+                try {
+                    doOnEachObserver.onError(e);
+                } catch (Throwable e2) {
+                    observer.onError(e2);
+                    return;
+                }
+                //再调用observer.onError
+                observer.onError(e);
+            }
+
+            @Override
+            public void onNext(T value) {
+                if (done) {
+                    return;
+                }
+                //先调用doOnEachObserver.onNext
+                try {
+                    doOnEachObserver.onNext(value);
+                } catch (Throwable e) {
+                    onError(OnErrorThrowable.addValueAsLastCause(e, value));
+                    return;
+                }
+                //再调用observer.onNext
+                observer.onNext(value);
+            }
+        };
+    }
+}
+```
+
+分析完了OperatorDoOnEach的具体实现，接下来要看下他的call方法是如何被调用的：
+
+#### 4.3 lift()方法
+
+接着看下`doOnNext()`
+
+``` java
+public final Observable<T> doOnNext(final Action1<? super T> onNext) {
+    Observer<T> observer = new Observer<T>() {
+        @Override
+        public final void onCompleted() {
+        }
+        @Override
+        public final void onError(Throwable e) {
+        }
+        @Override
+        public final void onNext(T args) {
+            onNext.call(args);
+        }
+    };
+    //上述代码是将onNext封装到了一个Observer里面。
+    return lift(new OperatorDoOnEach<T>(observer));
+}
+```
+
+``` java
+public final <R> Observable<R> lift(final Operator<? extends R, ? super T> operator) {
+    return new Observable<R>(new OnSubscribe<R>() {
+        //这个call会被上层调用
+        @Override
+        public void call(Subscriber<? super R> o) {
+            //这个o是上游调用这个return new Observable返回的观察者中的OnSubscribe的call方法传递下来的
+            //观察者，在本例中，由于onNext之前就是Observable.create，因此o中的call方法就是：
+            //	{
+            //		it.onNext("123");
+            //		it.onCompleted();
+            //	}
+            try {
+                //调用call，将o转换成st。
+                //st中的call方法的逻辑参照着OperatorDoOnEach的逻辑就是：将operator的调用逻辑追加在o的调用逻辑之前。
+                Subscriber<? super T> st = hook.onLift(operator).call(o);
+                try {
+                    // new Subscriber created and being subscribed with so 'onStart' it
+                    st.onStart();
+                    //继续调用call方法
+                    onSubscribe.call(st);
+                } catch (Throwable e) {
+                    // localized capture of errors rather than it skipping all operators 
+                    // and ending up in the try/catch of the subscribe method which then
+                    // prevents onErrorResumeNext and other similar approaches to error handling
+                    if (e instanceof OnErrorNotImplementedException) {
+                        throw (OnErrorNotImplementedException) e;
+                    }
+                    st.onError(e);
+                }
+            } catch (Throwable e) {
+                if (e instanceof OnErrorNotImplementedException) {
+                    throw (OnErrorNotImplementedException) e;
+                }
+                // if the lift function failed all we can do is pass the error to the final Subscriber
+                // as we don't have the operator available to us
+                o.onError(e);
+            }
+        }
+    });
+}
+```
+
+注意，onLift方法是一个全局钩子。
+
+``` java
+public <T, R> Operator<? extends R, ? super T> onLift(final Operator<? extends R, ? super T> lift) {
+    //默认实现是啥都不处理直接返回。
+    return lift;
+}
+```
+
+
+
+### 5 常用操作符源码分析
+
+#### 5.1 filter
+
+过滤
+
+``` java
+public final Observable<T> filter(Func1<? super T, Boolean> predicate) {
+    //调用lift
+    return lift(new OperatorFilter<T>(predicate));
+}
+```
+
+
+
+``` java
+public final class OperatorFilter<T> implements Operator<T, T> {
+
+    private final Func1<? super T, Boolean> predicate;
+
+    public OperatorFilter(Func1<? super T, Boolean> predicate) {
+        this.predicate = predicate;
+    }
+
+    @Override
+    public Subscriber<? super T> call(final Subscriber<? super T> child) {
+        return new Subscriber<T>(child) {
+
+            @Override
+            public void onCompleted() {
+                child.onCompleted();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                child.onError(e);
+            }
+
+            @Override
+            public void onNext(T t) {
+                try {
+                    //如果call方法返回true，才继续将数据向下传递
+                    if (predicate.call(t)) {
+                        child.onNext(t);
+                    } else {
+                        // TODO consider a more complicated version that batches these
+                        request(1);
+                    }
+                } catch (Throwable e) {
+                    child.onError(OnErrorThrowable.addValueAsLastCause(e, t));
+                }
+            }
+
+        };
+    }
+
+}
+```
+
+
+
+#### 5.2 map
+
+映射
+
+``` java
+public final <R> Observable<R> map(Func1<? super T, ? extends R> func) {
+    return lift(new OperatorMap<T, R>(func));
+}
+```
+
+``` java
+public final class OperatorMap<T, R> implements Operator<R, T> {
+
+    private final Func1<? super T, ? extends R> transformer;
+
+    public OperatorMap(Func1<? super T, ? extends R> transformer) {
+        this.transformer = transformer;
+    }
+
+    @Override
+    public Subscriber<? super T> call(final Subscriber<? super R> o) {
+        return new Subscriber<T>(o) {
+
+            @Override
+            public void onCompleted() {
+                o.onCompleted();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                o.onError(e);
+            }
+
+            @Override
+            public void onNext(T t) {
+                try {
+                    //transformer就是映射，映
