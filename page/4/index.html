@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  <title>Hexo</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.12.1/css/all.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/mdbootstrap/4.13.0/css/mdb.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/3.0.1/github-markdown.min.css" />
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+
+
+
+  <link  rel="stylesheet" href="/lib/prettify/tomorrow-night-eighties.min.css" />
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link defer rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+<!-- 自定义样式保持在最底部 -->
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+<body>
+  <header style="height: 100vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Hexo</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">归档</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">分类</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">标签</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">关于</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+          </div>
+
+          
+            <div class="scroll-down-bar">
+              <i class="fas fa-angle-down scroll-down-arrow"></i>
+            </div>
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      <div class="container nopadding-md">
+        <div class="py-5 z-depth-3" id="board"
+          style=margin-top:0>
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2020/03/26/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/OkHttp%E6%8B%A6%E6%88%AA%E5%99%A8%E8%A2%96%E7%8F%8D%E9%87%8D%E5%86%99%E7%89%88/">
+        <p class="h4 index-header">OkHttp拦截器袖珍重写版</p>
+      </a>
+
+      <a href="/2020/03/26/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/OkHttp%E6%8B%A6%E6%88%AA%E5%99%A8%E8%A2%96%E7%8F%8D%E9%87%8D%E5%86%99%E7%89%88/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">
+本篇文章建立在看过一遍OkHttp源码中的拦截器部分的基础上。
+
+OkHttp回顾OkHttp的拦截器工作原理如下图，每一个拦截器都有机会处理上一个拦截器传下来的Request或者下一个拦截器返回上来的Response，即可任意地进行前处理和后处理。在最后一个拦截器CallServerInterceptor中进行真正的网络链接，成功后构造Response对象并发布，一层一层地传递到开发者手上。
+
+
+仿写拦截器
+在实战开发中，仅就涉及数据处理这一方面，拦截器就有非常好的设计效果，OkHttp这一套是可以照搬到很多地方的，拦截器这一套设计实战性非常高，故在这里动手撸一个简易版。
+
+1. 定义Re</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-26&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/">第三方库</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2020/03/26/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/JsonDeserializer%E5%92%8CJsonSerializer%E5%8F%AF%E8%83%BD%E5%BC%95%E8%B5%B7%E6%97%A0%E9%99%90%E5%BE%AA%E7%8E%AF%E8%B0%83%E7%94%A8%E5%AF%BC%E8%87%B4StackOverFlow/">
+        <p class="h4 index-header">JsonDeserializer和JsonSerializer可能引起无限循环调用导致StackOverFlow</p>
+      </a>
+
+      <a href="/2020/03/26/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/JsonDeserializer%E5%92%8CJsonSerializer%E5%8F%AF%E8%83%BD%E5%BC%95%E8%B5%B7%E6%97%A0%E9%99%90%E5%BE%AA%E7%8E%AF%E8%B0%83%E7%94%A8%E5%AF%BC%E8%87%B4StackOverFlow/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">1. 两种自定义方式Gson自定义序列化和反序列的方式有两种
+
+通过GsonBuilder来注册适配器。
+用@JsonAdapter注解来为类型或者属性指定适配器。
+
+其中，以注解的方式用@JsonAdapter来实现自定义序列化或反序列化，gson的github的wiki页是没有的，但是参照这个类的注释，也很容易就能实现。
+2. 例子场景：
+首先，正常的json字符串是这样的结构：
+{
+    &quot;family&quot;:{
+        &quot;Dad&quot;:&quot;a&quot;,
+        &quot;Mon&quot;:&quot;b&quot;
+  </div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-26&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/">第三方库</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2020/03/26/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/Dagger2%E8%84%91%E5%9B%BE/">
+        <p class="h4 index-header">Dagger2脑图</p>
+      </a>
+
+      <a href="/2020/03/26/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/Dagger2%E8%84%91%E5%9B%BE/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">
+查看原图会非常清晰。对于@Component的依赖，不理解就对着这篇博客敲一遍就懂了
+                                                                                                                                                                                                                                                                </div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-26&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/">第三方库</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2020/03/26/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/Dagger2%E9%85%8D%E5%90%88Application%E6%8B%93%E5%B1%95%E7%B1%BB%E5%AE%9E%E7%8E%B0%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">
+        <p class="h4 index-header">Dagger2配合Application拓展类实现单例模式</p>
+      </a>
+
+      <a href="/2020/03/26/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/Dagger2%E9%85%8D%E5%90%88Application%E6%8B%93%E5%B1%95%E7%B1%BB%E5%AE%9E%E7%8E%B0%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">
+需要提前了解Dagger2的@Singleton 和 @Component依赖。
+
+介绍Android中的单例模式，可以通过继承Application类，在onCreate中初始化单例类，然后将单例类的引用通过getXXX()发布出去。Application类提供了天然的单例模式。
+但是，如果我们有10个单例类，那么就需要
+
+在Application类里面写10个引用，
+10个getXXX()方法
+onCreate()中10个单例类的初始化
+
+缺点 
+
+当需求变动，要更换实现类的时候，要在Application里面做修改
+onCreate()中初始化的10个单例类，并不是马上就要用的，更好的</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-26&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/">第三方库</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2020/03/26/ndk/JNI%E5%88%9B%E5%BB%BA%E5%8F%98%E9%87%8F%E5%92%8C%E9%87%8A%E6%94%BE%E5%8F%98%E9%87%8F/">
+        <p class="h4 index-header">JNI创建变量和释放变量</p>
+      </a>
+
+      <a href="/2020/03/26/ndk/JNI%E5%88%9B%E5%BB%BA%E5%8F%98%E9%87%8F%E5%92%8C%E9%87%8A%E6%94%BE%E5%8F%98%E9%87%8F/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">jni中的数据传递就两种：c层传到java层；java层传到c层。
+1 当数据从java传递到c1.1 传递基本数据类型在Java层定义jni代码：
+public static native void inputInt(int intData);
+c层实现：
+JNIEXPORT void JNICALL
+Java_com_hwilliam_jnilearncmake_NDKTools_inputInt(JNIEnv *env, jclass clazz, jint int_data) {
+    int data = int_data;
+    LOGD(&quot;input int dat</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-26&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/ndk/">ndk</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2020/03/26/RxJava-2-x/%E9%98%B2%E6%AD%A2%E8%BF%B7%E8%B7%AF/">
+        <p class="h4 index-header">防止迷路</p>
+      </a>
+
+      <a href="/2020/03/26/RxJava-2-x/%E9%98%B2%E6%AD%A2%E8%BF%B7%E8%B7%AF/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">防止迷路
+
+简书Season_zlc（用水管和上游下游比喻rxjava）
+扔物线：给 Android 开发者的 RxJava 详解                                                                                                                                                                                                                                           </div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-26&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/RxJava-2-x/">RxJava-2-x</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2020/03/26/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/Dagger2/">
+        <p class="h4 index-header">Dagger2</p>
+      </a>
+
+      <a href="/2020/03/26/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/Dagger2/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">
+例子来自https://www.jianshu.com/p/24af4c102f62
+
+只用@Inject和@Component完成依赖注入：
+在gradle添加依赖，用@Inject和@Component为相应的字段和类打上注解
+build project
+Dagger2会在app.build.generated.source.apt.debug.com.text.包名生成代码。
+DaggerXXXComponent.java
+XXX_MembersInjector.java
+XXX_Factory.java
+
+
+
+举一个例子：MainAcitvity对象依赖Pot对象，Pot对象依赖Ro</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-26&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/">第三方库</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2020/03/26/%E6%97%A5%E8%AE%B0%E6%9C%AC/%E4%B8%8D%E5%A4%9F%E5%8A%AA%E5%8A%9B%E7%9A%84%E8%87%AA%E5%B7%B1/">
+        <p class="h4 index-header">不够努力的自己</p>
+      </a>
+
+      <a href="/2020/03/26/%E6%97%A5%E8%AE%B0%E6%9C%AC/%E4%B8%8D%E5%A4%9F%E5%8A%AA%E5%8A%9B%E7%9A%84%E8%87%AA%E5%B7%B1/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">今天是2017年11月17日，我正式开始自学编程的日子是2017年5月20日，6个月，也就是半年过去了，到目前为止我的水平还算不上一个合格的开发者，昨天晚上看了一下一个大神的腾讯实习面试经历，觉得自己估计连一面都过不了吧，自己的实力还是没到那个层次。
+需要读的书还有很多，需要了解的知识也有很多，说不定还要学C++，因为android的NDK开发涉及到C++的内容，NDK能很大的加强效率。
+6个月来，有一段时间是非常努力的，但是也有很大一部分时间是浪费掉了，浪费在虚度光阴上面了，觉得自己就是目光短浅，没有看到牛逼的人有多么牛逼，所以才敢那么散漫地浪费时间不去敲代码，从今天开始，做一个努力的程序员</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-26&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E6%97%A5%E8%AE%B0%E6%9C%AC/">日记本</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2020/03/26/%E6%97%A5%E8%AE%B0%E6%9C%AC/2018%E6%98%A5%E8%8A%82%E7%9A%84%E6%9C%AB%E5%B0%BE/">
+        <p class="h4 index-header">2018春节的末尾</p>
+      </a>
+
+      <a href="/2020/03/26/%E6%97%A5%E8%AE%B0%E6%9C%AC/2018%E6%98%A5%E8%8A%82%E7%9A%84%E6%9C%AB%E5%B0%BE/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">为了拿科目二的驾照，明日返校。其实我更想在远方的清儿，我与她又隔了快两个月没见面了。                                                                                                                                                                                                                                                                  </div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-26&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E6%97%A5%E8%AE%B0%E6%9C%AC/">日记本</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2020/03/26/%E6%97%A5%E8%AE%B0%E6%9C%AC/2018-11-30/">
+        <p class="h4 index-header">Fri Nov 30 2018 00:00:00 GMT+0000 (Coordinated Universal Time)</p>
+      </a>
+
+      <a href="/2020/03/26/%E6%97%A5%E8%AE%B0%E6%9C%AC/2018-11-30/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">
+
+                                                                                                                                                                                                                                                                                                          </div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-26&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E6%97%A5%E8%AE%B0%E6%9C%AC/">日记本</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+
+
+  <nav aria-label="index posts navigation">
+    <span class="pagination pg-blue justify-content-center mt-5" id="pagination">
+      <a class="extend prev" rel="prev" href="/page/3/"><i class="fas fa-angle-double-left"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><a class="extend next" rel="next" href="/page/5/"><i class="fas fa-angle-double-right"></i></a>
+    </span>
+  </nav>
+  
+  <script>
+    for (ele of document.getElementById("pagination").getElementsByTagName("a")) {
+      ele.href += '#board';
+    }
+  </script>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+  </main>
+
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+    </div>
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/popper.js/1.16.1/umd/popper.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="https://cdn.staticfile.org/mdbootstrap/4.13.0/js/mdb.min.js" ></script>
+<script  src="/js/main.js" ></script>
+
+
+  <script  src="/js/lazyload.js" ></script>
+
+
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+
+<!-- Plugins -->
+
+
+
+  <script  src="https://cdn.staticfile.org/prettify/188.0.0/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  linenums');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

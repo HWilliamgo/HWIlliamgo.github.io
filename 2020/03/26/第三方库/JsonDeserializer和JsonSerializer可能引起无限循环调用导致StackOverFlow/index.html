@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  <title>JsonDeserializer和JsonSerializer可能引起无限循环调用导致StackOverFlow - Hexo</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.12.1/css/all.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/mdbootstrap/4.13.0/css/mdb.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/3.0.1/github-markdown.min.css" />
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+
+
+
+  <link  rel="stylesheet" href="/lib/prettify/tomorrow-night-eighties.min.css" />
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link defer rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+<!-- 自定义样式保持在最底部 -->
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Hexo</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">归档</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">分类</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">标签</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">关于</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+                <p class="mt-3 post-meta">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                  星期四, 三月 26日 2020, 5:48 下午
+                </p>
+              
+
+              <p class="mt-1">
+                
+                  
+                  <span class="post-meta">
+                    <i class="far fa-chart-bar"></i>
+                    1.1k 字
+                  </span>
+                
+
+                
+                  
+                  <span class="post-meta">
+                      <i class="far fa-clock"></i>
+                      5 分钟
+                  </span>
+                
+
+                
+              </p>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5 z-depth-3" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+            <div class="markdown-body">
+              <h3 id="1-两种自定义方式"><a href="#1-两种自定义方式" class="headerlink" title="1. 两种自定义方式"></a>1. 两种自定义方式</h3><p>Gson自定义序列化和反序列的方式有两种</p>
+<ol>
+<li>通过<code>GsonBuilder</code>来注册适配器。</li>
+<li>用<code>@JsonAdapter</code>注解来为类型或者属性指定适配器。</li>
+</ol>
+<p>其中，以注解的方式用<code>@JsonAdapter</code>来实现自定义序列化或反序列化，gson的github的wiki页是没有的，但是参照这个类的注释，也很容易就能实现。</p>
+<h3 id="2-例子"><a href="#2-例子" class="headerlink" title="2. 例子"></a>2. 例子</h3><p>场景：</p>
+<p>首先，正常的json字符串是这样的结构：</p>
+<pre><code class="json">{
+    &quot;family&quot;:{
+        &quot;Dad&quot;:&quot;a&quot;,
+        &quot;Mon&quot;:&quot;b&quot;
+    },
+    &quot;gender&quot;:&quot;male&quot;,
+    &quot;home&quot;:&quot;Shenzhen&quot;,
+    &quot;name&quot;:&quot;William&quot;
+}</code></pre>
+<p>该json中包含两个json对象，一个是外部对象，一个是family对象。那么用类似<code>GsonFormat</code>之类的插件，就会生成两个类。</p>
+<pre><code class="kotlin">data class Person(
+    val family: Family?,
+    val gender: String,
+    val home: String,
+    val name: String
+) {
+    data class Family(
+        val dad: String,
+        val mon: String
+
+    )
+}</code></pre>
+<p>但是，有时候服务器会不合理地返回一个这样的数据：</p>
+<pre><code class="json">{
+  &quot;family&quot;: &quot;&quot;,
+  &quot;gender&quot;: &quot;male&quot;,
+  &quot;home&quot;: &quot;Shenzhen&quot;,
+  &quot;name&quot;: &quot;William&quot;
+}</code></pre>
+<p>即family这个本应该是json对象的地方，返回了空字符串。</p>
+<p>那么当用Gson反序列化的时候，会报这样的错误：</p>
+<pre><code>Exception in thread &quot;main&quot; com.google.gson.JsonSyntaxException: java.lang.IllegalStateException: Expected BEGIN_OBJECT but was STRING at line 2 column 14 path $.family
+    at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory$Adapter.read(ReflectiveTypeAdapterFactory.java:226)
+    at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory$1.read(ReflectiveTypeAdapterFactory.java:131)
+    at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory$Adapter.read(ReflectiveTypeAdapterFactory.java:222)
+    at com.google.gson.Gson.fromJson(Gson.java:932)
+    at com.google.gson.Gson.fromJson(Gson.java:897)
+    at com.google.gson.Gson.fromJson(Gson.java:846)
+    at com.google.gson.Gson.fromJson(Gson.java:817)
+    at william.MainKtKt.main(MainKt.kt:10)
+Caused by: java.lang.IllegalStateException: Expected BEGIN_OBJECT but was STRING at line 2 column 14 path $.family
+    at com.google.gson.stream.JsonReader.beginObject(JsonReader.java:386)
+    at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory$Adapter.read(ReflectiveTypeAdapterFactory.java:215)
+    ... 7 more
+</code></pre><p>即解析family这个key的时候，本来期望是得到一个对象，但是得到了一个String，即json字符串和你定义的对应的实体类不符合。</p>
+<p>那么这个时候可以通过自定义反序列化策略，来在规避gson在反序列化过程中，遇到本应该返回对象，却返回了字符串而引起的错误。</p>
+<pre><code class="kotlin">class CustomFamilyDeserializer : JsonDeserializer&lt;Family&gt; {
+    override fun deserialize(json: JsonElement, typeOfT: Type?, context: JsonDeserializationContext): Family? {
+        return if (!json.isJsonObject) {
+            //如果这个json不是一个jsonObject，那么返回一个null，让gson去把Family属性映射成null即可。
+            null
+        } else {            
+            //如果是jsonObject，那么就用gson继续解析即可。
+            Gson().fromJson(json, typeOfT)
+
+            //如果用context直接解析，会导致栈溢出
+            //context.deserialize(json, typeOfT)
+        }
+    }
+}</code></pre>
+<p>上面的是一个自定义的<code>JsonDeserializer</code>实现。</p>
+<p>使用：</p>
+<ol>
+<li><p>GsonBuilder</p>
+<pre><code class="kotlin">val gson :Gson = getGsonBuilder()
+    .registerTypeAdapter(Person.Family::class.java, Person.Family.CustomFamilyDeserializer())
+    .create()
+//json字符串
+val jsonOfPerson=&quot;&quot;
+val person :Person =gson.fromJson(jsonOfPerson,Person::class.java)</code></pre>
+</li>
+<li><p>@JsonAdapter</p>
+<p>直接在Family属性处加上注解</p>
+<pre><code class="kotlin">data class Person(
+    @JsonAdapter(Family.CustomFamilyDeserializer::class)
+    val family: Family?,
+    val gender: String,
+    val home: String,
+    val name: String
+) {
+    data class Family(
+        val dad: String,
+        val mon: String
+
+    ) {
+        class CustomFamilyDeserializer : JsonDeserializer&lt;Family&gt; {
+            override fun deserialize(json: JsonElement, typeOfT: Type?, context: JsonDeserializationContext): Family? {
+                return if (!json.isJsonObject) {
+                    null
+                } else {
+                    //用当前上下文解析，也不会引起栈溢出
+                    context.deserialize(json, typeOfT)
+
+                    //新构建一个Gson对象，也不会引起栈溢出
+                    //Gson().fromJson(json, typeOfT)
+                }
+            }
+        }
+    }
+}</code></pre>
+<p>然后直接解析就行</p>
+<pre><code class="kotlin">val jsonOfPerson=&quot;&quot;
+val person :Person =gson.fromJson(jsonOfPerson,Person::class.java)</code></pre>
+</li>
+</ol>
+<h3 id="3-JsonAdapter"><a href="#3-JsonAdapter" class="headerlink" title="3. @JsonAdapter"></a>3. @JsonAdapter</h3><pre><code class="java">@Retention(RetentionPolicy.RUNTIME)
+@Target({ElementType.TYPE, ElementType.FIELD})
+public @interface JsonAdapter {
+
+  /** Either a {@link TypeAdapter} or {@link TypeAdapterFactory}, or one or both of {@link JsonDeserializer} or {@link JsonSerializer}. */
+  Class&lt;?&gt; value();
+
+  /** false, to be able to handle {@code null} values within the adapter, default value is true. */
+  boolean nullSafe() default true;
+
+}</code></pre>
+<p>jsonAdapter的处理目标是<code>类型</code>和<code>变量</code>。</p>
+<p>当他用在变量上（即如上面的例子的用法）时，可以在回调中，无论用context上下文或者新建一个Gson对象，来解析当前json，都不会造成无限循环调用的问题。</p>
+<p>而当他作用在类型上时，在回调中，无论用context上下文或者新建一个Gson对象，来解析当前json，都会造成异常。所以，当该注解用在类型上时，回调中一定不能对同样的类型再用Gson去解析。</p>
+<h3 id="4-GsonBuilder"><a href="#4-GsonBuilder" class="headerlink" title="4. GsonBuilder"></a>4. GsonBuilder</h3><p>用GsonBuilder的时候，是通过<code>registerTypeAdapter</code>方法注册一个序列化器或反序列化器，那么只要在回调用你不要用当前Gson上下文，创建另一个Gson对象，来进行解析，就不会有任何的问题。</p>
+<blockquote>
+<p>结论：</p>
+<p>最好不要在JsonSerializer或JsonDeserializer实现中对当前的类型的对象再用gson解析，因为很可能会引起无限循环地去调用该解析器。如果实在要用，则在GsonBuilder的时候新建一个Gson，或者用@JsonAdapter的时候注解打到变量上而不是类上。</p>
+</blockquote>
+<p>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 </p>
+
+            </div>
+            <hr>
+            <div>
+              <p>
+                
+                  <span>
+                <i class="iconfont icon-inbox"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/">第三方库</a>
+                      &nbsp;
+                    
+                  </span>&nbsp;&nbsp;
+                
+                
+              </p>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/03/26/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/OkHttp%E6%8B%A6%E6%88%AA%E5%99%A8%E8%A2%96%E7%8F%8D%E9%87%8D%E5%86%99%E7%89%88/">
+                        <i class="fa fa-chevron-left"></i>
+                        <span class="hidden-mobile">OkHttp拦截器袖珍重写版</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/2020/03/26/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/Dagger2%E8%84%91%E5%9B%BE/">
+                        <span class="hidden-mobile">Dagger2脑图</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="fa fa-chevron-right"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+              
+                <!-- Comments -->
+                <div class="comments" id="comments">
+                  
+                  
+
+                </div>
+              
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc-start"></div>
+<div id="toc">
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+    </div>
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/popper.js/1.16.1/umd/popper.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="https://cdn.staticfile.org/mdbootstrap/4.13.0/js/mdb.min.js" ></script>
+<script  src="/js/main.js" ></script>
+
+
+  <script  src="/js/lazyload.js" ></script>
+
+
+
+  
+  <script  src="https://cdn.staticfile.org/tocbot/4.10.0/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var navHeight = $('#navbar').height();
+      var toc = $('#toc');
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+      var tocLimMax = 2 * boardTop + boardCtn.height();
+
+      $(window).scroll(function () {
+        var tocLimMin = $('#toc-start').offset().top - navHeight;
+        var scroH = document.body.scrollTop + document.documentElement.scrollTop;
+
+        if (tocLimMin <= scroH && scroH <= tocLimMax) {
+          toc.css({
+            'display': 'block',
+            'position': 'fixed',
+            'top': navHeight,
+          });
+        } else if (scroH <= tocLimMin) {
+          toc.css({
+            'position': '',
+            'top': '',
+          });
+        } else if (scroH > tocLimMax) {
+          toc.css('display', 'none');
+        }
+      });
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '.post-content',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc > p').css('visibility', 'visible');
+      }
+      var offset = boardCtn.css('margin-right')
+      $('#toc-ctn').css({
+        'right': offset
+      })
+    });
+  </script>
+
+
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+
+<!-- Plugins -->
+
+
+
+  <script  src="https://cdn.staticfile.org/prettify/188.0.0/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  linenums');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "JsonDeserializer和JsonSerializer可能引起无限循环调用导致StackOverFlow&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

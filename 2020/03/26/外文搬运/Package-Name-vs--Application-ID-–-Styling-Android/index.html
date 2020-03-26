@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  <title>Package-Name-vs--Application-ID-–-Styling-Android - Hexo</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.12.1/css/all.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/mdbootstrap/4.13.0/css/mdb.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/3.0.1/github-markdown.min.css" />
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+
+
+
+  <link  rel="stylesheet" href="/lib/prettify/tomorrow-night-eighties.min.css" />
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link defer rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+<!-- 自定义样式保持在最底部 -->
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Hexo</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">归档</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">分类</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">标签</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">关于</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+                <p class="mt-3 post-meta">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                  星期四, 三月 26日 2020, 5:48 下午
+                </p>
+              
+
+              <p class="mt-1">
+                
+                  
+                  <span class="post-meta">
+                    <i class="far fa-chart-bar"></i>
+                    1.3k 字
+                  </span>
+                
+
+                
+                  
+                  <span class="post-meta">
+                      <i class="far fa-clock"></i>
+                      8 分钟
+                  </span>
+                
+
+                
+              </p>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5 z-depth-3" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+            <div class="markdown-body">
+              <blockquote>
+<p>原文地址 <a href="https://blog.stylingandroid.com/package-name-vs-application-id/" target="_blank" rel="noopener">https://blog.stylingandroid.com/package-name-vs-application-id/</a></p>
+</blockquote>
+<p>All Android developers should understand that the Package Name that we choose for our app is very important. I’m referring to the Package Name of the application itself (which gets declared in the Manifest) rather than the Java package name (although often they will be identical. It was only recently, when I was tackling a somewhat obscure issue as part of my day job, that I realised that there is actually a subtle, but important, difference between the Package Name and the Application ID. In this article we’ll look at the difference between the two.  </p>
+<p><a href="https://i2.wp.com/blog.stylingandroid.com/wp-content/uploads/2017/02/box.png?ssl=1" target="_blank" rel="noopener"><img src="https://upload-images.jianshu.io/upload_images/7177220-f2945e2ab187c3f2.25&resize=150,150&ssl=1?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="image"></a>Let’s begin with a reminder of the basics. The Package Name is, as we’ve already mentioned, defined as part of the Manifest and represents the identity of any given app both on an individual device, and on the Google Play store (or any other app store for that matter). Therefore your package name has to be unique. However it is sometimes useful to be able to produce separate APKs with different identities (e.g. different IDs for debug &amp; release builds so that they can be published as distinct entities in Fabric Beta). To facilitate this we can control the <code>applicationId</code> in our <code>build.gradle</code> and this enables us have distinct package names. We can see this in a simple project. The common Manifest is defined like this:</p>
+<pre><code class="xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;manifest xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+  xmlns:tools=&quot;http://schemas.android.com/tools&quot;
+  package=&quot;com.stylingandroid.packagename&quot;&gt;
+
+  &lt;application
+    android:allowBackup=&quot;false&quot;
+    android:icon=&quot;@mipmap/ic_launcher&quot;
+    android:label=&quot;@string/app_name&quot;
+    android:supportsRtl=&quot;true&quot;
+    android:theme=&quot;@style/AppTheme&quot;
+    tools:ignore=&quot;GoogleAppIndexingWarning&quot;&gt;
+    &lt;activity android:name=&quot;.MainActivity&quot;&gt;
+      &lt;intent-filter&gt;
+        &lt;action android:name=&quot;android.intent.action.MAIN&quot; /&gt;
+
+        &lt;category android:name=&quot;android.intent.category.LAUNCHER&quot; /&gt;
+      &lt;/intent-filter&gt;
+    &lt;/activity&gt;
+  &lt;/application&gt;
+
+&lt;/manifest&gt;</code></pre>
+<p>We have a base package name of <code>com.stylingandroid.packagename</code>. Next we have our <code>build.gradle</code>:</p>
+<pre><code class="groovy">apply plugin: &#39;com.android.application&#39;
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion &quot;25.0.0&quot;
+    defaultConfig {
+        applicationId &quot;com.stylingandroid.packagename&quot;
+        minSdkVersion 23
+        targetSdkVersion 25
+        versionCode 1
+        versionName &quot;1.0&quot;
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile(&#39;proguard-android.txt&#39;), &#39;proguard-rules.pro&#39;
+            applicationIdSuffix &quot;.release&quot;
+        }
+        debug {
+            applicationIdSuffix &quot;.debug&quot;
+        }
+    }
+}
+
+dependencies {
+    compile &#39;com.android.support:appcompat-v7:25.1.0&#39;
+}</code></pre>
+<p>Here we add a distinct suffix to the <code>applicationId</code> for both debug and release builds. It is possible to override the entire <code>applicationId</code> (i.e. replace the whole of the package name with the <code>applicationId</code>, but we’ll just add a suffix here.</p>
+<p>If we now compare the two Manifests which get added to the two APKs we can see how distinct package names are specified in each Manifest:</p>
+<p><a href="https://i2.wp.com/blog.stylingandroid.com/wp-content/uploads/2017/02/Debug-vs.-Release-manifest.png?ssl=1" target="_blank" rel="noopener"><img src="https://upload-images.jianshu.io/upload_images/7177220-c917a2a94c30301b.25&resize=708,198&ssl=1?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="image"></a></p>
+<p>There should be nothing here that should be surprising to the vast majority of Android developers, but from here on it is important to understand the difference between the Package Name – which gets declared up-front in the base Manifest; and the application ID – which gets declared in our <code>build.gradle</code>. The package name controls much of what occurs during the build, but the application ID only gets applied right at the very end. For proof of this, take a look <a href="https://developer.android.com/studio/build/application-id.html#change_the_package_name" target="_blank" rel="noopener">here</a>, specifically the final note which states:</p>
+<blockquote>
+<p>Although you may have a different name for the manifest package and the Gradle applicationId, the build tools copy the application ID into your APK’s final manifest file at the <strong>end</strong> of the build</p>
+</blockquote>
+<p>(The emphasis of the word <strong>end</strong> is mine)</p>
+<p>So why is this important? Let’s begin by adding some code to our main <em>Activity</em> firstly a simple layout containing two _TextView_s:</p>
+<pre><code class="xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;LinearLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+  xmlns:tools=&quot;http://schemas.android.com/tools&quot;
+  android:layout_width=&quot;match_parent&quot;
+  android:layout_height=&quot;match_parent&quot;
+  android:paddingTop=&quot;@dimen/padding_vertical&quot;
+  android:paddingBottom=&quot;@dimen/padding_vertical&quot;
+  android:paddingStart=&quot;@dimen/padding_horizontal&quot;
+  android:paddingEnd=&quot;@dimen/padding_horizontal&quot;
+  android:orientation=&quot;vertical&quot;
+  tools:context=&quot;com.stylingandroid.packagename.MainActivity&quot;&gt;
+
+  &lt;TextView
+    android:id=&quot;@+id/package_name&quot;
+    android:layout_width=&quot;wrap_content&quot;
+    android:layout_height=&quot;wrap_content&quot; /&gt;
+
+  &lt;TextView
+    android:id=&quot;@+id/application_id&quot;
+    android:layout_width=&quot;wrap_content&quot;
+    android:layout_height=&quot;wrap_content&quot; /&gt;
+
+&lt;/LinearLayout&gt;</code></pre>
+<p>To the <em>Activity</em> itself we’ll add some code to set these to the package name &amp; the applicationId:</p>
+<pre><code class="java">package com.stylingandroid.packagename;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.widget.TextView;
+
+public class MainActivity extends Activity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        TextView packageNameTextView = (TextView) findViewById(R.id.package_name);
+        TextView applicationIdTextView = (TextView) findViewById(R.id.application_id);
+
+        packageNameTextView.setText(getString(R.string.package_name, BuildConfig.class.getPackage().toString()));
+        applicationIdTextView.setText(getString(R.string.application_id, BuildConfig.APPLICATION_ID));
+    }
+}</code></pre>
+<p>The three highlighted lines actually explain what happens during the build.</p>
+<p>The first thing to note is the Java package name of <em>MainActivity</em> itself. As is normal we have matched this to the package name which we initially defined in the Manifest (shown earlier).</p>
+<p>Secondly, when we come to reference our <em>BuildConfig</em>, we don’t need to fully qualify the package name, or import the package. That is because the <code>BuildConfig.java</code> and <code>R.java</code> both got generated in the package name that was specified <em>originally</em> in the Manifest – <code>com.stylingandroid.packagename</code>.</p>
+<p>Thirdly, although the package name has not been set in the Manifest at the point when our code is compiled, we can still gain access to the final application ID for the current build flavor via the <em>BuildConfig.APPLICATION_ID</em> constant.</p>
+<p>If we run this code it confirms this:</p>
+<p><a href="https://i0.wp.com/blog.stylingandroid.com/wp-content/uploads/2017/02/app.png?ssl=1" target="_blank" rel="noopener"><img src="https://upload-images.jianshu.io/upload_images/7177220-4478359c4f97ea01.25&resize=708,530&ssl=1?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="image"></a></p>
+<p>This won’t cause anyone any issues in the vast majority of cases but if, for example, you are generating code from an annotation processor, it can be important to understand when to use the package name over the applicationId and vice versa.</p>
+<p>So, why is it left so late to set the applicationID? The simple reason is that it would cause no end of problems if it was set earlier in the process. If the <code>BuildConfig.java</code> and <code>R.java</code> files was set to the applicationId rather than the package name, then the code which referenced these would need to have different imports for different build variants – in other words you would need to have separate source sets (with huge amounts of duplication) for your different build flavors in order to access these. This would have some quite profound implications for the maintainability of our code.</p>
+<p>As I have said, an understanding of precisely how this all works is not necessary for developers to be able to write android apps. But if, like me, you encounter some issues with generating code in the correct java package then this can be invaluable. When I was searching for information on this, the only thing I could find was the page on the official documentation (which I quoted and linked to earlier), so it seemed worth sharing what I learned. Apologies to anyone expecting the usual UI/UX-centric subject matter but hopefully this will be of interest to many as us developers are an inquisitive bunch!</p>
+<p>The source code for this article is available <a href="https://github.com/StylingAndroid/PackageName" target="_blank" rel="noopener">here</a>.</p>
+<p>© 2017, <a href="https://blog.stylingandroid.com/" target="_blank" rel="noopener">Mark Allison</a>. All rights reserved.<br>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      </p>
+
+            </div>
+            <hr>
+            <div>
+              <p>
+                
+                  <span>
+                <i class="iconfont icon-inbox"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E5%A4%96%E6%96%87%E6%90%AC%E8%BF%90/">外文搬运</a>
+                      &nbsp;
+                    
+                  </span>&nbsp;&nbsp;
+                
+                
+              </p>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/03/26/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/Ubuntu%E4%B8%8Bandroid-studio%E5%90%8C%E6%AD%A5%E8%B8%A9%E5%9D%91/">
+                        <i class="fa fa-chevron-left"></i>
+                        <span class="hidden-mobile">Ubuntu下android-studio同步踩坑</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/2020/03/26/%E5%8A%A0%E5%BF%AB%E5%BC%80%E5%8F%91%E6%95%88%E7%8E%87%E7%9A%84%E5%B7%A5%E5%85%B7/%E5%BF%AB%E9%80%9F%E5%90%AF%E6%90%AD%E5%BB%BAAndroid%E9%A1%B9%E7%9B%AE%E6%89%80%E9%9C%80%E8%A6%81%E7%9A%84%E5%BA%93/">
+                        <span class="hidden-mobile">快速启搭建Android项目所需要的库</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="fa fa-chevron-right"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+              
+                <!-- Comments -->
+                <div class="comments" id="comments">
+                  
+                  
+
+                </div>
+              
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc-start"></div>
+<div id="toc">
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+    </div>
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/popper.js/1.16.1/umd/popper.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="https://cdn.staticfile.org/mdbootstrap/4.13.0/js/mdb.min.js" ></script>
+<script  src="/js/main.js" ></script>
+
+
+  <script  src="/js/lazyload.js" ></script>
+
+
+
+  
+  <script  src="https://cdn.staticfile.org/tocbot/4.10.0/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var navHeight = $('#navbar').height();
+      var toc = $('#toc');
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+      var tocLimMax = 2 * boardTop + boardCtn.height();
+
+      $(window).scroll(function () {
+        var tocLimMin = $('#toc-start').offset().top - navHeight;
+        var scroH = document.body.scrollTop + document.documentElement.scrollTop;
+
+        if (tocLimMin <= scroH && scroH <= tocLimMax) {
+          toc.css({
+            'display': 'block',
+            'position': 'fixed',
+            'top': navHeight,
+          });
+        } else if (scroH <= tocLimMin) {
+          toc.css({
+            'position': '',
+            'top': '',
+          });
+        } else if (scroH > tocLimMax) {
+          toc.css('display', 'none');
+        }
+      });
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '.post-content',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc > p').css('visibility', 'visible');
+      }
+      var offset = boardCtn.css('margin-right')
+      $('#toc-ctn').css({
+        'right': offset
+      })
+    });
+  </script>
+
+
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+
+<!-- Plugins -->
+
+
+
+  <script  src="https://cdn.staticfile.org/prettify/188.0.0/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  linenums');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "Package-Name-vs--Application-ID-–-Styling-Android&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

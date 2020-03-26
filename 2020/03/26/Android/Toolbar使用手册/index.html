@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  <title>Toolbar使用手册 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.12.1/css/all.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/mdbootstrap/4.13.0/css/mdb.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/3.0.1/github-markdown.min.css" />
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+
+
+
+  <link  rel="stylesheet" href="/lib/prettify/tomorrow-night-eighties.min.css" />
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link defer rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+<!-- 自定义样式保持在最底部 -->
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Hexo</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">归档</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">分类</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">标签</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">关于</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+                <p class="mt-3 post-meta">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                  星期四, 三月 26日 2020, 5:48 下午
+                </p>
+              
+
+              <p class="mt-1">
+                
+                  
+                  <span class="post-meta">
+                    <i class="far fa-chart-bar"></i>
+                    1.1k 字
+                  </span>
+                
+
+                
+                  
+                  <span class="post-meta">
+                      <i class="far fa-clock"></i>
+                      5 分钟
+                  </span>
+                
+
+                
+              </p>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5 z-depth-3" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+            <div class="markdown-body">
+              <p>明确一点：toolbar不要设置setSupportActionBar();</p>
+<pre><code>说三遍！：toolbar不要设置setSupportActionBar();
+         toolbar不要设置setSupportActionBar();
+         toolbar不要设置setSupportActionBar();</code></pre><blockquote>
+<p>toolbar就是toolbar，不是actionBar~，而且用了setSupportActionBar之后api调用超级杂乱，因此我们就把Toolbar当做一个新的独立的控件就行了</p>
+</blockquote>
+<p>#文章目录：</p>
+<ol>
+<li>入门级配置</li>
+<li>进阶设置</li>
+<li>设置popup的背景颜色和字体颜色<br>##1. 入门级配置：<br><img src="http://upload-images.jianshu.io/upload_images/7177220-ed2ed551eeba8669.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt=""></li>
+</ol>
+<pre><code>//toolbar
+//单独设置theme为黑色主题是为了让字体是白色的
+//minHeight标识最小高度，解决适配问题
+//fitsSystemWindows是为了不让Toolbar中的内容顶到状态栏的位置
+&lt;android.support.v7.widget.Toolbar
+    android:id=&quot;@+id/toolbar&quot;
+    android:layout_width=&quot;match_parent&quot;
+    android:layout_height=&quot;wrap_content&quot;
+    android:background=&quot;@color/colorAccent&quot;
+    android:fitsSystemWindows=&quot;true&quot;
+    android:minHeight=&quot;?actionBarSize&quot;
+    android:theme=&quot;@style/ThemeOverlay.AppCompat.Dark.ActionBar&quot; &gt;
+    &lt;ImageView
+        android:src=&quot;@drawable/ic_android_black_24dp&quot;
+        android:layout_width=&quot;wrap_content&quot;
+        android:layout_height=&quot;wrap_content&quot; /&gt;
+&lt;/android.support.v7.widget.Toolbar&gt;</code></pre><pre><code>//style
+//用的是Theme.AppCompat.DayNight.NoActionBar，黑色主题，无ActionBar
+&lt;resources&gt;
+    &lt;!-- Base application theme. --&gt;
+    &lt;style name=&quot;AppTheme&quot; parent=&quot;Theme.AppCompat.DayNight.NoActionBar&quot;&gt;
+        &lt;!-- Customize your theme here. --&gt;
+
+        &lt;item name=&quot;colorPrimary&quot;&gt;@color/colorPrimary&lt;/item&gt;
+        &lt;item name=&quot;colorPrimaryDark&quot;&gt;@color/colorPrimaryDark&lt;/item&gt;
+        &lt;item name=&quot;colorAccent&quot;&gt;@color/colorAccent&lt;/item&gt;
+    &lt;/style&gt;
+&lt;/resources&gt;</code></pre><pre><code>public class MainActivity extends AppCompatActivity {
+    //这个是快速打Toast做的工具类
+    Toast_ toast_=new Toast_(this);
+    private static final String TAG = &quot;MainActivity&quot;;
+    Toolbar toolbar;
+    @Override
+    protected void onCreate(final Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        //设置透明statusBar
+        if (Build.VERSION.SDK_INT&gt;Build.VERSION_CODES.KITKAT){
+            WindowManager.LayoutParams layoutParams=getWindow().getAttributes();
+            layoutParams.flags=WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
+        }
+        toolbar=findViewById(R.id.toolbar);
+//注意了,logo、navigationIcon、title、subtitle在xml中设置的话，
+//必须要用res-auto那个命名空间，默认的是app:开头的那个，否则设置无效
+//，这里为了方便就用代码来设置
+        toolbar.setTitle(&quot;标题&quot;);
+        toolbar.setSubtitle(&quot;副标题&quot;);
+        toolbar.setLogo(R.drawable.ic_android_black_24dp);
+        toolbar.inflateMenu(R.menu.menu_toolbar);
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.delete:
+                        toast_.makeText(&quot;delete&quot;);
+                        break;
+                    case R.id.share:
+                        toast_.makeText(&quot;share&quot;);
+                        break;
+                    case R.id.search:
+                        toast_.makeText(&quot;search&quot;);
+                        break;
+                }
+                return false;
+            }
+        });
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toast_.makeText(&quot;navigationIcon&quot;);
+            }
+        });
+    }
+}</code></pre><ul>
+<li>这里需要注意一个就是toolbar的xml属性中的<code>android:fitsSystemWindows=&quot;true&quot;</code>，官方描述：<code>adjusts the padding of this view to leave space for the system windows</code><br>他就是防止toolbar内容挤压到statusBar的属性，也可以用paddingTop=”25dp”来设置，不过这样会有低版本不兼容的问题，所以用fitSystemWindows是最佳方案。</li>
+</ul>
+<p>不用android:fitsSystemWindows=”true”的结果：<br><img src="http://upload-images.jianshu.io/upload_images/7177220-3f09bb37a21d4551.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt=""></p>
+<p>toolbar的一半都和状态栏重合了…</p>
+<p>到此基本的功能都能使用了，以下<code>进阶设置</code>是一些可能出现的需求：</p>
+<hr>
+<p>##2. 进阶设置：</p>
+<ol>
+<li>像微信的menu那样弹出的菜单不会遮挡住拓展按钮，而且还带小图标：<br><img src="http://upload-images.jianshu.io/upload_images/7177220-864ad3313447f6a4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt=""><br>默认效果：<br><img src="http://upload-images.jianshu.io/upload_images/7177220-ae18a463b5ae840e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt=""><br>定义一个popup的style，然后再toolbar的属性的xml中指定<code>app:popupTheme=&quot;@style/popupTheme&quot;</code><br><code>style</code>如下<pre><code>//让菜单不会挡住拓展按钮
+&lt;style name=&quot;popupTheme&quot; parent=&quot;ThemeOverlay.AppCompat.Dark.ActionBar&quot;&gt;
+ &lt;item name=&quot;overlapAnchor&quot;&gt;false&lt;/item&gt;
+&lt;/style&gt;</code></pre>效果：<br><img src="http://upload-images.jianshu.io/upload_images/7177220-b6dbb58ec4af80a2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt=""><br>接下来加图标：<pre><code>//模仿微信的扩展菜单带图标功能
+//通过反射来做的一个效果，可能再别的机型或者版本就不适配了
+//具体的反射内部什么情况我也不懂
+Menu menu=toolbar.getMenu();
+if (toolbar.getMenu().getClass().getSimpleName().equalsIgnoreCase(&quot;MenuBuilder&quot;)){
+ try{
+     Method method = menu.getClass().getDeclaredMethod(&quot;setOptionalIconsVisible&quot;, Boolean.TYPE);
+     method.setAccessible(true);
+     method.invoke(menu, true);
+ }catch (Exception e){
+     e.printStackTrace();
+ }
+}
+//下面这个方案其实也可以，有机会再深究
+//if (menu.getClass().getSimpleName().equals(&quot;MenuBuilder&quot;)) {
+//    try {
+//        MenuBuilder menuBuilder = (MenuBuilder) menu;
+//        menuBuilder.setOptionalIconsVisible(true);
+//    } catch (Exception e) {
+//        e.printStackTrace();
+//    }
+//}</code></pre>因为我的图标都是白色的，所以我就把popup的style改成了Dark风格的，背景就是黑色的了，我的图标就看得清了：<pre><code>&lt;style name=&quot;popupTheme&quot; parent=&quot;ThemeOverlay.AppCompat.Dark&quot;&gt;
+     &lt;item name=&quot;overlapAnchor&quot;&gt;false&lt;/item&gt;
+&lt;/style&gt;</code></pre>效果：<img src="http://upload-images.jianshu.io/upload_images/7177220-195f3a0410a70452.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt=""></li>
+</ol>
+<hr>
+<p>##3.设置popup的背景颜色和字体颜色</p>
+<pre><code>&lt;style name=&quot;popupTheme&quot; parent=&quot;ThemeOverlay.AppCompat.Dark&quot;&gt;
+    &lt;item name=&quot;overlapAnchor&quot;&gt;false&lt;/item&gt;
+    //很简单，这两个设置就行，不过注意，是android:开头的
+    &lt;item name=&quot;android:background&quot;&gt;@color/colorPrimary&lt;/item&gt;
+    &lt;item name=&quot;android:textColor&quot;&gt;@color/colorAccent&lt;/item&gt;
+&lt;/style&gt;</code></pre><p><img src="http://upload-images.jianshu.io/upload_images/7177220-b03ab4ab16f1b7e7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt=""></p>
+<hr>
+<blockquote>
+<p>一切的方法都介绍完了，这么复杂的配置，一定要封装，我自己封装了toolbar，反手就是一个连接：<br><a href="https://github.com/William619499149/EasyToolbar2" target="_blank" rel="noopener">EasyToolbar</a></p>
+</blockquote>
+<p>还有一个Toolbar教程也说的不错：<a href="https://www.jianshu.com/p/e2ae6aaff696" target="_blank" rel="noopener">https://www.jianshu.com/p/e2ae6aaff696</a></p>
+<hr>
+<p>完<br>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          </p>
+
+            </div>
+            <hr>
+            <div>
+              <p>
+                
+                  <span>
+                <i class="iconfont icon-inbox"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Android/">Android</a>
+                      &nbsp;
+                    
+                  </span>&nbsp;&nbsp;
+                
+                
+              </p>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/03/26/Android/Volley%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C%EF%BC%881%EF%BC%89/">
+                        <i class="fa fa-chevron-left"></i>
+                        <span class="hidden-mobile">Volley使用手册（1）</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/2020/03/26/Android/TextInputLayout/">
+                        <span class="hidden-mobile">TextInputLayout</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="fa fa-chevron-right"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+              
+                <!-- Comments -->
+                <div class="comments" id="comments">
+                  
+                  
+
+                </div>
+              
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc-start"></div>
+<div id="toc">
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+    </div>
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/popper.js/1.16.1/umd/popper.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="https://cdn.staticfile.org/mdbootstrap/4.13.0/js/mdb.min.js" ></script>
+<script  src="/js/main.js" ></script>
+
+
+  <script  src="/js/lazyload.js" ></script>
+
+
+
+  
+  <script  src="https://cdn.staticfile.org/tocbot/4.10.0/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var navHeight = $('#navbar').height();
+      var toc = $('#toc');
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+      var tocLimMax = 2 * boardTop + boardCtn.height();
+
+      $(window).scroll(function () {
+        var tocLimMin = $('#toc-start').offset().top - navHeight;
+        var scroH = document.body.scrollTop + document.documentElement.scrollTop;
+
+        if (tocLimMin <= scroH && scroH <= tocLimMax) {
+          toc.css({
+            'display': 'block',
+            'position': 'fixed',
+            'top': navHeight,
+          });
+        } else if (scroH <= tocLimMin) {
+          toc.css({
+            'position': '',
+            'top': '',
+          });
+        } else if (scroH > tocLimMax) {
+          toc.css('display', 'none');
+        }
+      });
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '.post-content',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc > p').css('visibility', 'visible');
+      }
+      var offset = boardCtn.css('margin-right')
+      $('#toc-ctn').css({
+        'right': offset
+      })
+    });
+  </script>
+
+
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+
+<!-- Plugins -->
+
+
+
+  <script  src="https://cdn.staticfile.org/prettify/188.0.0/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  linenums');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "Toolbar使用手册&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

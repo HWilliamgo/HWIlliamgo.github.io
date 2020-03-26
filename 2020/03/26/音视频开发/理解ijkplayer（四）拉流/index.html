@@ -1,0 +1,1874 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  <title>理解ijkplayer（四）拉流 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.12.1/css/all.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/mdbootstrap/4.13.0/css/mdb.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/3.0.1/github-markdown.min.css" />
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+
+
+
+  <link  rel="stylesheet" href="/lib/prettify/tomorrow-night-eighties.min.css" />
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link defer rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+<!-- 自定义样式保持在最底部 -->
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Hexo</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">归档</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">分类</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">标签</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">关于</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+                <p class="mt-3 post-meta">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                  星期四, 三月 26日 2020, 5:48 下午
+                </p>
+              
+
+              <p class="mt-1">
+                
+                  
+                  <span class="post-meta">
+                    <i class="far fa-chart-bar"></i>
+                    7.8k 字
+                  </span>
+                
+
+                
+                  
+                  <span class="post-meta">
+                      <i class="far fa-clock"></i>
+                      42 分钟
+                  </span>
+                
+
+                
+              </p>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5 z-depth-3" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+            <div class="markdown-body">
+              <blockquote>
+<p>前言</p>
+<p>我是一名打算走音视频路线的android开发者。以此系列文章开始，记录我的音视频开发学习之路</p>
+<p>ijkplayer系列文章目录：<br><a href="https://www.jianshu.com/writer#/notebooks/40971763/notes/56760993/preview" target="_blank" rel="noopener">理解ijkplayer（一）：开始</a></p>
+<p><a href="https://www.jianshu.com/p/b5a2584e03f1" target="_blank" rel="noopener">理解ijkplayer（二）项目结构分析</a></p>
+<p><a href="https://www.jianshu.com/p/0501be9cf4bf" target="_blank" rel="noopener">理解ijkplayer（三）从Java层开始初始化</a></p>
+<p><a href="https://www.jianshu.com/p/f633da0db4dd" target="_blank" rel="noopener">理解ijkplayer（四）拉流</a></p>
+<p><a href="https://www.jianshu.com/p/1e10507f18b6" target="_blank" rel="noopener">理解ijkplayer（五）解码、播放</a></p>
+</blockquote>
+<hr>
+<p>由于篇幅的原因，因此这一篇文章是接着上一篇继续写的。</p>
+<p>上一篇文章分析完了：</p>
+<ol>
+<li>JNI_Onload()</li>
+<li>native_init()</li>
+<li>native_setup()</li>
+<li>_setDataSource()</li>
+<li>_setVideoSurface</li>
+</ol>
+<h3 id="1-prepareAsync"><a href="#1-prepareAsync" class="headerlink" title="1  _prepareAsync()"></a>1  _prepareAsync()</h3><p>播放器的异步准备。这是初始化阶段中最复杂，最重要的函数。</p>
+<pre><code class="c">//    ijkmedia/ijkplayer/android/ijkplayer_jni.c
+static void
+IjkMediaPlayer_prepareAsync(JNIEnv *env, jobject thiz)
+{
+    MPTRACE(&quot;%s\n&quot;, __func__);
+    int retval = 0;
+    IjkMediaPlayer *mp = jni_get_media_player(env, thiz);
+    JNI_CHECK_GOTO(mp, env, &quot;java/lang/IllegalStateException&quot;, &quot;mpjni: prepareAsync: null mp&quot;, LABEL_RETURN);
+
+    retval = ijkmp_prepare_async(mp);
+    IJK_CHECK_MPRET_GOTO(retval, env, LABEL_RETURN);
+
+LABEL_RETURN:
+    ijkmp_dec_ref_p(&amp;mp);
+}</code></pre>
+<pre><code class="c">//    ijkmedia/ijkplayer/ijkplayer.c
+int ijkmp_prepare_async(IjkMediaPlayer *mp)
+{
+    assert(mp);
+    MPTRACE(&quot;ijkmp_prepare_async()\n&quot;);
+    pthread_mutex_lock(&amp;mp-&gt;mutex);
+    int retval = ijkmp_prepare_async_l(mp);
+    pthread_mutex_unlock(&amp;mp-&gt;mutex);
+    MPTRACE(&quot;ijkmp_prepare_async()=%d\n&quot;, retval);
+    return retval;
+}</code></pre>
+<pre><code class="c">static int ijkmp_prepare_async_l(IjkMediaPlayer *mp)
+{
+    assert(mp);
+
+    MPST_RET_IF_EQ(mp-&gt;mp_state, MP_STATE_IDLE);
+    // MPST_RET_IF_EQ(mp-&gt;mp_state, MP_STATE_INITIALIZED);
+    MPST_RET_IF_EQ(mp-&gt;mp_state, MP_STATE_ASYNC_PREPARING);
+    MPST_RET_IF_EQ(mp-&gt;mp_state, MP_STATE_PREPARED);
+    MPST_RET_IF_EQ(mp-&gt;mp_state, MP_STATE_STARTED);
+    MPST_RET_IF_EQ(mp-&gt;mp_state, MP_STATE_PAUSED);
+    MPST_RET_IF_EQ(mp-&gt;mp_state, MP_STATE_COMPLETED);
+    // MPST_RET_IF_EQ(mp-&gt;mp_state, MP_STATE_STOPPED);
+    MPST_RET_IF_EQ(mp-&gt;mp_state, MP_STATE_ERROR);
+    MPST_RET_IF_EQ(mp-&gt;mp_state, MP_STATE_END);
+    //声明url不为空
+    assert(mp-&gt;data_source);
+    //改变播放器状态到MP_STATE_ASYNC_PREPARING
+    ijkmp_change_state_l(mp, MP_STATE_ASYNC_PREPARING);
+    //消息队列开始
+    msg_queue_start(&amp;mp-&gt;ffplayer-&gt;msg_queue);
+
+    // released in msg_loop
+    ijkmp_inc_ref(mp);
+    //创建并启动消息线程，开启循环来读取消息队列的消息。
+    mp-&gt;msg_thread = SDL_CreateThreadEx(&amp;mp-&gt;_msg_thread, ijkmp_msg_loop, mp, &quot;ff_msg_loop&quot;);
+    // msg_thread is detached inside msg_loop
+    // TODO: 9 release weak_thiz if pthread_create() failed;
+    //逻辑跳转到ff_ffplay.c
+    int retval = ffp_prepare_async_l(mp-&gt;ffplayer, mp-&gt;data_source);
+    if (retval &lt; 0) {
+        //出错，则抛出MP_STATE_ERROR
+        ijkmp_change_state_l(mp, MP_STATE_ERROR);
+        return retval;
+    }
+
+    return 0;
+}</code></pre>
+<p>看到创建消息线程的那一句的<code>ijkmp_msg_loop</code>函数</p>
+<pre><code class="c">//这句函数会在线程被启动的时候调用，类似于Thread中的Runnable
+static int ijkmp_msg_loop(void *arg)
+{
+    IjkMediaPlayer *mp = arg;
+      //调用mp的msg_loop函数。
+    int ret = mp-&gt;msg_loop(arg);
+    return ret;
+}</code></pre>
+<p><code>mp-&gt;msg_loop</code>这个函数，在前面播放器被创建的时候被赋值，在<code>3.3.2</code>中。</p>
+<p>那么这时开启了消息循环线程，并且prepare的逻辑跳转到了<code>ff_ffplay.c</code>中</p>
+<pre><code class="c">//    ijkmedia/ijkplayer/ff_ffplay.c
+int ffp_prepare_async_l(FFPlayer *ffp, const char *file_name)
+{
+    assert(ffp);
+    assert(!ffp-&gt;is);
+    assert(file_name);
+    //针对rtmp和rtsp协议，移除选项”timeout“
+    if (av_stristart(file_name, &quot;rtmp&quot;, NULL) ||
+        av_stristart(file_name, &quot;rtsp&quot;, NULL)) {
+        // There is total different meaning for &#39;timeout&#39; option in rtmp
+        av_log(ffp, AV_LOG_WARNING, &quot;remove &#39;timeout&#39; option for rtmp.\n&quot;);
+        av_dict_set(&amp;ffp-&gt;format_opts, &quot;timeout&quot;, NULL, 0);
+    }
+
+    /* there is a length limit in avformat */
+    if (strlen(file_name) + 1 &gt; 1024) {
+        av_log(ffp, AV_LOG_ERROR, &quot;%s too long url\n&quot;, __func__);
+        if (avio_find_protocol_name(&quot;ijklongurl:&quot;)) {
+            av_dict_set(&amp;ffp-&gt;format_opts, &quot;ijklongurl-url&quot;, file_name, 0);
+            file_name = &quot;ijklongurl:&quot;;
+        }
+    }
+    //打印版本信息
+    av_log(NULL, AV_LOG_INFO, &quot;===== versions =====\n&quot;);
+    ffp_show_version_str(ffp, &quot;ijkplayer&quot;,      ijk_version_info());
+    ffp_show_version_str(ffp, &quot;FFmpeg&quot;,         av_version_info());
+    ffp_show_version_int(ffp, &quot;libavutil&quot;,      avutil_version());
+    ffp_show_version_int(ffp, &quot;libavcodec&quot;,     avcodec_version());
+    ffp_show_version_int(ffp, &quot;libavformat&quot;,    avformat_version());
+    ffp_show_version_int(ffp, &quot;libswscale&quot;,     swscale_version());
+    ffp_show_version_int(ffp, &quot;libswresample&quot;,  swresample_version());
+    av_log(NULL, AV_LOG_INFO, &quot;===== options =====\n&quot;);
+    ffp_show_dict(ffp, &quot;player-opts&quot;, ffp-&gt;player_opts);
+    ffp_show_dict(ffp, &quot;format-opts&quot;, ffp-&gt;format_opts);
+    ffp_show_dict(ffp, &quot;codec-opts &quot;, ffp-&gt;codec_opts);
+    ffp_show_dict(ffp, &quot;sws-opts   &quot;, ffp-&gt;sws_dict);
+    ffp_show_dict(ffp, &quot;swr-opts   &quot;, ffp-&gt;swr_opts);
+    av_log(NULL, AV_LOG_INFO, &quot;===================\n&quot;);
+    //设置播放器选项
+    av_opt_set_dict(ffp, &amp;ffp-&gt;player_opts);
+    //如果ffplayer-&gt;aout==null，那么久打开音频输出设备。前面的初始化代码是没有为这个赋值过的，所以第一次调用肯定会返回true.
+    if (!ffp-&gt;aout) {
+        ffp-&gt;aout = ffpipeline_open_audio_output(ffp-&gt;pipeline, ffp);
+        if (!ffp-&gt;aout)
+            return -1;
+    }
+
+#if CONFIG_AVFILTER
+    if (ffp-&gt;vfilter0) {
+        GROW_ARRAY(ffp-&gt;vfilters_list, ffp-&gt;nb_vfilters);
+        ffp-&gt;vfilters_list[ffp-&gt;nb_vfilters - 1] = ffp-&gt;vfilter0;
+    }
+#endif
+        //打开流，并返回一个VideoState的结构体
+    VideoState *is = stream_open(ffp, file_name, NULL);
+    if (!is) {
+        av_log(NULL, AV_LOG_WARNING, &quot;ffp_prepare_async_l: stream_open failed OOM&quot;);
+        return EIJK_OUT_OF_MEMORY;
+    }
+
+    ffp-&gt;is = is;
+    ffp-&gt;input_filename = av_strdup(file_name);
+    return 0;
+}</code></pre>
+<h3 id="2-打开音频输出设备"><a href="#2-打开音频输出设备" class="headerlink" title="2 打开音频输出设备"></a>2 打开音频输出设备</h3><pre><code class="c">//如果ffplayer-&gt;aout==null，那么久打开音频输出设备。前面的初始化代码是没有为这个赋值过的，所以第一次调用肯定会返回true.
+    if (!ffp-&gt;aout) {
+        ffp-&gt;aout = ffpipeline_open_audio_output(ffp-&gt;pipeline, ffp);
+        if (!ffp-&gt;aout)
+            return -1;
+    }</code></pre>
+<pre><code class="c">SDL_Aout *ffpipeline_open_audio_output(IJKFF_Pipeline *pipeline, FFPlayer *ffp)
+{
+    //借助pipeline的方法
+    return pipeline-&gt;func_open_audio_output(pipeline, ffp);
+}</code></pre>
+<p>而<code>ffp-&gt;pipeline</code>是在创建播放器IjkMediaPlayer的时候，在创建完<code>ffplayer</code>，和<code>ffplyaer-&gt;vout</code>一起创建的，在<code>3.3.2</code>有如下的代码：</p>
+<pre><code class="c">//    ijkmedia/ijkplayer/android/ijkplayer_android.c
+IjkMediaPlayer *ijkmp_android_create(int(*msg_loop)(void*))
+{
+    //创建IjkMediaPlayer
+    IjkMediaPlayer *mp = ijkmp_create(msg_loop);
+    if (!mp)
+        goto fail;
+    //创建视频输出设备，会根据根据硬解还是软件，硬解用MediaCodec创建，软解用FFmpeg创建
+    mp-&gt;ffplayer-&gt;vout = SDL_VoutAndroid_CreateForAndroidSurface();
+    if (!mp-&gt;ffplayer-&gt;vout)
+        goto fail;
+    //暂时不太理解这个叫做”管道“的东西是什么
+    mp-&gt;ffplayer-&gt;pipeline = ffpipeline_create_from_android(mp-&gt;ffplayer);
+    if (!mp-&gt;ffplayer-&gt;pipeline)
+        goto fail;
+    //将创建的视频输出设备vout，赋值到ffplayer-&gt;pipeline中
+    ffpipeline_set_vout(mp-&gt;ffplayer-&gt;pipeline, mp-&gt;ffplayer-&gt;vout);
+
+    return mp;
+
+fail:
+    ijkmp_dec_ref_p(&amp;mp);
+    return NULL;
+}</code></pre>
+<p>那么我们看到<code>pipeline-&gt;func_open_audio_output(pipeline, ffp);</code>的这个方法：我一点进去直接跳转到<code>IJKFF_Pipeline</code>的结构体的定义来了。</p>
+<pre><code class="c">struct IJKFF_Pipeline {
+    SDL_Class             *opaque_class;
+    IJKFF_Pipeline_Opaque *opaque;
+
+    void            (*func_destroy)             (IJKFF_Pipeline *pipeline);
+    IJKFF_Pipenode *(*func_open_video_decoder)  (IJKFF_Pipeline *pipeline, FFPlayer *ffp);
+      //我们要看的是这个方法，名叫：打开音频输出设备。
+    SDL_Aout       *(*func_open_audio_output)   (IJKFF_Pipeline *pipeline, FFPlayer *ffp);
+    IJKFF_Pipenode *(*func_init_video_decoder)  (IJKFF_Pipeline *pipeline, FFPlayer *ffp);
+    int           (*func_config_video_decoder)  (IJKFF_Pipeline *pipeline, FFPlayer *ffp);
+};</code></pre>
+<p>这个函数应该是在某个地方被赋值了，我们得找一下，全局搜索关键字：<code>func_open_audio_output</code></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/7177220-39dc9db5869ee765.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt=""></p>
+<p>全局搜索中出现了3个对<code>func_open_audio_output</code>赋值的语句，分别出现在</p>
+<ol>
+<li><code>ffpipleline_android.c</code></li>
+<li><code>ffpipeline_ffplay.c</code></li>
+<li><code>ffpipeline_ios.c</code></li>
+</ol>
+<p>其中貌似android和ios平台有各自的赋值规则，然后又一个中立的赋值的地方，我们先看这个平台无关的中立的赋值的地方：</p>
+<pre><code class="c">static SDL_Aout *func_open_audio_output(IJKFF_Pipeline *pipeline, FFPlayer *ffp)
+{    
+      //返回NULL
+    return NULL;
+}
+
+IJKFF_Pipeline *ffpipeline_create_from_ffplay(FFPlayer *ffp)
+{
+    IJKFF_Pipeline *pipeline = ffpipeline_alloc(&amp;g_pipeline_class, sizeof(IJKFF_Pipeline_Opaque));
+    if (!pipeline)
+        return pipeline;
+
+    IJKFF_Pipeline_Opaque *opaque = pipeline-&gt;opaque;
+    opaque-&gt;ffp                   = ffp;
+
+    pipeline-&gt;func_destroy            = func_destroy;
+    pipeline-&gt;func_open_video_decoder = func_open_video_decoder;
+      //在这里
+    pipeline-&gt;func_open_audio_output  = func_open_audio_output;
+
+    return pipeline;
+}</code></pre>
+<p>这个平台无关的函数赋值语句赋值的函数返回了NULL。而我再全局搜索一下这个<code>ffpipeline_create_from_ffplay</code>，发现没有调用这个的地方。那么这个函数应该只是一个示范函数，让Android和ios平台去各自实现。</p>
+<p>那么看下android这边的：</p>
+<pre><code class="c">IJKFF_Pipeline *ffpipeline_create_from_android(FFPlayer *ffp)
+{
+    ALOGD(&quot;ffpipeline_create_from_android()\n&quot;);
+    IJKFF_Pipeline *pipeline = ffpipeline_alloc(&amp;g_pipeline_class, sizeof(IJKFF_Pipeline_Opaque));
+    if (!pipeline)
+        return pipeline;
+
+    IJKFF_Pipeline_Opaque *opaque = pipeline-&gt;opaque;
+    opaque-&gt;ffp                   = ffp;
+    opaque-&gt;surface_mutex         = SDL_CreateMutex();
+    opaque-&gt;left_volume           = 1.0f;
+    opaque-&gt;right_volume          = 1.0f;
+    if (!opaque-&gt;surface_mutex) {
+        ALOGE(&quot;ffpipeline-android:create SDL_CreateMutex failed\n&quot;);
+        goto fail;
+    }
+
+    pipeline-&gt;func_destroy              = func_destroy;
+    pipeline-&gt;func_open_video_decoder   = func_open_video_decoder;
+      //打开音频输出设备
+    pipeline-&gt;func_open_audio_output    = func_open_audio_output;
+    pipeline-&gt;func_init_video_decoder   = func_init_video_decoder;
+    pipeline-&gt;func_config_video_decoder = func_config_video_decoder;
+
+    return pipeline;
+fail:
+    ffpipeline_free_p(&amp;pipeline);
+    return NULL;
+}</code></pre>
+<p>注意，这个<code>ffpipeline_create_from_android</code>方法被调用的地方，是在创建完<code>ffplayer</code>播放器后，和<code>ffplayer-&gt;vout</code>一起创建的，在<code>3.3.2</code>中有示例代码。</p>
+<p>继续看<code>func_open_audio_output</code>函数：</p>
+<pre><code class="c">static SDL_Aout *func_open_audio_output(IJKFF_Pipeline *pipeline, FFPlayer *ffp)
+{
+    SDL_Aout *aout = NULL;
+    if (ffp-&gt;opensles) {
+          //如果打开了opensles，则用OpenSLES来创建音频输出设备
+        aout = SDL_AoutAndroid_CreateForOpenSLES();
+    } else {
+          //否则，使用Android平台的AudioTrack来创建音频输出设备
+        aout = SDL_AoutAndroid_CreateForAudioTrack();
+    }
+    if (aout)
+        SDL_AoutSetStereoVolume(aout, pipeline-&gt;opaque-&gt;left_volume, pipeline-&gt;opaque-&gt;right_volume);
+    return aout;
+}</code></pre>
+<p>那么这个<code>ffp-&gt;opensles</code>的返回值就很关键了，通过全局搜索，我看到在</p>
+<p><code>inline static void ffp_reset_internal(*FFPlayer* **ffp*)</code>函数中有：</p>
+<pre><code class="c">    ffp-&gt;opensles                       = 0; // option</code></pre>
+<p>即opensles是默认关闭的，除非用了option去打开它。</p>
+<p>而option的定义位于：<code>ijkmedia/ijkplayer/ff_ffplay_options.h</code>。option是如何发挥作用的，后面再分析。</p>
+<p>对于ijkplayer是如何利用AudioTrack来播放解码后的pcm音频数据的，这里也暂不分析。</p>
+<h3 id="3-打开流"><a href="#3-打开流" class="headerlink" title="3 打开流"></a>3 打开流</h3><pre><code class="c">    VideoState *is = stream_open(ffp, file_name, NULL);</code></pre>
+<p>单看这一句，感觉是：根据file_name(url)打开对应的视频流，并返回一个<code>VideoState</code>(视频状态)</p>
+<p>而这个<code>VideoState</code>是保存在<code>FFPlayer</code>里面的</p>
+<pre><code class="c">typedef struct FFPlayer {
+    const AVClass *av_class;
+
+    /* ffplay context */
+    VideoState *is;
+      //...
+}</code></pre>
+<p>而这个<code>FFPlayer</code>则是<code>IikMediaPlayer</code>中真正的播放器对象。</p>
+<p>即一个播放器对应一个<code>VideoState</code>对象。</p>
+<p>那么先看一下<code>VideoState</code>的结构体：</p>
+<pre><code class="c">typedef struct VideoState {
+    SDL_Thread *read_tid;//读线程
+    SDL_Thread _read_tid;
+    AVInputFormat *iformat;//输入格式
+    int abort_request;//停止请求
+    int force_refresh;//强制刷新
+    int paused;//暂停
+    int last_paused;
+    int queue_attachments_req;
+    int seek_req;
+    int seek_flags;
+    int64_t seek_pos;
+    int64_t seek_rel;
+#ifdef FFP_MERGE
+    int read_pause_return;
+#endif
+    AVFormatContext *ic;
+    int realtime;
+
+    Clock audclk;//音频时钟
+    Clock vidclk;//视频时钟
+    Clock extclk;//外部时钟
+
+    FrameQueue pictq;//图片帧队列：解码后的视频数据
+    FrameQueue subpq;//字幕帧队列：解码后的字幕数据
+    FrameQueue sampq;//音频帧队列：解码后的音频数据
+
+    Decoder auddec;//音频解码器
+    Decoder viddec;//视频解码器
+    Decoder subdec;//字幕解码器
+
+    int audio_stream;//音频流
+
+    int av_sync_type;
+    void *handle;
+    double audio_clock;
+    int audio_clock_serial;
+    double audio_diff_cum; /* used for AV difference average computation */
+    double audio_diff_avg_coef;
+    double audio_diff_threshold;
+    int audio_diff_avg_count;
+    AVStream *audio_st;
+    PacketQueue audioq;//音频包数据：未解码的音频数据，从demuxers输出
+    int audio_hw_buf_size;
+    uint8_t *audio_buf;
+    uint8_t *audio_buf1;
+    short *audio_new_buf;  /* for soundtouch buf */
+    unsigned int audio_buf_size; /* in bytes */
+    unsigned int audio_buf1_size;
+    unsigned int audio_new_buf_size;
+    int audio_buf_index; /* in bytes */
+    int audio_write_buf_size;
+    int audio_volume;
+    int muted;
+    struct AudioParams audio_src;
+#if CONFIG_AVFILTER
+    struct AudioParams audio_filter_src;
+#endif
+    struct AudioParams audio_tgt;
+    struct SwrContext *swr_ctx;
+    int frame_drops_early;
+    int frame_drops_late;
+    int continuous_frame_drops_early;
+
+    enum ShowMode {
+        SHOW_MODE_NONE = -1, SHOW_MODE_VIDEO = 0, SHOW_MODE_WAVES, SHOW_MODE_RDFT, SHOW_MODE_NB
+    } show_mode;
+    int16_t sample_array[SAMPLE_ARRAY_SIZE];
+    int sample_array_index;
+    int last_i_start;
+#ifdef FFP_MERGE
+    RDFTContext *rdft;
+    int rdft_bits;
+    FFTSample *rdft_data;
+    int xpos;
+#endif
+    double last_vis_time;
+#ifdef FFP_MERGE
+    SDL_Texture *vis_texture;
+    SDL_Texture *sub_texture;
+#endif
+
+    int subtitle_stream;
+    AVStream *subtitle_st;
+    PacketQueue subtitleq;//未解码的字幕数据：从demuxser输出
+
+    double frame_timer;
+    double frame_last_returned_time;
+    double frame_last_filter_delay;
+    int video_stream;
+    AVStream *video_st;
+    PacketQueue videoq;//未解码的视频数据：从demuxsers输出
+    double max_frame_duration;      // maximum duration of a frame - above this, we consider the jump a timestamp discontinuity
+    struct SwsContext *img_convert_ctx;
+#ifdef FFP_SUB
+    struct SwsContext *sub_convert_ctx;
+#endif
+    int eof;
+
+    char *filename;
+    int width, height, xleft, ytop;//视频的：宽、高、左上角x坐标，左上角y坐标。和ffmpeg里面的是对应的。
+    int step;
+
+#if CONFIG_AVFILTER
+    int vfilter_idx;
+    AVFilterContext *in_video_filter;   // the first filter in the video chain
+    AVFilterContext *out_video_filter;  // the last filter in the video chain
+    AVFilterContext *in_audio_filter;   // the first filter in the audio chain
+    AVFilterContext *out_audio_filter;  // the last filter in the audio chain
+    AVFilterGraph *agraph;              // audio filter graph
+#endif
+
+    int last_video_stream, last_audio_stream, last_subtitle_stream;
+
+    SDL_cond *continue_read_thread;
+
+    /* extra fields */
+    SDL_mutex  *play_mutex; // only guard state, do not block any long operation
+    SDL_Thread *video_refresh_tid;
+    SDL_Thread _video_refresh_tid;
+
+    int buffering_on;
+    int pause_req;
+
+    int dropping_frame;
+    int is_video_high_fps; // above 30fps
+    int is_video_high_res; // above 1080p
+
+    PacketQueue *buffer_indicator_queue;
+
+    volatile int latest_video_seek_load_serial;
+    volatile int latest_audio_seek_load_serial;
+    volatile int64_t latest_seek_load_start_at;
+
+    int drop_aframe_count;
+    int drop_vframe_count;
+    int64_t accurate_seek_start_time;
+    volatile int64_t accurate_seek_vframe_pts;
+    volatile int64_t accurate_seek_aframe_pts;
+    int audio_accurate_seek_req;
+    int video_accurate_seek_req;
+    SDL_mutex *accurate_seek_mutex;
+    SDL_cond  *video_accurate_seek_cond;
+    SDL_cond  *audio_accurate_seek_cond;
+    volatile int initialized_decoder;
+    int seek_buffering;
+} VideoState;</code></pre>
+<p>我针对我理解了的字段做了一些注释。</p>
+<p>那么现在看到返回<code>VideoState</code>结构体的方法<code>openstream</code></p>
+<pre><code class="c">static VideoState *stream_open(FFPlayer *ffp, const char *filename, AVInputFormat *iformat)
+{
+    assert(!ffp-&gt;is);
+    VideoState *is;
+    //创建VideoState结构体
+    is = av_mallocz(sizeof(VideoState));
+    if (!is)
+        return NULL;
+    //给VideoState结构体中的属性赋值
+    is-&gt;filename = av_strdup(filename);
+    if (!is-&gt;filename)
+        goto fail;
+    is-&gt;iformat = iformat;
+    is-&gt;ytop    = 0;
+    is-&gt;xleft   = 0;
+#if defined(__ANDROID__)
+    //android平台下的soundtouch，不太清楚是做什么的
+    if (ffp-&gt;soundtouch_enable) {
+        is-&gt;handle = ijk_soundtouch_create();
+    }
+#endif
+
+    /* start video display */
+    //初始化3个帧队列（解码后帧的队列）
+    if (frame_queue_init(&amp;is-&gt;pictq, &amp;is-&gt;videoq, ffp-&gt;pictq_size, 1) &lt; 0)
+        goto fail;
+    if (frame_queue_init(&amp;is-&gt;subpq, &amp;is-&gt;subtitleq, SUBPICTURE_QUEUE_SIZE, 0) &lt; 0)
+        goto fail;
+    if (frame_queue_init(&amp;is-&gt;sampq, &amp;is-&gt;audioq, SAMPLE_QUEUE_SIZE, 1) &lt; 0)
+        goto fail;
+    //初始化3个包队列（解码前的帧队列,不过是demuxer输出的数据了）
+    if (packet_queue_init(&amp;is-&gt;videoq) &lt; 0 ||
+        packet_queue_init(&amp;is-&gt;audioq) &lt; 0 ||
+        packet_queue_init(&amp;is-&gt;subtitleq) &lt; 0)
+        goto fail;
+
+    //以下3个创建SDL_cond的函数，不太清楚他们的作用是什么，暂不分析
+    if (!(is-&gt;continue_read_thread = SDL_CreateCond())) {
+        av_log(NULL, AV_LOG_FATAL, &quot;SDL_CreateCond(): %s\n&quot;, SDL_GetError());
+        goto fail;
+    }
+
+    if (!(is-&gt;video_accurate_seek_cond = SDL_CreateCond())) {
+        av_log(NULL, AV_LOG_FATAL, &quot;SDL_CreateCond(): %s\n&quot;, SDL_GetError());
+        ffp-&gt;enable_accurate_seek = 0;
+    }
+
+    if (!(is-&gt;audio_accurate_seek_cond = SDL_CreateCond())) {
+        av_log(NULL, AV_LOG_FATAL, &quot;SDL_CreateCond(): %s\n&quot;, SDL_GetError());
+        ffp-&gt;enable_accurate_seek = 0;
+    }
+    //初始化音频时钟，视频时钟，外部时钟
+    init_clock(&amp;is-&gt;vidclk, &amp;is-&gt;videoq.serial);
+    init_clock(&amp;is-&gt;audclk, &amp;is-&gt;audioq.serial);
+    init_clock(&amp;is-&gt;extclk, &amp;is-&gt;extclk.serial);
+    is-&gt;audio_clock_serial = -1;
+    //初始化播放器的初始音量
+    if (ffp-&gt;startup_volume &lt; 0)
+        av_log(NULL, AV_LOG_WARNING, &quot;-volume=%d &lt; 0, setting to 0\n&quot;, ffp-&gt;startup_volume);
+    if (ffp-&gt;startup_volume &gt; 100)
+        av_log(NULL, AV_LOG_WARNING, &quot;-volume=%d &gt; 100, setting to 100\n&quot;, ffp-&gt;startup_volume);
+    ffp-&gt;startup_volume = av_clip(ffp-&gt;startup_volume, 0, 100);
+    ffp-&gt;startup_volume = av_clip(SDL_MIX_MAXVOLUME * ffp-&gt;startup_volume / 100, 0, SDL_MIX_MAXVOLUME);
+    is-&gt;audio_volume = ffp-&gt;startup_volume;
+    is-&gt;muted = 0;
+    is-&gt;av_sync_type = ffp-&gt;av_sync_type;
+    //初始化播放器互斥锁
+    is-&gt;play_mutex = SDL_CreateMutex();
+    is-&gt;accurate_seek_mutex = SDL_CreateMutex();
+    ffp-&gt;is = is;
+    //如果start_on_prepared=false，那么当prepare完之后要暂停，不能直接播放。
+    is-&gt;pause_req = !ffp-&gt;start_on_prepared;
+    //创建视频渲染线程
+    is-&gt;video_refresh_tid = SDL_CreateThreadEx(&amp;is-&gt;_video_refresh_tid, video_refresh_thread, ffp, &quot;ff_vout&quot;);
+    if (!is-&gt;video_refresh_tid) {
+        av_freep(&amp;ffp-&gt;is);
+        return NULL;
+    }
+    //********开始初始化解码器
+    is-&gt;initialized_decoder = 0;
+    //创建读取线程
+    is-&gt;read_tid = SDL_CreateThreadEx(&amp;is-&gt;_read_tid, read_thread, ffp, &quot;ff_read&quot;);
+    if (!is-&gt;read_tid) {
+        av_log(NULL, AV_LOG_FATAL, &quot;SDL_CreateThread(): %s\n&quot;, SDL_GetError());
+        goto fail;
+    }
+
+    if (ffp-&gt;async_init_decoder &amp;&amp; !ffp-&gt;video_disable &amp;&amp; ffp-&gt;video_mime_type &amp;&amp; strlen(ffp-&gt;video_mime_type) &gt; 0
+                    &amp;&amp; ffp-&gt;mediacodec_default_name &amp;&amp; strlen(ffp-&gt;mediacodec_default_name) &gt; 0) {
+        if (ffp-&gt;mediacodec_all_videos || ffp-&gt;mediacodec_avc || ffp-&gt;mediacodec_hevc || ffp-&gt;mediacodec_mpeg2) {
+            decoder_init(&amp;is-&gt;viddec, NULL, &amp;is-&gt;videoq, is-&gt;continue_read_thread);
+            ffp-&gt;node_vdec = ffpipeline_init_video_decoder(ffp-&gt;pipeline, ffp);
+        }
+    }
+    //********初始化解码器完成
+    is-&gt;initialized_decoder = 1;
+
+    return is;
+fail:
+    is-&gt;initialized_decoder = 1;
+    is-&gt;abort_request = true;
+    if (is-&gt;video_refresh_tid)
+        SDL_WaitThread(is-&gt;video_refresh_tid, NULL);
+    stream_close(ffp);
+    return NULL;
+}</code></pre>
+<p>他的逻辑大致为：</p>
+<ol>
+<li>创建<code>VideoState</code>对象，并初始化他的一些默认属性。</li>
+<li>初始化视频、音频、字幕的解码后的帧队列。</li>
+<li>初始化视频、音频、字幕的解码前的包队列。</li>
+<li>初始化播放器音量。</li>
+<li>创建视频渲染线程。</li>
+<li>创建视频数据读取线程（从网络读取或者从文件读取，io操作）。</li>
+<li>初始化解码器。（ffmpeg应该会在内部创建解码线程）。</li>
+</ol>
+<p>因此，在<code>openstream()</code>方法中完成了最主要的3个线程的创建。</p>
+<h3 id="4-视频读取线程"><a href="#4-视频读取线程" class="headerlink" title="4 视频读取线程"></a>4 视频读取线程</h3><p>在<code>stream_open</code>这个打开流的函数中，在开启了视频渲染线程后，接着就开启了视频读取线程。</p>
+<pre><code class="c">static VideoState *stream_open(FFPlayer *ffp, const char *filename, AVInputFormat *iformat){
+      //...
+        is-&gt;read_tid = SDL_CreateThreadEx(&amp;is-&gt;_read_tid, read_thread, ffp, &quot;ff_read&quot;);
+      //...
+}</code></pre>
+<p>通过创建单独的线程，专门用于读取Packet，在<code>read_thread()</code>函数中。而这个函数非常长，做了很多事情，先放出一个浓缩版的：</p>
+<h4 id="简略版代码："><a href="#简略版代码：" class="headerlink" title="简略版代码："></a>简略版代码：</h4><pre><code class="c">static int read_thread(void *arg)
+{
+       //Open an input stream and read the header. The codecs are not opened.
+    //The stream must be closed with avformat_close_input().
+    //打开输入流，并读取文件头部，解码器还未打开。主要作用是探测流的协议，如http还是rtmp等。
+    err = avformat_open_input(&amp;ic, is-&gt;filename, is-&gt;iformat, &amp;ffp-&gt;format_opts);
+
+    // Read packets of a media file to get stream information. This
+    // is useful for file formats with no headers such as MPEG. This
+    // function also computes the real framerate in case of MPEG-2 repeat
+    // frame mode.
+    // The logical file position is not changed by this function;
+    // examined packets may buffered for later processing. 
+    //探测文件封装格式，音视频编码参数等信息。
+    err = avformat_find_stream_info(ic, opts);
+
+    // Find the &quot;best&quot; stream in the file.
+    // The best stream is determined according to various heuristics as the most
+    // likely to be what the user expects.
+    // If the decoder parameter is non-NULL, av_find_best_stream will find the
+    // default decoder for the stream&#39;s codec; streams for which no decoder can
+    // be found are ignored.
+    //根据 AVFormatContext，找到最佳的流。
+    av_find_best_stream(ic, AVMEDIA_TYPE_VIDEO,
+                        st_index[AVMEDIA_TYPE_VIDEO], -1, NULL, 0);
+
+      //内部分别开启audio,video,subtitle的解码器的线程，开始各自的解码的工作。在稍后的3.6.5解码线程中分析这里的内容
+    stream_component_open(ffp, st_index[AVMEDIA_TYPE_AUDIO]);
+    stream_component_open(ffp, st_index[AVMEDIA_TYPE_VIDEO]);
+    stream_component_open(ffp, st_index[AVMEDIA_TYPE_SUBTITLE]);
+
+      //开始无限循环,调用ffmpeg的av_read_frame()读取AVPacket，并入队。
+      for (;;) {
+      //AVPacket pkt;
+
+      ret = av_read_frame(ic, pkt);
+
+      //把网络读取到并解封装到的pkt包入队列。（稍后在解码线程会拿到这些pkt包去解码。）
+
+            //如果是音频流的包
+      packet_queue_put(&amp;is-&gt;audioq, pkt);
+      //如果是视频流的包
+      packet_queue_put(&amp;is-&gt;videoq, pkt);
+      //如果是字幕流的包
+      packet_queue_put(&amp;is-&gt;subtitleq, pkt);
+    }  
+}</code></pre>
+<h4 id="完整版代码："><a href="#完整版代码：" class="headerlink" title="完整版代码："></a>完整版代码：</h4><p>那么详细的全部的源码（600行）如下，做了部分注释。</p>
+<pre><code class="c">/* this thread gets the stream from the disk or the network */
+static int read_thread(void *arg)
+{
+    FFPlayer *ffp = arg;
+    VideoState *is = ffp-&gt;is;
+    AVFormatContext *ic = NULL;
+    int err, i, ret __unused;
+    int st_index[AVMEDIA_TYPE_NB];
+    AVPacket pkt1, *pkt = &amp;pkt1;
+    int64_t stream_start_time;
+    int completed = 0;
+    int pkt_in_play_range = 0;
+    AVDictionaryEntry *t;
+    SDL_mutex *wait_mutex = SDL_CreateMutex();
+    int scan_all_pmts_set = 0;
+    int64_t pkt_ts;
+    int last_error = 0;
+    int64_t prev_io_tick_counter = 0;
+    int64_t io_tick_counter = 0;
+    int init_ijkmeta = 0;
+
+    if (!wait_mutex) {
+        av_log(NULL, AV_LOG_FATAL, &quot;SDL_CreateMutex(): %s\n&quot;, SDL_GetError());
+        ret = AVERROR(ENOMEM);
+        goto fail;
+    }
+
+    memset(st_index, -1, sizeof(st_index));
+    is-&gt;last_video_stream = is-&gt;video_stream = -1;
+    is-&gt;last_audio_stream = is-&gt;audio_stream = -1;
+    is-&gt;last_subtitle_stream = is-&gt;subtitle_stream = -1;
+    is-&gt;eof = 0;
+    //初始化AVFormatContext
+    ic = avformat_alloc_context();
+    if (!ic) {
+        av_log(NULL, AV_LOG_FATAL, &quot;Could not allocate context.\n&quot;);
+        ret = AVERROR(ENOMEM);
+        goto fail;
+    }
+    //为AVFormatContext设置中断回调
+    ic-&gt;interrupt_callback.callback = decode_interrupt_cb;
+    ic-&gt;interrupt_callback.opaque = is;
+    if (!av_dict_get(ffp-&gt;format_opts, &quot;scan_all_pmts&quot;, NULL, AV_DICT_MATCH_CASE)) {
+        av_dict_set(&amp;ffp-&gt;format_opts, &quot;scan_all_pmts&quot;, &quot;1&quot;, AV_DICT_DONT_OVERWRITE);
+        scan_all_pmts_set = 1;
+    }
+    if (av_stristart(is-&gt;filename, &quot;rtmp&quot;, NULL) ||
+        av_stristart(is-&gt;filename, &quot;rtsp&quot;, NULL)) {
+        // There is total different meaning for &#39;timeout&#39; option in rtmp
+        av_log(ffp, AV_LOG_WARNING, &quot;remove &#39;timeout&#39; option for rtmp.\n&quot;);
+        av_dict_set(&amp;ffp-&gt;format_opts, &quot;timeout&quot;, NULL, 0);
+    }
+
+    if (ffp-&gt;skip_calc_frame_rate) {
+        av_dict_set_int(&amp;ic-&gt;metadata, &quot;skip-calc-frame-rate&quot;, ffp-&gt;skip_calc_frame_rate, 0);
+        av_dict_set_int(&amp;ffp-&gt;format_opts, &quot;skip-calc-frame-rate&quot;, ffp-&gt;skip_calc_frame_rate, 0);
+    }
+
+    if (ffp-&gt;iformat_name)
+        //找到视频格式:AVInputFormat
+        is-&gt;iformat = av_find_input_format(ffp-&gt;iformat_name);
+    //Open an input stream and read the header. The codecs are not opened.
+    //The stream must be closed with avformat_close_input().
+    //打开输入流，并读取文件头部，解码器还未打开。主要作用是探测流的协议，如http还是rtmp等。
+    err = avformat_open_input(&amp;ic, is-&gt;filename, is-&gt;iformat, &amp;ffp-&gt;format_opts);
+    if (err &lt; 0) {
+        print_error(is-&gt;filename, err);
+        ret = -1;
+        goto fail;
+    }
+    ffp_notify_msg1(ffp, FFP_MSG_OPEN_INPUT);
+
+    if (scan_all_pmts_set)
+        av_dict_set(&amp;ffp-&gt;format_opts, &quot;scan_all_pmts&quot;, NULL, AV_DICT_MATCH_CASE);
+
+    if ((t = av_dict_get(ffp-&gt;format_opts, &quot;&quot;, NULL, AV_DICT_IGNORE_SUFFIX))) {
+        av_log(NULL, AV_LOG_ERROR, &quot;Option %s not found.\n&quot;, t-&gt;key);
+#ifdef FFP_MERGE
+        ret = AVERROR_OPTION_NOT_FOUND;
+        goto fail;
+#endif
+    }
+    is-&gt;ic = ic;
+
+    if (ffp-&gt;genpts)
+        ic-&gt;flags |= AVFMT_FLAG_GENPTS;
+
+    av_format_inject_global_side_data(ic);
+    //
+    //AVDictionary **opts;
+    //int orig_nb_streams;
+    //opts = setup_find_stream_info_opts(ic, ffp-&gt;codec_opts);
+    //orig_nb_streams = ic-&gt;nb_streams;
+
+
+    if (ffp-&gt;find_stream_info) {
+        AVDictionary **opts = setup_find_stream_info_opts(ic, ffp-&gt;codec_opts);
+        int orig_nb_streams = ic-&gt;nb_streams;
+
+        do {
+            if (av_stristart(is-&gt;filename, &quot;data:&quot;, NULL) &amp;&amp; orig_nb_streams &gt; 0) {
+                for (i = 0; i &lt; orig_nb_streams; i++) {
+                    if (!ic-&gt;streams[i] || !ic-&gt;streams[i]-&gt;codecpar || ic-&gt;streams[i]-&gt;codecpar-&gt;profile == FF_PROFILE_UNKNOWN) {
+                        break;
+                    }
+                }
+
+                if (i == orig_nb_streams) {
+                    break;
+                }
+            }
+            // Read packets of a media file to get stream information. This
+            // is useful for file formats with no headers such as MPEG. This
+            // function also computes the real framerate in case of MPEG-2 repeat
+            // frame mode.
+            // The logical file position is not changed by this function;
+            // examined packets may buffered for later processing. 
+            //探测文件封装格式，音视频编码参数等信息。
+            err = avformat_find_stream_info(ic, opts);
+        } while(0);
+        ffp_notify_msg1(ffp, FFP_MSG_FIND_STREAM_INFO);
+
+        for (i = 0; i &lt; orig_nb_streams; i++)
+            av_dict_free(&amp;opts[i]);
+        av_freep(&amp;opts);
+
+        if (err &lt; 0) {
+            av_log(NULL, AV_LOG_WARNING,
+                   &quot;%s: could not find codec parameters\n&quot;, is-&gt;filename);
+            ret = -1;
+            goto fail;
+        }
+    }
+    if (ic-&gt;pb)
+        ic-&gt;pb-&gt;eof_reached = 0; // FIXME hack, ffplay maybe should not use avio_feof() to test for the end
+
+    if (ffp-&gt;seek_by_bytes &lt; 0)
+        ffp-&gt;seek_by_bytes = !!(ic-&gt;iformat-&gt;flags &amp; AVFMT_TS_DISCONT) &amp;&amp; strcmp(&quot;ogg&quot;, ic-&gt;iformat-&gt;name);
+
+    is-&gt;max_frame_duration = (ic-&gt;iformat-&gt;flags &amp; AVFMT_TS_DISCONT) ? 10.0 : 3600.0;
+    is-&gt;max_frame_duration = 10.0;
+    av_log(ffp, AV_LOG_INFO, &quot;max_frame_duration: %.3f\n&quot;, is-&gt;max_frame_duration);
+
+#ifdef FFP_MERGE
+    if (!window_title &amp;&amp; (t = av_dict_get(ic-&gt;metadata, &quot;title&quot;, NULL, 0)))
+        window_title = av_asprintf(&quot;%s - %s&quot;, t-&gt;value, input_filename);
+
+#endif
+    //处理seek
+    /* if seeking requested, we execute it */
+    if (ffp-&gt;start_time != AV_NOPTS_VALUE) {
+        int64_t timestamp;
+
+        timestamp = ffp-&gt;start_time;
+        /* add the stream start time */
+        if (ic-&gt;start_time != AV_NOPTS_VALUE)
+            timestamp += ic-&gt;start_time;
+        ret = avformat_seek_file(ic, -1, INT64_MIN, timestamp, INT64_MAX, 0);
+        if (ret &lt; 0) {
+            av_log(NULL, AV_LOG_WARNING, &quot;%s: could not seek to position %0.3f\n&quot;,
+                    is-&gt;filename, (double)timestamp / AV_TIME_BASE);
+        }
+    }
+
+    is-&gt;realtime = is_realtime(ic);
+    //打印详细的格式信息
+    av_dump_format(ic, 0, is-&gt;filename, 0);
+
+    int video_stream_count = 0;
+    int h264_stream_count = 0;
+    int first_h264_stream = -1;
+    for (i = 0; i &lt; ic-&gt;nb_streams; i++) {
+        AVStream *st = ic-&gt;streams[i];
+        enum AVMediaType type = st-&gt;codecpar-&gt;codec_type;
+        st-&gt;discard = AVDISCARD_ALL;
+        if (type &gt;= 0 &amp;&amp; ffp-&gt;wanted_stream_spec[type] &amp;&amp; st_index[type] == -1)
+            if (avformat_match_stream_specifier(ic, st, ffp-&gt;wanted_stream_spec[type]) &gt; 0)
+                st_index[type] = i;
+
+        // choose first h264
+
+        if (type == AVMEDIA_TYPE_VIDEO) {
+            enum AVCodecID codec_id = st-&gt;codecpar-&gt;codec_id;
+            video_stream_count++;
+            if (codec_id == AV_CODEC_ID_H264) {
+                h264_stream_count++;
+                if (first_h264_stream &lt; 0)
+                    first_h264_stream = i;
+            }
+        }
+    }
+    if (video_stream_count &gt; 1 &amp;&amp; st_index[AVMEDIA_TYPE_VIDEO] &lt; 0) {
+        st_index[AVMEDIA_TYPE_VIDEO] = first_h264_stream;
+        av_log(NULL, AV_LOG_WARNING, &quot;multiple video stream found, prefer first h264 stream: %d\n&quot;, first_h264_stream);
+    }
+
+    //*****对视频，音频，和字幕，调用av_find_best_stream，找到对应的stream的下标，并填充在st_index数组中
+    if (!ffp-&gt;video_disable)
+        st_index[AVMEDIA_TYPE_VIDEO] =
+            // Find the &quot;best&quot; stream in the file.
+            // The best stream is determined according to various heuristics as the most
+            // likely to be what the user expects.
+            // If the decoder parameter is non-NULL, av_find_best_stream will find the
+            // default decoder for the stream&#39;s codec; streams for which no decoder can
+            // be found are ignored.
+            //根据AVFormatContext，找到最佳的流。
+            av_find_best_stream(ic, AVMEDIA_TYPE_VIDEO,
+                                st_index[AVMEDIA_TYPE_VIDEO], -1, NULL, 0);
+    if (!ffp-&gt;audio_disable)
+        st_index[AVMEDIA_TYPE_AUDIO] =
+            av_find_best_stream(ic, AVMEDIA_TYPE_AUDIO,
+                                st_index[AVMEDIA_TYPE_AUDIO],
+                                st_index[AVMEDIA_TYPE_VIDEO],
+                                NULL, 0);
+    if (!ffp-&gt;video_disable &amp;&amp; !ffp-&gt;subtitle_disable)
+        st_index[AVMEDIA_TYPE_SUBTITLE] =
+            av_find_best_stream(ic, AVMEDIA_TYPE_SUBTITLE,
+                                st_index[AVMEDIA_TYPE_SUBTITLE],
+                                (st_index[AVMEDIA_TYPE_AUDIO] &gt;= 0 ?
+                                 st_index[AVMEDIA_TYPE_AUDIO] :
+                                 st_index[AVMEDIA_TYPE_VIDEO]),
+                                NULL, 0);
+
+    is-&gt;show_mode = ffp-&gt;show_mode;
+#ifdef FFP_MERGE // bbc: dunno if we need this
+    if (st_index[AVMEDIA_TYPE_VIDEO] &gt;= 0) {
+        AVStream *st = ic-&gt;streams[st_index[AVMEDIA_TYPE_VIDEO]];
+        AVCodecParameters *codecpar = st-&gt;codecpar;
+        AVRational sar = av_guess_sample_aspect_ratio(ic, st, NULL);
+        if (codecpar-&gt;width)
+            set_default_window_size(codecpar-&gt;width, codecpar-&gt;height, sar);
+    }
+#endif
+
+    //******打开3个流 start
+    /* open the streams */
+    if (st_index[AVMEDIA_TYPE_AUDIO] &gt;= 0) {
+        stream_component_open(ffp, st_index[AVMEDIA_TYPE_AUDIO]);
+    } else {
+        ffp-&gt;av_sync_type = AV_SYNC_VIDEO_MASTER;
+        is-&gt;av_sync_type  = ffp-&gt;av_sync_type;
+    }
+
+    ret = -1;
+    if (st_index[AVMEDIA_TYPE_VIDEO] &gt;= 0) {
+        ret = stream_component_open(ffp, st_index[AVMEDIA_TYPE_VIDEO]);
+    }
+    if (is-&gt;show_mode == SHOW_MODE_NONE)
+        is-&gt;show_mode = ret &gt;= 0 ? SHOW_MODE_VIDEO : SHOW_MODE_RDFT;
+
+    if (st_index[AVMEDIA_TYPE_SUBTITLE] &gt;= 0) {
+        stream_component_open(ffp, st_index[AVMEDIA_TYPE_SUBTITLE]);
+    }
+    //******打开3个流 end
+
+    ffp_notify_msg1(ffp, FFP_MSG_COMPONENT_OPEN);
+
+    if (!ffp-&gt;ijkmeta_delay_init) {
+        ijkmeta_set_avformat_context_l(ffp-&gt;meta, ic);
+    }
+
+    ffp-&gt;stat.bit_rate = ic-&gt;bit_rate;
+    if (st_index[AVMEDIA_TYPE_VIDEO] &gt;= 0)
+        ijkmeta_set_int64_l(ffp-&gt;meta, IJKM_KEY_VIDEO_STREAM, st_index[AVMEDIA_TYPE_VIDEO]);
+    if (st_index[AVMEDIA_TYPE_AUDIO] &gt;= 0)
+        ijkmeta_set_int64_l(ffp-&gt;meta, IJKM_KEY_AUDIO_STREAM, st_index[AVMEDIA_TYPE_AUDIO]);
+    if (st_index[AVMEDIA_TYPE_SUBTITLE] &gt;= 0)
+        ijkmeta_set_int64_l(ffp-&gt;meta, IJKM_KEY_TIMEDTEXT_STREAM, st_index[AVMEDIA_TYPE_SUBTITLE]);
+
+    if (is-&gt;video_stream &lt; 0 &amp;&amp; is-&gt;audio_stream &lt; 0) {
+        av_log(NULL, AV_LOG_FATAL, &quot;Failed to open file &#39;%s&#39; or configure filtergraph\n&quot;,
+               is-&gt;filename);
+        ret = -1;
+        goto fail;
+    }
+
+    //初始化缓冲指示器队列，优先使用音频packetQueue，找不到就使用视频packetQueue。
+    if (is-&gt;audio_stream &gt;= 0) {
+        is-&gt;audioq.is_buffer_indicator = 1;
+        is-&gt;buffer_indicator_queue = &amp;is-&gt;audioq;
+    } else if (is-&gt;video_stream &gt;= 0) {
+        is-&gt;videoq.is_buffer_indicator = 1;
+        is-&gt;buffer_indicator_queue = &amp;is-&gt;videoq;
+    } else {
+        assert(&quot;invalid streams&quot;);
+    }
+
+    //如果是直播流，则播放器使用无限缓存
+    if (ffp-&gt;infinite_buffer &lt; 0 &amp;&amp; is-&gt;realtime)
+        ffp-&gt;infinite_buffer = 1;
+
+    if (!ffp-&gt;render_wait_start &amp;&amp; !ffp-&gt;start_on_prepared)
+        toggle_pause(ffp, 1);
+    if (is-&gt;video_st &amp;&amp; is-&gt;video_st-&gt;codecpar) {
+        AVCodecParameters *codecpar = is-&gt;video_st-&gt;codecpar;
+        //发送VIDEO_SIZE_CHANGED回调和SAR_CHANGED回调
+        ffp_notify_msg3(ffp, FFP_MSG_VIDEO_SIZE_CHANGED, codecpar-&gt;width, codecpar-&gt;height);
+        ffp_notify_msg3(ffp, FFP_MSG_SAR_CHANGED, codecpar-&gt;sample_aspect_ratio.num, codecpar-&gt;sample_aspect_ratio.den);
+    }
+    ffp-&gt;prepared = true;
+    //发送PREPARED回调
+    ffp_notify_msg1(ffp, FFP_MSG_PREPARED);
+    if (!ffp-&gt;render_wait_start &amp;&amp; !ffp-&gt;start_on_prepared) {
+        while (is-&gt;pause_req &amp;&amp; !is-&gt;abort_request) {
+            SDL_Delay(20);
+        }
+    }
+    if (ffp-&gt;auto_resume) {
+        ffp_notify_msg1(ffp, FFP_REQ_START);
+        ffp-&gt;auto_resume = 0;
+    }
+    /* offset should be seeked*/
+    if (ffp-&gt;seek_at_start &gt; 0) {
+        ffp_seek_to_l(ffp, (long)(ffp-&gt;seek_at_start));
+    }
+
+    //开始无限循环,调用ffmpeg的av_read_frame()读取AVPacket，并入队。
+    for (;;) {
+        //如果中断请求，则跳出循环
+        if (is-&gt;abort_request)
+            break;
+#ifdef FFP_MERGE
+        if (is-&gt;paused != is-&gt;last_paused) {
+            is-&gt;last_paused = is-&gt;paused;
+            if (is-&gt;paused)
+                is-&gt;read_pause_return = av_read_pause(ic);
+            else
+                av_read_play(ic);
+        }
+#endif
+#if CONFIG_RTSP_DEMUXER || CONFIG_MMSH_PROTOCOL
+        if (is-&gt;paused &amp;&amp;
+                (!strcmp(ic-&gt;iformat-&gt;name, &quot;rtsp&quot;) ||
+                 (ic-&gt;pb &amp;&amp; !strncmp(ffp-&gt;input_filename, &quot;mmsh:&quot;, 5)))) {
+            /* wait 10 ms to avoid trying to get another packet */
+            /* XXX: horrible */
+            SDL_Delay(10);
+            continue;
+        }
+#endif
+        //如果是seek 请求
+        if (is-&gt;seek_req) {
+            int64_t seek_target = is-&gt;seek_pos;
+            int64_t seek_min    = is-&gt;seek_rel &gt; 0 ? seek_target - is-&gt;seek_rel + 2: INT64_MIN;
+            int64_t seek_max    = is-&gt;seek_rel &lt; 0 ? seek_target - is-&gt;seek_rel - 2: INT64_MAX;
+// FIXME the +-2 is due to rounding being not done in the correct direction in generation
+//      of the seek_pos/seek_rel variables
+
+            ffp_toggle_buffering(ffp, 1);
+            ffp_notify_msg3(ffp, FFP_MSG_BUFFERING_UPDATE, 0, 0);
+            //ffmepg 中处理seek
+            ret = avformat_seek_file(is-&gt;ic, -1, seek_min, seek_target, seek_max, is-&gt;seek_flags);
+            if (ret &lt; 0) {
+                av_log(NULL, AV_LOG_ERROR,
+                       &quot;%s: error while seeking\n&quot;, is-&gt;ic-&gt;filename);
+            } else {
+                if (is-&gt;audio_stream &gt;= 0) {
+                    packet_queue_flush(&amp;is-&gt;audioq);
+                    packet_queue_put(&amp;is-&gt;audioq, &amp;flush_pkt);
+                    // TODO: clear invaild audio data
+                    // SDL_AoutFlushAudio(ffp-&gt;aout);
+                }
+                if (is-&gt;subtitle_stream &gt;= 0) {
+                    packet_queue_flush(&amp;is-&gt;subtitleq);
+                    packet_queue_put(&amp;is-&gt;subtitleq, &amp;flush_pkt);
+                }
+                if (is-&gt;video_stream &gt;= 0) {
+                    if (ffp-&gt;node_vdec) {
+                        ffpipenode_flush(ffp-&gt;node_vdec);
+                    }
+                    packet_queue_flush(&amp;is-&gt;videoq);
+                    packet_queue_put(&amp;is-&gt;videoq, &amp;flush_pkt);
+                }
+                if (is-&gt;seek_flags &amp; AVSEEK_FLAG_BYTE) {
+                   set_clock(&amp;is-&gt;extclk, NAN, 0);
+                } else {
+                   set_clock(&amp;is-&gt;extclk, seek_target / (double)AV_TIME_BASE, 0);
+                }
+
+                is-&gt;latest_video_seek_load_serial = is-&gt;videoq.serial;
+                is-&gt;latest_audio_seek_load_serial = is-&gt;audioq.serial;
+                is-&gt;latest_seek_load_start_at = av_gettime();
+            }
+            ffp-&gt;dcc.current_high_water_mark_in_ms = ffp-&gt;dcc.first_high_water_mark_in_ms;
+            is-&gt;seek_req = 0;
+            is-&gt;queue_attachments_req = 1;
+            is-&gt;eof = 0;
+#ifdef FFP_MERGE
+            if (is-&gt;paused)
+                step_to_next_frame(is);
+#endif
+            completed = 0;
+            SDL_LockMutex(ffp-&gt;is-&gt;play_mutex);
+            if (ffp-&gt;auto_resume) {
+                is-&gt;pause_req = 0;
+                if (ffp-&gt;packet_buffering)
+                    is-&gt;buffering_on = 1;
+                ffp-&gt;auto_resume = 0;
+                stream_update_pause_l(ffp);
+            }
+            if (is-&gt;pause_req)
+                step_to_next_frame_l(ffp);
+            SDL_UnlockMutex(ffp-&gt;is-&gt;play_mutex);
+
+            if (ffp-&gt;enable_accurate_seek) {
+                is-&gt;drop_aframe_count = 0;
+                is-&gt;drop_vframe_count = 0;
+                SDL_LockMutex(is-&gt;accurate_seek_mutex);
+                if (is-&gt;video_stream &gt;= 0) {
+                    is-&gt;video_accurate_seek_req = 1;
+                }
+                if (is-&gt;audio_stream &gt;= 0) {
+                    is-&gt;audio_accurate_seek_req = 1;
+                }
+                SDL_CondSignal(is-&gt;audio_accurate_seek_cond);
+                SDL_CondSignal(is-&gt;video_accurate_seek_cond);
+                SDL_UnlockMutex(is-&gt;accurate_seek_mutex);
+            }
+
+            ffp_notify_msg3(ffp, FFP_MSG_SEEK_COMPLETE, (int)fftime_to_milliseconds(seek_target), ret);
+            ffp_toggle_buffering(ffp, 1);
+        }
+        if (is-&gt;queue_attachments_req) {
+            if (is-&gt;video_st &amp;&amp; (is-&gt;video_st-&gt;disposition &amp; AV_DISPOSITION_ATTACHED_PIC)) {
+                AVPacket copy = { 0 };
+                if ((ret = av_packet_ref(&amp;copy, &amp;is-&gt;video_st-&gt;attached_pic)) &lt; 0)
+                    goto fail;
+                packet_queue_put(&amp;is-&gt;videoq, &amp;copy);
+                packet_queue_put_nullpacket(&amp;is-&gt;videoq, is-&gt;video_stream);
+            }
+            is-&gt;queue_attachments_req = 0;
+        }
+
+        /* if the queue are full, no need to read more */
+        if (ffp-&gt;infinite_buffer&lt;1 &amp;&amp; !is-&gt;seek_req &amp;&amp;
+#ifdef FFP_MERGE
+              (is-&gt;audioq.size + is-&gt;videoq.size + is-&gt;subtitleq.size &gt; MAX_QUEUE_SIZE
+#else
+              (is-&gt;audioq.size + is-&gt;videoq.size + is-&gt;subtitleq.size &gt; ffp-&gt;dcc.max_buffer_size
+#endif
+                    //内部逻辑为queue-&gt;nb_packets &gt; min_frames
+            || (   stream_has_enough_packets(is-&gt;audio_st, is-&gt;audio_stream, &amp;is-&gt;audioq, MIN_FRAMES)
+                &amp;&amp; stream_has_enough_packets(is-&gt;video_st, is-&gt;video_stream, &amp;is-&gt;videoq, MIN_FRAMES)
+                &amp;&amp; stream_has_enough_packets(is-&gt;subtitle_st, is-&gt;subtitle_stream, &amp;is-&gt;subtitleq, MIN_FRAMES)))) {
+            if (!is-&gt;eof) {
+                ffp_toggle_buffering(ffp, 0);
+            }
+            /* wait 10 ms */
+            SDL_LockMutex(wait_mutex);
+            SDL_CondWaitTimeout(is-&gt;continue_read_thread, wait_mutex, 10);
+            SDL_UnlockMutex(wait_mutex);
+            //进入到下一次循环
+            continue;
+        }
+        //处理播放结束
+        if ((!is-&gt;paused || completed) &amp;&amp;
+            (!is-&gt;audio_st || (is-&gt;auddec.finished == is-&gt;audioq.serial &amp;&amp; frame_queue_nb_remaining(&amp;is-&gt;sampq) == 0)) &amp;&amp;
+            (!is-&gt;video_st || (is-&gt;viddec.finished == is-&gt;videoq.serial &amp;&amp; frame_queue_nb_remaining(&amp;is-&gt;pictq) == 0))) {
+            if (ffp-&gt;loop != 1 &amp;&amp; (!ffp-&gt;loop || --ffp-&gt;loop)) {
+                stream_seek(is, ffp-&gt;start_time != AV_NOPTS_VALUE ? ffp-&gt;start_time : 0, 0, 0);
+            } else if (ffp-&gt;autoexit) {
+                ret = AVERROR_EOF;
+                goto fail;
+            } else {
+                ffp_statistic_l(ffp);
+                if (completed) {
+                    av_log(ffp, AV_LOG_INFO, &quot;ffp_toggle_buffering: eof\n&quot;);
+                    SDL_LockMutex(wait_mutex);
+                    // infinite wait may block shutdown
+                    while(!is-&gt;abort_request &amp;&amp; !is-&gt;seek_req)
+                        SDL_CondWaitTimeout(is-&gt;continue_read_thread, wait_mutex, 100);
+                    SDL_UnlockMutex(wait_mutex);
+                    if (!is-&gt;abort_request)
+                        continue;
+                } else {
+                    completed = 1;
+                    ffp-&gt;auto_resume = 0;
+
+                    // TODO: 0 it&#39;s a bit early to notify complete here
+                    ffp_toggle_buffering(ffp, 0);
+                    toggle_pause(ffp, 1);
+                    if (ffp-&gt;error) {
+                        av_log(ffp, AV_LOG_INFO, &quot;ffp_toggle_buffering: error: %d\n&quot;, ffp-&gt;error);
+                        ffp_notify_msg1(ffp, FFP_MSG_ERROR);
+                    } else {
+                        av_log(ffp, AV_LOG_INFO, &quot;ffp_toggle_buffering: completed: OK\n&quot;);
+                        ffp_notify_msg1(ffp, FFP_MSG_COMPLETED);
+                    }
+                }
+            }
+        }
+        pkt-&gt;flags = 0;
+        //读帧，读到这个pkt包里面？
+        //0 if OK, &lt; 0 on error or end of file
+        ret = av_read_frame(ic, pkt);
+        if (ret &lt; 0) {
+            int pb_eof = 0;
+            int pb_error = 0;
+            //EOF表示：end of file
+            if ((ret == AVERROR_EOF || avio_feof(ic-&gt;pb)) &amp;&amp; !is-&gt;eof) {
+                ffp_check_buffering_l(ffp);
+                pb_eof = 1;
+                // check error later
+            }
+            if (ic-&gt;pb &amp;&amp; ic-&gt;pb-&gt;error) {
+                pb_eof = 1;
+                pb_error = ic-&gt;pb-&gt;error;
+            }
+            if (ret == AVERROR_EXIT) {
+                pb_eof = 1;
+                pb_error = AVERROR_EXIT;
+            }
+
+            if (pb_eof) {
+                if (is-&gt;video_stream &gt;= 0)
+                    packet_queue_put_nullpacket(&amp;is-&gt;videoq, is-&gt;video_stream);
+                if (is-&gt;audio_stream &gt;= 0)
+                    packet_queue_put_nullpacket(&amp;is-&gt;audioq, is-&gt;audio_stream);
+                if (is-&gt;subtitle_stream &gt;= 0)
+                    packet_queue_put_nullpacket(&amp;is-&gt;subtitleq, is-&gt;subtitle_stream);
+                is-&gt;eof = 1;
+            }
+            if (pb_error) {
+                if (is-&gt;video_stream &gt;= 0)
+                    packet_queue_put_nullpacket(&amp;is-&gt;videoq, is-&gt;video_stream);
+                if (is-&gt;audio_stream &gt;= 0)
+                    packet_queue_put_nullpacket(&amp;is-&gt;audioq, is-&gt;audio_stream);
+                if (is-&gt;subtitle_stream &gt;= 0)
+                    packet_queue_put_nullpacket(&amp;is-&gt;subtitleq, is-&gt;subtitle_stream);
+                is-&gt;eof = 1;
+                ffp-&gt;error = pb_error;
+                av_log(ffp, AV_LOG_ERROR, &quot;av_read_frame error: %s\n&quot;, ffp_get_error_string(ffp-&gt;error));
+                // break;
+            } else {
+                ffp-&gt;error = 0;
+            }
+            if (is-&gt;eof) {
+                ffp_toggle_buffering(ffp, 0);
+                SDL_Delay(100);
+            }
+            SDL_LockMutex(wait_mutex);
+            SDL_CondWaitTimeout(is-&gt;continue_read_thread, wait_mutex, 10);
+            SDL_UnlockMutex(wait_mutex);
+            ffp_statistic_l(ffp);
+            continue;
+        } else {
+            is-&gt;eof = 0;
+        }
+
+        //flush_pkt是用来做什么的？
+        if (pkt-&gt;flags &amp; AV_PKT_FLAG_DISCONTINUITY) {
+            if (is-&gt;audio_stream &gt;= 0) {
+                packet_queue_put(&amp;is-&gt;audioq, &amp;flush_pkt);
+            }
+            if (is-&gt;subtitle_stream &gt;= 0) {
+                packet_queue_put(&amp;is-&gt;subtitleq, &amp;flush_pkt);
+            }
+            if (is-&gt;video_stream &gt;= 0) {
+                packet_queue_put(&amp;is-&gt;videoq, &amp;flush_pkt);
+            }
+        }
+
+        /* check if packet is in play range specified by user, then queue, otherwise discard */
+        stream_start_time = ic-&gt;streams[pkt-&gt;stream_index]-&gt;start_time;
+        pkt_ts = pkt-&gt;pts == AV_NOPTS_VALUE ? pkt-&gt;dts : pkt-&gt;pts;
+        pkt_in_play_range = ffp-&gt;duration == AV_NOPTS_VALUE ||
+                (pkt_ts - (stream_start_time != AV_NOPTS_VALUE ? stream_start_time : 0)) *
+                av_q2d(ic-&gt;streams[pkt-&gt;stream_index]-&gt;time_base) -
+                (double)(ffp-&gt;start_time != AV_NOPTS_VALUE ? ffp-&gt;start_time : 0) / 1000000
+                &lt;= ((double)ffp-&gt;duration / 1000000);
+        if (pkt-&gt;stream_index == is-&gt;audio_stream &amp;&amp; pkt_in_play_range) {
+            packet_queue_put(&amp;is-&gt;audioq, pkt);
+        } else if (pkt-&gt;stream_index == is-&gt;video_stream &amp;&amp; pkt_in_play_range
+                   &amp;&amp; !(is-&gt;video_st &amp;&amp; (is-&gt;video_st-&gt;disposition &amp; AV_DISPOSITION_ATTACHED_PIC))) {
+            packet_queue_put(&amp;is-&gt;videoq, pkt);
+        } else if (pkt-&gt;stream_index == is-&gt;subtitle_stream &amp;&amp; pkt_in_play_range) {
+            packet_queue_put(&amp;is-&gt;subtitleq, pkt);
+        } else {
+            av_packet_unref(pkt);
+        }
+
+        ffp_statistic_l(ffp);
+
+        if (ffp-&gt;ijkmeta_delay_init &amp;&amp; !init_ijkmeta &amp;&amp;
+                (ffp-&gt;first_video_frame_rendered || !is-&gt;video_st) &amp;&amp; (ffp-&gt;first_audio_frame_rendered || !is-&gt;audio_st)) {
+            ijkmeta_set_avformat_context_l(ffp-&gt;meta, ic);
+            init_ijkmeta = 1;
+        }
+
+        if (ffp-&gt;packet_buffering) {
+            io_tick_counter = SDL_GetTickHR();
+            if ((!ffp-&gt;first_video_frame_rendered &amp;&amp; is-&gt;video_st) || (!ffp-&gt;first_audio_frame_rendered &amp;&amp; is-&gt;audio_st)) {
+                if (abs((int)(io_tick_counter - prev_io_tick_counter)) &gt; FAST_BUFFERING_CHECK_PER_MILLISECONDS) {
+                    prev_io_tick_counter = io_tick_counter;
+                    ffp-&gt;dcc.current_high_water_mark_in_ms = ffp-&gt;dcc.first_high_water_mark_in_ms;
+                    ffp_check_buffering_l(ffp);
+                }
+            } else {
+                if (abs((int)(io_tick_counter - prev_io_tick_counter)) &gt; BUFFERING_CHECK_PER_MILLISECONDS) {
+                    prev_io_tick_counter = io_tick_counter;
+                    ffp_check_buffering_l(ffp);
+                }
+            }
+        }
+    }
+
+    ret = 0;
+ fail:
+    if (ic &amp;&amp; !is-&gt;ic)
+        avformat_close_input(&amp;ic);
+
+    if (!ffp-&gt;prepared || !is-&gt;abort_request) {
+        ffp-&gt;last_error = last_error;
+        ffp_notify_msg2(ffp, FFP_MSG_ERROR, last_error);
+    }
+    SDL_DestroyMutex(wait_mutex);
+    return 0;
+}</code></pre>
+<h4 id="小结："><a href="#小结：" class="headerlink" title="小结："></a>小结：</h4><p>总结一下：视频读取线程大致做的事情就是：</p>
+<ol>
+<li>ffmpeg进行协议探测，封装格式探测等网络请求，为创建解码器做准备。</li>
+<li>创建video，audio，subtitle解码器并开启相应的解码线程。</li>
+<li>for循环不断地调用<code>av_read_frame()</code>去从ffmpeg内部维护的网络包缓存去取出下载好的AVPacket，并放入相应的队列中，供稍后解码线程取出解码。</li>
+</ol>
+<p>tex);<br>            if (ffp-&gt;auto_resume) {<br>                is-&gt;pause_req = 0;<br>                if (ffp-&gt;packet_buffering)<br>                    is-&gt;buffering_on = 1;<br>                ffp-&gt;auto_resume = 0;<br>                stream_update_pause_l(ffp);<br>            }<br>            if (is-&gt;pause_req)<br>                step_to_next_frame_l(ffp);<br>            SDL_UnlockMutex(ffp-&gt;is-&gt;play_mutex);</p>
+<pre><code>        if (ffp-&gt;enable_accurate_seek) {
+            is-&gt;drop_aframe_count = 0;
+            is-&gt;drop_vframe_count = 0;
+            SDL_LockMutex(is-&gt;accurate_seek_mutex);
+            if (is-&gt;video_stream &gt;= 0) {
+                is-&gt;video_accurate_seek_req = 1;
+            }
+            if (is-&gt;audio_stream &gt;= 0) {
+                is-&gt;audio_accurate_seek_req = 1;
+            }
+            SDL_CondSignal(is-&gt;audio_accurate_seek_cond);
+            SDL_CondSignal(is-&gt;video_accurate_seek_cond);
+            SDL_UnlockMutex(is-&gt;accurate_seek_mutex);
+        }
+
+        ffp_notify_msg3(ffp, FFP_MSG_SEEK_COMPLETE, (int)fftime_to_milliseconds(seek_target), ret);
+        ffp_toggle_buffering(ffp, 1);
+    }
+    if (is-&gt;queue_attachments_req) {
+        if (is-&gt;video_st &amp;&amp; (is-&gt;video_st-&gt;disposition &amp; AV_DISPOSITION_ATTACHED_PIC)) {
+            AVPacket copy = { 0 };
+            if ((ret = av_packet_ref(&amp;copy, &amp;is-&gt;video_st-&gt;attached_pic)) &lt; 0)
+                goto fail;
+            packet_queue_put(&amp;is-&gt;videoq, &amp;copy);
+            packet_queue_put_nullpacket(&amp;is-&gt;videoq, is-&gt;video_stream);
+        }
+        is-&gt;queue_attachments_req = 0;
+    }
+
+    /* if the queue are full, no need to read more */
+    if (ffp-&gt;infinite_buffer&lt;1 &amp;&amp; !is-&gt;seek_req &amp;&amp;</code></pre><p>#ifdef FFP_MERGE<br>              (is-&gt;audioq.size + is-&gt;videoq.size + is-&gt;subtitleq.size &gt; MAX_QUEUE_SIZE<br>#else<br>              (is-&gt;audioq.size + is-&gt;videoq.size + is-&gt;subtitleq.size &gt; ffp-&gt;dcc.max_buffer_size<br>#endif<br>                    //内部逻辑为queue-&gt;nb_packets &gt; min_frames<br>            || (   stream_has_enough_packets(is-&gt;audio_st, is-&gt;audio_stream, &amp;is-&gt;audioq, MIN_FRAMES)<br>                &amp;&amp; stream_has_enough_packets(is-&gt;video_st, is-&gt;video_stream, &amp;is-&gt;videoq, MIN_FRAMES)<br>                &amp;&amp; stream_has_enough_packets(is-&gt;subtitle_st, is-&gt;subtitle_stream, &amp;is-&gt;subtitleq, MIN_FRAMES)))) {<br>            if (!is-&gt;eof) {<br>                ffp_toggle_buffering(ffp, 0);<br>            }<br>            /* wait 10 ms */<br>            SDL_LockMutex(wait_mutex);<br>            SDL_CondWaitTimeout(is-&gt;continue_read_thread, wait_mutex, 10);<br>            SDL_UnlockMutex(wait_mutex);<br>            //进入到下一次循环<br>            continue;<br>        }<br>        //处理播放结束<br>        if ((!is-&gt;paused || completed) &amp;&amp;<br>            (!is-&gt;audio_st || (is-&gt;auddec.finished == is-&gt;audioq.serial &amp;&amp; frame_queue_nb_remaining(&amp;is-&gt;sampq) == 0)) &amp;&amp;<br>            (!is-&gt;video_st || (is-&gt;viddec.finished == is-&gt;videoq.serial &amp;&amp; frame_queue_nb_remaining(&amp;is-&gt;pictq) == 0))) {<br>            if (ffp-&gt;loop != 1 &amp;&amp; (!ffp-&gt;loop || –ffp-&gt;loop)) {<br>                stream_seek(is, ffp-&gt;start_time != AV_NOPTS_VALUE ? ffp-&gt;start_time : 0, 0, 0);<br>            } else if (ffp-&gt;autoexit) {<br>                ret = AVERROR_EOF;<br>                goto fail;<br>            } else {<br>                ffp_statistic_l(ffp);<br>                if (completed) {<br>                    av_log(ffp, AV_LOG_INFO, “ffp_toggle_buffering: eof\n”);<br>                    SDL_LockMutex(wait_mutex);<br>                    // infinite wait may block shutdown<br>                    while(!is-&gt;abort_request &amp;&amp; !is-&gt;seek_req)<br>                        SDL_CondWaitTimeout(is-&gt;continue_read_thread, wait_mutex, 100);<br>                    SDL_UnlockMutex(wait_mutex);<br>                    if (!is-&gt;abort_request)<br>                        continue;<br>                } else {<br>                    completed = 1;<br>                    ffp-&gt;auto_resume = 0;</p>
+<pre><code>                // TODO: 0 it&#39;s a bit early to notify complete here
+                ffp_toggle_buffering(ffp, 0);
+                toggle_pause(ffp, 1);
+                if (ffp-&gt;error) {
+                    av_log(ffp, AV_LOG_INFO, &quot;ffp_toggle_buffering: error: %d\n&quot;, ffp-&gt;error);
+                    ffp_notify_msg1(ffp, FFP_MSG_ERROR);
+                } else {
+                    av_log(ffp, AV_LOG_INFO, &quot;ffp_toggle_buffering: completed: OK\n&quot;);
+                    ffp_notify_msg1(ffp, FFP_MSG_COMPLETED);
+                }
+            }
+        }
+    }
+    pkt-&gt;flags = 0;
+    //读帧，读到这个pkt包里面？
+    //0 if OK, &lt; 0 on error or end of file
+    ret = av_read_frame(ic, pkt);
+    if (ret &lt; 0) {
+        int pb_eof = 0;
+        int pb_error = 0;
+        //EOF表示：end of file
+        if ((ret == AVERROR_EOF || avio_feof(ic-&gt;pb)) &amp;&amp; !is-&gt;eof) {
+            ffp_check_buffering_l(ffp);
+            pb_eof = 1;
+            // check error later
+        }
+        if (ic-&gt;pb &amp;&amp; ic-&gt;pb-&gt;error) {
+            pb_eof = 1;
+            pb_error = ic-&gt;pb-&gt;error;
+        }
+        if (ret == AVERROR_EXIT) {
+            pb_eof = 1;
+            pb_error = AVERROR_EXIT;
+        }
+
+        if (pb_eof) {
+            if (is-&gt;video_stream &gt;= 0)
+                packet_queue_put_nullpacket(&amp;is-&gt;videoq, is-&gt;video_stream);
+            if (is-&gt;audio_stream &gt;= 0)
+                packet_queue_put_nullpacket(&amp;is-&gt;audioq, is-&gt;audio_stream);
+            if (is-&gt;subtitle_stream &gt;= 0)
+                packet_queue_put_nullpacket(&amp;is-&gt;subtitleq, is-&gt;subtitle_stream);
+            is-&gt;eof = 1;
+        }
+        if (pb_error) {
+            if (is-&gt;video_stream &gt;= 0)
+                packet_queue_put_nullpacket(&amp;is-&gt;videoq, is-&gt;video_stream);
+            if (is-&gt;audio_stream &gt;= 0)
+                packet_queue_put_nullpacket(&amp;is-&gt;audioq, is-&gt;audio_stream);
+            if (is-&gt;subtitle_stream &gt;= 0)
+                packet_queue_put_nullpacket(&amp;is-&gt;subtitleq, is-&gt;subtitle_stream);
+            is-&gt;eof = 1;
+            ffp-&gt;error = pb_error;
+            av_log(ffp, AV_LOG_ERROR, &quot;av_read_frame error: %s\n&quot;, ffp_get_error_string(ffp-&gt;error));
+            // break;
+        } else {
+            ffp-&gt;error = 0;
+        }
+        if (is-&gt;eof) {
+            ffp_toggle_buffering(ffp, 0);
+            SDL_Delay(100);
+        }
+        SDL_LockMutex(wait_mutex);
+        SDL_CondWaitTimeout(is-&gt;continue_read_thread, wait_mutex, 10);
+        SDL_UnlockMutex(wait_mutex);
+        ffp_statistic_l(ffp);
+        continue;
+    } else {
+        is-&gt;eof = 0;
+    }
+
+    //flush_pkt是用来做什么的？
+    if (pkt-&gt;flags &amp; AV_PKT_FLAG_DISCONTINUITY) {
+        if (is-&gt;audio_stream &gt;= 0) {
+            packet_queue_put(&amp;is-&gt;audioq, &amp;flush_pkt);
+        }
+        if (is-&gt;subtitle_stream &gt;= 0) {
+            packet_queue_put(&amp;is-&gt;subtitleq, &amp;flush_pkt);
+        }
+        if (is-&gt;video_stream &gt;= 0) {
+            packet_queue_put(&amp;is-&gt;videoq, &amp;flush_pkt);
+        }
+    }
+
+    /* check if packet is in play range specified by user, then queue, otherwise discard */
+    stream_start_time = ic-&gt;streams[pkt-&gt;stream_index]-&gt;start_time;
+    pkt_ts = pkt-&gt;pts == AV_NOPTS_VALUE ? pkt-&gt;dts : pkt-&gt;pts;
+    pkt_in_play_range = ffp-&gt;duration == AV_NOPTS_VALUE ||
+            (pkt_ts - (stream_start_time != AV_NOPTS_VALUE ? stream_start_time : 0)) *
+            av_q2d(ic-&gt;streams[pkt-&gt;stream_index]-&gt;time_base) -
+            (double)(ffp-&gt;start_time != AV_NOPTS_VALUE ? ffp-&gt;start_time : 0) / 1000000
+            &lt;= ((double)ffp-&gt;duration / 1000000);
+    if (pkt-&gt;stream_index == is-&gt;audio_stream &amp;&amp; pkt_in_play_range) {
+        packet_queue_put(&amp;is-&gt;audioq, pkt);
+    } else if (pkt-&gt;stream_index == is-&gt;video_stream &amp;&amp; pkt_in_play_range
+               &amp;&amp; !(is-&gt;video_st &amp;&amp; (is-&gt;video_st-&gt;disposition &amp; AV_DISPOSITION_ATTACHED_PIC))) {
+        packet_queue_put(&amp;is-&gt;videoq, pkt);
+    } else if (pkt-&gt;stream_index == is-&gt;subtitle_stream &amp;&amp; pkt_in_play_range) {
+        packet_queue_put(&amp;is-&gt;subtitleq, pkt);
+    } else {
+        av_packet_unref(pkt);
+    }
+
+    ffp_statistic_l(ffp);
+
+    if (ffp-&gt;ijkmeta_delay_init &amp;&amp; !init_ijkmeta &amp;&amp;
+            (ffp-&gt;first_video_frame_rendered || !is-&gt;video_st) &amp;&amp; (ffp-&gt;first_audio_frame_rendered || !is-&gt;audio_st)) {
+        ijkmeta_set_avformat_context_l(ffp-&gt;meta, ic);
+        init_ijkmeta = 1;
+    }
+
+    if (ffp-&gt;packet_buffering) {
+        io_tick_counter = SDL_GetTickHR();
+        if ((!ffp-&gt;first_video_frame_rendered &amp;&amp; is-&gt;video_st) || (!ffp-&gt;first_audio_frame_rendered &amp;&amp; is-&gt;audio_st)) {
+            if (abs((int)(io_tick_counter - prev_io_tick_counter)) &gt; FAST_BUFFERING_CHECK_PER_MILLISECONDS) {
+                prev_io_tick_counter = io_tick_counter;
+                ffp-&gt;dcc.current_high_water_mark_in_ms = ffp-&gt;dcc.first_high_water_mark_in_ms;
+                ffp_check_buffering_l(ffp);
+            }
+        } else {
+            if (abs((int)(io_tick_counter - prev_io_tick_counter)) &gt; BUFFERING_CHECK_PER_MILLISECONDS) {
+                prev_io_tick_counter = io_tick_counter;
+                ffp_check_buffering_l(ffp);
+            }
+        }
+    }
+}
+
+ret = 0;</code></pre><p> fail:<br>    if (ic &amp;&amp; !is-&gt;ic)<br>        avformat_close_input(&amp;ic);</p>
+<pre><code>if (!ffp-&gt;prepared || !is-&gt;abort_request) {
+    ffp-&gt;last_error = last_error;
+    ffp_notify_msg2(ffp, FFP_MSG_ERROR, last_error);
+}
+SDL_D</code></pre>
+            </div>
+            <hr>
+            <div>
+              <p>
+                
+                  <span>
+                <i class="iconfont icon-inbox"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%BC%80%E5%8F%91/">音视频开发</a>
+                      &nbsp;
+                    
+                  </span>&nbsp;&nbsp;
+                
+                
+              </p>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/03/26/%E7%BD%91%E7%BB%9C/Https%E6%89%AB%E7%9B%B2/">
+                        <i class="fa fa-chevron-left"></i>
+                        <span class="hidden-mobile">Https扫盲</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/2020/03/26/%E7%AE%97%E6%B3%95/%E7%BA%A2%E9%BB%91%E6%A0%91/">
+                        <span class="hidden-mobile">红黑树</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="fa fa-chevron-right"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+              
+                <!-- Comments -->
+                <div class="comments" id="comments">
+                  
+                  
+
+                </div>
+              
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc-start"></div>
+<div id="toc">
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+    </div>
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/popper.js/1.16.1/umd/popper.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="https://cdn.staticfile.org/mdbootstrap/4.13.0/js/mdb.min.js" ></script>
+<script  src="/js/main.js" ></script>
+
+
+  <script  src="/js/lazyload.js" ></script>
+
+
+
+  
+  <script  src="https://cdn.staticfile.org/tocbot/4.10.0/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var navHeight = $('#navbar').height();
+      var toc = $('#toc');
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+      var tocLimMax = 2 * boardTop + boardCtn.height();
+
+      $(window).scroll(function () {
+        var tocLimMin = $('#toc-start').offset().top - navHeight;
+        var scroH = document.body.scrollTop + document.documentElement.scrollTop;
+
+        if (tocLimMin <= scroH && scroH <= tocLimMax) {
+          toc.css({
+            'display': 'block',
+            'position': 'fixed',
+            'top': navHeight,
+          });
+        } else if (scroH <= tocLimMin) {
+          toc.css({
+            'position': '',
+            'top': '',
+          });
+        } else if (scroH > tocLimMax) {
+          toc.css('display', 'none');
+        }
+      });
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '.post-content',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc > p').css('visibility', 'visible');
+      }
+      var offset = boardCtn.css('margin-right')
+      $('#toc-ctn').css({
+        'right': offset
+      })
+    });
+  </script>
+
+
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+
+<!-- Plugins -->
+
+
+
+  <script  src="https://cdn.staticfile.org/prettify/188.0.0/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  linenums');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "理解ijkplayer（四）拉流&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

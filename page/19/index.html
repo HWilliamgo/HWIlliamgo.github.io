@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  <title>Hexo</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.12.1/css/all.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/mdbootstrap/4.13.0/css/mdb.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/3.0.1/github-markdown.min.css" />
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+
+
+
+  <link  rel="stylesheet" href="/lib/prettify/tomorrow-night-eighties.min.css" />
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link defer rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+<!-- 自定义样式保持在最底部 -->
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+<body>
+  <header style="height: 100vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Hexo</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">归档</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">分类</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">标签</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">关于</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+          </div>
+
+          
+            <div class="scroll-down-bar">
+              <i class="fas fa-angle-down scroll-down-arrow"></i>
+            </div>
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      <div class="container nopadding-md">
+        <div class="py-5 z-depth-3" id="board"
+          style=margin-top:0>
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2020/03/26/Android/Handler%E5%8F%AF%E8%83%BD%E5%BC%95%E8%B5%B7%E7%9A%84%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/">
+        <p class="h4 index-header">Handler可能引起的内存泄漏</p>
+      </a>
+
+      <a href="/2020/03/26/Android/Handler%E5%8F%AF%E8%83%BD%E5%BC%95%E8%B5%B7%E7%9A%84%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">
+参考文章http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2014/1106/1922.html
+
+
+在用handler的时候如果这么用就一定会发生内存泄漏：
+public class MainActivity extends AppCompatActivity {
+
+ private Handler myHandler=new Handler(){
+     @Override
+     public void handleMessage(Message msg) {
+         super.handleMessage(msg</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-26&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Android/">Android</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2020/03/26/Android/GreenDao%E5%AE%89%E5%85%A8%E5%9C%B0%E5%8D%87%E7%BA%A7%E6%95%B0%E6%8D%AE%E5%BA%93/">
+        <p class="h4 index-header">GreenDao安全地升级数据库</p>
+      </a>
+
+      <a href="/2020/03/26/Android/GreenDao%E5%AE%89%E5%85%A8%E5%9C%B0%E5%8D%87%E7%BA%A7%E6%95%B0%E6%8D%AE%E5%BA%93/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">首先,这玩意怎么升级数据库？
+传统SQLite语句做法：写一个自己的Helper继承自SQLiteOpenHelper，重写里面的onUpgrade方法，方法里做的事情就是（如图）：
+
+
+先把原先的表drop下来，就是删了
+然后再重新创建)然后拿helper的时候就用的自己的Helper就完事了，接着这里第四个参数就是数据库版本号，填一个比之前大的数字就OK了。
+
+
+GreenDao：问题：greendao里面没有那种指定版本号就升级的方法，摸索之后如下：在这里更改数据库版本，然后点击make project，下次安装的时候就升级了~
+
+然而，默认情况下GreenDao升级数据库也是会直接dr</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-26&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Android/">Android</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2020/03/26/Android/Generate-Signed-APK%E7%9A%84%E4%B8%80%E4%B8%AA%E5%9D%91/">
+        <p class="h4 index-header">Generate-Signed-APK的一个坑</p>
+      </a>
+
+      <a href="/2020/03/26/Android/Generate-Signed-APK%E7%9A%84%E4%B8%80%E4%B8%AA%E5%9D%91/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">
+给这玩意坑了好长时间，不过还好后面还是解决了。
+
+ 入口：
+进入：
+下一步：
+
+
+这个地方注意了，V2的签名方式是Android 7.0之后的签名方式，顾名思义：需要运行在7.0以后的手机上才能使用这种签名方式，但是如果不是android7.0的手机我们用V2的签名方式签名了会啥情况？
+
+很蛋疼
+
+是的是的，就是找不到签名证书了。
+结论：避免不适配咋办？直接用V1的签名就行了呀。或者V1和V2都用，也没问题。                                                                                             </div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-26&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Android/">Android</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2020/03/26/Android/GreenDao-2-0%E5%88%9D%E5%A7%8B%E5%8C%96%E6%96%B9%E6%B3%95/">
+        <p class="h4 index-header">GreenDao-2-0初始化方法</p>
+      </a>
+
+      <a href="/2020/03/26/Android/GreenDao-2-0%E5%88%9D%E5%A7%8B%E5%8C%96%E6%96%B9%E6%B3%95/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">因为我以前都是用3.0的注解来生成Entity实体类的， 没有用过2.0用代码操作的方式，所以记录一下。
+
+官网图如上：第一点：在你的generator类里面添加依赖。那么打开AS,新建一个Module，类型为Java Library.
+在Module的gradle中复制粘贴依赖
+
+看官网的第三点：在app中添加依赖：
+
+写一个类用来生成GreenDao。
+public class ExampleDaoGenerator {
+
+    private static final String packageName=&quot;GreenDao&quot;;
+    private static</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-26&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Android/">Android</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2020/03/26/Android/Fragment%E7%8A%B6%E6%80%81%E4%BF%9D%E5%AD%98/">
+        <p class="h4 index-header">Fragment状态保存</p>
+      </a>
+
+      <a href="/2020/03/26/Android/Fragment%E7%8A%B6%E6%80%81%E4%BF%9D%E5%AD%98/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">译］Android Activity 和 Fragment 状态保存与恢复的最佳实践                                                                                                                                                                                                                                                                  </div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-26&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Android/">Android</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2020/03/26/Android/Fragment%E6%B6%89%E5%8F%8A%E7%9A%84add%E3%80%81remove%E5%92%8Creplace%E6%96%B9%E6%B3%95%E5%92%8C%E5%9B%9E%E9%80%80%E6%A0%88%E7%9A%84%E5%85%B3%E7%B3%BB%E8%AF%A6%E8%A7%A3/">
+        <p class="h4 index-header">Fragment涉及的add、remove和replace方法和回退栈的关系详解</p>
+      </a>
+
+      <a href="/2020/03/26/Android/Fragment%E6%B6%89%E5%8F%8A%E7%9A%84add%E3%80%81remove%E5%92%8Creplace%E6%96%B9%E6%B3%95%E5%92%8C%E5%9B%9E%E9%80%80%E6%A0%88%E7%9A%84%E5%85%B3%E7%B3%BB%E8%AF%A6%E8%A7%A3/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">前部分参考：Fragment涉及的add、remove和replace方法和回退栈的关系详解
+划重点：
+
+add方法不会加入回退栈，只会在container的view里面一层一层不断往上面涂layout。
+this.layout = (FrameLayout) this.findViewById(R.id.contentFrame);
+
+     button.setOnClickListener(new View.OnClickListener() {
+         @Override
+         public void onClick(View v) {
+            </div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-26&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Android/">Android</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2020/03/26/Android/CoordinatorLayout%E9%85%8D%E5%90%88AppBarLayout%E3%80%81CollapsingToolbarLayout%E3%80%81Toolbar%E4%BD%BF%E7%94%A8/">
+        <p class="h4 index-header">CoordinatorLayout配合AppBarLayout、CollapsingToolbarLayout、Toolbar使用</p>
+      </a>
+
+      <a href="/2020/03/26/Android/CoordinatorLayout%E9%85%8D%E5%90%88AppBarLayout%E3%80%81CollapsingToolbarLayout%E3%80%81Toolbar%E4%BD%BF%E7%94%A8/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">这篇文章主要介绍的是CoordinatorLayout，AppBarLayout,CollapsingToolbarLayout和Toolbar的结合表现出的动态效果。效果如图：
+首先介绍上述几个控件在使用的时候的注意点：
+
+CoordinatorLayout：
+是一个FrameLayout
+
+
+AppBarLayout：
+是一个vertical的LinearLayout，其子View应通过setScrollFlags(int)或者xmL中的app:layout_scrollFlags来提供他们的Behavior。
+具体的app:layout_scrollFlags有这么几个： scroll,</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-26&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Android/">Android</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2020/03/26/Android/DialogFragment%E8%87%AA%E5%B7%B1%E7%88%AC%E8%BF%87%E7%9A%84%E5%9D%91/">
+        <p class="h4 index-header">DialogFragment自己爬过的坑</p>
+      </a>
+
+      <a href="/2020/03/26/Android/DialogFragment%E8%87%AA%E5%B7%B1%E7%88%AC%E8%BF%87%E7%9A%84%E5%9D%91/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">DialogFragment在显示之后如何从屏幕消除？
+
+直接按手机的返回键
+自己的代码里处理 ，调用DialogFragment的对象的dismiss()；
+从外部处理MyDialogFragment dialog=(MyDialogFragment)getFragmentManager.findFragmentByTag();
+dialog.dismiss();
+//摸索了我好久好久，各种查资料，最后自己试出来了，妈的                                                                                       </div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-26&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Android/">Android</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2020/03/26/Android/CoordinatorLayout%E5%85%A8%E9%9D%A2%E8%A7%A3%E6%9E%90/">
+        <p class="h4 index-header">CoordinatorLayout全面解析</p>
+      </a>
+
+      <a href="/2020/03/26/Android/CoordinatorLayout%E5%85%A8%E9%9D%A2%E8%A7%A3%E6%9E%90/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">Absfree的文章：彻底搞懂CoordinatorLayout
+                                                                                                                                                                                                                                                                           </div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-26&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Android/">Android</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2020/03/26/Android/CoodinatorLayout%E9%87%8C%E6%94%BE%E5%B8%83%E5%B1%80%E9%97%AE%E9%A2%98/">
+        <p class="h4 index-header">CoodinatorLayout里放布局问题</p>
+      </a>
+
+      <a href="/2020/03/26/Android/CoodinatorLayout%E9%87%8C%E6%94%BE%E5%B8%83%E5%B1%80%E9%97%AE%E9%A2%98/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">CoordinatorLayout是一个FrameLayout，也就是说如果不做特殊处理，里面的子布局是无法控制的，超过一个，就会糊在一起，但是CoordiatorLayout又很特殊，只有在作为layout.xml的顶层布局才能发挥他协调子view的作用。因此要控制他的多个子View，比如除了AppBarLayout之外，要在下面加一个TabLayout或者RecyclerView,就要在他们里面加上app:layout_behavior=&quot;&quot;属性
+&lt;android.support.v7.widget.RecyclerView
+    android:id=&quo</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-26&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Android/">Android</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+
+
+  <nav aria-label="index posts navigation">
+    <span class="pagination pg-blue justify-content-center mt-5" id="pagination">
+      <a class="extend prev" rel="prev" href="/page/18/"><i class="fas fa-angle-double-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><a class="page-number" href="/page/18/">18</a><span class="page-number current">19</span><a class="page-number" href="/page/20/">20</a><a class="page-number" href="/page/21/">21</a><a class="page-number" href="/page/22/">22</a><a class="extend next" rel="next" href="/page/20/"><i class="fas fa-angle-double-right"></i></a>
+    </span>
+  </nav>
+  
+  <script>
+    for (ele of document.getElementById("pagination").getElementsByTagName("a")) {
+      ele.href += '#board';
+    }
+  </script>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+  </main>
+
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+    </div>
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/popper.js/1.16.1/umd/popper.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="https://cdn.staticfile.org/mdbootstrap/4.13.0/js/mdb.min.js" ></script>
+<script  src="/js/main.js" ></script>
+
+
+  <script  src="/js/lazyload.js" ></script>
+
+
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+
+<!-- Plugins -->
+
+
+
+  <script  src="https://cdn.staticfile.org/prettify/188.0.0/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  linenums');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
