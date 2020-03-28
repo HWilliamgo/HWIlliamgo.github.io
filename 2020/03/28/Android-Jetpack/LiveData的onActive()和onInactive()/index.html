@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="https://s1.ax1x.com/2020/03/28/GkotgK.th.jpg">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="HWilliamgo">
+  <meta name="keywords" content="">
+  <title>LiveData的onActive()和onInactive() - William的小星球</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.12.1/css/all.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/mdbootstrap/4.13.0/css/mdb.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/3.0.1/github-markdown.min.css" />
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+
+
+
+  <link  rel="stylesheet" href="/lib/prettify/tomorrow-night-eighties.min.css" />
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link defer rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+<!-- 自定义样式保持在最底部 -->
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>William的小星球</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">归档</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">分类</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">标签</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">关于</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('https://w.wallhaven.cc/full/39/wallhaven-39joqy.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+                <p class="mt-3 post-meta">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                  星期六, 三月 28日 2020, 8:05 早上
+                </p>
+              
+
+              <p class="mt-1">
+                
+                  
+                  <span class="post-meta">
+                    <i class="far fa-chart-bar"></i>
+                    1.4k 字
+                  </span>
+                
+
+                
+                  
+                  <span class="post-meta">
+                      <i class="far fa-clock"></i>
+                      5 分钟
+                  </span>
+                
+
+                
+              </p>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5 z-depth-3" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+            <div class="markdown-body">
+              <blockquote>
+<p>看文档的时候对LiveData()的onInactive()回调产生了疑问，遂看源码，记录之。</p>
+</blockquote>
+<h3 id="1-关系"><a href="#1-关系" class="headerlink" title="1. 关系"></a>1. 关系</h3><p><img src="https://upload-images.jianshu.io/upload_images/7177220-e1ef03486cbaad2e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt=""></p>
+<p>概述：LiveData和Observer互相持有，LiveData将其持有的数据的变动，转发给所有注册过来的Observer。</p>
+<h3 id="2-onActive-和-onInactive"><a href="#2-onActive-和-onInactive" class="headerlink" title="2. onActive 和 onInactive()"></a>2. onActive 和 onInactive()</h3><pre><code class="java">/**
+ * Called when the number of active observers change to 1 from 0.
+ * &lt;p&gt;
+ * This callback can be used to know that this LiveData is being used thus should be kept
+ * up to date.
+ */
+protected void onActive() {
+}
+/**
+ * Called when the number of active observers change from 1 to 0.
+ * &lt;p&gt;
+ * This does not mean that there are no observers left, there may still be observers but their
+ * lifecycle states aren&#39;t {@link Lifecycle.State#STARTED} or {@link Lifecycle.State#RESUMED}
+ * (like an Activity in the back stack).
+ * &lt;p&gt;
+ * You can check if there are observers via {@link #hasObservers()}.
+ */
+protected void onInactive() {
+}</code></pre>
+<p>这里对<code>onInactive()</code>方法的注释产生了疑问。</p>
+<p>因为他与<code>onActive()</code>的注释并不完全对应，而是多了一句话：</p>
+<p>这不表示该LiveData没有任何Observer了，任然有可能有LiveData，只是他们的状态不是Lifecycle.State#STARTE或Lifecycle.State#RESUMED，就像一个Activity在回退栈中。</p>
+<h3 id="3-LiveData-ObserverWrapper（翻译：观察者封装器）"><a href="#3-LiveData-ObserverWrapper（翻译：观察者封装器）" class="headerlink" title="3. LiveData.ObserverWrapper（翻译：观察者封装器）"></a>3. LiveData.ObserverWrapper（翻译：观察者封装器）</h3><p>这两个回调只在一个方法中被调用，即<code>LiveData.ObserverWrapper</code>这个抽象非静态内部类。</p>
+<pre><code class="java">private abstract class ObserverWrapper {
+    final Observer&lt;T&gt; mObserver;
+    //当前是否活跃状态。
+    boolean mActive;
+    int mLastVersion = START_VERSION;
+    ObserverWrapper(Observer&lt;T&gt; observer) {
+        mObserver = observer;
+    }
+    abstract boolean shouldBeActive();
+    boolean isAttachedTo(LifecycleOwner owner) {
+        return false;
+    }
+    void detachObserver() {
+    }
+
+    //Observer的状态改变回调
+    void activeStateChanged(boolean newActive) {
+        //如果新的状态等于原有的状态，直接返回。
+        if (newActive == mActive) {
+            return;
+        }
+        // immediately set active state, so we&#39;d never dispatch anything to inactive
+        // owner
+
+        //新状态赋值给旧状态
+        mActive = newActive;
+        //原先是否是活跃状态，取决于LiveData的mActiveCount
+        boolean wasInactive = LiveData.this.mActiveCount == 0;
+        //根据新状态，修改LiveData的mActiveCount
+        LiveData.this.mActiveCount += mActive ? 1 : -1;
+        //如果原先是非活跃，而新的状态是活跃
+        if (wasInactive &amp;&amp; mActive) {
+            onActive();//1
+        }
+        //如果原先是活跃，而新的状态是非活跃
+        if (LiveData.this.mActiveCount == 0 &amp;&amp; !mActive) {
+            onInactive();//2
+        }
+        //如果新的状态是活跃，那么发射value，即会调用上层设置的onChanged()回调。
+        if (mActive) {
+            dispatchingValue(this);
+        }
+    }
+}</code></pre>
+<p>通过以上叙述可知，<code>onActive()</code>和<code>onInactive()</code>都来自Observer的<code>activeStateChange()</code>，这个<code>activeStateChange()</code>方法不是给开发者调用的，他自己也不会调用自己，他由Observer所注册到的LiveData在适当的时机调用。</p>
+<h3 id="4-LiveData-ObserverWrapper-activeStateChange"><a href="#4-LiveData-ObserverWrapper-activeStateChange" class="headerlink" title="4. LiveData.ObserverWrapper#activeStateChange()"></a>4. LiveData.ObserverWrapper#activeStateChange()</h3><p><img src="https://upload-images.jianshu.io/upload_images/7177220-db2c2c73986225e2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt=""></p>
+<p>有四个地方会调用。</p>
+<ol>
+<li><p>considerNotify</p>
+<pre><code class="java">private void considerNotify(ObserverWrapper observer) {
+    if (!observer.mActive) {
+        return;
+    }
+    //调用observer的shouldBeActive（）方法确认当前observer是否是活跃的
+    if (!observer.shouldBeActive()) {
+        observer.activeStateChanged(false);
+        return;
+    }
+    if (observer.mLastVersion &gt;= mVersion) {
+        return;
+    }
+    observer.mLastVersion = mVersion;
+    //noinspection unchecked
+    observer.mObserver.onChanged((T) mData);
+}</code></pre>
+<p>此处的observer的shouldBeActive()的实现稍后分析。</p>
+</li>
+<li><p>来自observeForever()，永久注册，注册了的观察者不再受制于<code>LifecycleOwner</code>的自动解除注册机制。</p>
+</li>
+<li><p>移除观察者，都被移除了，当然这个Observer就不再活跃了。</p>
+</li>
+<li><p>来自<code>LifecycleBoundObserver</code>。但是注意，此处调用的参数依然是借助了shouldBeActive()方法，可以说第一点很像。</p>
+</li>
+</ol>
+<h3 id="5-LifecycleBoundObserver（翻译：生命周期绑定了的观察者）"><a href="#5-LifecycleBoundObserver（翻译：生命周期绑定了的观察者）" class="headerlink" title="5. LifecycleBoundObserver（翻译：生命周期绑定了的观察者）"></a>5. LifecycleBoundObserver（翻译：生命周期绑定了的观察者）</h3><pre><code class="java">//1. 继承ObserverWrapper------------&gt;对Observer的进一步封装
+//2. 实现GenericLifecycleObserver---&gt;具有生命周期感知能力
+class LifecycleBoundObserver extends ObserverWrapper implements GenericLifecycleObserver {
+    @NonNull final LifecycleOwner mOwner;
+    LifecycleBoundObserver(@NonNull LifecycleOwner owner, Observer&lt;T&gt; observer) {
+        super(observer);
+        mOwner = owner;
+    }
+    //借助LifecycleOwner的获取当前状态的方法来实现了shouldBeActive()
+    //用isAtLeast(STARTED)，例如只有在Activity的onStart()和onStop()回调之间，这个Observer
+    //才是活跃的。
+    @Override
+    boolean shouldBeActive() {
+        return mOwner.getLifecycle().getCurrentState().isAtLeast(STARTED);
+    }
+    @Override
+    public void onStateChanged(LifecycleOwner source, Lifecycle.Event event) {
+        if (mOwner.getLifecycle().getCurrentState() == DESTROYED) {
+            //绑定的LifecycleOwner是DESSTROYED，就移除自己（观察者）。这样LiveData的观察者
+            //就一个一个全部自己把自己从LiveData移除了。
+            removeObserver(mObserver);
+            return;
+        }
+        //借助LifecycleOwnwer的onStateChanged回调调用activeStateChanged()
+        activeStateChanged(shouldBeActive());
+    }
+    @Override
+    boolean isAttachedTo(LifecycleOwner owner) {
+        return mOwner == owner;
+    }
+    @Override
+    void detachObserver() {
+        mOwner.getLifecycle().removeObserver(this);
+    }
+}</code></pre>
+<p>通过这个LifecycleBoundObserver的shouldBeActive()方法的实现，解答了LiveData的onInactive()方法的注释了。回到ObserverWrapper的activeStateChanged()方法看下：</p>
+<pre><code class="java">void activeStateChanged(boolean newActive) {
+    if (newActive == mActive) {
+        return;
+    }
+
+    mActive = newActive;
+    boolean wasInactive = LiveData.this.mActiveCount == 0;
+    //此处，每当一个Observer是非活跃的时候，mActiveCount就-1。
+    LiveData.this.mActiveCount += mActive ? 1 : -1;
+    if (wasInactive &amp;&amp; mActive) {
+        onActive();
+    }
+    //当减到最后一个,mActiveCount=0了，就调用onInactive()了。
+    if (LiveData.this.mActiveCount == 0 &amp;&amp; !mActive) {
+        onInactive();
+    }
+    if (mActive) {
+        dispatchingValue(this);
+    }
+}</code></pre>
+<p>而此处引起activeStateChanged（false）调用的原因，则可能是因为绑定的LifecycleOwner的生命周期不再是STARTED或者RESUMED了。</p>
+<h3 id="6-LiveData的mVersion属性"><a href="#6-LiveData的mVersion属性" class="headerlink" title="6. LiveData的mVersion属性"></a>6. LiveData的mVersion属性</h3><p>这里有一个问题需要注意，就是mVersion这个属性的作用。</p>
+<p>疑问：</p>
+<p>activeStateChanged（）会在每当LifecycleOwner对象的生命状态发生改变时都调用，那么如果是活跃状态，就会走到dispatchingValue(this)这个方法，就会去回调到最上层开发者设置的onChanged()回调？</p>
+<p>这样可不太好啊，每次Activity从后台返回，都会调用一下onChanged()吗？事实不是这样的，通过打断点debug，从后台返回虽然改变了Activity生命状态，但是没有回调onChanged()。这符合Observer的onChanged()方法的注释</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/7177220-a686064513976af9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt=""></p>
+<p>只有data改变了，才会回调。</p>
+<p>那么明明因为LifecycleOwner的生命状态改变而调用了–&gt;activeStateChanged()—&gt;dispatchingValue()—&gt;considerNotify()。为什么不回调onChanged()?</p>
+<pre><code class="java">private void considerNotify(ObserverWrapper observer) {
+    if (!observer.mActive) {
+        return;
+    }
+    if (!observer.shouldBeActive()) {
+        observer.activeStateChanged(false);
+        return;
+    }
+    //对比observer的版本和LiveData的版本，如果LiveData的版本不大于Observer,
+    //返回，不再调用onChanged（）
+    if (observer.mLastVersion &gt;= mVersion) {
+        return;
+    }
+    //否则，让Observer的版本与LiveData同步，接着调用onChanged()
+    observer.mLastVersion = mVersion;
+    //noinspection unchecked
+    observer.mObserver.onChanged((T) mData);
+}</code></pre>
+<p>而LiveData的mVersion属性的惟一的写入的地方是：</p>
+<pre><code class="java">@MainThread
+protected void setValue(T value) {
+    assertMainThread(&quot;setValue&quot;);
+    mVersion++;//自增
+    mData = value;
+    dispatchingValue(null);
+}</code></pre>
+<p>即mVersion属性保证了：设置了一次value，调用一次onChanged()的正确逻辑。<br>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </p>
+
+            </div>
+            <hr>
+            <div>
+              <p>
+                
+                  <span>
+                <i class="iconfont icon-inbox"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Android-Jetpack/">Android-Jetpack</a>
+                      &nbsp;
+                    
+                  </span>&nbsp;&nbsp;
+                
+                
+              </p>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/03/28/Android-Jetpack/ViewModel/">
+                        <i class="fa fa-chevron-left"></i>
+                        <span class="hidden-mobile">ViewModel</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/2020/03/28/Android/AppCompatActivity%E5%92%8CFragment%E5%A6%82%E4%BD%95%E9%80%9A%E8%BF%87Lifecycle%E5%B0%86%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E7%8A%B6%E6%80%81%E8%BD%AC%E5%8F%91%E5%87%BA%E5%8E%BB/">
+                        <span class="hidden-mobile">AppCompatActivity和Fragment如何通过Lifecycle将生命周期状态转发出去</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="fa fa-chevron-right"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+              
+                <!-- Comments -->
+                <div class="comments" id="comments">
+                  
+                  
+  <script defer src="https://utteranc.es/client.js"
+          repo="git@github.com:HWilliamgo/HWilliamgo.github.io.git"
+          issue-term="pathname"
+  
+          label="utterances"
+    
+          theme="github-light"
+          crossorigin="anonymous"
+  >
+  </script>
+
+
+                </div>
+              
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc-start"></div>
+<div id="toc">
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+    </div>
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/popper.js/1.16.1/umd/popper.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="https://cdn.staticfile.org/mdbootstrap/4.13.0/js/mdb.min.js" ></script>
+<script  src="/js/main.js" ></script>
+
+
+  <script  src="/js/lazyload.js" ></script>
+
+
+
+  
+  <script  src="https://cdn.staticfile.org/tocbot/4.10.0/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var navHeight = $('#navbar').height();
+      var toc = $('#toc');
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+      var tocLimMax = 2 * boardTop + boardCtn.height();
+
+      $(window).scroll(function () {
+        var tocLimMin = $('#toc-start').offset().top - navHeight;
+        var scroH = document.body.scrollTop + document.documentElement.scrollTop;
+
+        if (tocLimMin <= scroH && scroH <= tocLimMax) {
+          toc.css({
+            'display': 'block',
+            'position': 'fixed',
+            'top': navHeight,
+          });
+        } else if (scroH <= tocLimMin) {
+          toc.css({
+            'position': '',
+            'top': '',
+          });
+        } else if (scroH > tocLimMax) {
+          toc.css('display', 'none');
+        }
+      });
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '.post-content',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc > p').css('visibility', 'visible');
+      }
+      var offset = boardCtn.css('margin-right')
+      $('#toc-ctn').css({
+        'right': offset
+      })
+    });
+  </script>
+
+
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+
+<!-- Plugins -->
+
+
+
+  <script  src="https://cdn.staticfile.org/prettify/188.0.0/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  linenums');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "LiveData的onActive()和onInactive()&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

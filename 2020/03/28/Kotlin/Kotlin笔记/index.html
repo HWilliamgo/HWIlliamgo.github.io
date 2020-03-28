@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="https://s1.ax1x.com/2020/03/28/GkotgK.th.jpg">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="HWilliamgo">
+  <meta name="keywords" content="">
+  <title>Kotlin笔记 - William的小星球</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.12.1/css/all.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/mdbootstrap/4.13.0/css/mdb.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/3.0.1/github-markdown.min.css" />
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+
+
+
+  <link  rel="stylesheet" href="/lib/prettify/tomorrow-night-eighties.min.css" />
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link defer rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+<!-- 自定义样式保持在最底部 -->
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>William的小星球</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">归档</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">分类</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">标签</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">关于</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('https://w.wallhaven.cc/full/39/wallhaven-39joqy.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+                <p class="mt-3 post-meta">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                  星期六, 三月 28日 2020, 8:05 早上
+                </p>
+              
+
+              <p class="mt-1">
+                
+                  
+                  <span class="post-meta">
+                    <i class="far fa-chart-bar"></i>
+                    1.9k 字
+                  </span>
+                
+
+                
+                  
+                  <span class="post-meta">
+                      <i class="far fa-clock"></i>
+                      6 分钟
+                  </span>
+                
+
+                
+              </p>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5 z-depth-3" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+            <div class="markdown-body">
+              <h1 id="Kotlin与Java的差异"><a href="#Kotlin与Java的差异" class="headerlink" title="Kotlin与Java的差异"></a>Kotlin与Java的差异</h1><h3 id="1-对象的初始化时的顺序"><a href="#1-对象的初始化时的顺序" class="headerlink" title="1. 对象的初始化时的顺序"></a>1. 对象的初始化时的顺序</h3><p>   在java中，<code>初始化代码块</code> -&gt; <code>构造函数</code></p>
+<p>   在kotlin中，<code>主构造函数</code> -&gt; <code>初始化代码块</code> -&gt; <code>次构造函数</code></p>
+<p>   由于Kotlin中主构造函数在初始化代码块之前，因此初始化代码块可以使用主代码块传入的参数。</p>
+<p>   在kotlin中，所有的次构造器都会先调用主构造器（若不存在，也会隐式调用），而初始化代码块会放在主构造函数之后执行，因此次构造函数执行之前，初始化代码块是执行完了的。</p>
+<h3 id="2-访问控制符"><a href="#2-访问控制符" class="headerlink" title="2. 访问控制符"></a>2. 访问控制符</h3><p>   private：只能在类的内部或者文件内部被访问</p>
+<p>   internal：internal成员可在类的内部、文件的内部、同一个模块被访问</p>
+<p>   protected：可在类的内部或者、文件内部、子类中被访问</p>
+<p>   public：在任意地方被访问</p>
+<p>   与java的差异在于：</p>
+<ol>
+<li><p>Kotlin取消了java的默认的包访问权限，引入internal模块访问权限</p>
+</li>
+<li><p>Kotlin取消了protected的包访问权限。</p>
+</li>
+<li><p>Kotlin的默认访问控制符是public</p>
+<p>此处的模块的存在形式有如下几种：</p>
+</li>
+</ol>
+<ul>
+<li><p>一个intelliJ IDEA模块</p>
+</li>
+<li><p>一个Maven项目</p>
+</li>
+<li><p>一个Gradle源集</p>
+</li>
+<li><p>一次<kotlinc>的Ant任务执行所编译的一套文件</p>
+</li>
+</ul>
+<p>   注意，可以修改属性的setter()访问权限，但是无法修改属性的getter()访问权限，因为getter()访问权限是和属性的访问权限一致的</p>
+<h3 id="3-继承：Kotlin与Java的设计相同，所有子类构造器必须调用父类构造器一次。"><a href="#3-继承：Kotlin与Java的设计相同，所有子类构造器必须调用父类构造器一次。" class="headerlink" title="3. 继承：Kotlin与Java的设计相同，所有子类构造器必须调用父类构造器一次。"></a>3. 继承：Kotlin与Java的设计相同，所有子类构造器必须调用父类构造器一次。</h3><p>   当调用子类构造器来初始化子类对象时，父类构造器总会在子类构造器之前执行；不仅如此，在执行父类构造器时，系统会再次上溯执行其父类构造器……以此类推，创建任何Kotlin对象，最先执行的总是Any类的构造器。</p>
+<h3 id="4-方法的重写遵循”两同两小一大“规则"><a href="#4-方法的重写遵循”两同两小一大“规则" class="headerlink" title="4. 方法的重写遵循”两同两小一大“规则"></a>4. 方法的重写遵循”两同两小一大“规则</h3><ul>
+<li>两同：方法名相同，形参列表相同</li>
+<li>两小：子类方法的返回值类型比父类方法的返回值类型更小或相等。子类方法声明抛出的异常类应比父类方法生命抛出的异常类更小或相等。</li>
+<li>一大：指的是子类方法的访问权限应比父类方法的访问权限更大或相等。</li>
+</ul>
+<h3 id="5-嵌套类和内部类"><a href="#5-嵌套类和内部类" class="headerlink" title="5. 嵌套类和内部类"></a>5. 嵌套类和内部类</h3><ol>
+<li>内部类机制和Java的非静态内部类一致</li>
+<li>嵌套类机制和Java的静态内部类一致，由于静态成员无法访问非静态成员，且Kotlin取消了static属性，因此Kotlin的嵌套类无法访问任何的外部类成员。</li>
+<li>Koltin中允许在接口中定义嵌套类，但不允许在接口中定义内部类。</li>
+</ol>
+<h3 id="6-匿名内部类"><a href="#6-匿名内部类" class="headerlink" title="6. 匿名内部类"></a>6. 匿名内部类</h3><ol>
+<li>Kotlin 抛弃了匿名内部类，而用功能更强大的对象表达式</li>
+<li>如果对象是一个函数式接口的实例，则可以使用Lambda表达式创建他（或者用带接口名前缀的lambda表达式创建他）。</li>
+</ol>
+<h3 id="7-对象表达式"><a href="#7-对象表达式" class="headerlink" title="7. 对象表达式"></a>7. 对象表达式</h3><pre><code class="kotlin">   object :N个父类型{
+
+   }</code></pre>
+<ol>
+<li>增强版的匿名内部类，匿名内部类只能指定一个父类型，而对象表达式可以指定N个父类型。</li>
+<li>对象表达式不能是抽象类，因为系统在创建对象表达式的时候会立刻创建对象。</li>
+<li>对象表达式不能定义构造器，但是可以定义初始化块。</li>
+<li>对象表达式可以包含内部类，但是不能包含嵌套类。</li>
+<li>Kotlin编译器能更准确地识别局部范围内或者private修饰的对象表达式的真实类型(既可以直接调用对象表达式中新定义的方法和属性)。</li>
+<li>对象表达式可访问或者修改其所在范围内的局部变量。(java只能访问final变量，且不能修改)</li>
+</ol>
+<h3 id="8-对象声明-java的静态块单例模式"><a href="#8-对象声明-java的静态块单例模式" class="headerlink" title="8. 对象声明(java的静态块单例模式)"></a>8. 对象声明(java的静态块单例模式)</h3><pre><code class="kotlin">   objecct 名字 : N个接口{
+
+   }</code></pre>
+<p>   对象声明和对象表达式的区别：</p>
+<ol>
+<li><p>对象表达式是表达式，因此可以赋值给变量并被引用。而对象声明不是表达式，不能用于赋值。</p>
+</li>
+<li><p>对象声明可包含嵌套类，不可包含内部类。对象表达式可包含内部类，不能包含嵌套类。</p>
+</li>
+<li><p>对象声明不能定义在函数和方法内，可以定义在类中。对象表达式可以嵌套在其他对象声明或者非内部类中。 </p>
+<p>对象声明专门用于实现单例模式，对象声明所定义的对象就是该类的唯一实例，直接用对象声明的名称即可访问该唯一实例。</p>
+<p>通过IntelliJ的tools-&gt;Kotlin-&gt;show Kotlin bytecode，再点击Decompile，可以看见Java代码的实现是：用懒加载的单例模式实现的。单例对象的初始化放在了静态块中。</p>
+</li>
+</ol>
+<h3 id="9-伴生对象"><a href="#9-伴生对象" class="headerlink" title="9. 伴生对象"></a>9. 伴生对象</h3><ol>
+<li><p>若在类中的对象声明加一个companion，该对象就变成了伴生对象。</p>
+</li>
+<li><p>每个类最多只能定义一个伴生对象。</p>
+</li>
+<li><p>伴生对象的名字并不重要，因此可以省略。</p>
+</li>
+<li><p>伴生对象的作用就是为他所在的类模拟静态成员。</p>
+</li>
+<li><p>拓展伴生对象就是为该伴生对象的外部类拓展静态方法和变量。</p>
+<pre><code class="kotlin">fun main() {
+ println(MyClass.name)
+ MyClass.output(&quot;你好&quot;)
+ MyClass.test()
+ MyClass().test()
+ println(MyClass.foo)
+}
+
+interface Outputable {
+ fun output(msg: String)
+}
+
+class MyClass {
+ companion object : Outputable {
+     //相当于MyClass的静态成员
+     val name = &quot;name 属性值&quot;
+     //相当于MyClass的静态方法
+     override fun output(msg: String) {
+         println(msg)
+     }
+ }
+}
+//为MyClass拓展实例方法
+fun MyClass.Companion.test() {
+ println(&quot;为伴生对象扩展的方法&quot;)
+}
+//为MyClass拓展静态方法
+fun MyClass.test() {
+ println(&quot;为MyClass类扩展的方法&quot;)
+}
+//为MyClass拓展静态变量
+val MyClass.Companion.foo
+ get() = &quot;为伴生对象拓展的属性&quot;</code></pre>
+</li>
+</ol>
+<h3 id="10-类委托。就和java的代理模式的作用是一样的。"><a href="#10-类委托。就和java的代理模式的作用是一样的。" class="headerlink" title="10. 类委托。就和java的代理模式的作用是一样的。"></a>10. 类委托。就和java的代理模式的作用是一样的。</h3><h3 id="11-属性委托，可以直接实现Kotlin提供的两个接口ReadWriteProperty和ReadOnlyProperty来分别实现var和val属性的委托。"><a href="#11-属性委托，可以直接实现Kotlin提供的两个接口ReadWriteProperty和ReadOnlyProperty来分别实现var和val属性的委托。" class="headerlink" title="11. 属性委托，可以直接实现Kotlin提供的两个接口ReadWriteProperty和ReadOnlyProperty来分别实现var和val属性的委托。"></a>11. 属性委托，可以直接实现Kotlin提供的两个接口<code>ReadWriteProperty</code>和<code>ReadOnlyProperty</code>来分别实现var和val属性的委托。</h3><h3 id="12-Kotlin泛型"><a href="#12-Kotlin泛型" class="headerlink" title="12. Kotlin泛型"></a>12. Kotlin泛型</h3><h4 id="声明处型变"><a href="#声明处型变" class="headerlink" title="声明处型变"></a>声明处型变</h4><p>泛型中的<code>in</code>和<code>out</code>，用于取代java中有设计缺陷的<code>?</code>通配符和上下界的使用（具体设计缺陷在Kotlin文档的泛型这一部分有讲到）</p>
+<p><code>out</code>    由<code>out</code>声明的泛型变量，只能作为方法的返回值发布到外部，不能作为方法的参数传递到方法内部。好处是：可以将带有该泛型的变量赋值给父类型泛型的变量。如</p>
+<pre><code class="kotlin">interface Source&lt;out T&gt; {
+    fun nextT(): T
+}
+
+fun demo(strs: Source&lt;String&gt;) {
+    val newSource: Source&lt;Any&gt; = strs
+}</code></pre>
+<p><code>in</code>        由<code>in</code>声明的泛型变量，只能作为参数被设置到内部，而不能发布到外部，因此，带有该泛型的子类型的变量都可以被作为参数传递进来。如</p>
+<pre><code class="kotlin">interface ClassA&lt;in T&gt; {
+    fun setT(value: T)
+}
+
+fun demo(value: ClassA&lt;MutableList&lt;Int&gt;&gt;) {
+    value.setT(ArrayList())
+    //也可以引用给更小类型的泛型变量，因为这里的y此后调用setT()传进去的参数ArrayList比MutableList类型更小
+    val y: ClassA&lt;ArrayList&lt;Int&gt;&gt; = value
+}</code></pre>
+<p>总结：out泛型的类可以作为方法中的参数，可以赋值给父类型的泛型引用。in泛型的类只能赋值给子类型泛型的变量，不可以作为方法中的参数。</p>
+<h4 id="使用处型变"><a href="#使用处型变" class="headerlink" title="使用处型变"></a>使用处型变</h4><p>​<br>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </p>
+
+            </div>
+            <hr>
+            <div>
+              <p>
+                
+                  <span>
+                <i class="iconfont icon-inbox"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Kotlin/">Kotlin</a>
+                      &nbsp;
+                    
+                  </span>&nbsp;&nbsp;
+                
+                
+              </p>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/03/28/Kotlin/Kotlin%E6%B3%9B%E5%9E%8B/">
+                        <i class="fa fa-chevron-left"></i>
+                        <span class="hidden-mobile">Kotlin泛型</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/2020/03/28/View/View%E4%BA%8B%E4%BB%B6%E5%88%86%E5%8F%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+                        <span class="hidden-mobile">View事件分发学习笔记</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="fa fa-chevron-right"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+              
+                <!-- Comments -->
+                <div class="comments" id="comments">
+                  
+                  
+  <script defer src="https://utteranc.es/client.js"
+          repo="git@github.com:HWilliamgo/HWilliamgo.github.io.git"
+          issue-term="pathname"
+  
+          label="utterances"
+    
+          theme="github-light"
+          crossorigin="anonymous"
+  >
+  </script>
+
+
+                </div>
+              
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc-start"></div>
+<div id="toc">
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+    </div>
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/popper.js/1.16.1/umd/popper.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="https://cdn.staticfile.org/mdbootstrap/4.13.0/js/mdb.min.js" ></script>
+<script  src="/js/main.js" ></script>
+
+
+  <script  src="/js/lazyload.js" ></script>
+
+
+
+  
+  <script  src="https://cdn.staticfile.org/tocbot/4.10.0/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var navHeight = $('#navbar').height();
+      var toc = $('#toc');
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+      var tocLimMax = 2 * boardTop + boardCtn.height();
+
+      $(window).scroll(function () {
+        var tocLimMin = $('#toc-start').offset().top - navHeight;
+        var scroH = document.body.scrollTop + document.documentElement.scrollTop;
+
+        if (tocLimMin <= scroH && scroH <= tocLimMax) {
+          toc.css({
+            'display': 'block',
+            'position': 'fixed',
+            'top': navHeight,
+          });
+        } else if (scroH <= tocLimMin) {
+          toc.css({
+            'position': '',
+            'top': '',
+          });
+        } else if (scroH > tocLimMax) {
+          toc.css('display', 'none');
+        }
+      });
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '.post-content',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc > p').css('visibility', 'visible');
+      }
+      var offset = boardCtn.css('margin-right')
+      $('#toc-ctn').css({
+        'right': offset
+      })
+    });
+  </script>
+
+
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+
+<!-- Plugins -->
+
+
+
+  <script  src="https://cdn.staticfile.org/prettify/188.0.0/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  linenums');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "Kotlin笔记&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

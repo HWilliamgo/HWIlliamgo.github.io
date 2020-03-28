@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="https://s1.ax1x.com/2020/03/28/GkotgK.th.jpg">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="HWilliamgo">
+  <meta name="keywords" content="">
+  <title>Dagger2 - William的小星球</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.12.1/css/all.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/mdbootstrap/4.13.0/css/mdb.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/3.0.1/github-markdown.min.css" />
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+
+
+
+  <link  rel="stylesheet" href="/lib/prettify/tomorrow-night-eighties.min.css" />
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link defer rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+<!-- 自定义样式保持在最底部 -->
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>William的小星球</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">归档</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">分类</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">标签</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">关于</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('https://w.wallhaven.cc/full/39/wallhaven-39joqy.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+                <p class="mt-3 post-meta">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                  星期六, 三月 28日 2020, 8:05 早上
+                </p>
+              
+
+              <p class="mt-1">
+                
+                  
+                  <span class="post-meta">
+                    <i class="far fa-chart-bar"></i>
+                    3.1k 字
+                  </span>
+                
+
+                
+                  
+                  <span class="post-meta">
+                      <i class="far fa-clock"></i>
+                      13 分钟
+                  </span>
+                
+
+                
+              </p>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5 z-depth-3" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+            <div class="markdown-body">
+              <blockquote>
+<p>例子来自<a href="https://www.jianshu.com/p/24af4c102f62" target="_blank" rel="noopener">https://www.jianshu.com/p/24af4c102f62</a></p>
+</blockquote>
+<h1 id="只用-Inject和-Component完成依赖注入："><a href="#只用-Inject和-Component完成依赖注入：" class="headerlink" title="只用@Inject和@Component完成依赖注入："></a>只用@Inject和@Component完成依赖注入：</h1><ol>
+<li>在gradle添加依赖，用<code>@Inject</code>和<code>@Component</code>为相应的字段和类打上注解</li>
+<li>build project</li>
+<li>Dagger2会在<code>app.build.generated.source.apt.debug.com.text.包名</code>生成代码。<ol>
+<li><code>DaggerXXXComponent.java</code></li>
+<li><code>XXX_MembersInjector.java</code></li>
+<li><code>XXX_Factory.java</code></li>
+</ol>
+</li>
+</ol>
+<p>举一个例子：<br>MainAcitvity对象依赖Pot对象，Pot对象依赖Rose对象。</p>
+<ol>
+<li><p>用<code>@Inject</code>标注要被实例化的引用（在这里是<code>MainActivity</code>中的<code>Pot pot</code>字段，<code>Pot</code>中的<code>Rose rose</code>字段）<strong>&lt;Dagger2会为他们生成一个注入器类Injector&gt;</strong></p>
+</li>
+<li><p>用<code>@Inject</code>标注要被实例化的类的构造方法（在这里是<code>Pot</code>类和<code>Rose</code>类要被实例化）<strong>&lt;Dagger2会为Pot和Rose生成对应的工厂类&gt;</strong></p>
+</li>
+<li><p>用<code>@Component</code>标注一个接口<strong>&lt;Dagger2会为其生成XXXComponent类&gt;</strong></p>
+<pre><code>public class MainActivity extends AppCompatActivity {
+ private static final String TAG = &quot;MainActivity&quot;;
+
+ @Inject
+ public Pot pot;//MainActivity依赖Pot对象
+
+ @Override
+ protected void onCreate(Bundle savedInstanceState) {
+     super.onCreate(savedInstanceState);
+     setContentView(R.layout.activity_main);
+ }
+}</code></pre><pre><code>public class Pot {
+
+ private Rose rose;//Pot对象依赖Rose对象
+
+ @Inject
+ public Pot(Rose rose){
+     this.rose=rose;
+ }
+
+ public String show(){
+     return rose.whisper();
+ }
+}</code></pre><pre><code>public class Rose {
+ //Rose对象没有任何依赖
+ @Inject
+ public Rose() {
+ }
+
+ public String whisper(){
+     return &quot;热恋&quot;;
+ }
+}</code></pre><pre><code>@Component
+public interface MainActivityComponent {
+ void inject(MainActivity activity);
+}</code></pre><p>点击build project，生成了：<br><img src="https://upload-images.jianshu.io/upload_images/7177220-e3046a306f48b02e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt=""><br>现在可以使用：</p>
+<pre><code>public class MainActivity extends AppCompatActivity {
+ private static final String TAG = &quot;MainActivity&quot;;
+
+ @Inject
+ public Pot pot;
+
+ @Override
+ protected void onCreate(Bundle savedInstanceState) {
+     super.onCreate(savedInstanceState);
+     setContentView(R.layout.activity_main);
+
+     //此时pot还指向null，不可用
+     DaggerMainActivityComponent.create().inject(this);//实现pot的实例化
+     //此时pot已经指向对象，可用
+ }
+}</code></pre><p><img src="https://upload-images.jianshu.io/upload_images/7177220-e251c2c7ab62b9d1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="image.png"></p>
+</li>
+</ol>
+<p>现在分析Dagger2生成的四个类<br><code>DaggerMainActivityComponent</code><br><code>MainActivity_MembersInjector</code><br><code>Pot_Factory</code><br><code>Rose_Factory</code></p>
+<h3 id="Pot-Factory和Rose-Factory"><a href="#Pot-Factory和Rose-Factory" class="headerlink" title="Pot_Factory和Rose_Factory"></a>Pot_Factory和Rose_Factory</h3><p><code>XXX_Factory implements Fatory&lt;XXX&gt;</code><br><code>Factory&lt;XXX&gt; implements Provider&lt;XXX&gt;</code><br>也就是工厂类的最终抽象是<code>Provider</code><br><img src="https://upload-images.jianshu.io/upload_images/7177220-8e357281c58cbefb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="image.png"></p>
+<pre><code>public enum Rose_Factory implements Factory&lt;Rose&gt; {
+  INSTANCE;
+
+  @Override
+  public Rose get() {//get()方法返回泛型&lt;Rose&gt;实例，用来生成对象
+    return new Rose();
+  }
+
+  public static Factory&lt;Rose&gt; create() {//create()方法用来生成工厂对象
+    return INSTANCE;
+  }
+}</code></pre><pre><code>public final class Pot_Factory implements Factory&lt;Pot&gt; {
+//因为Pot类的构造方法有参数，参数对象要提前Pot对象实例化，因此持有一个参数对象的类的工厂类，
+//用来创建参数对象。
+  private final Provider&lt;Rose&gt; roseProvider;
+
+  public Pot_Factory(Provider&lt;Rose&gt; roseProvider) {
+    assert roseProvider != null;
+    this.roseProvider = roseProvider;
+  }
+
+  @Override
+  public Pot get() {//get()方法返回泛型&lt;Pot&gt;实例，用来生成对象
+    return new Pot(roseProvider.get());
+  }
+  //create()方法用来生成工厂对象
+  public static Factory&lt;Pot&gt; create(Provider&lt;Rose&gt; roseProvider) {
+    return new Pot_Factory(roseProvider);
+  }
+}</code></pre><h3 id="MainActivity-MembersInjector"><a href="#MainActivity-MembersInjector" class="headerlink" title="MainActivity_MembersInjector"></a>MainActivity_MembersInjector</h3><p>由MainActivity的引用上的@Inject注解生成</p>
+<pre><code>@Inject
+public Pot pot;</code></pre><p><img src="https://upload-images.jianshu.io/upload_images/7177220-c2ec45a6d0d2fe3c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt=""></p>
+<p>代码如下</p>
+<pre><code>public final class MainActivity_MembersInjector implements MembersInjector&lt;MainActivity&gt; {
+//持有Pot的工厂类，用来生成Pot对象
+  private final Provider&lt;Pot&gt; potProvider;
+
+  public MainActivity_MembersInjector(Provider&lt;Pot&gt; potProvider) {
+    assert potProvider != null;
+    this.potProvider = potProvider;
+  }
+
+//静态方法供外部调用，用来创建这个注入器
+  public static MembersInjector&lt;MainActivity&gt; create(Provider&lt;Pot&gt; potProvider) {
+    return new MainActivity_MembersInjector(potProvider);
+  }
+
+//依赖注入的直接入口，将传入的MainActivity对象的引用变量，用工厂类生成其实例,
+//实现依赖注入。
+  @Override
+  public void injectMembers(MainActivity instance) {
+    if (instance == null) {
+      throw new NullPointerException(&quot;Cannot inject members into a null reference&quot;);
+    }
+    instance.pot = potProvider.get();//用工厂类对象创建对象。
+  }
+}</code></pre><h3 id="DaggerMainActivityComponent"><a href="#DaggerMainActivityComponent" class="headerlink" title="DaggerMainActivityComponent"></a>DaggerMainActivityComponent</h3><p><img src="https://upload-images.jianshu.io/upload_images/7177220-c8e1b0825b152a96.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt=""></p>
+<pre><code>/**
+ * 持有工厂类和注入器类的引用。
+ * 注入器的实例化需要工厂类对象作为参数。
+ * 因此Component类连接工厂类和注入器类，最后通过注入器类来完成工作。
+ * 
+ * 
+ * inject方法直接调用注入器的injectMembers(),注入器中的方法才是注入的直接入口
+ * 
+ */
+public class DaggerMainActivityComponent {
+    public final class DaggerMainActivityComponent implements MainActivityComponent {
+        private Provider&lt;Pot&gt; potProvider;//工厂类
+
+        private MembersInjector&lt;MainActivity&gt; mainActivityMembersInjector;//注入器
+
+        private DaggerMainActivityComponent(com.test.traindagger.DaggerMainActivityComponent.Builder builder) {
+            assert builder != null;
+            initialize(builder);
+        }
+
+        public static com.test.traindagger.DaggerMainActivityComponent.Builder builder() {
+            return new com.test.traindagger.DaggerMainActivityComponent.Builder();
+        }
+
+        public static MainActivityComponent create() {
+            return builder().build();
+        }
+
+        @SuppressWarnings(&quot;unchecked&quot;)
+        private void initialize(final com.test.traindagger.DaggerMainActivityComponent.Builder builder) {
+            //实例化工厂类
+            this.potProvider = Pot_Factory.create(Rose_Factory.create());
+            //依赖工厂类来实例化注入器
+            this.mainActivityMembersInjector = MainActivity_MembersInjector.create(potProvider);
+        }
+
+        //就是我们在使用的时候用的inject方法
+        //调用注入器的injectMembers（上下文）来实现注入
+        @Override
+        public void inject(MainActivity activity) {
+            mainActivityMembersInjector.injectMembers(activity);
+        }
+
+        public static final class Builder {
+            private Builder() {}
+
+            public MainActivityComponent build() {
+                return new com.test.traindagger.DaggerMainActivityComponent(this);
+            }
+        }
+    }
+}</code></pre><h1 id="加入-Module和-Provide"><a href="#加入-Module和-Provide" class="headerlink" title="加入@Module和@Provide"></a>加入@Module和@Provide</h1><p>使用场景:</p>
+<ol>
+<li>无法为第三方库中的类中的构造方法去加上<code>@Inject</code>，也就无法通过这种方式让Dagger2为其生成工厂类</li>
+<li>当使用了依赖倒置，构造器上的参数就是抽象的（接口或抽象类），Dagger2无法通过构造函数上的<code>@Inject</code>将其参数中的接口实例化，因为他并不知道实现类是谁。</li>
+</ol>
+<p>比如<strong>场景1</strong>：将上面的<code>Rose</code>类，抽象出来一个<code>Flower</code>类，并将<code>Pot</code>类中的所有<code>Rose</code>引用替换为<code>Flower</code>引用，因此<code>Rose</code>在这里实现了依赖倒置，那么Dagger2无法通过<code>Rose</code>类的构造方法为<code>Rose</code>类生成工厂类，而<code>Pot</code>类没有使用依赖倒置，因此<code>Pot</code>类的构造方法依然可以使用<code>@Inject</code>来让Dagger2为<code>Pot</code>生成工厂类。</p>
+<pre><code>public class Pot {
+
+    private Flower flower;//将Rose引用替换为了Flower，依赖倒置
+
+    @Inject
+    public Pot(Flower flower){
+        this.flower=flower;
+    }
+
+    public String show(){
+        return flower.whisper();
+    }
+}</code></pre><pre><code>public class Rose extends Flower{
+//原本有@Inject，现在去掉了这里的@InJect，因为Dagger2无法定位到这个类的构造函数，
+//这个注解留着也没有用
+//不过不去掉也不会出错，依然可以通过编译，
+//因为Dagger2已经不是从这里生成Rose的工厂方法了
+    public Rose(){
+    }
+    public String whisper(){
+        return &quot;热恋&quot;;
+    }
+}</code></pre><p>在这个场景下，工厂类的生成就和这个类没有什么关系了，那么就要通过另一种方式生成工厂类，就是通过重新创建一个Module类，由他来创建工厂类。</p>
+<pre><code>@Module//@表示这个类是一个创建工厂类的入口，可以说是工厂类的工厂类。
+public class FlowerModule {
+    @Provides//标注这个方法作为工厂方法，生成Flower对象。
+    Flower provideFlower(){
+        //项目需求变动后，要改Flower接口的实现类的时候，就改这里，比如return new Lily();
+        return new Rose();
+    }
+}</code></pre><p>再为Component接口的注解添加参数</p>
+<pre><code>
+@Component(modules = FlowerModule.class)
+public interface MainActivityComponent {
+    void inject(MainActivity activity);
+}</code></pre><p>现在build project，多出了这个类</p>
+<pre><code>public final class FlowerModule_ProvideFlowerFactory implements Factory&lt;Flower&gt; {
+    private final FlowerModule module;//持有一个Module引用，通过他来实例化泛型&lt;Flower&gt;
+
+    public FlowerModule_ProvideFlowerFactory(FlowerModule module) {
+        assert module != null;
+        this.module = module;
+    }
+
+    //调用module.provideXXX()来返回实例
+    @Override
+    public Flower get() {
+        return Preconditions.checkNotNull(
+                module.provideFlower(), &quot;Cannot return null from a non-@Nullable @Provides method&quot;);
+    }
+
+    //创建自己
+    public static Factory&lt;Flower&gt; create(FlowerModule module) {
+        return new FlowerModule_ProvideFlowerFactory(module);
+    }
+}</code></pre><p>而DaggerMainActivityComponent的变化如下：</p>
+<pre><code>public final class DaggerMainActivityComponent implements MainActivityComponent {
+    private Provider&lt;Flower&gt; provideFlowerProvider;//新加入的创建Flower的工厂类
+
+    private Provider&lt;Pot&gt; potProvider;
+
+    private MembersInjector&lt;MainActivity&gt; mainActivityMembersInjector;
+
+    private DaggerMainActivityComponent(com.test.traindagger.DaggerMainActivityComponent.Builder builder) {
+        assert builder != null;
+        initialize(builder);
+    }
+
+    public static com.test.traindagger.DaggerMainActivityComponent.Builder builder() {
+        return new com.test.traindagger.DaggerMainActivityComponent.Builder();
+    }
+
+    public static MainActivityComponent create() {
+        return builder().build();
+    }
+
+    @SuppressWarnings(&quot;unchecked&quot;)
+    private void initialize(final com.test.traindagger.DaggerMainActivityComponent.Builder builder) {
+        //通过FlowerModule作为参数创建工厂类
+        this.provideFlowerProvider = FlowerModule_ProvideFlowerFactory.create(builder.flowerModule);
+
+        this.potProvider = Pot_Factory.create(provideFlowerProvider);
+
+        this.mainActivityMembersInjector = MainActivity_MembersInjector.create(potProvider);
+    }
+
+    @Override
+    public void inject(MainActivity activity) {
+        mainActivityMembersInjector.injectMembers(activity);
+    }
+
+    public static final class Builder {
+        private FlowerModule flowerModule;
+
+        private Builder() {}
+
+        public MainActivityComponent build() {
+            if (flowerModule == null) {
+                this.flowerModule = new FlowerModule();//实例化Module类，就是工厂类的工厂类
+            }
+            return new com.test.traindagger.DaggerMainActivityComponent(this);
+        }
+
+        public com.test.traindagger.DaggerMainActivityComponent.Builder flowerModule(FlowerModule flowerModule) {
+            this.flowerModule = Preconditions.checkNotNull(flowerModule);
+            return this;
+        }
+    }
+}</code></pre><p>build project之后的使用：</p>
+<pre><code>//此时pot还指向null
+    DaggerMainActivityComponent.builder()
+            .flowerModule(new FlowerModule())//将这个方法暴露给调用者的意义：让调用者可以更改传入哪个Module来生成工厂类。
+            .build()
+            .inject(this);
+//此时pot已经指向对象</code></pre><p>es.jianshu.io/upload_images/7177220-e251c2c7ab62b9d1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)</p>
+<p>现在分析Dagger2生成的四个类<br><code>DaggerMainActivityComponent</code><br><code>MainActivity_MembersInjector</code><br><code>Pot_Factory</code><br><code>Rose_Factory</code></p>
+<h3 id="Pot-Factory和Rose-Factory-1"><a href="#Pot-Factory和Rose-Factory-1" class="headerlink" title="Pot_Factory和Rose_Factory"></a>Pot_Factory和Rose_Factory</h3><p><code>XXX_Factory implements Fatory&lt;XXX&gt;</code><br><code>Factory&lt;XXX&gt; implements Provider&lt;XXX&gt;</code><br>也就是工厂类的最终抽象是<code>Provider</code><br><img src="https://upload-images.jianshu.io/upload_images/7177220-8e357281c58cbefb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="image.png"></p>
+<pre><code>public enum Rose_Factory implements Factory&lt;Rose&gt; {
+  INSTANCE;
+
+  @Override
+  public Rose get() {//get()方法返回泛型&lt;Rose&gt;实例，用来生成对象
+    return new Rose();
+  }
+
+  public static Factory&lt;Rose&gt; create() {//create()方法用来生成工厂对象
+    return INSTANCE;
+  }
+}</code></pre><pre><code>public final class Pot_Factory implements Factory&lt;Pot&gt; {
+//因为Pot类的构造方法有参数，参数对象要提前Pot对象实例化，因此持有一个参数对象的类的工厂类，
+//用来创建参数对象。
+  private final Provider&lt;Rose&gt; roseProvider;
+
+  public Pot_Factory(Provider&lt;Rose&gt; roseProvider) {
+    assert roseProvider != null;
+    this.roseProvider = roseProvider;
+  }
+
+  @Override
+  public Pot get() {//get()方法返回泛型&lt;Pot&gt;实例，用来生成对象
+    return new Pot(roseProvider.get());
+  }
+  //create()方法用来生成工厂对象
+  public static Factory&lt;Pot&gt; create(Provider&lt;Rose&gt; roseProvider) {
+    return new Pot_Factory(roseProvider);
+  }
+}</code></pre><h3 id="MainActivity-MembersInjector-1"><a href="#MainActivity-MembersInjector-1" class="headerlink" title="MainActivity_MembersInjector"></a>MainActivity_MembersInjector</h3><p>由MainActivity的引用上的@Inject注解生成</p>
+<pre><code>@Inject
+public Pot pot;</code></pre><p><img src="https://upload-images.jianshu.io/upload_images/7177220-c2ec45a6d0d2fe3c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt=""></p>
+<p>代码如下</p>
+<pre><code>public final class MainActivity_MembersInjector implements MembersInjector&lt;MainActivity&gt; {
+//持有Pot的工厂类，用来生成Pot对象
+  private final Provider&lt;Pot&gt; potProvider;
+
+  public MainActivity_MembersInjector(Provider&lt;Pot&gt; potProvider) {
+    assert potProvider != null;
+    this.potProvider = potProvider;
+  }
+
+//静态方法供外部调用，用来创建这个注入器
+  public static MembersInjector&lt;MainActivity&gt; create(Provider&lt;Pot&gt; potProvider) {
+    return new MainActivity_MembersInjector(potProvider);
+  }
+
+//依赖注入的直接入口，将传入的MainActivity对象的引用变量，用工厂类生成其实例,
+//实现依赖注入。
+  @Override
+  public void injectMembers(MainActivity instance) {
+    if (instance == null) {
+      throw new NullPointerException(&quot;Cannot inject members into a null reference&quot;);
+    }
+    instance.pot = potProvider.get();//用工厂类对象创建对象。
+  }
+}</code></pre><h3 id="DaggerMainActivityComponent-1"><a href="#DaggerMainActivityComponent-1" class="headerlink" title="DaggerMainActivityComponent"></a>DaggerMainActivityComponent</h3><p><img src="https://upload-images.jianshu.io/upload_images/7177220-c8e1b0825b152a96.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt=""></p>
+<pre><code>/**
+ * 持有工厂类和注入器类的引用。
+ * 注入器的实例化需要工厂类对象作为参数。
+ * 因此Component类连接工厂类和注入器类，最后通过注入器类来完成工作。
+ * 
+ * 
+ * inject方法直接调用注入器的injectMembers(),注入器中的方法才是注入的直接入口
+ * 
+ */
+public class DaggerMainActivityComponent {
+    public final class DaggerMainActivityComponent implements MainActivityComponent {
+        private Provider&lt;Pot&gt; potProvider;//工厂类
+
+        private MembersInjector&lt;MainActivity&gt; mainActivityMembersInjector;//注入器
+
+        private DaggerMainActivityComponent(com.test.traindagger.DaggerMainActivityComponent.Builder builder) {
+            assert builder != null;
+            initialize(builder);
+        }
+
+        public static com.test.traindagger.DaggerMainActivityComponent.Builder builder() {
+            return new com.test.traindagger.DaggerMainActivityComponent.Builder();
+        }
+
+        public static MainActivityComponent create() {
+            return builder().build();
+        }
+
+        @SuppressWarnings(&quot;unchecked&quot;)
+        private void initialize(final com.test.traindagger.DaggerMainActivityComponent.Builder builder) {
+            //实例化工厂类
+            this.potProvider = Pot_Factory.create(Rose_Factory.create());
+            //依赖工厂类来实例化注入器
+            this.mainActivityMembersInjector = MainActivity_MembersInjector.create(potProvider);
+        }
+
+        //就是我们在使用的时候用的inject方法
+        //调用注入器的injectMembers（上下文）来实现注入
+        @Override
+        public void inject(MainActivity activity) {
+            mainActivityMembersInjector.injectMembers(activity);
+        }
+
+        public static final class Builder {
+            private Builder() {}
+
+            public MainActivityComponent build() {
+                return new com.test.traindagger.DaggerMainActivityComponent(this);
+            }
+        }
+    }
+}</code></pre><h1 id="加入-Module和-Provide-1"><a href="#加入-Module和-Provide-1" class="headerlink" title="加入@Module和@Provide"></a>加入@Module和@Provide</h1><p>使用场景:</p>
+<ol>
+<li>无法为第三方库中的类中的构造方法去加上<code>@Inject</code>，也就无法通过这种方式让Dagger2为其生成工厂类</li>
+<li>当使用了依赖倒置，构造器上的参数就是抽象的（接口或抽象类），Dagger2无法通过构造函数上的<code>@Inject</code>将其参数中的接口实例化，因为他并不知道实现类是谁。</li>
+</ol>
+<p>比如<strong>场景1</strong>：将上面的<code>Rose</code>类，抽象出来一个<code>Flower</code>类，并将<code>Pot</code>类中的所有<code>Rose</code>引用替换为<code>Flower</code>引用，因此<code>Rose</code>在这里实现了依赖倒置，那么Dagger2无法通过<code>Rose</code>类的构造方法为<code>Rose</code>类生成工厂类，而<code>Pot</code>类没有使用依赖倒置，因此<code>Pot</code>类的构造方法依然可以使用<code>@Inject</code>来让Dagger2为<code>Pot</code>生成工厂类。</p>
+<pre><code>public class Pot {
+
+    private Flower flower;//将Rose引用替换为了Flower，依赖倒置
+
+    @Inject
+    public Pot(Flower flower){
+        this.flower=flower;
+    }
+
+    public String show(){
+        return flower.whisper();
+    }
+}</code></pre><pre><code>public class Rose extends Flower{
+//原本有@Inject，现在去掉了这里的@InJect，因为Dagger2无法定位到这个类的构造函数，
+//这个注解留着也没有用
+//不过不去掉也不会出错，依然可以通过编译，
+//因为Dagger2已经不是从这里生成Rose的工厂方法了
+    public Rose(){
+    }
+    public String whisper(){
+        return &quot;热恋&quot;;
+    }
+}</code></pre><p>在这个场景下，工厂类的生成就和这个类没有什么关系了，那么就要通过另一种方式生成工厂类，就是通过重新创建一个Module类，由他来创建工厂类。</p>
+<pre><code>@Module//@表示这个类是一个创建工厂类的入口，可以说是工厂类的工厂类。
+public class FlowerModule {
+    @Provides//标注这个方法作为工厂方法，生成Flower对象。
+    Flower provideFlower(){
+        //项目需求变动后，要改Flower接口的实现类的时候，就改这里，比如return new Lily();
+        return new Rose();
+    }
+}</code></pre><p>再为Component接口的注解添加参数</p>
+<pre><code>
+@Component(modules = FlowerModule.class)
+public interface MainActivityComponent {
+    void inject(MainActivity activity);
+}</code></pre><p>现在build project，多出了这个类</p>
+<p>```<br>public final class FlowerModule_ProvideFlowerFactory implements Factory<Flower> {<br>    private final FlowerModule module;//持有一个Module引用，通过他来实例化泛型<Flower></p>
+<pre><code>public FlowerModule_ProvideFlowerFactory(FlowerModule module) {
+    assert module != null;
+    this.module = module;
+}
+
+//调用module.provideXXX()来返回实例
+@Override
+public Flower get() {
+    return Preconditions.checkNotNull(
+            module.provideFlower(), &quot;Cannot return null from a non-@Nullable @Provides method&quot;);
+}
+
+//创建自己
+public static Factory&lt;Flower&gt; create(F</code></pre>
+            </div>
+            <hr>
+            <div>
+              <p>
+                
+                  <span>
+                <i class="iconfont icon-inbox"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/">第三方库</a>
+                      &nbsp;
+                    
+                  </span>&nbsp;&nbsp;
+                
+                
+              </p>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/03/28/%E7%AE%97%E6%B3%95/AVL%E6%A0%91/">
+                        <i class="fa fa-chevron-left"></i>
+                        <span class="hidden-mobile">AVL树</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/2020/03/28/ndk/JNI%E5%88%9B%E5%BB%BA%E5%8F%98%E9%87%8F%E5%92%8C%E9%87%8A%E6%94%BE%E5%8F%98%E9%87%8F/">
+                        <span class="hidden-mobile">JNI创建变量和释放变量</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="fa fa-chevron-right"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+              
+                <!-- Comments -->
+                <div class="comments" id="comments">
+                  
+                  
+  <script defer src="https://utteranc.es/client.js"
+          repo="git@github.com:HWilliamgo/HWilliamgo.github.io.git"
+          issue-term="pathname"
+  
+          label="utterances"
+    
+          theme="github-light"
+          crossorigin="anonymous"
+  >
+  </script>
+
+
+                </div>
+              
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc-start"></div>
+<div id="toc">
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+    </div>
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/popper.js/1.16.1/umd/popper.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="https://cdn.staticfile.org/mdbootstrap/4.13.0/js/mdb.min.js" ></script>
+<script  src="/js/main.js" ></script>
+
+
+  <script  src="/js/lazyload.js" ></script>
+
+
+
+  
+  <script  src="https://cdn.staticfile.org/tocbot/4.10.0/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var navHeight = $('#navbar').height();
+      var toc = $('#toc');
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+      var tocLimMax = 2 * boardTop + boardCtn.height();
+
+      $(window).scroll(function () {
+        var tocLimMin = $('#toc-start').offset().top - navHeight;
+        var scroH = document.body.scrollTop + document.documentElement.scrollTop;
+
+        if (tocLimMin <= scroH && scroH <= tocLimMax) {
+          toc.css({
+            'display': 'block',
+            'position': 'fixed',
+            'top': navHeight,
+          });
+        } else if (scroH <= tocLimMin) {
+          toc.css({
+            'position': '',
+            'top': '',
+          });
+        } else if (scroH > tocLimMax) {
+          toc.css('display', 'none');
+        }
+      });
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '.post-content',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc > p').css('visibility', 'visible');
+      }
+      var offset = boardCtn.css('margin-right')
+      $('#toc-ctn').css({
+        'right': offset
+      })
+    });
+  </script>
+
+
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+
+<!-- Plugins -->
+
+
+
+  <script  src="https://cdn.staticfile.org/prettify/188.0.0/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  linenums');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "Dagger2&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="https://s1.ax1x.com/2020/03/28/GkotgK.th.jpg">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="HWilliamgo">
+  <meta name="keywords" content="">
+  <title>requestLayout()引起的问题 - William的小星球</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.12.1/css/all.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/mdbootstrap/4.13.0/css/mdb.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/3.0.1/github-markdown.min.css" />
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+
+
+
+  <link  rel="stylesheet" href="/lib/prettify/tomorrow-night-eighties.min.css" />
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link defer rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+<!-- 自定义样式保持在最底部 -->
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>William的小星球</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">归档</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">分类</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">标签</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">关于</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('https://w.wallhaven.cc/full/39/wallhaven-39joqy.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+                <p class="mt-3 post-meta">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                  星期六, 三月 28日 2020, 8:05 早上
+                </p>
+              
+
+              <p class="mt-1">
+                
+                  
+                  <span class="post-meta">
+                    <i class="far fa-chart-bar"></i>
+                    916 字
+                  </span>
+                
+
+                
+                  
+                  <span class="post-meta">
+                      <i class="far fa-clock"></i>
+                      3 分钟
+                  </span>
+                
+
+                
+              </p>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5 z-depth-3" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+            <div class="markdown-body">
+              <h1 id="requestLayout-引起的问题"><a href="#requestLayout-引起的问题" class="headerlink" title="requestLayout()引起的问题"></a>requestLayout()引起的问题</h1><blockquote>
+<p>网上有大量写的很深入的<code>requestLayout()</code>源码分析的文章。故这里不再写了，只做一个实际情况下遇到的问题的分析。</p>
+<p>起因：</p>
+<p>自定义了一个<code>CircleImageView</code>，功能是调用<code>setImage(Bitmap bitmap)</code>后可以将图片以圆形加载。</p>
+<p>本以为直接在<code>setImage(Bitmap)</code>的结尾直接调用<code>requestLayout()</code>即可。</p>
+</blockquote>
+<p>这里从两个方面写：</p>
+<h3 id="xml中定义为wrap-content"><a href="#xml中定义为wrap-content" class="headerlink" title="xml中定义为wrap_content"></a>xml中定义为wrap_content</h3><p>当<code>LayoutParams</code>是<code>wrap_content</code>时，我处理的逻辑是：在<code>onMeasure()</code>中根据宽高的<code>MeasureSpec</code>是否等于<code>MeasureSpec.AT_MOST</code>，如果等于，那么在第一次绘制的时候，<code>setMeasureDimension()</code>都设置成0，而当调用了<code>setBitmap()</code>时，获取图片的宽高并保存，然后调用<code>requestLayout()</code>，此举引起<code>onMeasure()</code>，那么在此处将图片的宽高设置到<code>setMeasureDimension()</code>中，而整体的View的测量大小就是图片大小了。</p>
+<p>此时我的<code>onMeasure</code>和<code>setBitmap</code>长这样：</p>
+<pre><code class="java">@Override
+protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+    Log.d(TAG, &quot;onMeasure: &quot;);
+    int ws = MeasureSpec.getSize(widthMeasureSpec);
+    int hs = MeasureSpec.getSize(heightMeasureSpec);
+    int wm = MeasureSpec.getMode(widthMeasureSpec);
+    int hm = MeasureSpec.getMode(heightMeasureSpec);
+    //如果子view是wrap_content，那么view就设置成bitmap的大小。
+    if (wm == MeasureSpec.AT_MOST) {
+        ws = bitmapW;
+    }
+    if (hm == MeasureSpec.AT_MOST) {
+        hs = bitmapH;
+    }
+    int resultW = MeasureSpec.makeMeasureSpec(ws, wm);
+    int resultH = MeasureSpec.makeMeasureSpec(hs, hm);
+    super.onMeasure(resultW, resultH);
+}
+public void setImage(Bitmap bitmap) {
+    mBitmap = bitmap;
+    bitmapH = mBitmap.getHeight();
+    bitmapW = mBitmap.getWidth();
+    requestLayout();//最后要调用一个requestLayout，引起onMeasure()和onLayout()。
+}</code></pre>
+<h4 id="大小不同的两张图片"><a href="#大小不同的两张图片" class="headerlink" title="大小不同的两张图片"></a>大小不同的两张图片</h4><p>此时为这个<code>CircleImageView</code>准备了两张分辨率不同的图片，点击按钮A加载图片A，点击按钮B加载图片B。</p>
+<p>点击情况：</p>
+<ol>
+<li>由显示A的情况下加载B，或者显示B的情况下加载A，或者从没有图片情况下点击加载Ａ或Ｂ，分别引起了<code>onMeasure()</code>,<code>onSizeChanged（）</code>,<code>onLayout()</code>,<code>onDraw</code>回调。成功地在<code>onDraw</code>重新<code>drawBitmap()</code>切换了图片。</li>
+<li>当在A图片下点击按钮A，或者在B图片下点击按钮B。只引起了<code>onMeasure()</code>和<code>onLayout()</code>回调。这里少了一个<code>onSizeChanged()</code>很好理解，因为在该情况下，<code>setMeasureDimesion()</code>传入的值和上一次一样，View中可以很容易通过这种判断而跳过<code>onSizeChanged()</code>回调，而至于为什么<code>onDraw（）</code>回调没有引起，这点我也很疑惑。</li>
+</ol>
+<h4 id="大小相同的两张图片"><a href="#大小相同的两张图片" class="headerlink" title="大小相同的两张图片"></a>大小相同的两张图片</h4><p>此时我又准备了两张大小相同的图片。操作和上述一样。</p>
+<p>点击情况：</p>
+<ol>
+<li>从没有图片的情况下点击加载图片Ａ:<code>onMeasure()</code>,<code>onSizeChanged（）</code>,<code>onLayout()</code>,<code>onDraw</code></li>
+<li>从图片Ａ点击加载图片Ｂ：加载失败，图片仍然停留在图片Ａ，此时的回调是：<code>onMeasure()</code>和｀onLayout()｀</li>
+<li>图片Ａ点击加载图片Ａ:　同２。</li>
+</ol>
+<h4 id="推论：-在wrap-content情况下"><a href="#推论：-在wrap-content情况下" class="headerlink" title="推论：(在wrap_content情况下)"></a>推论：(在wrap_content情况下)</h4><ol>
+<li>当<code>requestLayout()</code>调用时，一定会引起<code>onMeasure()</code>和<code>onLayout()</code>。</li>
+<li>当<code>requestLayout()</code>调用时，如果没有在<code>setMeasureDimension()</code>中传入和上次不同的测量值的话，一定不会引起<code>onSizeChanged()</code>和<code>onDraw()</code>。<code>onSizeChanged()</code>不被调用的原因很容易在<code>onLayout()</code>的源码中找到答案，而<code>onDraw()</code>不引起回调的原因目前还不明白。</li>
+</ol>
+<h3 id="xml中定义为精确值"><a href="#xml中定义为精确值" class="headerlink" title="xml中定义为精确值"></a>xml中定义为精确值</h3><ol>
+<li><p>情况：此时图片直接无法加载。仅仅在第一次实例化CircleImageView的时候会依次调用<code>onMeasure()</code>,<code>onSizeChanged（）</code>,<code>onLayout()</code>,<code>onDraw</code>，伺候每一次调用<code>setImage()</code>都只会引起<code>onMeasure()</code>和<code>onLayout()</code>。</p>
+</li>
+<li><p>原因：因为在<code>requestLayout()</code>调用后，因为此时的测量模式是<code>EXACTLY</code>，因此<code>setMeasuredDimension()</code>中传入的值永远不变，永远都是xml中定义的那个精确值。而上文的推论中指出，<code>setMeasuredDimension()</code>传入的值等于原本的测量值的话，直接引起<code>onSizeChanged()</code>和<code>onDraw()</code>无法调用。</p>
+</li>
+</ol>
+<hr>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><ol>
+<li>上文中的推论</li>
+<li>不能依赖<code>requestLayout</code>来引起<code>onDraw()</code>回调，如果百分之百确定要绘制，直接调用<code>invalidate()</code>或<code>postInvalidate()</code>，他们只会引起<code>onDraw()</code>的回调。</li>
+<li>CircleImageView源码：<a href="https://github.com/William619499149/anddroid-little-bubble/blob/master/CircleImageView.java" target="_blank" rel="noopener">https://github.com/William619499149/anddroid-little-bubble/blob/master/CircleImageView.java</a><br>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </li>
+</ol>
+
+            </div>
+            <hr>
+            <div>
+              <p>
+                
+                  <span>
+                <i class="iconfont icon-inbox"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/View/">View</a>
+                      &nbsp;
+                    
+                  </span>&nbsp;&nbsp;
+                
+                
+              </p>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/03/28/View/view-getX(),-view-getLeft(),-view-getTranslationX()/">
+                        <i class="fa fa-chevron-left"></i>
+                        <span class="hidden-mobile">view-getX(),-view-getLeft(),-view-getTranslationX()</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/2020/03/28/View/getWidth%E5%92%8CgetHeight%E6%96%B9%E6%B3%95/">
+                        <span class="hidden-mobile">getWidth和getHeight方法</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="fa fa-chevron-right"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+              
+                <!-- Comments -->
+                <div class="comments" id="comments">
+                  
+                  
+  <script defer src="https://utteranc.es/client.js"
+          repo="git@github.com:HWilliamgo/HWilliamgo.github.io.git"
+          issue-term="pathname"
+  
+          label="utterances"
+    
+          theme="github-light"
+          crossorigin="anonymous"
+  >
+  </script>
+
+
+                </div>
+              
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc-start"></div>
+<div id="toc">
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+    </div>
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/popper.js/1.16.1/umd/popper.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="https://cdn.staticfile.org/mdbootstrap/4.13.0/js/mdb.min.js" ></script>
+<script  src="/js/main.js" ></script>
+
+
+  <script  src="/js/lazyload.js" ></script>
+
+
+
+  
+  <script  src="https://cdn.staticfile.org/tocbot/4.10.0/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var navHeight = $('#navbar').height();
+      var toc = $('#toc');
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+      var tocLimMax = 2 * boardTop + boardCtn.height();
+
+      $(window).scroll(function () {
+        var tocLimMin = $('#toc-start').offset().top - navHeight;
+        var scroH = document.body.scrollTop + document.documentElement.scrollTop;
+
+        if (tocLimMin <= scroH && scroH <= tocLimMax) {
+          toc.css({
+            'display': 'block',
+            'position': 'fixed',
+            'top': navHeight,
+          });
+        } else if (scroH <= tocLimMin) {
+          toc.css({
+            'position': '',
+            'top': '',
+          });
+        } else if (scroH > tocLimMax) {
+          toc.css('display', 'none');
+        }
+      });
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '.post-content',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc > p').css('visibility', 'visible');
+      }
+      var offset = boardCtn.css('margin-right')
+      $('#toc-ctn').css({
+        'right': offset
+      })
+    });
+  </script>
+
+
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+
+<!-- Plugins -->
+
+
+
+  <script  src="https://cdn.staticfile.org/prettify/188.0.0/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  linenums');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "requestLayout()引起的问题&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

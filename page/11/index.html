@@ -8,7 +8,7 @@
 <head>
   <meta charset="UTF-8">
   <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png">
-  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <link rel="icon" type="image/png" href="https://s1.ax1x.com/2020/03/28/GkotgK.th.jpg">
   <meta name="viewport"
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -17,9 +17,9 @@
   
   <meta name="theme-color" content="#2f4154">
   <meta name="description" content="">
-  <meta name="author" content="John Doe">
+  <meta name="author" content="HWilliamgo">
   <meta name="keywords" content="">
-  <title>Hexo</title>
+  <title>William的小星球</title>
 
   <link  rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.12.1/css/all.min.css" />
 <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
@@ -49,7 +49,7 @@
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand"
-       href="/">&nbsp;<strong>Hexo</strong>&nbsp;</a>
+       href="/">&nbsp;<strong>William的小星球</strong>&nbsp;</a>
 
     <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
             data-target="#navbarSupportedContent"
@@ -113,7 +113,7 @@
 </nav>
 
     <div class="view intro-2" id="background" parallax=true
-         style="background: url('/img/default.png') no-repeat center center;
+         style="background: url('https://s1.ax1x.com/2020/03/28/GkWdBR.jpg') no-repeat center center;
            background-size: cover;">
       <div class="full-bg-img">
         <div class="mask rgba-black-light flex-center">
@@ -151,33 +151,33 @@
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/26/Java/%E9%80%9A%E8%BF%87%E5%8F%8D%E5%B0%84%E6%9F%A5%E7%9C%8B%E6%B3%9B%E5%9E%8B%E4%BF%A1%E6%81%AF/">
-        <p class="h4 index-header">通过反射查看泛型信息</p>
+      <a href="/2020/03/28/View/android%E8%87%AA%E5%AE%9A%E4%B9%89View%E4%B8%AD%E7%94%A8NinePatch%E7%B1%BB%E7%94%BB9%E5%9B%BE/">
+        <p class="h4 index-header">android自定义View中用NinePatch类画9图</p>
       </a>
 
-      <a href="/2020/03/26/Java/%E9%80%9A%E8%BF%87%E5%8F%8D%E5%B0%84%E6%9F%A5%E7%9C%8B%E6%B3%9B%E5%9E%8B%E4%BF%A1%E6%81%AF/">
+      <a href="/2020/03/28/View/android%E8%87%AA%E5%AE%9A%E4%B9%89View%E4%B8%AD%E7%94%A8NinePatch%E7%B1%BB%E7%94%BB9%E5%9B%BE/">
         
         
           
         
         <div class="index-excerpt" >
-          <div class="index-text mb-1">#####通过泛型和反射避免强制类型转换：下面这个代码是没问题的。
-Class clazz=Class.forName(&quot;java.util.Date&quot;);
-Date date= (Date) clazz.newInstance();但是这样也没问题，编译器不会报错，但是run肯定会报错。
-String string= (String) clazz.newInstance();结合泛型反射可以避免强制类型转换，让编译器帮我们检查：
-@SuppressWarnings(value = &quot;unchecked&quot;)
-public class MainTest {</div>
+          <div class="index-text mb-1">9图的制作在官网和其他博客中都有大量教程，最终可以制作出XXX.9.png文件
+##　没有用NinePatch:在自定义View中，直用Bitmap和画笔而不配合NinePatch类是画不9图的效果的，比如：
+//R.drawable.image9Patch是制作好的9图
+Bitmap bitmap=BitmapFactory.decodeResource(getResources(),R.drawable.image9Patch)@Override
+protected void onDraw(Canvas canvas) {
+   ...创建RectF dst，作为bitmap被画出且自动缩</div>
         </div>
       </a>
 
       <div class="index-btm">
         
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-26&nbsp;&nbsp;
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
         
         
           <i class="iconfont icon-inbox"></i>
           
-            <a href="/categories/Java/">Java</a>&nbsp;
+            <a href="/categories/View/">View</a>&nbsp;
           &nbsp;
         
         
@@ -189,39 +189,35 @@ public class MainTest {</div>
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/26/Kotlin/Java%E4%B8%AD%E8%A2%AB%E9%98%89%E5%89%B2%E7%9A%84%E9%97%AD%E5%8C%85%E5%9C%A8Kotlin%E4%B8%AD%E7%9A%84%E8%A1%A8%E7%8E%B0%E5%A6%82%E4%BD%95%EF%BC%9F/">
-        <p class="h4 index-header">Java中被阉割的闭包在Kotlin中的表现如何？</p>
+      <a href="/2020/03/28/View/android%E7%9A%84PopupWindow%E6%97%A0%E6%B3%95%E6%94%B6%E5%88%B0KeyEvent-KEYCODE_BACK%E7%9A%84%E5%8E%9F%E5%9B%A0-md/">
+        <p class="h4 index-header">android的PopupWindow无法收到KeyEvent-KEYCODE_BACK的原因-md</p>
       </a>
 
-      <a href="/2020/03/26/Kotlin/Java%E4%B8%AD%E8%A2%AB%E9%98%89%E5%89%B2%E7%9A%84%E9%97%AD%E5%8C%85%E5%9C%A8Kotlin%E4%B8%AD%E7%9A%84%E8%A1%A8%E7%8E%B0%E5%A6%82%E4%BD%95%EF%BC%9F/">
+      <a href="/2020/03/28/View/android%E7%9A%84PopupWindow%E6%97%A0%E6%B3%95%E6%94%B6%E5%88%B0KeyEvent-KEYCODE_BACK%E7%9A%84%E5%8E%9F%E5%9B%A0-md/">
         
         
           
         
         <div class="index-excerpt" >
-          <div class="index-text mb-1">1 闭包概述闭包，Clousure。在Java中表现为Lambda表达式，在Koltin中表现为函数类型变量（或者也叫做Lambda表达式）。
-其定义：java为什么匿名内部类的参数引用时final？ - 胖胖的回答
-
-一个依赖于自由变量的函数 
-
-处在含有这些自由变量的一个外围环境
-
-这个函数能够访问外围环境里的自由变量
-
-
-2 Kotlin和Java的闭包对比在java8中，java中的闭包类型依然不能直接地修改外部环境的变量的引用，因此就有了众所周知的：匿名内部类的实例对外部环境的变量的访问，都需要让外部环境的变量加上final关键字。
-在Kotin中，这一点被改进了，Kotlin中的闭</div>
+          <div class="index-text mb-1">PopupWindow无法收到KeyEvent.KEYCODE_BACK的原因：
+在创建的顶层PopupDecorView的dispatchKeyEvent()回调中，把该事件拦截了。
+1. PopupDecorView创建PopupDecorView代码：
+//PopupWindow#showAtLocation()
+public void showAtLocation(IBinder token, int gravity, int x, int y) {
+    if (isShowing() || mContentView == null) {
+        return;
+    }</div>
         </div>
       </a>
 
       <div class="index-btm">
         
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-26&nbsp;&nbsp;
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
         
         
           <i class="iconfont icon-inbox"></i>
           
-            <a href="/categories/Kotlin/">Kotlin</a>&nbsp;
+            <a href="/categories/View/">View</a>&nbsp;
           &nbsp;
         
         
@@ -233,35 +229,36 @@ public class MainTest {</div>
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/26/Kotlin/Kotlin%E5%8D%8F%E7%A8%8B%EF%BC%88%E4%B8%80%EF%BC%89%E7%90%86%E8%A7%A3/">
-        <p class="h4 index-header">Kotlin协程（一）理解</p>
+      <a href="/2020/03/28/View/View%E7%AE%80%E8%A6%81%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/">
+        <p class="h4 index-header">View简要工作原理</p>
       </a>
 
-      <a href="/2020/03/26/Kotlin/Kotlin%E5%8D%8F%E7%A8%8B%EF%BC%88%E4%B8%80%EF%BC%89%E7%90%86%E8%A7%A3/">
+      <a href="/2020/03/28/View/View%E7%AE%80%E8%A6%81%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/">
         
         
           
         
         <div class="index-excerpt" >
-          <div class="index-text mb-1">
-最近这段时间抽空学习了一下Kotlin协程相关的知识，在此做一个总结和梳理
-
-是什么kotlin协程是什么一个名为kotlinx.coroutines包下的库， 是由 JetBrains 开发的功能丰富的协程库，方便大家利用协程来完成异步处理的开发。
-当我们创建协程（Coroutine）时，我们创建的是什么？一种类似于java.lang.Runnable，但比Runnable功能要强大的多的对象。
-//launch函数是CoroutineScope的拓展函数，即launch{}函数需要该对象才能使用，以下代码不能直接使用
-launch(Dispatchers.IO) {
-    //这段代码</div>
+          <div class="index-text mb-1">ViewRootImpl对象=&gt;performTraversals()
+private void performTraversals() {
+//上下近800行代码。
+  performMeasure();
+  performLayout();
+  performDraw();
+}private void performMeasure(int childWidthMeasureSpec, int childHeightMeasureSpec) {
+//mView是DecorView对象
+  mView.measure(childWidthMeasureSpec, childHeightM</div>
         </div>
       </a>
 
       <div class="index-btm">
         
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-26&nbsp;&nbsp;
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
         
         
           <i class="iconfont icon-inbox"></i>
           
-            <a href="/categories/Kotlin/">Kotlin</a>&nbsp;
+            <a href="/categories/View/">View</a>&nbsp;
           &nbsp;
         
         
@@ -273,11 +270,11 @@ launch(Dispatchers.IO) {
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/26/Kotlin/Kotlin%E6%B3%9B%E5%9E%8B/">
+      <a href="/2020/03/28/Kotlin/Kotlin%E6%B3%9B%E5%9E%8B/">
         <p class="h4 index-header">Kotlin泛型</p>
       </a>
 
-      <a href="/2020/03/26/Kotlin/Kotlin%E6%B3%9B%E5%9E%8B/">
+      <a href="/2020/03/28/Kotlin/Kotlin%E6%B3%9B%E5%9E%8B/">
         
         
           
@@ -314,7 +311,7 @@ List&lt;? extends </div>
 
       <div class="index-btm">
         
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-26&nbsp;&nbsp;
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
         
         
           <i class="iconfont icon-inbox"></i>
@@ -331,11 +328,11 @@ List&lt;? extends </div>
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/26/Kotlin/Kotlin%E7%AC%94%E8%AE%B0/">
+      <a href="/2020/03/28/Kotlin/Kotlin%E7%AC%94%E8%AE%B0/">
         <p class="h4 index-header">Kotlin笔记</p>
       </a>
 
-      <a href="/2020/03/26/Kotlin/Kotlin%E7%AC%94%E8%AE%B0/">
+      <a href="/2020/03/28/Kotlin/Kotlin%E7%AC%94%E8%AE%B0/">
         
         
           
@@ -352,7 +349,7 @@ List&lt;? extends </div>
 
       <div class="index-btm">
         
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-26&nbsp;&nbsp;
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
         
         
           <i class="iconfont icon-inbox"></i>
@@ -369,29 +366,35 @@ List&lt;? extends </div>
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/26/java%E5%B9%B6%E5%8F%91/Future%E7%9B%B8%E5%85%B3%E7%B1%BB%E8%A7%A3%E9%87%8A/">
-        <p class="h4 index-header">Future相关类解释</p>
+      <a href="/2020/03/28/View/View%E4%BA%8B%E4%BB%B6%E5%88%86%E5%8F%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+        <p class="h4 index-header">View事件分发学习笔记</p>
       </a>
 
-      <a href="/2020/03/26/java%E5%B9%B6%E5%8F%91/Future%E7%9B%B8%E5%85%B3%E7%B1%BB%E8%A7%A3%E9%87%8A/">
+      <a href="/2020/03/28/View/View%E4%BA%8B%E4%BB%B6%E5%88%86%E5%8F%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
         
         
           
         
         <div class="index-excerpt" >
-          <div class="index-text mb-1">Future接口一个Future代表一个异步计算的结果。他提供了5个方法来确认计算是否完成，来等待异步任务的完成，来获取异步计算的结果。当计算完成，计算结果有且只能有通过get()方法来获取，并且会阻塞调用者线程直到异步计算的任务完成。取消只能通过cancel()方法。他提供了额外的方法来决定任务正常完成还是被取消。一旦一个计算任务完成，他将不再能够被取消。如果你要用Future是为了能够取消异步任务而不要他的返回结果，那么可以使用Future&lt;?&gt;并返回null作为异步任务的执行结果。
-RunnableFuture接口表示一个可以run的Future, run方法的成功执行标识着</div>
+          <div class="index-text mb-1">
+首先推荐郭霖的真正的通俗易懂的View的事件分发文章：
+Android事件分发机制完全解析，带你从源码的角度彻底理解(上)
+
+文章中讲述了几个要点：
+
+如果你在执行ACTION_DOWN的时候返回了false，后面一系列其它的action就不会再得到执行了。简单的说，就是当dispatchTouchEvent在进行事件分发的时候，只有前一个action返回true，才会触发后一个action。即消费事件才会继续有事件。
+在dispatchMotionEvent方法中执行到了onTouchEvent中将MotionEvent对象传入switch中做ACTION_DOWN、ACTION_UP等判</div>
         </div>
       </a>
 
       <div class="index-btm">
         
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-26&nbsp;&nbsp;
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
         
         
           <i class="iconfont icon-inbox"></i>
           
-            <a href="/categories/java%E5%B9%B6%E5%8F%91/">java并发</a>&nbsp;
+            <a href="/categories/View/">View</a>&nbsp;
           &nbsp;
         
         
@@ -403,11 +406,11 @@ RunnableFuture接口表示一个可以run的Future, run方法的成功执行标�
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/26/RxJava-2-x/%E9%98%B2%E6%AD%A2%E8%BF%B7%E8%B7%AF/">
+      <a href="/2020/03/28/RxJava-2-x/%E9%98%B2%E6%AD%A2%E8%BF%B7%E8%B7%AF/">
         <p class="h4 index-header">防止迷路</p>
       </a>
 
-      <a href="/2020/03/26/RxJava-2-x/%E9%98%B2%E6%AD%A2%E8%BF%B7%E8%B7%AF/">
+      <a href="/2020/03/28/RxJava-2-x/%E9%98%B2%E6%AD%A2%E8%BF%B7%E8%B7%AF/">
         
         
           
@@ -422,7 +425,7 @@ RunnableFuture接口表示一个可以run的Future, run方法的成功执行标�
 
       <div class="index-btm">
         
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-26&nbsp;&nbsp;
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
         
         
           <i class="iconfont icon-inbox"></i>
@@ -439,11 +442,11 @@ RunnableFuture接口表示一个可以run的Future, run方法的成功执行标�
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/26/View/ScrollView%E5%B5%8C%E5%A5%97ScrollView%E7%9A%84%E6%BB%91%E5%8A%A8%E5%86%B2%E7%AA%81/">
+      <a href="/2020/03/28/View/ScrollView%E5%B5%8C%E5%A5%97ScrollView%E7%9A%84%E6%BB%91%E5%8A%A8%E5%86%B2%E7%AA%81/">
         <p class="h4 index-header">ScrollView嵌套ScrollView的滑动冲突</p>
       </a>
 
-      <a href="/2020/03/26/View/ScrollView%E5%B5%8C%E5%A5%97ScrollView%E7%9A%84%E6%BB%91%E5%8A%A8%E5%86%B2%E7%AA%81/">
+      <a href="/2020/03/28/View/ScrollView%E5%B5%8C%E5%A5%97ScrollView%E7%9A%84%E6%BB%91%E5%8A%A8%E5%86%B2%E7%AA%81/">
         
         
           
@@ -463,7 +466,7 @@ RunnableFuture接口表示一个可以run的Future, run方法的成功执行标�
 
       <div class="index-btm">
         
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-26&nbsp;&nbsp;
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
         
         
           <i class="iconfont icon-inbox"></i>
@@ -480,11 +483,11 @@ RunnableFuture接口表示一个可以run的Future, run方法的成功执行标�
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/26/View/View#onKeyDown%E4%B8%8D%E8%B0%83%E7%94%A8/">
+      <a href="/2020/03/28/View/View#onKeyDown%E4%B8%8D%E8%B0%83%E7%94%A8/">
         <p class="h4 index-header">View#onKeyDown不调用</p>
       </a>
 
-      <a href="/2020/03/26/View/View#onKeyDown%E4%B8%8D%E8%B0%83%E7%94%A8/">
+      <a href="/2020/03/28/View/View#onKeyDown%E4%B8%8D%E8%B0%83%E7%94%A8/">
         
         
           
@@ -503,7 +506,7 @@ ViewRootImpl-&gt;DecorView-&gt;Activity-&gt;ViewGroup-&gt;View
 
       <div class="index-btm">
         
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-26&nbsp;&nbsp;
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
         
         
           <i class="iconfont icon-inbox"></i>
@@ -520,11 +523,11 @@ ViewRootImpl-&gt;DecorView-&gt;Activity-&gt;ViewGroup-&gt;View
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/26/View/View#post(Runnable-runnable)%E4%B8%BA%E4%BB%80%E4%B9%88%E8%83%BD%E6%8B%BF%E5%88%B0view%E7%9A%84%E5%AE%BD%E9%AB%98%E3%80%82/">
+      <a href="/2020/03/28/View/View#post(Runnable-runnable)%E4%B8%BA%E4%BB%80%E4%B9%88%E8%83%BD%E6%8B%BF%E5%88%B0view%E7%9A%84%E5%AE%BD%E9%AB%98%E3%80%82/">
         <p class="h4 index-header">View#post(Runnable-runnable)为什么能拿到view的宽高。</p>
       </a>
 
-      <a href="/2020/03/26/View/View#post(Runnable-runnable)%E4%B8%BA%E4%BB%80%E4%B9%88%E8%83%BD%E6%8B%BF%E5%88%B0view%E7%9A%84%E5%AE%BD%E9%AB%98%E3%80%82/">
+      <a href="/2020/03/28/View/View#post(Runnable-runnable)%E4%B8%BA%E4%BB%80%E4%B9%88%E8%83%BD%E6%8B%BF%E5%88%B0view%E7%9A%84%E5%AE%BD%E9%AB%98%E3%80%82/">
         
         
           
@@ -543,7 +546,7 @@ public boolean post(Runnable action) {
 
       <div class="index-btm">
         
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-26&nbsp;&nbsp;
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
         
         
           <i class="iconfont icon-inbox"></i>
@@ -672,7 +675,7 @@ public boolean post(Runnable action) {
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "&nbsp;",
+        "feel free to leave comments&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,

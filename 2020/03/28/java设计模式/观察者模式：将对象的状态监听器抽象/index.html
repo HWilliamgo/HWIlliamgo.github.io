@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="https://s1.ax1x.com/2020/03/28/GkotgK.th.jpg">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="HWilliamgo">
+  <meta name="keywords" content="">
+  <title>观察者模式：将对象的状态监听器抽象 - William的小星球</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.12.1/css/all.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/mdbootstrap/4.13.0/css/mdb.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/3.0.1/github-markdown.min.css" />
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+
+
+
+  <link  rel="stylesheet" href="/lib/prettify/tomorrow-night-eighties.min.css" />
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link defer rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+<!-- 自定义样式保持在最底部 -->
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>William的小星球</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">归档</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">分类</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">标签</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">关于</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('https://w.wallhaven.cc/full/39/wallhaven-39joqy.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+                <p class="mt-3 post-meta">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                  星期六, 三月 28日 2020, 8:05 早上
+                </p>
+              
+
+              <p class="mt-1">
+                
+                  
+                  <span class="post-meta">
+                    <i class="far fa-chart-bar"></i>
+                    928 字
+                  </span>
+                
+
+                
+                  
+                  <span class="post-meta">
+                      <i class="far fa-clock"></i>
+                      3 分钟
+                  </span>
+                
+
+                
+              </p>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5 z-depth-3" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+            <div class="markdown-body">
+              <p>回调、监听器、观察者模式。这三个名词描述的都是同一件事物：</p>
+<blockquote>
+<p> 一个有状态的对象，将自身的状态发布出去，通知到那些订阅了该对象的状态的观察者（们）。</p>
+</blockquote>
+<p>举例子：微信用户关注（或者说订阅）一个公众号，当公众号作者发布一篇推文时，所有订阅了这个公众号的用户都能收到推送。</p>
+<p>被观察者，都是有状态的对象，将自己的某个状态发布给订阅了他的对象们。</p>
+<p>代码举例：</p>
+<pre><code class="kotlin">class Author {
+    private var onPublishEssayListener: ((id: String) -&gt; Unit)? = null
+    private var onUpdateEssayListener: ((id: String) -&gt; Unit)? = null
+    private var onDeleteEssayListener: ((id: String) -&gt; Unit)? = null
+
+    fun publishEssay() {
+        //...
+
+        //由Author自己维护何时发布回调
+        onPublishEssayListener?.invoke(&quot;123&quot;)
+
+        //...
+    }
+
+    fun deleteEssay() {
+        //..
+
+        //由Author自己维护何时发布回调
+        onDeleteEssayListener?.invoke(&quot;123&quot;)
+
+        //..
+    }
+
+    fun updateEssay() {
+        //..
+
+        //由Author自己维护何时发布回调
+        onUpdateEssayListener?.invoke(&quot;123&quot;)
+
+        //..
+    }
+
+    fun observePublish(onPublishEssayListener: (id: String) -&gt; Unit) {
+        this.onPublishEssayListener = onPublishEssayListener
+    }
+
+    fun observeUpdate(onUpdateEssayListener: (id: String) -&gt; Unit) {
+        this.onUpdateEssayListener = onUpdateEssayListener
+    }
+
+    fun observeDelete(onDeleteEssayListener: (id: String) -&gt; Unit) {
+        this.onDeleteEssayListener = onDeleteEssayListener
+    }
+}
+
+fun main(args: Array&lt;String&gt;) {
+
+    val author = Author()
+
+    author.observePublish { id -&gt;
+        log(&quot;发布文章，id=$id&quot;)
+    }
+
+    author.observeUpdate { id -&gt;
+        log(&quot;更新文章，id=$id&quot;)
+    }
+    author.observeDelete { id -&gt;
+        log(&quot;删除文章。id=$id&quot;)
+    }
+    author.publishEssay()
+    author.updateEssay()
+    author.deleteEssay()
+}</code></pre>
+<p>打印：</p>
+<pre><code>发布文章，id=123
+更新文章，id=123
+删除文章。id=123</code></pre><p>上述代码由<code>Author</code>类直接引用了回调（用了Kotlin中的函数类型，省去了定义多个接口），在<code>Authoer</code>类的内部来直接根据当前的逻辑，将注册过来的观察者给发布出去。这里可以将这些观察者（或者说回调对象）抽象出来，做成一个父类，让<code>Author</code>继承。</p>
+<p>因为观察者观察的都是文章的状态，因此这个类叫做<code>EssayStateRegistry</code></p>
+<pre><code class="kotlin">abstract class EssayStateRegistry {
+    private var onPublishEssayListener: ((id: String) -&gt; Unit)? = null
+    private var onUpdateEssayListener: ((id: String) -&gt; Unit)? = null
+    private var onDeleteEssayListener: ((id: String) -&gt; Unit)? = null
+
+    //-------------状态的通知------------------
+    protected fun notifyPublish(id: String) {
+        onPublishEssayListener?.invoke(id)
+    }
+
+    protected fun notifyUpdate(id: String) {
+        onUpdateEssayListener?.invoke(id)
+    }
+
+    protected fun notifyDelete(id: String) {
+        onDeleteEssayListener?.invoke(id)
+    }
+
+    //------------状态的订阅--------------------
+    fun observePublish(onPublishEssayListener: (id: String) -&gt; Unit) {
+        this.onPublishEssayListener = onPublishEssayListener
+    }
+
+    fun observeUpdate(onUpdateEssayListener: (id: String) -&gt; Unit) {
+        this.onUpdateEssayListener = onUpdateEssayListener
+    }
+
+    fun observeDelete(onDeleteEssayListener: (id: String) -&gt; Unit) {
+        this.onDeleteEssayListener = onDeleteEssayListener
+    }
+}</code></pre>
+<p>此时的<code>Authoer</code>便干净了许多</p>
+<pre><code class="kotlin">//继承了EssayStateRegistry
+class Author : EssayStateRegistry() {
+    fun publishEssay() {
+        //...
+
+        //由Author自己维护何时发布回调
+        notifyPublish(&quot;123&quot;)
+        //...
+    }
+
+    fun deleteEssay() {
+        //..
+
+        //由Author自己维护何时发布回调
+        notifyDelete(&quot;123&quot;)
+        //..
+    }
+
+    fun updateEssay() {
+        //..
+
+        //由Author自己维护何时发布回调
+        notifyUpdate(&quot;123&quot;)
+        //..
+    }
+}</code></pre>
+<p>主程序代码不需要改变。</p>
+<pre><code class="kotlin">fun main(args: Array&lt;String&gt;) {
+
+    val author = Author()
+
+    author.observePublish { id -&gt;
+        log(&quot;发布文章，id=$id&quot;)
+    }
+
+    author.observeUpdate { id -&gt;
+        log(&quot;更新文章，id=$id&quot;)
+    }
+    author.observeDelete { id -&gt;
+        log(&quot;删除文章。id=$id&quot;)
+    }
+    author.publishEssay()
+    author.updateEssay()
+    author.deleteEssay()
+}</code></pre>
+<p>打印</p>
+<pre><code>发布文章，id=123
+更新文章，id=123
+删除文章。id=123</code></pre><p>特点：</p>
+<ol>
+<li>将有状态的对象<code>Author</code>与他的观察、订阅逻辑分离。他自己不再直接维护他的状态。他的状态的订阅和发布的处理细节抽象给父类。他自己只需要继承父类就可以获得转发自己状态的能力。</li>
+</ol>
+<p>优点：</p>
+<ol>
+<li>逻辑分离，简化有状态的对象<code>Author</code>的代码，让其专注主要的逻辑。</li>
+<li>抽象出来的父类<code>EssayStateRegistry</code>可以拓展，其他对象只需要继承父类，就可以瞬间拥有所有父类的状态和维护状态的能力。</li>
+<li>当未来可能有更多的状态需要<code>Author</code>类拓展，那么可以再抽象出一个父类<code>XXXStateRegistry</code>来让<code>Author</code>继承，此时<code>Author</code>的代码将依然保持简洁。</li>
+</ol>
+<p>缺点：</p>
+<ol>
+<li>继承就是耦合，抽象父类的任何的改动，都将影响所有继承了父类的子类。</li>
+</ol>
+<p>图：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/7177220-d534c096fb9f7b44.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt=""><br>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             </p>
+
+            </div>
+            <hr>
+            <div>
+              <p>
+                
+                  <span>
+                <i class="iconfont icon-inbox"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/java%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">java设计模式</a>
+                      &nbsp;
+                    
+                  </span>&nbsp;&nbsp;
+                
+                
+              </p>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/03/28/java%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E9%9D%99%E6%80%81%E6%96%B9%E6%B3%95%E7%BB%99%E9%9D%9E%E9%9D%99%E6%80%81%E5%8F%98%E9%87%8F%E8%B5%8B%E5%80%BC/">
+                        <i class="fa fa-chevron-left"></i>
+                        <span class="hidden-mobile">静态方法给非静态变量赋值</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/2020/03/28/java%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/">
+                        <span class="hidden-mobile">策略模式</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="fa fa-chevron-right"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+              
+                <!-- Comments -->
+                <div class="comments" id="comments">
+                  
+                  
+  <script defer src="https://utteranc.es/client.js"
+          repo="git@github.com:HWilliamgo/HWilliamgo.github.io.git"
+          issue-term="pathname"
+  
+          label="utterances"
+    
+          theme="github-light"
+          crossorigin="anonymous"
+  >
+  </script>
+
+
+                </div>
+              
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc-start"></div>
+<div id="toc">
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+    </div>
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/popper.js/1.16.1/umd/popper.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="https://cdn.staticfile.org/mdbootstrap/4.13.0/js/mdb.min.js" ></script>
+<script  src="/js/main.js" ></script>
+
+
+  <script  src="/js/lazyload.js" ></script>
+
+
+
+  
+  <script  src="https://cdn.staticfile.org/tocbot/4.10.0/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var navHeight = $('#navbar').height();
+      var toc = $('#toc');
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+      var tocLimMax = 2 * boardTop + boardCtn.height();
+
+      $(window).scroll(function () {
+        var tocLimMin = $('#toc-start').offset().top - navHeight;
+        var scroH = document.body.scrollTop + document.documentElement.scrollTop;
+
+        if (tocLimMin <= scroH && scroH <= tocLimMax) {
+          toc.css({
+            'display': 'block',
+            'position': 'fixed',
+            'top': navHeight,
+          });
+        } else if (scroH <= tocLimMin) {
+          toc.css({
+            'position': '',
+            'top': '',
+          });
+        } else if (scroH > tocLimMax) {
+          toc.css('display', 'none');
+        }
+      });
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '.post-content',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc > p').css('visibility', 'visible');
+      }
+      var offset = boardCtn.css('margin-right')
+      $('#toc-ctn').css({
+        'right': offset
+      })
+    });
+  </script>
+
+
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+
+<!-- Plugins -->
+
+
+
+  <script  src="https://cdn.staticfile.org/prettify/188.0.0/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  linenums');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "观察者模式：将对象的状态监听器抽象&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -8,7 +8,7 @@
 <head>
   <meta charset="UTF-8">
   <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png">
-  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <link rel="icon" type="image/png" href="https://s1.ax1x.com/2020/03/28/GkotgK.th.jpg">
   <meta name="viewport"
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -17,9 +17,9 @@
   
   <meta name="theme-color" content="#2f4154">
   <meta name="description" content="">
-  <meta name="author" content="John Doe">
+  <meta name="author" content="HWilliamgo">
   <meta name="keywords" content="">
-  <title>Hexo</title>
+  <title>William的小星球</title>
 
   <link  rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.12.1/css/all.min.css" />
 <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
@@ -49,7 +49,7 @@
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand"
-       href="/">&nbsp;<strong>Hexo</strong>&nbsp;</a>
+       href="/">&nbsp;<strong>William的小星球</strong>&nbsp;</a>
 
     <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
             data-target="#navbarSupportedContent"
@@ -113,7 +113,7 @@
 </nav>
 
     <div class="view intro-2" id="background" parallax=true
-         style="background: url('/img/default.png') no-repeat center center;
+         style="background: url('https://s1.ax1x.com/2020/03/28/GkWdBR.jpg') no-repeat center center;
            background-size: cover;">
       <div class="full-bg-img">
         <div class="mask rgba-black-light flex-center">
@@ -151,34 +151,36 @@
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/26/git/git-clone%E5%81%9A%E4%BA%86%E4%BB%80%E4%B9%88/">
-        <p class="h4 index-header">git-clone做了什么</p>
+      <a href="/2020/03/28/JVM/%E5%AF%B9%E8%B1%A1%E4%B8%8E%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/">
+        <p class="h4 index-header">对象与垃圾回收</p>
       </a>
 
-      <a href="/2020/03/26/git/git-clone%E5%81%9A%E4%BA%86%E4%BB%80%E4%B9%88/">
+      <a href="/2020/03/28/JVM/%E5%AF%B9%E8%B1%A1%E4%B8%8E%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/">
         
         
           
         
         <div class="index-excerpt" >
           <div class="index-text mb-1">
-git官方教程：3.5 Git 分支 - 远程分支
+gc只负责回收堆内存中的对象，不会回收任何物力资源（如数据库连接，网络IO等）。
+程序无法精确控制gc的运行，gc会在合适的时候进行。当对象永久失去引用后（=null），系统就会在合适的时候回收它所占的内存。
+在gc回收任何对象之前，总会调用它的finalize方法，该方法可能使对象重新获得引用，导致gc取消回收。
 
-打开一个directory，输入
-git init
-git clone &lt;远程地址&gt;发生了如下图所示的事情上方是服务器的仓库，master指向f4265，当克隆仓库之后，整个仓库的所有文件，包括.git文件，全部下载到本地的diretory。
-git的clone命令将远程仓库在本地命名为origin，创建一个指向它的 master 分支的指针，并且在本地将其命名为 origin/master（如第二个图的origin/master指针），同时创建一个master指针，并将HEAD指针指向这个master指针（如第二个图的mas</div>
+##对象在内存中的状态：
+
+可达状态：对象被创建后，有一个以上的变量引用它，程序可通过引用变量来调用该对象的实例变量和方法。
+可恢复状态：程序中某个对象不再有任何变量引用它，它进入可恢复状态，gc准备回收该对象所占的内存，在回收该对象之前，系统会调用所有可恢复状态对象的fina</div>
         </div>
       </a>
 
       <div class="index-btm">
         
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-26&nbsp;&nbsp;
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
         
         
           <i class="iconfont icon-inbox"></i>
           
-            <a href="/categories/git/">git</a>&nbsp;
+            <a href="/categories/JVM/">JVM</a>&nbsp;
           &nbsp;
         
         
@@ -190,38 +192,34 @@ git的clone命令将远程仓库在本地命名为origin，创建一个指向它
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/26/git/git%E4%BF%AE%E6%94%B9commit%E4%BF%A1%E6%81%AF%E3%80%82/">
-        <p class="h4 index-header">git修改commit信息。</p>
+      <a href="/2020/03/28/JVM/java%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/">
+        <p class="h4 index-header">java运行时数据区</p>
       </a>
 
-      <a href="/2020/03/26/git/git%E4%BF%AE%E6%94%B9commit%E4%BF%A1%E6%81%AF%E3%80%82/">
+      <a href="/2020/03/28/JVM/java%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/">
         
         
           
         
         <div class="index-excerpt" >
-          <div class="index-text mb-1">在Android Studio上面直接操作Version Control的reword是最直接的。
-用git的方式来：
-git rebase -i HEAD~1打开了文本编辑器
-pick 10130de msg
+          <div class="index-text mb-1">读《深入理解Java虚拟机》读书笔记
+程序计数器：
+为了保证程序能够连续地执行下去，处理器必须具有某些手段来确定下一条指令的地址，而程序计数器正是起到这种作用。
+用来记录当前线程所执行的字节码的行号。字节码解释器的工作就是通过改变程序计数器来选取下一条需要执行的字节码指令（分支，循环，跳转，异常，线程恢复等）。
+JVM的多线程是通过线程轮流切换并分配处理器执行时间来实现的。在一个确定时刻，一个处理器都只会执行一条线程中的指令。因此为了线程切换后能恢复到正确执行位置，每条线程需要一个独立的程序计数器，各条线程之间计数器互不影响，独立存储。因此程序计数器的内存区域是线程私有的内存。
 
-# Rebase da71f75..10130de onto da71f75 (1 command)
-#
-# Commands:
-# p, pick &lt;commit&gt; = use commit
-# r, reword &lt;commit&gt; = use commit, but edit the commit message
-# e, edit &lt;commit&</div>
+Java虚拟</div>
         </div>
       </a>
 
       <div class="index-btm">
         
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-26&nbsp;&nbsp;
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
         
         
           <i class="iconfont icon-inbox"></i>
           
-            <a href="/categories/git/">git</a>&nbsp;
+            <a href="/categories/JVM/">JVM</a>&nbsp;
           &nbsp;
         
         
@@ -233,38 +231,34 @@ pick 10130de msg
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/26/git/git%E5%8E%8B%E7%BC%A9%E7%89%88%E6%9C%AC%E5%BF%AB%E7%85%A7/">
-        <p class="h4 index-header">git压缩版本快照</p>
+      <a href="/2020/03/28/JVM/java%E7%B1%BB%E5%88%9D%E5%A7%8B%E5%8C%96/">
+        <p class="h4 index-header">java类初始化</p>
       </a>
 
-      <a href="/2020/03/26/git/git%E5%8E%8B%E7%BC%A9%E7%89%88%E6%9C%AC%E5%BF%AB%E7%85%A7/">
+      <a href="/2020/03/28/JVM/java%E7%B1%BB%E5%88%9D%E5%A7%8B%E5%8C%96/">
         
         
           
         
         <div class="index-excerpt" >
-          <div class="index-text mb-1">目前有两种方案：
+          <div class="index-text mb-1">虚拟机规范严格规定了有且只有5种情况必须立即对类进行初始化（而加载、验证、准备自然需要在此之前开始）：
 
-git merge --squash
-git rebase -i HEAD~n
-
-1. mergegit merge --squash &lt;要合并的分支&gt;例子：本地的情况：
-
-用普通的git merge
-
-当用git checkout master+git merge develop:此时用git push，会将3,4,5,10,11,12,13的版本快照全部push到服务器去。那么如果要我要压缩，把这么多版本快照压缩成一个版本快照然后push到服务器呢？2. 用git merge –squash &lt;要合并的分支&gt;
-git checkout maste</div>
+使用new关键字实例化对象的时候、读取或设置一个类的静态字段（被final修饰、已在编译期把结果放入常量池的静态字段除外）的时候，以及调用一个类的静态方法的时候。
+使用java.lang.reflect包的方法对类进行反射调用的时候，如果类没有进行过初始化，则需要先出发其初始化。
+当初始化一个类的时候，如果发现其父类还没有进行过初始化，则需要先触发其父类的初始化。
+当虚拟机启动时，用户需要指定一个要执行的主类（包含main()方法的那个类)，虚拟机会先初始化这个主类。
+当使用JDK1.7的</div>
         </div>
       </a>
 
       <div class="index-btm">
         
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-26&nbsp;&nbsp;
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
         
         
           <i class="iconfont icon-inbox"></i>
           
-            <a href="/categories/git/">git</a>&nbsp;
+            <a href="/categories/JVM/">JVM</a>&nbsp;
           &nbsp;
         
         
@@ -276,31 +270,34 @@ git checkout maste</div>
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/26/git/git%E5%9C%A8github%E4%B8%8A%E7%9A%84%E6%93%8D%E4%BD%9C%E7%9A%84%E7%89%88%E6%9C%AC%E5%9B%9E%E9%80%80/">
-        <p class="h4 index-header">git在github上的操作的版本回退</p>
+      <a href="/2020/03/28/JVM/java%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%88%9B%E5%BB%BA%E3%80%81%E5%86%85%E5%AD%98%E5%B8%83%E5%B1%80%E3%80%81%E5%AF%B9%E8%B1%A1%E8%AE%BF%E9%97%AE/">
+        <p class="h4 index-header">java对象的创建、内存布局、对象访问</p>
       </a>
 
-      <a href="/2020/03/26/git/git%E5%9C%A8github%E4%B8%8A%E7%9A%84%E6%93%8D%E4%BD%9C%E7%9A%84%E7%89%88%E6%9C%AC%E5%9B%9E%E9%80%80/">
+      <a href="/2020/03/28/JVM/java%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%88%9B%E5%BB%BA%E3%80%81%E5%86%85%E5%AD%98%E5%B8%83%E5%B1%80%E3%80%81%E5%AF%B9%E8%B1%A1%E8%AE%BF%E9%97%AE/">
         
         
           
         
         <div class="index-excerpt" >
-          <div class="index-text mb-1">git在github上的操作的版本回退
-找到你要回退的版本快照的hashCode
-git reset --hard hashCode 将本地的head指针指向hashCode代表的版本快照。
-git push -f将当前指针强制推送到远程，操作之后github上的版本快照回到原来的样子。（强制push之前一定要再看一眼head指针指向的版本快照是你想要的原来的样子）                                                                                                                    </div>
+          <div class="index-text mb-1">对象的创建：
+检查被new的对象的类是否已经被加载，解析，初始化过。若没有，执行相应的类加载过程
+分配内存（两种方式）         1. 指针碰撞：用Serial、ParNew等带Compact过程的垃圾收集器
+  2. 空闲列表：用CMS这种基于Mark-Sweep算法的垃圾收集器。
+内存分配不是线程安全的：在并发情况下，可能出现在给对象A分配内存，指针还没来得及修改，对象B又使用了原来的指针来分配内存。解决方法：
+对分配内存空间的动作进行同步处理：用CAS配上失败重试。
+把内存分配的动作按照不同线程分配到不同空间中进行：每个线程在堆中预先分配一小块本地线程分配缓冲（TLAB），哪个线程</div>
         </div>
       </a>
 
       <div class="index-btm">
         
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-26&nbsp;&nbsp;
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
         
         
           <i class="iconfont icon-inbox"></i>
           
-            <a href="/categories/git/">git</a>&nbsp;
+            <a href="/categories/JVM/">JVM</a>&nbsp;
           &nbsp;
         
         
@@ -312,38 +309,28 @@ git push -f将当前指针强制推送到远程，操作之后github上的版本
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/26/git/git%E5%A4%9A%E4%BA%BA%E5%8D%8F%E4%BD%9C%E6%A8%A1%E6%8B%9F%EF%BC%8C%E5%9B%BE%E8%A7%A3/">
-        <p class="h4 index-header">git多人协作模拟，图解</p>
+      <a href="/2020/03/28/JVM/java%E5%8F%98%E9%87%8F%E5%88%9D%E5%A7%8B%E5%8C%96%E6%97%B6%E7%9A%84%E8%B5%8B%E5%80%BC/">
+        <p class="h4 index-header">java变量初始化时的赋值</p>
       </a>
 
-      <a href="/2020/03/26/git/git%E5%A4%9A%E4%BA%BA%E5%8D%8F%E4%BD%9C%E6%A8%A1%E6%8B%9F%EF%BC%8C%E5%9B%BE%E8%A7%A3/">
+      <a href="/2020/03/28/JVM/java%E5%8F%98%E9%87%8F%E5%88%9D%E5%A7%8B%E5%8C%96%E6%97%B6%E7%9A%84%E8%B5%8B%E5%80%BC/">
         
         
           
         
         <div class="index-excerpt" >
-          <div class="index-text mb-1">
-说明，为了制图方便，因此将版本快照用普通的数字来表示，实际上不严谨，应该像官网用SHA-1 值如92ec2来表示版本快照更加合适。
-
-现在有两个人协作开发一个项目，master分支是稳定版，随时可发布，develop分支是开发版，是平时开发用的分支。
-由Peter和Tony负责开发这个项目，两个人各自完成开发，测试后，push到服务器就可以下班。
-此时在github或者gitlab上的.git表示的代码仓库版本情况如图
-
-现在Peter和Tony两人各自打开git bash输入
-git clone 服务器地址git clone指令做了4个事情：
-
-git自动将整个代码仓库包括.git文件夹下</div>
+          <div class="index-text mb-1">                                                                                                                                                                                                                                                                                                            </div>
         </div>
       </a>
 
       <div class="index-btm">
         
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-26&nbsp;&nbsp;
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
         
         
           <i class="iconfont icon-inbox"></i>
           
-            <a href="/categories/git/">git</a>&nbsp;
+            <a href="/categories/JVM/">JVM</a>&nbsp;
           &nbsp;
         
         
@@ -355,31 +342,34 @@ git自动将整个代码仓库包括.git文件夹下</div>
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/26/git/git%E6%96%B0%E5%BB%BA%E8%BF%9C%E7%A8%8B%E5%88%86%E6%94%AF%EF%BC%8C%E5%88%9B%E5%BB%BA%E8%B7%9F%E8%B8%AA%E8%BF%9C%E7%A8%8B%E5%88%86%E6%94%AF%E7%9A%84%E6%9C%AC%E5%9C%B0%E5%89%AF%E6%9C%AC/">
-        <p class="h4 index-header">git新建远程分支，创建跟踪远程分支的本地副本</p>
+      <a href="/2020/03/28/JVM/String%E5%AF%B9%E8%B1%A1%E7%9A%84intern()%E6%96%B9%E6%B3%95%E3%80%82/">
+        <p class="h4 index-header">String对象的intern()方法。</p>
       </a>
 
-      <a href="/2020/03/26/git/git%E6%96%B0%E5%BB%BA%E8%BF%9C%E7%A8%8B%E5%88%86%E6%94%AF%EF%BC%8C%E5%88%9B%E5%BB%BA%E8%B7%9F%E8%B8%AA%E8%BF%9C%E7%A8%8B%E5%88%86%E6%94%AF%E7%9A%84%E6%9C%AC%E5%9C%B0%E5%89%AF%E6%9C%AC/">
+      <a href="/2020/03/28/JVM/String%E5%AF%B9%E8%B1%A1%E7%9A%84intern()%E6%96%B9%E6%B3%95%E3%80%82/">
         
         
           
         
         <div class="index-excerpt" >
-          <div class="index-text mb-1">新建远程分支：git push -u origin 远程分支名
-新建远程分支，并将本地分支的commit信息push到远程分支。注意要加-u，表示当前追踪远程指定分支，如果不加，也无法建立远程分支。
-创建跟踪远程分支的本地副本：$ git branch 本地分支名 origin/远程分支名
-建议本地分支名=远程分支名，否则在push的时候，git会提醒你，并让你明确指定那一次push的远程分支名。                                                                                                    </div>
+          <div class="index-text mb-1">该方法与JVM的运行时常量池有关，运行时常量池是JVM方法区的一部分。
+
+new String()和new String(“”)都是申明一个新的空字符串，是空串不是null。
+String a=&quot;你好&quot;;在编译期确定字符串内容，放入常量池。
+String a=new String(&quot;你好&quot;)和String a=&quot;你&quot;+new String(&quot;好&quot;)是到了程序运行期，调用了String的构造函数了才能确定字符串内容的，不能放入常量池。
+String a=new String(&quot;abc&quot;);
+Str</div>
         </div>
       </a>
 
       <div class="index-btm">
         
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-26&nbsp;&nbsp;
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
         
         
           <i class="iconfont icon-inbox"></i>
           
-            <a href="/categories/git/">git</a>&nbsp;
+            <a href="/categories/JVM/">JVM</a>&nbsp;
           &nbsp;
         
         
@@ -391,158 +381,147 @@ git自动将整个代码仓库包括.git文件夹下</div>
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/26/git/git%E8%B7%9F%E8%B8%AA%E8%BF%9C%E7%A8%8B%E5%88%86%E6%94%AF%EF%BC%8C%E6%9F%A5%E7%9C%8B%E6%9C%AC%E5%9C%B0%E5%88%86%E6%94%AF%E8%BF%BD%E8%B8%AA%E5%92%8C%E8%BF%9C%E7%A8%8B%E5%88%86%E6%94%AF%E7%9A%84%E5%85%B3%E7%B3%BB/">
-        <p class="h4 index-header">git跟踪远程分支，查看本地分支追踪和远程分支的关系</p>
+      <a href="/2020/03/28/JVM/Java%EF%BC%8C%E9%87%8D%E8%BD%BD%E7%9A%84%E9%99%B7%E9%98%B1%EF%BC%8C%E9%9D%99%E6%80%81%E5%88%86%E6%B4%BE%EF%BC%8C%E9%87%8D%E5%86%99%EF%BC%8C%E5%8A%A8%E6%80%81%E5%88%86%E6%B4%BE%E3%80%82/">
+        <p class="h4 index-header">Java，重载的陷阱，静态分派，重写，动态分派。</p>
       </a>
 
-      <a href="/2020/03/26/git/git%E8%B7%9F%E8%B8%AA%E8%BF%9C%E7%A8%8B%E5%88%86%E6%94%AF%EF%BC%8C%E6%9F%A5%E7%9C%8B%E6%9C%AC%E5%9C%B0%E5%88%86%E6%94%AF%E8%BF%BD%E8%B8%AA%E5%92%8C%E8%BF%9C%E7%A8%8B%E5%88%86%E6%94%AF%E7%9A%84%E5%85%B3%E7%B3%BB/">
+      <a href="/2020/03/28/JVM/Java%EF%BC%8C%E9%87%8D%E8%BD%BD%E7%9A%84%E9%99%B7%E9%98%B1%EF%BC%8C%E9%9D%99%E6%80%81%E5%88%86%E6%B4%BE%EF%BC%8C%E9%87%8D%E5%86%99%EF%BC%8C%E5%8A%A8%E6%80%81%E5%88%86%E6%B4%BE%E3%80%82/">
         
         
           
         
         <div class="index-excerpt" >
-          <div class="index-text mb-1">跟踪远程分支如果用git push指令时，当前分支没有跟踪远程分支（没有和远程分支建立联系），那么就会git就会报错
-There is no tracking information for the current branch.
-Please specify which branch you want to merge with.因为当前分支没有追踪远程指定的分支的话，当前分支指定的版本快照不知道要作为服务器哪一个分支的版本快照的子节点。简单来说就是：不知道要推送给哪一个分支。那么如何建立远程分支：
+          <div class="index-text mb-1">本文描述的内容如题：重载的陷阱，静态分派，重写，动态分派public class StaticDispatch {
+    static abstract class Human{}
+    static class Man extends Human{}
+    static class Woman extends Human{}
 
-克隆时自动将创建好的master分支追踪origin/master分支git clone </div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-26&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/git/">git</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/26/git/git%EF%BC%8C%E4%B8%BA%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%93%E5%BA%93%E5%BB%BA%E7%AB%8B%E6%96%B0%E7%9A%84%E5%88%86%E6%94%AF%E3%80%82/">
-        <p class="h4 index-header">git，为服务器仓库建立新的分支。</p>
-      </a>
-
-      <a href="/2020/03/26/git/git%EF%BC%8C%E4%B8%BA%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%93%E5%BA%93%E5%BB%BA%E7%AB%8B%E6%96%B0%E7%9A%84%E5%88%86%E6%94%AF%E3%80%82/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">
-直接在github页面上面
-
-当前切换到了master分支，如果文本框输入后一个新的分支名字后，确认，就会创建一个分支指向master分支。要创建一个分支指向develop分支，就将当前分支切换到develop上面。
-这一切都用鼠标可以完成，很直观简洁。
-
-通过git bash。如果我要在服务器创建一个新的分支bugfix指向develop，这做不到。只能通过push命令，让这一次push跟踪到develop，在develop分支上面生成新的快照，并将新的bugfix指向新的版本快照。
-
-在本地的develop分支chekout -b一个bugfix分支，然后执行git branch -u </div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-26&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/git/">git</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/26/git/%E4%B8%BAgit%E8%AE%BE%E7%BD%AE%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%99%A8%E3%80%82/">
-        <p class="h4 index-header">为git设置文本编辑器。</p>
-      </a>
-
-      <a href="/2020/03/26/git/%E4%B8%BAgit%E8%AE%BE%E7%BD%AE%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%99%A8%E3%80%82/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">直接输入git commit的时候，或者git rebase -i来压缩的时候，都会进入git默认的文本编辑器，根本不会用，然后只能被迫关闭。后得知可以更改文本编辑器，配置如下：
-git config --global core.editor &quot;\&quot;D:\应用程序\Sublime Text3\sublime_text.exe\&quot;&quot;更改后，当git要进入文本编辑器的时候，就会直接打开路径下的sublime text了。
-配制后的C:\Users\admin\.gitconfig如下:
-//...略
-[core]
-    editor = \&quot;D:</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-26&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/git/">git</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/26/java%E5%B9%B6%E5%8F%91/FutureTask%E5%92%8CExecutorService#submit()/">
-        <p class="h4 index-header">FutureTask和ExecutorService#submit()</p>
-      </a>
-
-      <a href="/2020/03/26/java%E5%B9%B6%E5%8F%91/FutureTask%E5%92%8CExecutorService#submit()/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">
-ThreadPoolExecutor对象可以通过Executor的工厂方法(newXXX)或者他自己的构造函数来创建。他是Java线程池的实现类。
-使用：
-//Runnable
-fun main(args: Array&lt;String&gt;) {
-    val pool= Executors.newFixedThreadPool(3)
-    pool.execute{
-        Thread.sleep(2000)
-        println(&quot;无返回值&quot;)
-        pool.shutdown()
+    public void sayHello(Human guy){
+        System.out.println(&quot;hello,guy!&quot;);
     }
-}
-
-//FutureTask
-f</div>
+    public void sayHello(Man guy){
+ </div>
         </div>
       </a>
 
       <div class="index-btm">
         
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-26&nbsp;&nbsp;
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
         
         
           <i class="iconfont icon-inbox"></i>
           
-            <a href="/categories/java%E5%B9%B6%E5%8F%91/">java并发</a>&nbsp;
+            <a href="/categories/JVM/">JVM</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2020/03/28/JVM/Java%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F/">
+        <p class="h4 index-header">Java虚拟机是什么？</p>
+      </a>
+
+      <a href="/2020/03/28/JVM/Java%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">一句话解释：它是一种基于下层的操作系统和硬件平台并利用软件方法来实现的抽象的计算机，可以在上面执行java的字节码程序。
+JVM是Java程序运行的容器,但是他同时也是操作系统的一个进程,因此他也有他自己的运行的生命周期,也有自己的代码和数据空间。
+JVM在整个jdk中处于最底层,负责与操作系统的交互,用来屏蔽操作系统环境,提供一个完整的Java运行环境,因此也叫虚拟计算机。
+如果把Java原程序想象成我们的C++原程序，Java原程序编译后生成的字节码就相当于C++原程序编译后的80x86的机器码（二进制程序文件），JVM虚拟机相当于80x86计算机系统，Java解释器相当于80x86CPU</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/JVM/">JVM</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2020/03/28/JVM/2018-04-22/">
+        <p class="h4 index-header">Sun Apr 22 2018 00:00:00 GMT+0000 (Coordinated Universal Time)</p>
+      </a>
+
+      <a href="/2020/03/28/JVM/2018-04-22/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">                                                                                                                                                                                                                                                                                                            </div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/JVM/">JVM</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2020/03/28/Gradle/gradle%E7%9A%84ext%E5%B1%9E%E6%80%A7/">
+        <p class="h4 index-header">gradle的ext属性</p>
+      </a>
+
+      <a href="/2020/03/28/Gradle/gradle%E7%9A%84ext%E5%B1%9E%E6%80%A7/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">1. 常见用法1. 在ext这个map中放字符串或者基本数据类型在android的rootProject的build.gradle中，定义如下代码块
+ext {
+    compileSdkVersion = 25
+    buildToolsVersion = &quot;26.0.0&quot;
+    minSdkVersion = 14
+    targetSdkVersion = 22
+    appcompatV7 = &quot;com.android.support:appcompat-v7:$androidSupportVersion&quot;
+}
+然后在app模块下，通过</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Gradle/">Gradle</a>&nbsp;
           &nbsp;
         
         
@@ -666,7 +645,7 @@ f</div>
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "&nbsp;",
+        "feel free to leave comments&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,

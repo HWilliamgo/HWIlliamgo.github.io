@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="https://s1.ax1x.com/2020/03/28/GkotgK.th.jpg">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="HWilliamgo">
+  <meta name="keywords" content="">
+  <title>AppCompatActivity和Fragment如何通过Lifecycle将生命周期状态转发出去 - William的小星球</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.12.1/css/all.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/mdbootstrap/4.13.0/css/mdb.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/3.0.1/github-markdown.min.css" />
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+
+
+
+  <link  rel="stylesheet" href="/lib/prettify/tomorrow-night-eighties.min.css" />
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link defer rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+<!-- 自定义样式保持在最底部 -->
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>William的小星球</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">归档</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">分类</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">标签</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">关于</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('https://w.wallhaven.cc/full/39/wallhaven-39joqy.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+                <p class="mt-3 post-meta">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                  星期六, 三月 28日 2020, 8:05 早上
+                </p>
+              
+
+              <p class="mt-1">
+                
+                  
+                  <span class="post-meta">
+                    <i class="far fa-chart-bar"></i>
+                    2.6k 字
+                  </span>
+                
+
+                
+                  
+                  <span class="post-meta">
+                      <i class="far fa-clock"></i>
+                      12 分钟
+                  </span>
+                
+
+                
+              </p>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5 z-depth-3" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+            <div class="markdown-body">
+              <blockquote>
+<p> 关于android的Lifecycle是什么和怎么用就不说了，这篇写的很好了：</p>
+<p><a href="https://blog.csdn.net/mq2553299/article/details/79029657" target="_blank" rel="noopener">Android官方架构组件:Lifecycle详解&amp;原理分析</a></p>
+</blockquote>
+<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><ol>
+<li>概述：Lifecycle方案其实就是把AppCompatActivity和Fragment(support包下的)的声名周期回调转发出去，本质上是基于一个观察者模式，将观察者注册到有生命周期的组件，然后有生命周期的组件在他们的生命周期回调时，把事件转发给每一个观察者，这样观察者就收到了AppCompatActivity或Fragment的生命周期回调，也就具有了生命周期感知能力。</li>
+<li>需要了解：<ol>
+<li>Lifecycle是什么和怎么用</li>
+<li>创建一个没有视图的Fragment，由于该Fragment和创建他的Activity的生命周期是一致的，因此该Fragment也具有Activtiy生命周期感知能力。</li>
+</ol>
+</li>
+</ol>
+<h2 id="Fragment如何转发生命周期"><a href="#Fragment如何转发生命周期" class="headerlink" title="Fragment如何转发生命周期"></a>Fragment如何转发生命周期</h2><ol>
+<li><p>打开<code>android.support.v4.app</code>包下的Fragment</p>
+<pre><code class="java"> public class Fragment implements ComponentCallbacks, OnCreateContextMenuListener, LifecycleOwner,ViewModelStoreOwner {
+     //...
+     LifecycleRegistry mLifecycleRegistry = new LifecycleRegistry(this);
+
+     @Override
+     public Lifecycle getLifecycle() {
+         return mLifecycleRegistry;
+     }
+     //...
+ }</code></pre>
+<p> Fragment实现了LifecycleOwner，在该接口唯一的抽象方法中返回了</p>
+<p> <code>LifecycleRegistry</code>，中文翻译过来是<strong>生命周期注册处</strong>，他是官方对Lifecycle抽象类的默认实现，而他就是一个被观察者，是一个<code>Observable</code>。</p>
+</li>
+<li><p>接着看<code>performCreate()</code>和<code>performStart()</code></p>
+<pre><code class="java"> void performCreate(Bundle savedInstanceState) {
+     if (mChildFragmentManager != null) {
+         mChildFragmentManager.noteStateNotSaved();
+     }
+     mState = CREATED;
+     mCalled = false;
+     onCreate(savedInstanceState);
+     mIsCreated = true;
+     if (!mCalled) {
+         throw new SuperNotCalledException(&quot;Fragment &quot; + this
+                 + &quot; did not call through to super.onCreate()&quot;);
+     }
+     //在这里，将Lifecycle.Event.ON_CREATE事件转发给所有生命周期观察者。
+     mLifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_CREATE);
+ }</code></pre>
+<pre><code class="java"> void performStart() {
+     if (mChildFragmentManager != null) {
+         mChildFragmentManager.noteStateNotSaved();
+         mChildFragmentManager.execPendingActions();
+     }
+     mState = STARTED;
+     mCalled = false;
+     onStart();
+     if (!mCalled) {
+         throw new SuperNotCalledException(&quot;Fragment &quot; + this
+                 + &quot; did not call through to super.onStart()&quot;);
+     }
+     if (mChildFragmentManager != null) {
+         mChildFragmentManager.dispatchStart();
+     }
+     //同理。
+     mLifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_START);
+ }</code></pre>
+<p> 至于<code>onResume()</code>，<code>onPause()</code>,<code>onStop</code>和<code>onDestory</code>，都是一样的，都会调用<code>mLifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.XXX)</code>把生命周期转发给观察者。</p>
+</li>
+<li><p>看下<code>handleLifecycleEvent()</code></p>
+<pre><code class="java"> public void handleLifecycleEvent(@NonNull Lifecycle.Event event) {
+     State next = getStateAfter(event);
+     moveToState(next);
+ }</code></pre>
+<p> 点进moveToState(next);</p>
+<pre><code class="java"> private void moveToState(State next) {
+     if (mState == next) {
+         return;
+     }
+     mState = next;
+     if (mHandlingEvent || mAddingObserverCounter != 0) {
+         mNewEventOccurred = true;
+         // we will figure out what to do on upper level.
+         return;
+     }
+     mHandlingEvent = true;
+     sync();//关注这个方法
+     mHandlingEvent = false;
+ }</code></pre>
+<p> 点进sync();</p>
+<pre><code class="java"> private void sync() {
+     LifecycleOwner lifecycleOwner = mLifecycleOwner.get();
+     if (lifecycleOwner == null) {
+         Log.w(LOG_TAG, &quot;LifecycleOwner is garbage collected, you shouldn&#39;t try dispatch &quot;
+                 + &quot;new events from it.&quot;);
+         return;
+     }
+     while (!isSynced()) {
+         mNewEventOccurred = false;
+         // no need to check eldest for nullability, because isSynced does it for us.
+         if (mState.compareTo(mObserverMap.eldest().getValue().mState) &lt; 0) {
+             backwardPass(lifecycleOwner);//点进这里
+         }
+         Entry&lt;LifecycleObserver, ObserverWithState&gt; newest = mObserverMap.newest();
+         if (!mNewEventOccurred &amp;&amp; newest != null
+                 &amp;&amp; mState.compareTo(newest.getValue().mState) &gt; 0) {
+             forwardPass(lifecycleOwner);//或者点进这里
+         }
+     }
+     mNewEventOccurred = false;
+ }</code></pre>
+<p> 接着点进backwardPass或者forwardPass。</p>
+<pre><code class="java"> private void backwardPass(LifecycleOwner lifecycleOwner) {
+     Iterator&lt;Entry&lt;LifecycleObserver, ObserverWithState&gt;&gt; descendingIterator =
+             mObserverMap.descendingIterator();
+     while (descendingIterator.hasNext() &amp;&amp; !mNewEventOccurred) {
+         Entry&lt;LifecycleObserver, ObserverWithState&gt; entry = descendingIterator.next();
+         ObserverWithState observer = entry.getValue();
+         while ((observer.mState.compareTo(mState) &gt; 0 &amp;&amp; !mNewEventOccurred
+                 &amp;&amp; mObserverMap.contains(entry.getKey()))) {
+             Event event = downEvent(observer.mState);
+             pushParentState(getStateAfter(event));
+             observer.dispatchEvent(lifecycleOwner, event);//终于，在这里把事件正式转发给了观察者。
+             popParentState();
+         }
+     }
+ }</code></pre>
+<p> 点进observer.dispatchEvent(…)</p>
+<pre><code class="java"> void dispatchEvent(LifecycleOwner owner, Event event) {
+     State newState = getStateAfter(event);
+     mState = min(mState, newState);
+     mLifecycleObserver.onStateChanged(owner, event);//在这里
+     mState = newState;
+ }</code></pre>
+<p> 点进mLifecycleObserver.onStateChanged(owner, event);</p>
+<pre><code class="java"> public interface GenericLifecycleObserver extends LifecycleObserver {
+     void onStateChanged(LifecycleOwner source, Lifecycle.Event event);
+ }</code></pre>
+<p> 终于，到了LifecycleObserver了，观察者只需要实现这个接口，然后再Activty或者Fragment里面注册一下，就能接收到一系列的生命周期回调了。</p>
+</li>
+</ol>
+<h2 id="AppCompatActivity如何转发生命周期"><a href="#AppCompatActivity如何转发生命周期" class="headerlink" title="AppCompatActivity如何转发生命周期"></a>AppCompatActivity如何转发生命周期</h2><h3 id="1-找到SupportActivity"><a href="#1-找到SupportActivity" class="headerlink" title="1. 找到SupportActivity"></a>1. 找到SupportActivity</h3><p>AppCompatActivity的继承关系：</p>
+<pre><code>Context (android.content)
+    ContextWrapper (android.content)
+        ContextThemeWrapper (android.view)
+            Activity (android.app)
+                SupportActivity (android.support.v4.app)
+                    BaseFragmentActivityApi14 (android.support.v4.app)
+                        BaseFragmentActivityApi16 (android.support.v4.app)
+                            FragmentActivity (android.support.v4.app)
+                                AppCompatActivity (android.support.v7.app)
+</code></pre><h3 id="2-分析SupportActivity"><a href="#2-分析SupportActivity" class="headerlink" title="2. 分析SupportActivity"></a>2. 分析SupportActivity</h3><pre><code class="java">public class SupportActivity extends Activity implements LifecycleOwner {
+    //...
+    private LifecycleRegistry mLifecycleRegistry = new LifecycleRegistry(this);
+
+    @Override
+    public Lifecycle getLifecycle() {
+        return mLifecycleRegistry;
+    }
+
+    @Override
+    @SuppressWarnings(&quot;RestrictedApi&quot;)
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        ReportFragment.injectIfNeededIn(this);//关键点
+    }
+
+}</code></pre>
+<p>其实我刚开始找AppCompatActivity的时候是懵逼的，因为从上到下的所有父类，都没有在生命周期里像Fragment一样去直接用<code>LifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.XXX)</code>转发生命周期事件的，找了半天都没找到。</p>
+<p>后来发现了上图14行代码处`ReportFragment.injectIfNeededIn(this);，原来是他，他用的技巧是文章开头说到的：<strong>创建一个没有视图的Fragment，由于该Fragment和创建他的Activity的生命周期是一致的，因此该Fragment也具有Activtiy生命周期感知能力。创建一个没有视图的Fragment，由于该Fragment和创建他的Activity的生命周期是一致的，因此该Fragment也具有Activtiy生命周期感知能力。</strong></p>
+<h3 id="3-ReportFragment-injectIfNeededIn-this"><a href="#3-ReportFragment-injectIfNeededIn-this" class="headerlink" title="3. ReportFragment.injectIfNeededIn(this)"></a>3. ReportFragment.injectIfNeededIn(this)</h3><pre><code class="java">public class ReportFragment extends Fragment {
+    public static void injectIfNeededIn(Activity activity) {
+    // ProcessLifecycleOwner should always correctly work and some activities may not extend
+    // FragmentActivity from support lib, so we use framework fragments for activities
+        android.app.FragmentManager manager = activity.getFragmentManager();
+        if (manager.findFragmentByTag(REPORT_FRAGMENT_TAG) == null) {
+        manager.beginTransaction().add(new ReportFragment(), REPORT_FRAGMENT_TAG).commit();
+        // Hopefully, we are the first to make a transaction.
+        manager.executePendingTransactions();
+        }
+    }
+}</code></pre>
+<p>借助传入的activity，创建一个<code>ReportFragment</code>(没有视图的Fragment)。</p>
+<p>再看ReportFragment的生命周期回调</p>
+<pre><code class="java">@Override
+public void onActivityCreated(Bundle savedInstanceState) {
+    super.onActivityCreated(savedInstanceState);
+    dispatchCreate(mProcessListener);
+    dispatch(Lifecycle.Event.ON_CREATE);
+}
+@Override
+public void onStart() {
+    super.onStart();
+    dispatchStart(mProcessListener);
+    dispatch(Lifecycle.Event.ON_START);
+}
+@Override
+public void onResume() {
+    super.onResume();
+    dispatchResume(mProcessListener);
+    dispatch(Lifecycle.Event.ON_RESUME);
+}
+@Override
+public void onPause() {
+    super.onPause();
+    dispatch(Lifecycle.Event.ON_PAUSE);
+}
+@Override
+public void onStop() {
+    super.onStop();
+    dispatch(Lifecycle.Event.ON_STOP);
+}
+@Override
+public void onDestroy() {
+    super.onDestroy();
+    dispatch(Lifecycle.Event.ON_DESTROY);
+    // just want to be sure that we won&#39;t leak reference to an activity
+    mProcessListener = null;
+}</code></pre>
+<p>是的就是这样，借助了这个没有视图的Fragment来把生命周期转发出去。</p>
+<p>看下<code>dispatch(Lifecycle.Event.XXX)</code>做了什么</p>
+<pre><code class="java">private void dispatch(Lifecycle.Event event) {
+    Activity activity = getActivity();
+    if (activity instanceof LifecycleRegistryOwner) {
+        ((LifecycleRegistryOwner) activity).getLifecycle().handleLifecycleEvent(event);
+        return;
+    }
+    if (activity instanceof LifecycleOwner) {
+        Lifecycle lifecycle = ((LifecycleOwner) activity).getLifecycle();
+        if (lifecycle instanceof LifecycleRegistry) {
+            ((LifecycleRegistry) lifecycle).handleLifecycleEvent(event);
+        }
+    }
+}</code></pre>
+<p>看到了第10行的<code>((LifecycleRegistry) lifecycle).handleLifecycleEvent(event);</code>，在这里，把生命周期转发出去。</p>
+<hr>
+<p>至此，分析结束。我从这个Lifecycle方案中学到的一点是：</p>
+<p>无视图Fragment的技巧的优点：</p>
+<p>他与创建他的Activity的生命周期一致（让这个Fragment具有生命周期感知能力），可以在不修改原有Activity生命周期代码的情况下，用Fragment来从外部<code>插入</code>方法。可拔插，解耦合，非常灵活。<br>力。<br>2. 需要了解：</p>
+<ol>
+<li>Lifecycle是什么和怎么用</li>
+<li>创建一个没有视图的Fragment，由于该Fragment和创建他的Activity的生命周期是一致的，因此该Fragment也具有Activtiy生命周期感知能力。</li>
+</ol>
+<h2 id="Fragment如何转发生命周期-1"><a href="#Fragment如何转发生命周期-1" class="headerlink" title="Fragment如何转发生命周期"></a>Fragment如何转发生命周期</h2><ol>
+<li><p>打开<code>android.support.v4.app</code>包下的Fragment</p>
+<pre><code class="java"> public class Fragment implements ComponentCallbacks, OnCreateContextMenuListener, LifecycleOwner,ViewModelStoreOwner {
+     //...
+     LifecycleRegistry mLifecycleRegistry = new LifecycleRegistry(this);
+
+     @Override
+     public Lifecycle getLifecycle() {
+         return mLifecycleRegistry;
+     }
+     //...
+ }</code></pre>
+<p> Fragment实现了LifecycleOwner，在该接口唯一的抽象方法中返回了</p>
+<p> <code>LifecycleRegistry</code>，中文翻译过来是<strong>生命周期注册处</strong>，他是官方对Lifecycle抽象类的默认实现，而他就是一个被观察者，是一个<code>Observable</code>。</p>
+</li>
+<li><p>接着看<code>performCreate()</code>和<code>performStart()</code></p>
+<pre><code class="java"> void performCreate(Bundle savedInstanceState) {
+     if (mChildFragmentManager != null) {
+         mChildFragmentManager.noteStateNotSaved();
+     }
+     mState = CREATED;
+     mCalled = false;
+     onCreate(savedInstanceState);
+     mIsCreated = true;
+     if (!mCalled) {
+         throw new SuperNotCalledException(&quot;Fragment &quot; + this
+                 + &quot; did not call through to super.onCreate()&quot;);
+     }
+     //在这里，将Lifecycle.Event.ON_CREATE事件转发给所有生命周期观察者。
+     mLifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_CREATE);
+ }</code></pre>
+<pre><code class="java"> void performStart() {
+     if (mChildFragmentManager != null) {
+         mChildFragmentManager.noteStateNotSaved();
+         mChildFragmentManager.execPendingActions();
+     }
+     mState = STARTED;
+     mCalled = false;
+     onStart();
+     if (!mCalled) {
+         throw new SuperNotCalledException(&quot;Fragment &quot; + this
+                 + &quot; did not call through to super.onStart()&quot;);
+     }
+     if (mChildFragmentManager != null) {
+         mChildFragmentManager.dispatchStart();
+     }
+     //同理。
+     mLifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_START);
+ }</code></pre>
+<p> 至于<code>onResume()</code>，<code>onPause()</code>,<code>onStop</code>和<code>onDestory</code>，都是一样的，都会调用<code>mLifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.XXX)</code>把生命周期转发给观察者。</p>
+</li>
+<li><p>看下<code>handleLifecycleEvent()</code></p>
+<pre><code class="java"> public void handleLifecycleEvent(@NonNull Lifecycle.Event event) {
+     State next = getStateAfter(event);
+     moveToState(next);
+ }</code></pre>
+<p> 点进moveToState(next);</p>
+<pre><code class="java"> private void moveToState(State next) {
+     if (mState == next) {
+         return;
+     }
+     mState = next;
+     if (mHandlingEvent || mAddingObserverCounter != 0) {
+         mNewEventOccurred = true;
+         // we will figure out what to do on upper level.
+         return;
+     }
+     mHandlingEvent = true;
+     sync();//关注这个方法
+     mHandlingEvent = false;
+ }</code></pre>
+<p> 点进sync();</p>
+<pre><code class="java"> private void sync() {
+     LifecycleOwner lifecycleOwner = mLifecycleOwner.get();
+     if (lifecycleOwner == null) {
+         Log.w(LOG_TAG, &quot;LifecycleOwner is garbage collected, you shouldn&#39;t try dispatch &quot;
+                 + &quot;new events from it.&quot;);
+         return;
+     }
+     while (!isSynced()) {
+         mNewEventOccurred = false;
+         // no need to check eldest for nullability, because isSynced does it for us.
+         if (mState.compareTo(mObserverMap.eldest().getValue().mState) &lt; 0) {
+             backwardPass(lifecycleOwner);//点进这里
+         }
+         Entry&lt;LifecycleObserver, ObserverWithState&gt; newest = mObserverMap.newest();
+         if (!mNewEventOccurred &amp;&amp; newest != null
+                 &amp;&amp; mState.compareTo(newest.getValue().mState) &gt; 0) {
+             forwardPass(lifecycleOwner);//或者点进这里
+         }
+     }
+     mNewEventOccurred = false;
+ }</code></pre>
+<p> 接着点进backwardPass或者forwardPass。</p>
+<pre><code class="java"> private void backwardPass(LifecycleOwner lifecycleOwner) {
+     Iterator&lt;Entry&lt;LifecycleObserver, ObserverWithState&gt;&gt; descendingIterator =
+             mObserverMap.descendingIterator();
+     while (descendingIterator.hasNext() &amp;&amp; !mNewEventOccurred) {
+         Entry&lt;LifecycleObserver, ObserverWithState&gt; entry = descendingIterator.next();
+         ObserverWithState observer = entry.getValue();
+         while ((observer.mState.compareTo(mState) &gt; 0 &amp;&amp; !mNewEventOccurred
+                 &amp;&amp; mObserverMap.contains(entry.getKey()))) {
+             Event event = downEvent(observer.mState);
+             pushParentState(getStateAfter(event));
+             observer.dispatchEvent(lifecycleOwner, event);//终于，在这里把事件正式转发给了观察者。
+             popParentState();
+         }
+     }
+ }</code></pre>
+<p> 点进observer.dispatchEvent(…)</p>
+<pre><code class="java"> void dispatchEvent(LifecycleOwner owner, Event event) {
+     State newState = getStateAfter(event);
+     mState = min(mState, newState);
+     mLifecycleObserver.onStateChanged(owner, event);//在这里
+     mState = newState;
+ }</code></pre>
+<p> 点进mLifecycleObserver.onStateChanged(owner, event);</p>
+<pre><code class="java"> public interface GenericLifecycleObserver extends LifecycleObserver {
+     void onStateChanged(LifecycleOwner source, Lifecycle.Event event);
+ }</code></pre>
+<p> 终于，到了LifecycleObserver了，观察者只需要实现这个接口，然后再Activty或者Fragment里面注册一下，就能接收到一系列的生命周期回调了。</p>
+</li>
+</ol>
+<h2 id="AppCompatActivity如何转发生命周期-1"><a href="#AppCompatActivity如何转发生命周期-1" class="headerlink" title="AppCompatActivity如何转发生命周期"></a>AppCompatActivity如何转发生命周期</h2><h3 id="1-找到SupportActivity-1"><a href="#1-找到SupportActivity-1" class="headerlink" title="1. 找到SupportActivity"></a>1. 找到SupportActivity</h3><p>AppCompatActivity的继承关系：</p>
+<pre><code>Context (android.content)
+    ContextWrapper (android.content)
+        ContextThemeWrapper (android.view)
+            Activity (android.app)
+                SupportActivity (android.support.v4.app)
+                    BaseFragmentActivityApi14 (android.support.v4.app)
+                        BaseFragmentActivityApi16 (android.support.v4.app)
+                            FragmentActivity (android.support.v4.app)
+                                AppCompatActivity (android.support.v7.app)
+</code></pre><h3 id="2-分析SupportActivity-1"><a href="#2-分析SupportActivity-1" class="headerlink" title="2. 分析SupportActivity"></a>2. 分析SupportActivity</h3><pre><code class="java">public class SupportActivity extends Activity implements LifecycleOwner {
+    //...
+    private LifecycleRegistry mLifecycleRegistry = new LifecycleRegistry(this);
+
+    @Override
+    public Lifecycle getLifecycle() {
+        return mLifecycleRegistry;
+    }
+
+    @Override
+    @SuppressWarnings(&quot;RestrictedApi&quot;)
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        ReportFragment.injectIfNeededIn(this);//关键点
+    }
+
+}</code></pre>
+<p>其实我刚开始找AppCompatActivity的时候是懵逼的，因为从上到下的所有父类，都没有在生命周期里像Fragment一样去直接用<code>LifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.XXX)</code>转发生命周期事件的，找了半天都没找到。</p>
+<p>后来发现了上图14行代码处`ReportFragment.injectIfNeededIn(this);，原来是他，他用的技巧是文章开头说到的：<strong>创建一个没有视图的Fragment，由于该Fragment和创建他的Activity的生命周期是一致的，因此该Fragment也具有Activtiy生命周期感知能力。创建一个没有视图的Fragment，由于该Fragment和创建他的Activity的生命周期是一致的，因此该Fragment也具有Activtiy生命周期感知能力。</strong></p>
+<h3 id="3-ReportFragment-injectIfNeededIn-this-1"><a href="#3-ReportFragment-injectIfNeededIn-this-1" class="headerlink" title="3. ReportFragment.injectIfNeededIn(this)"></a>3. ReportFragment.injectIfNeededIn(this)</h3><pre><code class="java">public class ReportFragment extends Fragment {
+    public static void injectIfNeededIn(Activity activity) {
+    // ProcessLifecycleOwner should always correctly work and some activities may not extend
+    // FragmentActivity from support lib, so we use framework fragments for activities
+        android.app.FragmentManager manager = activity.getFragmentManager();
+        if (manager.findFragmentByTag(REPORT_FRAGMENT_TAG) == null) {
+        manager.beginTransaction().add(new ReportFragment(), REPORT_FRAGMENT_TAG).commit();
+        // Hopefully, we are the first to make a transaction.
+        manager.executePendingTransactions();
+        }
+    }
+}</code></pre>
+<p>借助传入的activity，创建一个<code>ReportFragment</code>(没有视图的Fragment)。</p>
+<p>再看ReportFragment的生命周期回调</p>
+<pre><code class="java">@Override
+public void onActivityCreated(Bundle savedInstanceState) {
+    super.onActivityCreated(savedInstanceState);
+    dispatchCreate(mProcessListener);
+    dispatch(Lifecycle.Event.ON_CREATE);
+}
+@Override
+public void onStart() {
+    super.onStart();
+    dispatchStart(mProcessListener);
+    dispatch(Lifecycle.Event.ON_START);
+}
+@Override
+public void onResume() {
+    super.onResume();
+    dispatchResume(mProcessListener);
+    dispatch(Lifecycle.Event.ON_RESUME);
+}
+@Override
+public void onPause() {
+    super.onPause();
+    dispatch(Lifecycle.Event.ON_PAUSE);
+}
+@Override
+public void onStop() {
+    super.onStop();
+    dispatch(Lifecycle.Event.ON_STOP);
+}
+@Override
+public void onDestroy() {
+    super.onDestroy();
+    dispatch(Lifecycle.Event.ON_DESTROY);
+    // just want to be sure that we won&#39;t leak reference to an activity
+    mProcessListener = null;
+}</code></pre>
+<p>是的就是这样，借助了这个没有视图的Fragment来把生命周期转发出去。</p>
+<p>看下<code>dispatch(Lifecycle.Event.XXX)</code>做了什么</p>
+<p>```java<br>private void dispatch(Lifecycle.Event event) {<br>    Activity activity = getActivity();<br>    if (activity instanceof LifecycleRegistryOwner) {<br>        ((LifecycleRegistryOwner) activity).getLifecycle().handleLifecycleEvent(event);<br>        return;<br>    }<br>    if (activity instanceof LifecycleOwner) {<br>        Lifecycle lifecycle = ((LifecycleOwner) activity).getLifecycl</p>
+
+            </div>
+            <hr>
+            <div>
+              <p>
+                
+                  <span>
+                <i class="iconfont icon-inbox"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Android/">Android</a>
+                      &nbsp;
+                    
+                  </span>&nbsp;&nbsp;
+                
+                
+              </p>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/03/28/Android-Jetpack/LiveData%E7%9A%84onActive()%E5%92%8ConInactive()/">
+                        <i class="fa fa-chevron-left"></i>
+                        <span class="hidden-mobile">LiveData的onActive()和onInactive()</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/2020/03/28/Android/AIDL/">
+                        <span class="hidden-mobile">AIDL</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="fa fa-chevron-right"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+              
+                <!-- Comments -->
+                <div class="comments" id="comments">
+                  
+                  
+  <script defer src="https://utteranc.es/client.js"
+          repo="git@github.com:HWilliamgo/HWilliamgo.github.io.git"
+          issue-term="pathname"
+  
+          label="utterances"
+    
+          theme="github-light"
+          crossorigin="anonymous"
+  >
+  </script>
+
+
+                </div>
+              
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc-start"></div>
+<div id="toc">
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+    </div>
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/popper.js/1.16.1/umd/popper.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="https://cdn.staticfile.org/mdbootstrap/4.13.0/js/mdb.min.js" ></script>
+<script  src="/js/main.js" ></script>
+
+
+  <script  src="/js/lazyload.js" ></script>
+
+
+
+  
+  <script  src="https://cdn.staticfile.org/tocbot/4.10.0/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var navHeight = $('#navbar').height();
+      var toc = $('#toc');
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+      var tocLimMax = 2 * boardTop + boardCtn.height();
+
+      $(window).scroll(function () {
+        var tocLimMin = $('#toc-start').offset().top - navHeight;
+        var scroH = document.body.scrollTop + document.documentElement.scrollTop;
+
+        if (tocLimMin <= scroH && scroH <= tocLimMax) {
+          toc.css({
+            'display': 'block',
+            'position': 'fixed',
+            'top': navHeight,
+          });
+        } else if (scroH <= tocLimMin) {
+          toc.css({
+            'position': '',
+            'top': '',
+          });
+        } else if (scroH > tocLimMax) {
+          toc.css('display', 'none');
+        }
+      });
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '.post-content',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc > p').css('visibility', 'visible');
+      }
+      var offset = boardCtn.css('margin-right')
+      $('#toc-ctn').css({
+        'right': offset
+      })
+    });
+  </script>
+
+
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+
+<!-- Plugins -->
+
+
+
+  <script  src="https://cdn.staticfile.org/prettify/188.0.0/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  linenums');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "AppCompatActivity和Fragment如何通过Lifecycle将生命周期状态转发出去&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

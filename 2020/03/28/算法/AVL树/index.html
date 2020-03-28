@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="https://s1.ax1x.com/2020/03/28/GkotgK.th.jpg">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="HWilliamgo">
+  <meta name="keywords" content="">
+  <title>AVL树 - William的小星球</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.12.1/css/all.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/mdbootstrap/4.13.0/css/mdb.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/3.0.1/github-markdown.min.css" />
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+
+
+
+  <link  rel="stylesheet" href="/lib/prettify/tomorrow-night-eighties.min.css" />
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link defer rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+<!-- 自定义样式保持在最底部 -->
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>William的小星球</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">归档</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">分类</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">标签</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">关于</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('https://w.wallhaven.cc/full/39/wallhaven-39joqy.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+                <p class="mt-3 post-meta">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                  星期六, 三月 28日 2020, 8:05 早上
+                </p>
+              
+
+              <p class="mt-1">
+                
+                  
+                  <span class="post-meta">
+                    <i class="far fa-chart-bar"></i>
+                    2.8k 字
+                  </span>
+                
+
+                
+                  
+                  <span class="post-meta">
+                      <i class="far fa-clock"></i>
+                      14 分钟
+                  </span>
+                
+
+                
+              </p>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5 z-depth-3" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+            <div class="markdown-body">
+              <p>参考：<a href="https://www.cnblogs.com/skywang12345/p/3577479.html" target="_blank" rel="noopener">https://www.cnblogs.com/skywang12345/p/3577479.html</a></p>
+<h2 id="AVL树本质上还是一棵二叉搜索树，它的特点是："><a href="#AVL树本质上还是一棵二叉搜索树，它的特点是：" class="headerlink" title="AVL树本质上还是一棵二叉搜索树，它的特点是："></a>AVL树本质上还是一棵二叉搜索树，它的特点是：</h2><p>1.本身首先是一棵二叉搜索树。<br>2.带有平衡条件：每个结点的左右子树的高度之差的绝对值（平衡因子）最多为1。<br>也就是说，AVL树，本质上是带了平衡功能的二叉查找树（二叉排序树，二叉搜索树）。</p>
+<p>以下为四种不平衡的临界条件，分别为LL（leftleft）,LR（leftright）,RL,RR。<br><img src="https://upload-images.jianshu.io/upload_images/7177220-83255f2429ce767e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt=""><br>当每次到达这四种不平衡的临界条件时，都进行<strong>旋转树</strong>操作，那么树就能维持平衡：</p>
+<pre><code>private AVLTreeNode leftLeftRotation(AVLTreeNode node) {
+        checkNull(node);
+
+        AVLTreeNode  leftChild = node.left;
+        node.left =  leftChild.right;
+         leftChild.right = node;
+        //reset the height
+        node.height = max(height(node.left), height(node.right)) + 1;
+         leftChild.height = max(height( leftChild.left), height( leftChild.right)) + 1;
+        return  leftChild;
+    }
+
+    private AVLTreeNode rightRightRotation(AVLTreeNode node) {
+        checkNull(node);
+
+        AVLTreeNode  rightChild = node.right;
+        node.right =  rightChild.left;
+         rightChild.left = node;
+
+        node.height = max(height(node.left), height(node.right)) + 1;
+         rightChild.height = max(height( rightChild.left), height( rightChild.right)) + 1;
+        return  rightChild;
+    }
+
+    private AVLTreeNode leftRightRotation(AVLTreeNode node) {
+        node.left = rightRightRotation(node.left);//先对node.left旋转
+        return leftLeftRotation(node);//后对自己旋转
+    }
+
+    private AVLTreeNode rightLeftRotation(AVLTreeNode node) {
+        node.right = leftLeftRotation(node.right);
+        return rightRightRotation(node);
+    }</code></pre><p>结合插入和删除，AVL树的实现：</p>
+<pre><code>package DataStructureAndAlgor;
+/**
+ * AVL树
+ * 回顾的时候，最好把LL,RR,LR,RL旋转的四张图画出来，好理解。
+ *
+ * @param &lt;T&gt;
+ */
+public class AVLTree&lt;T extends Comparable&lt;T&gt;&gt; {
+
+    class AVLTreeNode {
+        T key;
+        int height;
+        AVLTreeNode left;
+        AVLTreeNode right;
+
+        public AVLTreeNode(T key, AVLTreeNode left, AVLTreeNode right) {
+            this.key = key;
+            this.left = left;
+            this.right = right;
+            this.height = 0;//初始化的结点的height都是0，因为都是作为叶子结点添加到树中的。
+        }
+    }
+
+    private AVLTreeNode mRoot;
+
+
+    private int height(AVLTreeNode tree) {
+        if (tree != null) {
+            return tree.height;
+        }
+        return 0;
+    }
+
+    public int height() {
+        return height(mRoot);
+    }
+
+    public int height(T key) {
+        AVLTreeNode node = search(mRoot, key);
+        return height(node);
+    }
+
+    private int max(int a, int b) {
+        return a &gt; b ? a : b;
+    }
+
+    private AVLTreeNode leftLeftRotation(AVLTreeNode node) {
+        checkNull(node);
+
+        AVLTreeNode  leftChild = node.left;
+        node.left =  leftChild.right;
+         leftChild.right = node;
+        //reset the height
+        node.height = max(height(node.left), height(node.right)) + 1;
+         leftChild.height = max(height( leftChild.left), height( leftChild.right)) + 1;
+        return  leftChild;
+    }
+
+    private AVLTreeNode rightRightRotation(AVLTreeNode node) {
+        checkNull(node);
+
+        AVLTreeNode  rightChild = node.right;
+        node.right =  rightChild.left;
+         rightChild.left = node;
+
+        node.height = max(height(node.left), height(node.right)) + 1;
+         rightChild.height = max(height( rightChild.left), height( rightChild.right)) + 1;
+        return  rightChild;
+    }
+
+    private AVLTreeNode leftRightRotation(AVLTreeNode node) {
+        node.left = rightRightRotation(node.left);//先对node.left旋转
+        return leftLeftRotation(node);//后对自己旋转
+    }
+
+    private AVLTreeNode rightLeftRotation(AVLTreeNode node) {
+        node.right = leftLeftRotation(node.right);
+        return rightRightRotation(node);
+    }
+
+    private void checkNull(AVLTreeNode node) {
+        if (node == null) {
+            throw new NullPointerException();
+        }
+    }
+
+    /**
+     * 将结点插入到AVL树种，并返回根节点。
+     *
+     * @param tree AVL树的根节点
+     * @param key  待插入的结点的值。
+     * @return 根节点
+     */
+    private AVLTreeNode insert(AVLTreeNode tree, T key) {
+        if (tree == null) {//递归终点
+            tree = new AVLTreeNode(key, null, null);
+        } else {
+            int cmp = key.compareTo(tree.key);//compare result
+
+            if (cmp &lt; 0) {
+                tree.left = insert(tree.left, key);//递归插入
+                //插入结点后，若AVLTree失去平衡，旋转树。
+                if (height(tree.left) - height(tree.right) == 2) {//说明是tree结点出问题(必须是left-right，否则得负值)
+                    if (key.compareTo(tree.left.key) &lt; 0) {//这里如果写成tree.right.key会报空指针异常
+                        tree = leftLeftRotation(tree);
+                    } else {
+                        tree = leftRightRotation(tree);
+                    }
+                }
+            } else if (cmp &gt; 0) {
+                tree.right = insert(tree.right, key);//递归插入
+                if (height(tree.right) - height(tree.left) == 2) {//说明是tree结点出问题(必须是left-right，否则得负值)
+                    if (key.compareTo(tree.right.key) &lt; 0) {//这里如果写成tree.left.key会报空指针异常
+                        tree = rightLeftRotation(tree);
+                    } else {
+                        tree = rightRightRotation(tree);
+                    }
+                }
+            } else {  //cmp==0;
+                System.out.println(&quot;添加失败！不允许添加相同的结点！&quot;);
+            }
+
+        }
+
+        tree.height = max(height(tree.left), height(tree.right)) + 1;
+
+        return tree;
+    }
+
+    public void insert(T key) {
+        mRoot = insert(mRoot, key);
+    }
+
+    /**
+     * 删除树中的结点z, 返回根节点
+     *
+     * @param tree 从tree结点开始找寻要删除的结点z
+     * @param z    待删除的根节点
+     * @return 根节点
+     */
+    private AVLTreeNode remove(AVLTreeNode tree, AVLTreeNode z) {
+        if (tree == null || z == null) {
+            return null;
+        }
+
+        int cmp = z.key.compareTo(tree.key);
+        if (cmp &lt; 0) {//待删除的结点在tree的左子树
+            tree.left = remove(tree.left, z);
+            if (height(tree.right) - height(tree.left) == 2) {//如果删除后tree失去平衡, 进行调节
+                AVLTreeNode r = tree.right;
+                if (height(r.left) &gt; height(r.right)) {
+                    tree = rightLeftRotation(tree);
+                } else {
+                    tree = rightRightRotation(tree);
+                }
+            }
+        } else if (cmp &gt; 0) {//待删除的结点在tree的右子树
+            tree.right = remove(tree.right, z);
+            if (height(tree.left) - height(tree.right) == 2) {//失去平衡
+                AVLTreeNode l = tree.left;
+                if (height(l.left) &lt; height(l.right)) {
+                    tree = leftRightRotation(tree);
+                } else {
+                    tree = leftLeftRotation(tree);
+                }
+            }
+        } else {//cmp==0,tree是要删除的结点
+            if (tree.left != null &amp;&amp; tree.right != null) {//tree的左右孩子非空
+                if (height(tree.left) &gt; height(tree.right)) {
+                    /*
+                    如果tree的左子树比右子树高，则
+                    （1）找出tree的左子树中的最大结点
+                    （2）将该最大结点的值赋值给tree
+                     (3) 删除该最大结点 。
+                     采用该方法的好处是：删除结点之后，AVL树仍然是平衡的。
+                     */
+                    AVLTreeNode max = maximum(tree.left);
+                    tree.key = max.key;
+                    tree.left = remove(tree.left, max);
+                } else {
+                    /*
+                    如果tree的右子树比左子树高或相等，则
+                    （1） 找出tree的右子树中的最小结点
+                    （2） 将该最小结点的值赋值给tree
+                     (3) 删除该最大结点
+                    采用该方法的好处是：删除结点之后，AVL树仍然是平衡的。
+                     */
+                    AVLTreeNode min = minimum(tree.right);
+                    tree.key = min.key;
+                    tree.right = remove(tree.right, min);
+                }
+            } else {
+                tree = (tree.left != null) ? tree.left : tree.right;
+            }
+        }
+
+        if (tree != null) {//删除叶子结点的时候，这个tree是会返回null的。
+            tree.height = max(height(tree.left), height(tree.right)) + 1;
+        }
+
+
+        return tree;
+    }
+
+    public void remove(T key) {
+        AVLTreeNode z = search(mRoot, key);
+        if (z != null) {
+            mRoot = remove(mRoot, z);
+        }
+    }
+
+    private void preOrderPrint(AVLTreeNode root, int depth) {
+        if (root != null) {
+            System.out.println();//换行
+            for (int i = 0; i &lt; depth; i++) {//for循环来打印value前的空格
+                System.out.print(&quot;--&quot;);//结点深度越大，空格越多
+            }
+            System.out.print(root.key);
+            depth++;
+            preOrderPrint(root.left, depth);
+            preOrderPrint(root.right, depth);
+        }
+    }
+
+    public void print() {
+        preOrderPrint(mRoot, 0);
+    }
+
+
+    private AVLTreeNode search(AVLTreeNode node, T key) {
+        if (node == null) {
+            return null;
+        }
+        int cmp = key.compareTo(node.key);
+        if (cmp &lt; 0) {
+            return search(node.left, key);
+        } else if (cmp &gt; 0) {
+            return search(node.right, key);
+        } else {
+            return node;
+        }
+
+    }
+
+    private AVLTreeNode maximum(AVLTreeNode tree) {
+        if (tree == null) {
+            return null;
+        }
+        while (tree.right != null) {
+            tree = tree.right;
+        }
+        return tree;
+    }
+
+    private AVLTreeNode minimum(AVLTreeNode tree) {
+        if (tree == null) {
+            return null;
+        }
+        while (tree.left != null) {
+            tree = tree.left;
+        }
+        return tree;
+    }
+
+    public T maximum() {
+        AVLTreeNode p = maximum(mRoot);
+        if (p != null) {
+            return p.key;
+        }
+        return null;
+    }
+
+    public T minimum() {
+        AVLTreeNode p = minimum(mRoot);
+        if (p != null) {
+            return p.key;
+        }
+        return null;
+    }
+}</code></pre><p>测试：</p>
+<pre><code>public class Main {
+    public static void main(String[] args) {
+        AVLTree&lt;Integer&gt; tree = new AVLTree&lt;&gt;();
+        int arr[] = {33, 22, 4, 7, 0, 60, 13, 32, 21, 99, 6, 15, 27, 2};
+
+        for (int i = 0; i &lt; arr.length; i++) {
+            tree.insert(arr[i]);
+        }
+
+        tree.print();
+        System.out.println();
+        System.out.println(&quot;树的根结点高度：&quot; + tree.height());
+
+        System.out.println(&quot;删除结点33,32,27,60,99&quot;);
+
+        tree.remove(33);
+        tree.remove(32);
+        tree.remove(27);
+        tree.remove(60);
+        tree.remove(99);
+
+        tree.print();
+        System.out.println();
+        System.out.println(&quot;树的根结点高度：&quot; + tree.height());
+    }
+}</code></pre><p>打印：</p>
+<pre><code>22
+--7
+----4
+------0
+--------2
+------6
+----15
+------13
+------21
+--33
+----32
+------27
+----60
+------99
+树的根结点高度：5
+99
+0
+删除结点33,32,27,60,99
+
+7
+--4
+----0
+------2
+----6
+--15
+----13
+----22
+------21
+树的根结点高度：4</code></pre><p>AVLTreeNode rightLeftRotation(AVLTreeNode node) {<br>        node.right = leftLeftRotation(node.right);<br>        return rightRightRotation(node);<br>    }</p>
+<pre><code>
+结合插入和删除，AVL树的实现：</code></pre><p>package DataStructureAndAlgor;<br>/**</p>
+<ul>
+<li><p>AVL树</p>
+</li>
+<li><p>回顾的时候，最好把LL,RR,LR,RL旋转的四张图画出来，好理解。</p>
+</li>
+<li></li>
+<li><p>@param <T></p>
+</li>
+<li><p>/<br>public class AVLTree&lt;T extends Comparable<T>&gt; {</p>
+<p>  class AVLTreeNode {</p>
+<pre><code>  T key;
+  int height;
+  AVLTreeNode left;
+  AVLTreeNode right;
+
+  public AVLTreeNode(T key, AVLTreeNode left, AVLTreeNode right) {
+      this.key = key;
+      this.left = left;
+      this.right = right;
+      this.height = 0;//初始化的结点的height都是0，因为都是作为叶子结点添加到树中的。
+  }</code></pre><p>  }</p>
+<p>  private AVLTreeNode mRoot;</p>
+</li>
+</ul>
+<pre><code>private int height(AVLTreeNode tree) {
+    if (tree != null) {
+        return tree.height;
+    }
+    return 0;
+}
+
+public int height() {
+    return height(mRoot);
+}
+
+public int height(T key) {
+    AVLTreeNode node = search(mRoot, key);
+    return height(node);
+}
+
+private int max(int a, int b) {
+    return a &gt; b ? a : b;
+}
+
+private AVLTreeNode leftLeftRotation(AVLTreeNode node) {
+    checkNull(node);
+
+    AVLTreeNode  leftChild = node.left;
+    node.left =  leftChild.right;
+     leftChild.right = node;
+    //reset the height
+    node.height = max(height(node.left), height(node.right)) + 1;
+     leftChild.height = max(height( leftChild.left), height( leftChild.right)) + 1;
+    return  leftChild;
+}
+
+private AVLTreeNode rightRightRotation(AVLTreeNode node) {
+    checkNull(node);
+
+    AVLTreeNode  rightChild = node.right;
+    node.right =  rightChild.left;
+     rightChild.left = node;
+
+    node.height = max(height(node.left), height(node.right)) + 1;
+     rightChild.height = max(height( rightChild.left), height( rightChild.right)) + 1;
+    return  rightChild;
+}
+
+private AVLTreeNode leftRightRotation(AVLTreeNode node) {
+    node.left = rightRightRotation(node.left);//先对node.left旋转
+    return leftLeftRotation(node);//后对自己旋转
+}
+
+private AVLTreeNode rightLeftRotation(AVLTreeNode node) {
+    node.right = leftLeftRotation(node.right);
+    return rightRightRotation(node);
+}
+
+private void checkNull(AVLTreeNode node) {
+    if (node == null) {
+        throw new NullPointerException();
+    }
+}
+
+/**
+ * 将结点插入到AVL树种，并返回根节点。
+ *
+ * @param tree AVL树的根节点
+ * @param key  待插入的结点的值。
+ * @return 根节点
+ */
+private AVLTreeNode insert(AVLTreeNode tree, T key) {
+    if (tree == null) {//递归终点
+        tree = new AVLTreeNode(key, null, null);
+    } else {
+        int cmp = key.compareTo(tree.key);//compare result
+
+        if (cmp &lt; 0) {
+            tree.left = insert(tree.left, key);//递归插入
+            //插入结点后，若AVLTree失去平衡，旋转树。
+            if (height(tree.left) - height(tree.right) == 2) {//说明是tree结点出问题(必须是left-right，否则得负值)
+                if (key.compareTo(tree.left.key) &lt; 0) {//这里如果写成tree.right.key会报空指针异常
+                    tree = leftLeftRotation(tree);
+                } else {
+                    tree = leftRightRotation(tree);
+                }
+            }
+        } else if (cmp &gt; 0) {
+            tree.right = insert(tree.right, key);//递归插入
+            if (height(tree.right) - height(tree.left) == 2) {//说明是tree结点出问题(必须是left-right，否则得负值)
+                if (key.compareTo(tree.right.key) &lt; 0) {//这里如果写成tree.left.key会报空指针异常
+                    tree = rightLeftRotation(tree);
+                } else {
+                    tree = rightRightRotation(tree);
+                }
+            }
+        } else {  //cmp==0;
+            System.out.println(&quot;添加失败！不允许添加相同的结点！&quot;);
+        }
+
+    }
+
+    tree.height = max(height(tree.left), height(tree.right)) + 1;
+
+    return tree;
+}
+
+public void insert(T key) {
+    mRoot = insert(mRoot, key);
+}
+
+/**
+ * 删除树中的结点z, 返回根节点
+ *
+ * @param tree 从tree结点开始找寻要删除的结点z
+ * @param z    待删除的根节点
+ * @return 根节点
+ */
+private AVLTreeNode remove(AVLTreeNode tree, AVLTreeNode z) {
+    if (tree == null || z == null) {
+        return null;
+    }
+
+    int cmp = z.key.compareTo(tree.key);
+    if (cmp &lt; 0) {//待删除的结点在tree的左子树
+        tree.left = remove(tree.left, z);
+        if (height(tree.right) - height(tree.left) == 2) {//如果删除后tree失去平衡, 进行调节
+            AVLTreeNode r = tree.right;
+            if (height(r.left) &gt; height(r.right)) {
+                tree = rightLeftRotation(tree);
+            } else {
+                tree = rightRightRotation(tree);
+            }
+        }
+    } else if (cmp &gt; 0) {//待删除的结点在tree的右子树
+        tree.right = remove(tree.right, z);
+        if (height(tree.left) - height(tree.right) == 2) {//失去平衡
+            AVLTreeNode l = tree.left;
+            if (height(l.left) &lt; height(l.right)) {
+                tree = leftRightRotation(tree);
+            } else {
+                tree = leftLeftRotation(tree);
+            }
+        }
+    } else {//cmp==0,tree是要删除的结点
+        if (tree.left != null &amp;&amp; tree.right != null) {//tree的左右孩子非空
+            if (height(tree.left) &gt; height(tree.right)) {
+                /*
+                如果tree的左子树比右子树高，则
+                （1）找出tree的左子树中的最大结点
+                （2）将该最大结点的值赋值给tree
+                 (3) 删除该最大结点 。
+                 采用该方法的好处是：删除结点之后，AVL树仍然是平衡的。
+                 */
+                AVLTreeNode max = maximum(tree.left);
+                tree.key = max.key;
+                tree.left = remove(tree.left, max);
+            } else {
+                /*
+                如果tree的右子树比左子树高或相等，则
+                （1） 找出tree的右子树中的最小结点
+                （2） 将该最小结点的值赋值给tree
+                 (3) 删除该最大结点
+                采用该方法的好处是：删除结点之后，AVL树仍然是平衡的。
+                 */
+                AVLTreeNode min = minimum(tree.right);
+                tree.key = min.key;
+                tree.right = remove(tree.right, min);
+            }
+        } else {
+            tree = (tree.left != null) ? tree.left : tree.right;
+        }
+    }
+
+    if (tree != null) {//删除叶子结点的时候，这个tree是会返回null的。
+        tree.height = max(height(tree.left), height(tree.right)) + 1;
+    }
+
+
+    return tree;
+}
+
+public void remove(T key) {
+    AVLTreeNode z = search(mRoot, key);
+    if (z != null) {
+        mRoot = remove(mRoot, z);
+    }
+}
+
+private void preOrderPrint(AVLTreeNode root, int depth) {
+    if (root != null) {
+        System.out.println();//换行
+        for (int i = 0; i &lt; depth; i++) {//for循环来打印value前的空格
+            System.out.print(&quot;--&quot;);//结点深度越大，空格越多
+        }
+        System.out.print(root.key);
+        depth++;
+        preOrderPrint(root.left, depth);
+        preOrderPrint(root.right, depth);
+    }
+}
+
+public void print() {
+    preOrderPrint(mRoot, 0);
+}
+
+
+private AVLTreeNode search(AVLTreeNode node, T key) {
+    if (node == null) {
+        return null;
+    }
+    int cmp = key.compareTo(node.key);
+    if (cmp &lt; 0) {
+        return search(node.left, key);
+    } else if (cmp &gt; 0) {
+        return search(node.right, key);
+    } else {
+        retur</code></pre>
+            </div>
+            <hr>
+            <div>
+              <p>
+                
+                  <span>
+                <i class="iconfont icon-inbox"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E7%AE%97%E6%B3%95/">算法</a>
+                      &nbsp;
+                    
+                  </span>&nbsp;&nbsp;
+                
+                
+              </p>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/03/28/%E7%AE%97%E6%B3%95/element%E4%B8%BAint%E7%9A%84%E4%BA%8C%E5%8F%89%E6%9F%A5%E6%89%BE%E6%A0%91/">
+                        <i class="fa fa-chevron-left"></i>
+                        <span class="hidden-mobile">element为int的二叉查找树</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/2020/03/28/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/Dagger2/">
+                        <span class="hidden-mobile">Dagger2</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="fa fa-chevron-right"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+              
+                <!-- Comments -->
+                <div class="comments" id="comments">
+                  
+                  
+  <script defer src="https://utteranc.es/client.js"
+          repo="git@github.com:HWilliamgo/HWilliamgo.github.io.git"
+          issue-term="pathname"
+  
+          label="utterances"
+    
+          theme="github-light"
+          crossorigin="anonymous"
+  >
+  </script>
+
+
+                </div>
+              
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc-start"></div>
+<div id="toc">
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+    </div>
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/popper.js/1.16.1/umd/popper.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="https://cdn.staticfile.org/mdbootstrap/4.13.0/js/mdb.min.js" ></script>
+<script  src="/js/main.js" ></script>
+
+
+  <script  src="/js/lazyload.js" ></script>
+
+
+
+  
+  <script  src="https://cdn.staticfile.org/tocbot/4.10.0/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var navHeight = $('#navbar').height();
+      var toc = $('#toc');
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+      var tocLimMax = 2 * boardTop + boardCtn.height();
+
+      $(window).scroll(function () {
+        var tocLimMin = $('#toc-start').offset().top - navHeight;
+        var scroH = document.body.scrollTop + document.documentElement.scrollTop;
+
+        if (tocLimMin <= scroH && scroH <= tocLimMax) {
+          toc.css({
+            'display': 'block',
+            'position': 'fixed',
+            'top': navHeight,
+          });
+        } else if (scroH <= tocLimMin) {
+          toc.css({
+            'position': '',
+            'top': '',
+          });
+        } else if (scroH > tocLimMax) {
+          toc.css('display', 'none');
+        }
+      });
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '.post-content',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc > p').css('visibility', 'visible');
+      }
+      var offset = boardCtn.css('margin-right')
+      $('#toc-ctn').css({
+        'right': offset
+      })
+    });
+  </script>
+
+
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+
+<!-- Plugins -->
+
+
+
+  <script  src="https://cdn.staticfile.org/prettify/188.0.0/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  linenums');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "AVL树&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="https://s1.ax1x.com/2020/03/28/GkotgK.th.jpg">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="HWilliamgo">
+  <meta name="keywords" content="">
+  <title>View#post(Runnable-runnable)为什么能拿到view的宽高。 - William的小星球</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.12.1/css/all.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/mdbootstrap/4.13.0/css/mdb.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/3.0.1/github-markdown.min.css" />
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+
+
+
+  <link  rel="stylesheet" href="/lib/prettify/tomorrow-night-eighties.min.css" />
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link defer rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+<!-- 自定义样式保持在最底部 -->
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>William的小星球</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">归档</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">分类</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">标签</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">关于</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('https://w.wallhaven.cc/full/39/wallhaven-39joqy.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+                <p class="mt-3 post-meta">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                  星期六, 三月 28日 2020, 8:05 早上
+                </p>
+              
+
+              <p class="mt-1">
+                
+                  
+                  <span class="post-meta">
+                    <i class="far fa-chart-bar"></i>
+                    1.1k 字
+                  </span>
+                
+
+                
+                  
+                  <span class="post-meta">
+                      <i class="far fa-clock"></i>
+                      5 分钟
+                  </span>
+                
+
+                
+              </p>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5 z-depth-3" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+            <div class="markdown-body">
+              <p>结论：view.post()方法在整个view树的performMeasure, performLayout, performDraw执行完后，才被主线程轮询到，才得到执行。</p>
+<hr>
+<p>基于android sdk-23的源码分析，文章分成两个部分，实际上我是先写第二部分了再写第一部分的。</p>
+<h2 id="第一部分"><a href="#第一部分" class="headerlink" title="第一部分"></a>第一部分</h2><p>看一下view.post的内部。</p>
+<pre><code class="java">public boolean post(Runnable action) {
+    final AttachInfo attachInfo = mAttachInfo;
+    if (attachInfo != null) {
+        return attachInfo.mHandler.post(action);
+    }
+    // Assume that post will succeed later
+    ViewRootImpl.getRunQueue().post(action);
+    return true;
+}</code></pre>
+<p>如果在Activity#onCreate()中直接调用view.post，attachInfo==null，因为此时view还没有attach到Window上。那么看ViewRootImpl.getRunQueue().post(action)。</p>
+<pre><code class="java">/**
+ * The run queue is used to enqueue pending work from Views when no Handler is
+ * attached.  The work is executed during the next call to performTraversals on
+ * the thread.
+ * @hide
+ */
+static final class RunQueue {
+    private final ArrayList&lt;HandlerAction&gt; mActions = new ArrayList&lt;HandlerAction&gt;();
+    void post(Runnable action) {
+        postDelayed(action, 0);
+    }
+    void postDelayed(Runnable action, long delayMillis) {
+        HandlerAction handlerAction = new HandlerAction();
+        handlerAction.action = action;
+        handlerAction.delay = delayMillis;
+        synchronized (mActions) {
+            mActions.add(handlerAction);
+        }
+    }
+    ...
+    void executeActions(Handler handler) {
+        synchronized (mActions) {
+            final ArrayList&lt;HandlerAction&gt; actions = mActions;
+            final int count = actions.size();
+            for (int i = 0; i &lt; count; i++) {
+                final HandlerAction handlerAction = actions.get(i);
+                handler.postDelayed(handlerAction.action, handlerAction.delay);
+            }
+            actions.clear();
+        }
+    }
+    private static class HandlerAction {
+        Runnable action;
+        long delay;
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            HandlerAction that = (HandlerAction) o;
+            return !(action != null ? !action.equals(that.action) : that.action != null);
+        }
+        @Override
+        public int hashCode() {
+            int result = action != null ? action.hashCode() : 0;
+            result = 31 * result + (int) (delay ^ (delay &gt;&gt;&gt; 32));
+            return result;
+        }
+    }
+}</code></pre>
+<p>这里省略了一个remove的方法。RunQueue就是在view.post(Runnable)的时候，把Runnable放到数组mAction里，然后当ActivityThread的performTraversal()里的getRunQueue().executeActions(attachInfo.mHandler);时，就把所有数组中的Runnable发送到主线程的Looper里去轮询。当然这些都会在performTraversal()执行完之后才能执行。</p>
+<h2 id="第二部分"><a href="#第二部分" class="headerlink" title="第二部分"></a>第二部分</h2><pre><code class="java">final class TraversalRunnable implements Runnable {
+    @Override
+    public void run() {
+        doTraversal();//专门用来执行ViewRootImpl里的doTraversal()，而doTraversal()里面有performTraversal();
+    }
+}
+final TraversalRunnable mTraversalRunnable = new TraversalRunnable();//紧接着就new出来一个实例</code></pre>
+<p><code>mTraversalRunnable</code>在ViewRootImpl里面总共也就出现了两次</p>
+<pre><code class="java">void scheduleTraversals() {
+    if (!mTraversalScheduled) {
+        mTraversalScheduled = true;
+        mTraversalBarrier = mHandler.getLooper().getQueue().postSyncBarrier();
+        mChoreographer.postCallback(
+                Choreographer.CALLBACK_TRAVERSAL, mTraversalRunnable, null);
+        if (!mUnbufferedInputDispatch) {
+            scheduleConsumeBatchedInput();
+        }
+        notifyRendererOfFramePending();
+        pokeDrawLockIfNeeded();
+    }
+}</code></pre>
+<p>另一个是<code>void unscheduleTraversals()</code>，先不看。<br>那么在这里出现的地方这一句<code>mChoreographer.postCallback( Choreographer.CALLBACK_TRAVERSAL, mTraversalRunnable, null);</code>，<br>Choreographer.n 编舞者<br>他在<code>ViewRootImpl</code>的构造方法中实例化：<code>mChoreographer = Choreographer.getInstance();</code></p>
+<pre><code class="java">//获取单例
+public static Choreographer getInstance() {
+    return sThreadInstance.get();
+}
+//看下sThreadInstance
+private static final ThreadLocal&lt;Choreographer&gt; sThreadInstance =
+        new ThreadLocal&lt;Choreographer&gt;() {
+    @Override
+    protected Choreographer initialValue() {
+        Looper looper = Looper.myLooper();
+        if (looper == null) {
+            throw new IllegalStateException(&quot;The current thread must have a looper!&quot;);
+        }
+        return new Choreographer(looper);
+    }
+};
+//看下编舞者的私有构造方法
+private Choreographer(Looper looper) {
+    mLooper = looper;
+    mHandler = new FrameHandler(looper);//用looper实例化了Handler。
+    mDisplayEventReceiver = USE_VSYNC ? new FrameDisplayEventReceiver(looper) : null;
+    mLastFrameTimeNanos = Long.MIN_VALUE;
+
+    mFrameIntervalNanos = (long)(1000000000 / getRefreshRate());
+
+    mCallbackQueues = new CallbackQueue[CALLBACK_LAST + 1];
+    for (int i = 0; i &lt;= CALLBACK_LAST; i++) {
+        mCallbackQueues[i] = new CallbackQueue();
+    }
+}</code></pre>
+<p>很明显的是由ThreadLocal来控制的线程单例类，拿到的Looper也是线程单例的Looper，而创建Choreographer的ViewRootImpl是在主线程创建的，因此拿到的就是主线程的Looper。<br>看回Choreographer的postCallback();，最终进来调用的postCallbackDelayedInternal();</p>
+<pre><code class="java">private void postCallbackDelayedInternal(int callbackType,
+        Object action, Object token, long delayMillis) {
+    if (DEBUG_FRAMES) {
+        Log.d(TAG, &quot;PostCallback: type=&quot; + callbackType
+                + &quot;, action=&quot; + action + &quot;, token=&quot; + token
+                + &quot;, delayMillis=&quot; + delayMillis);
+    }
+
+    synchronized (mLock) {
+        final long now = SystemClock.uptimeMillis();
+        final long dueTime = now + delayMillis;
+        mCallbackQueues[callbackType].addCallbackLocked(dueTime, action, token);
+
+        if (dueTime &lt;= now) {
+            scheduleFrameLocked(now);
+        } else {
+            Message msg = mHandler.obtainMessage(MSG_DO_SCHEDULE_CALLBACK, action);
+            msg.arg1 = callbackType;
+            msg.setAsynchronous(true);
+            //在此处用主线程的looper，最后把这个Runnable发到主线程里去，排队等待被调用mHandler.handleMessage()；最后被执行。
+            mHandler.sendMessageAtTime(msg, dueTime);
+        }
+    }
+}</code></pre>
+<p>总之这个ViewRootImpl里的doTraversal()方法由ViewRootImpl的scheduleTraversal()最终放到<br>Android主线程的Looper里面去轮询排队执行了。</p>
+<p>后面就是doTraversal()里面的performTraversal()了。</p>
+<pre><code class="java"> private void performTraversals() {
+        // cache mView since it is used so much below...
+        final View host = mView;
+        //注：该方法有800行代码，已省略
+        // Execute enqueued actions on every traversal in case a detached view enqueued an action
+        getRunQueue().executeActions(attachInfo.mHandler);
+
+    ...
+    performMeasure();//从DecorView开始完成View树的测量
+    ...
+    performLayout();//从DecorView开始完成View树的布局
+    ...
+    performDraw();//从DecorView开始绘制View树
+ }</code></pre>
+<p>注意：<code>getRunQueue().executeActions(attachInfo.mHandler)</code>里面会遍历数组然后把所有的view.post(Runnable)里的Runnable都用和主线程Looper关联的Hanlder#sendMessage出去，放到主线程Looper里轮询，等待调用。那么由于当前的<code>performTraversals()</code>本身就是由主线程Looper回调给刚才的编舞者Choreographer里面去执行的，因此主线程一定会等待performTraversals()整个方法执行完，才去接着执行由view.post()推送到主线程的Runnable。因此整个View树都完成了测量，布局，绘制。然后view.post()里面百分百的可以拿到view的宽高了。</p>
+<hr>
+<p>thanks</p>
+<p><a href="https://blog.csdn.net/scnuxisan225/article/details/49815269" target="_blank" rel="noopener">通过View.post()获取View的宽高引发的两个问题：1post的Runnable何时被执行，2为何View需要layout两次；以及发现Android的一个小bug - CSDN博客</a></p>
+<p><a href="https://www.cnblogs.com/dasusu/p/8047172.html" target="_blank" rel="noopener">【Android源码解析】View.post()到底干了啥 - 请叫我大苏 - 博客园</a></p>
+<p>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               </p>
+
+            </div>
+            <hr>
+            <div>
+              <p>
+                
+                  <span>
+                <i class="iconfont icon-inbox"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/View/">View</a>
+                      &nbsp;
+                    
+                  </span>&nbsp;&nbsp;
+                
+                
+              </p>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/03/28/View/View#onKeyDown%E4%B8%8D%E8%B0%83%E7%94%A8/">
+                        <i class="fa fa-chevron-left"></i>
+                        <span class="hidden-mobile">View#onKeyDown不调用</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/2020/03/28/View/View#scrollBy(int-x-,-int-y)%E5%8F%8D%E5%90%91/">
+                        <span class="hidden-mobile">View#scrollBy(int-x-,-int-y)反向</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="fa fa-chevron-right"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+              
+                <!-- Comments -->
+                <div class="comments" id="comments">
+                  
+                  
+  <script defer src="https://utteranc.es/client.js"
+          repo="git@github.com:HWilliamgo/HWilliamgo.github.io.git"
+          issue-term="pathname"
+  
+          label="utterances"
+    
+          theme="github-light"
+          crossorigin="anonymous"
+  >
+  </script>
+
+
+                </div>
+              
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc-start"></div>
+<div id="toc">
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+    </div>
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/popper.js/1.16.1/umd/popper.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="https://cdn.staticfile.org/mdbootstrap/4.13.0/js/mdb.min.js" ></script>
+<script  src="/js/main.js" ></script>
+
+
+  <script  src="/js/lazyload.js" ></script>
+
+
+
+  
+  <script  src="https://cdn.staticfile.org/tocbot/4.10.0/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var navHeight = $('#navbar').height();
+      var toc = $('#toc');
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+      var tocLimMax = 2 * boardTop + boardCtn.height();
+
+      $(window).scroll(function () {
+        var tocLimMin = $('#toc-start').offset().top - navHeight;
+        var scroH = document.body.scrollTop + document.documentElement.scrollTop;
+
+        if (tocLimMin <= scroH && scroH <= tocLimMax) {
+          toc.css({
+            'display': 'block',
+            'position': 'fixed',
+            'top': navHeight,
+          });
+        } else if (scroH <= tocLimMin) {
+          toc.css({
+            'position': '',
+            'top': '',
+          });
+        } else if (scroH > tocLimMax) {
+          toc.css('display', 'none');
+        }
+      });
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '.post-content',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc > p').css('visibility', 'visible');
+      }
+      var offset = boardCtn.css('margin-right')
+      $('#toc-ctn').css({
+        'right': offset
+      })
+    });
+  </script>
+
+
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+
+<!-- Plugins -->
+
+
+
+  <script  src="https://cdn.staticfile.org/prettify/188.0.0/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  linenums');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "View#post(Runnable-runnable)为什么能拿到view的宽高。&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
