@@ -151,270 +151,25 @@
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/28/Java/Annotation%E6%80%BB%E7%BB%93/">
-        <p class="h4 index-header">Annotation总结</p>
+      <a href="/2020/03/28/Android/%5B%E8%BD%AC%E8%BD%BD%5DsetFocusable%E3%80%81setEnabled%E3%80%81setClickable%E5%8C%BA%E5%88%AB/">
+        <p class="h4 index-header">转载-&gt;setFocusable、setEnabled、setClickable区别</p>
       </a>
 
-      <a href="/2020/03/28/Java/Annotation%E6%80%BB%E7%BB%93/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">这篇总结的内容是我自己昨天我晚上写的一部分，因为我第二天在简书上面看到了一篇和我内容相似的，估计出处也是《疯狂java讲义》，所以剩下的内容在这里面看就可以了：
-zlcook的文章 : Java:Annotation(注解)–原理到案例
-java基本的5种Annotation
-@Overrided：只作用于方法，标识该方法是覆盖父类的方法
-@Deprecated: 作用于方法，类，接口。表示某个程序元素已过时
-@SpressWarnings：被该Annotation修饰的程序元素以及其中的所有子元素将取消显示指定的编译器警告。比如：@SuppressWarnings(value=”unchec</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/Java/">Java</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/28/Java/Comparable%E6%8E%A5%E5%8F%A3%E6%98%AF%E4%BB%80%E4%B9%88/">
-        <p class="h4 index-header">Comparable接口是什么</p>
-      </a>
-
-      <a href="/2020/03/28/Java/Comparable%E6%8E%A5%E5%8F%A3%E6%98%AF%E4%BB%80%E4%B9%88/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">//Comparable接口：
-//实现了Comparable接口的类的对象，
-//可被Collections.sort(List)方法和Arrays.sort(Object[])方法自动地排序。
-
-//实现该接口的方法可以作为SortedMap的key
-//或者SortedSet中的element,但是需要额外地声名一个Comparator
-public interface Comparable&lt;T&gt;{
-  public int compareTo(T o);
-}
-
-Comparable是内部比较器，Comparator是外部比较器。
-以下为Comparable和Comparat</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/Java/">Java</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/28/Java/HashMap%E5%8D%8A%E8%A7%A3%E6%9E%90/">
-        <p class="h4 index-header">HashMap半解析</p>
-      </a>
-
-      <a href="/2020/03/28/Java/HashMap%E5%8D%8A%E8%A7%A3%E6%9E%90/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">此篇文章是对源码的分析，但并没有贴大量源码。3个接口前两个就不用多说了，Map&lt;K,V&gt;接口也应该对着中文版api文档看一下就明白了。
-先看直接父类AbstractMap&lt;K,V&gt;：
-AbstractMap&lt;K,V&gt;内部类：
-SimpleEntry&lt;K,V&gt;:实现Entry接口，Entry的英文单词是条目的意思，接口里面都是一些对规定好的操作方法，看文档就行了。在类中只有final key和value两个字段，其中由于key是final的，因此初始化之后就不可变。实例方法都是对这两个变量的基本操作，没什么特别的。简单来说就是对key和value的</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/Java/">Java</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/28/Java/Integer++/">
-        <p class="h4 index-header">Integer++</p>
-      </a>
-
-      <a href="/2020/03/28/Java/Integer++/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">Integer++
-在写一个线程同步的demo的时候，想用Integer作为对象传入各个Runnable中作为flag，自增，然后发现失败，探究原因后记录如下：
-
-public class Main {
-    public static void main(String[] args) {
-        Integer i = 10;
-        Integer j = i++;
-        System.out.println(i == j);
-    }
-}
-输出：false
-原因：
-Integer中表示值的变量value本身就是一个final类型的，即不可变类型，不可重新赋值</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/Java/">Java</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/28/Java/Java%E4%B8%8D%E5%8F%AF%E5%8F%98%E5%AF%B9%E8%B1%A1/">
-        <p class="h4 index-header">Java不可变对象</p>
-      </a>
-
-      <a href="/2020/03/28/Java/Java%E4%B8%8D%E5%8F%AF%E5%8F%98%E5%AF%B9%E8%B1%A1/">
+      <a href="/2020/03/28/Android/%5B%E8%BD%AC%E8%BD%BD%5DsetFocusable%E3%80%81setEnabled%E3%80%81setClickable%E5%8C%BA%E5%88%AB/">
         
         
           
         
         <div class="index-excerpt" >
           <div class="index-text mb-1">
-定义：如果某个对象在被创建后，其状态（实例变量）不能被修改，那么这个对象就称为不可变对象。
-优点： 
-不可变对象一定是线程安全的（不可变，别的线程修改不了）。
-可作为Map的键值和Set的元素。
+setClickable:  设置为true时，表明控件可以点击，如果为false，就不能点击；“点击”适用于鼠标、键盘按键、遥控器等；注意，setOnClickListener方法会默认把控件的setClickable设置为true。
 
 
-编写不可变类：
-所有字段都是private final。
-没有任何public的方法来修改字段。
-不依赖外部可变对象的引用。（如果依赖外部可变对象，那么当外部可变对象修改时，引用变量会指向新的对象，违反不可变对象的定义）
-不能逸出任何可变对象的引用变量。（逸出引用变量后，外部可以通过引用变量修改对象）。import java.util.Date;
+setEnabled:  使能控件，如果设置为false，该控件永远不会活动，不管设置为什么属性，都无效；设置为true，表明激活该控件，控件处于活动状态，处于活动状态，就能响应事件了，比如触摸、点击、按键事件等；
 
+setEnabled就相当于总开关一样，只有总开关打开了，才能使用其他事件。
 
-
-
-public final class I</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/Java/">Java</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/28/Java/Java%E4%BC%A0%E5%80%BC%E5%92%8C%E4%BC%A0%E5%BC%95%E7%94%A8%E7%9A%84%E7%9C%9F%E7%9B%B8/">
-        <p class="h4 index-header">Java传值和传引用的真相</p>
-      </a>
-
-      <a href="/2020/03/28/Java/Java%E4%BC%A0%E5%80%BC%E5%92%8C%E4%BC%A0%E5%BC%95%E7%94%A8%E7%9A%84%E7%9C%9F%E7%9B%B8/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">JAVA 对象引用，以及对象赋值
-
-上述文章可以作参考，但是最后总结说的，包括《thingking in Java》说的：“不管是基本类型还是对象类型，都是传值”。我认为这句话会引起歧义，真正的真相是：不管Java参数的类型是什么，一律传递参数的副本。《thingking in Java》中：“When you&#39;re passing primitives into a method,you get a distinct copy of the primitive.When you&#39;re passing a reference into a method,you get a co</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/Java/">Java</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/28/Android/DialogFragment%E8%87%AA%E5%B7%B1%E7%88%AC%E8%BF%87%E7%9A%84%E5%9D%91/">
-        <p class="h4 index-header">DialogFragment自己爬过的坑</p>
-      </a>
-
-      <a href="/2020/03/28/Android/DialogFragment%E8%87%AA%E5%B7%B1%E7%88%AC%E8%BF%87%E7%9A%84%E5%9D%91/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">DialogFragment在显示之后如何从屏幕消除？
-
-直接按手机的返回键
-自己的代码里处理 ，调用DialogFragment的对象的dismiss()；
-从外部处理MyDialogFragment dialog=(MyDialogFragment)getFragmentManager.findFragmentByTag();
-dialog.dismiss();
-//摸索了我好久好久，各种查资料，最后自己试出来了，妈的                                                                                       </div>
+setFocusable 使能控件获得焦点，设置为true</div>
         </div>
       </a>
 
@@ -437,24 +192,31 @@ dialog.dismiss();
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/28/Android/AIDL/">
-        <p class="h4 index-header">AIDL</p>
+      <a href="/2020/03/28/Android/Volley%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C%EF%BC%881%EF%BC%89/">
+        <p class="h4 index-header">Volley使用手册（1）</p>
       </a>
 
-      <a href="/2020/03/28/Android/AIDL/">
+      <a href="/2020/03/28/Android/Volley%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C%EF%BC%881%EF%BC%89/">
         
         
           
         
         <div class="index-excerpt" >
-          <div class="index-text mb-1">参考hongyang的博客：
+          <div class="index-text mb-1">#1.最简单的StringRequest和JasonRequest：
 
-Android aidl Binder框架浅析
+1.创建一个RequestQueue对象2.创建一个Request对象3.将Request对象添加到RequestQueue里面。
 
-#跨应用的进程间通信：首先要有两个应用:1、现在Android Studio里创建两个应用，两个module。2、一个应用做client，一个应用做server。3、实现client应用调用server应用中的服务。
-开始动手：###创建一个server应用：Manifest文件：
-&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
-&lt;manifest xmlns:android=&quot;http://schemas.andr</div>
+
+
+StringRequest:GET方法：
+
+StringRequest的构造方法第一个参数是url,第二个参数是onResponse接口实例，第三个参数是onErrorResponse接口实例。
+
+POST方法:
+
+这里的StringRequest是选择四个参数的构造方法，第一个参数传入的是method，然后重写getParams方法，返回要Post上去的Map。
+
+JsonReques</div>
         </div>
       </a>
 
@@ -477,17 +239,28 @@ Android aidl Binder框架浅析
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/28/Android-Jetpack/ViewModel/">
-        <p class="h4 index-header">ViewModel</p>
+      <a href="/2020/03/28/Android/ValueAnimator%E4%BD%BF%E7%94%A8%E6%80%9D%E8%B7%AF/">
+        <p class="h4 index-header">ValueAnimator使用思路</p>
       </a>
 
-      <a href="/2020/03/28/Android-Jetpack/ViewModel/">
+      <a href="/2020/03/28/Android/ValueAnimator%E4%BD%BF%E7%94%A8%E6%80%9D%E8%B7%AF/">
         
         
           
         
         <div class="index-excerpt" >
-          <div class="index-text mb-1">                                                                                                                                                                                                                                                                                                            </div>
+          <div class="index-text mb-1">
+ValueAnimator有三个方法来创建动画，分别是：
+
+ofInt();
+ofFloat();
+ofObject();
+
+先看ofInt():效果：
+思路：
+
+通过ValueAnimaotr.ofInt(startValue,endValue)方法返回一个ValueAnimator对象，再给对象设置各种比如duration,repeatCount,repeatMode,StartDelay的参数。
+最关键的是，要设置对象的.addUpdateListener(),该方法只要ValueAnimator传入的那个值在变化，回调方法就会不断地被回调，我们在这里就可以不断地调用更新View或者L</div>
         </div>
       </a>
 
@@ -498,7 +271,7 @@ Android aidl Binder框架浅析
         
           <i class="iconfont icon-inbox"></i>
           
-            <a href="/categories/Android-Jetpack/">Android-Jetpack</a>&nbsp;
+            <a href="/categories/Android/">Android</a>&nbsp;
           &nbsp;
         
         
@@ -510,25 +283,27 @@ Android aidl Binder框架浅析
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/28/Android-Jetpack/LiveData%E7%9A%84onActive()%E5%92%8ConInactive()/">
-        <p class="h4 index-header">LiveData的onActive()和onInactive()</p>
+      <a href="/2020/03/28/Android/Toolbar%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/">
+        <p class="h4 index-header">Toolbar使用手册</p>
       </a>
 
-      <a href="/2020/03/28/Android-Jetpack/LiveData%E7%9A%84onActive()%E5%92%8ConInactive()/">
+      <a href="/2020/03/28/Android/Toolbar%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/">
         
         
           
         
         <div class="index-excerpt" >
-          <div class="index-text mb-1">
-看文档的时候对LiveData()的onInactive()回调产生了疑问，遂看源码，记录之。
+          <div class="index-text mb-1">明确一点：toolbar不要设置setSupportActionBar();
+说三遍！：toolbar不要设置setSupportActionBar();
+         toolbar不要设置setSupportActionBar();
+         toolbar不要设置setSupportActionBar();
+toolbar就是toolbar，不是actionBar~，而且用了setSupportActionBar之后api调用超级杂乱，因此我们就把Toolbar当做一个新的独立的控件就行了
 
-1. 关系
-概述：LiveData和Observer互相持有，LiveData将其持有的数据的变动，转发给所有注册过来的Observer。
-2. onActive 和 onInactive()/**
- * Called when the number of active observers change to 1 from 0.
- * &lt;p&gt;
- * This callback can be used to know that this LiveData is being used t</div>
+#文章目录：
+
+入门级配置
+进阶设置
+设置popup的背景颜色和字体颜色##1. 入</div>
         </div>
       </a>
 
@@ -539,7 +314,236 @@ Android aidl Binder框架浅析
         
           <i class="iconfont icon-inbox"></i>
           
-            <a href="/categories/Android-Jetpack/">Android-Jetpack</a>&nbsp;
+            <a href="/categories/Android/">Android</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2020/03/28/Android/Toolbar/">
+        <p class="h4 index-header">Toolbar</p>
+      </a>
+
+      <a href="/2020/03/28/Android/Toolbar/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">在代码里面给toolbar设置背景颜色要用这个方法，不然设置出来的颜色不是原来的颜色。
+这第二个setBackgroundColor用出来不知道为什么颜色都不一样了。                                                                                                                                                                                                                         </div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Android/">Android</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2020/03/28/Android/TextInputLayout/">
+        <p class="h4 index-header">TextInputLayout</p>
+      </a>
+
+      <a href="/2020/03/28/Android/TextInputLayout/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">这个控件的两个优点：
+
+更加友好地显示提示
+更友好地显示错误信息
+
+更加友好地显示提示：
+&lt;RelativeLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+    xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;
+    xmlns:tools=&quot;http://schemas.android.com/tools&quot;
+    android:id=&quot;@+id/rl&quot;
+    a</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Android/">Android</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2020/03/28/Android/TabLayout%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/">
+        <p class="h4 index-header">TabLayout简单使用</p>
+      </a>
+
+      <a href="/2020/03/28/Android/TabLayout%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">简单的介绍TabLayout的常规用法效果图：
+布局：布局上面就是很简单的采用上面TabLayout下面ViewPager的形式
+代码：在xml中声名的viewPager需要调用viewPager.setAdapter(adapter)，那么TabLayout需要调用tablayout.setUpwithViewPager(viewPager)思路是：
+
+写findViewById（）找到这两个控件。
+写一个类MyViewPagerAdapter继承FragmentPagerAdapter，ViewPager里面展示的内容当然的是用的Fragment.
+那么就要写我们自己的Fragment类，</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Android/">Android</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2020/03/28/Android/Service%E6%98%AF%E5%8D%95%E4%BE%8B/">
+        <p class="h4 index-header">Service是单例</p>
+      </a>
+
+      <a href="/2020/03/28/Android/Service%E6%98%AF%E5%8D%95%E4%BE%8B/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">stackoverflow上的3个问题解答了我的疑惑：Android: When to use Service vs Singleton?Android service isn’t working as a singletonDoes startService() create a new Service instance or using the existing one?
+
+结论：
+
+当多次startService去启动Service，若Service对象存在，就只调用onStartCommand，若Service对象不存在，创建Service对象。
+服务时天然的单例模式，且可以被销毁。 </div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Android/">Android</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2020/03/28/Android/RecyclerView%E8%AE%B0%E4%BA%8B/">
+        <p class="h4 index-header">RecyclerView记事</p>
+      </a>
+
+      <a href="/2020/03/28/Android/RecyclerView%E8%AE%B0%E4%BA%8B/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">
+当RecyclerView组装完后，立刻去获取Item的高度：int childHeight = recyclerView.getLayoutManager().findViewByPosition(0).getHeight();会报空指针，因为itemView还没有attach到recyclerView中，获取不到itemView，用view.post()解决recyclerView.post(new Runnable){
+ int childHeight = recyclerView.getLayoutManager().findViewByPosition(0).getHeight()</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Android/">Android</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2020/03/28/Android/RecyclerView%E7%9A%84%E5%A4%8D%E7%94%A8/">
+        <p class="h4 index-header">RecyclerView的复用</p>
+      </a>
+
+      <a href="/2020/03/28/Android/RecyclerView%E7%9A%84%E5%A4%8D%E7%94%A8/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">当有9个不同的Item显示在屏幕上，一定有超过9个的ViewHolder对象，通过onCreateViewHolder(ViewGroup parent, int type)被创建（也就是其引用的View对象被创建）。
+根据官方文档阅读到的资料，大致整理了一下RecyclerView的3个方面：
+创建Item
+从.xml布局文件中inflate出新的View对象.
+上述新建的View对象作为参数传入ViewHolder的构造函数来创建ViewHolder对象。
+
+显示或更新数据
+为每个ViewHolder对象分配一个position，并调用onBindViewHolder(ViewHolder</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Android/">Android</a>&nbsp;
           &nbsp;
         
         
@@ -640,6 +644,8 @@ Android aidl Binder框架浅析
 
 
 
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
 
 
 

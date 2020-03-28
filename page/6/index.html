@@ -151,6 +151,84 @@
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2020/03/28/git/git%E8%B7%9F%E8%B8%AA%E8%BF%9C%E7%A8%8B%E5%88%86%E6%94%AF%EF%BC%8C%E6%9F%A5%E7%9C%8B%E6%9C%AC%E5%9C%B0%E5%88%86%E6%94%AF%E8%BF%BD%E8%B8%AA%E5%92%8C%E8%BF%9C%E7%A8%8B%E5%88%86%E6%94%AF%E7%9A%84%E5%85%B3%E7%B3%BB/">
+        <p class="h4 index-header">git跟踪远程分支，查看本地分支追踪和远程分支的关系</p>
+      </a>
+
+      <a href="/2020/03/28/git/git%E8%B7%9F%E8%B8%AA%E8%BF%9C%E7%A8%8B%E5%88%86%E6%94%AF%EF%BC%8C%E6%9F%A5%E7%9C%8B%E6%9C%AC%E5%9C%B0%E5%88%86%E6%94%AF%E8%BF%BD%E8%B8%AA%E5%92%8C%E8%BF%9C%E7%A8%8B%E5%88%86%E6%94%AF%E7%9A%84%E5%85%B3%E7%B3%BB/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">跟踪远程分支如果用git push指令时，当前分支没有跟踪远程分支（没有和远程分支建立联系），那么就会git就会报错
+There is no tracking information for the current branch.
+Please specify which branch you want to merge with.因为当前分支没有追踪远程指定的分支的话，当前分支指定的版本快照不知道要作为服务器哪一个分支的版本快照的子节点。简单来说就是：不知道要推送给哪一个分支。那么如何建立远程分支：
+
+克隆时自动将创建好的master分支追踪origin/master分支git clone </div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/git/">git</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2020/03/28/git/git%EF%BC%8C%E4%B8%BA%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%93%E5%BA%93%E5%BB%BA%E7%AB%8B%E6%96%B0%E7%9A%84%E5%88%86%E6%94%AF%E3%80%82/">
+        <p class="h4 index-header">git，为服务器仓库建立新的分支。</p>
+      </a>
+
+      <a href="/2020/03/28/git/git%EF%BC%8C%E4%B8%BA%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%93%E5%BA%93%E5%BB%BA%E7%AB%8B%E6%96%B0%E7%9A%84%E5%88%86%E6%94%AF%E3%80%82/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">
+直接在github页面上面
+
+当前切换到了master分支，如果文本框输入后一个新的分支名字后，确认，就会创建一个分支指向master分支。要创建一个分支指向develop分支，就将当前分支切换到develop上面。
+这一切都用鼠标可以完成，很直观简洁。
+
+通过git bash。如果我要在服务器创建一个新的分支bugfix指向develop，这做不到。只能通过push命令，让这一次push跟踪到develop，在develop分支上面生成新的快照，并将新的bugfix指向新的版本快照。
+
+在本地的develop分支chekout -b一个bugfix分支，然后执行git branch -u </div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/git/">git</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
       <a href="/2020/03/28/git/%E4%B8%BAgit%E8%AE%BE%E7%BD%AE%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%99%A8%E3%80%82/">
         <p class="h4 index-header">为git设置文本编辑器。</p>
       </a>
@@ -248,52 +326,6 @@ f</div>
         <div class="index-excerpt" >
           <div class="index-text mb-1">Future接口一个Future代表一个异步计算的结果。他提供了5个方法来确认计算是否完成，来等待异步任务的完成，来获取异步计算的结果。当计算完成，计算结果有且只能有通过get()方法来获取，并且会阻塞调用者线程直到异步计算的任务完成。取消只能通过cancel()方法。他提供了额外的方法来决定任务正常完成还是被取消。一旦一个计算任务完成，他将不再能够被取消。如果你要用Future是为了能够取消异步任务而不要他的返回结果，那么可以使用Future&lt;?&gt;并返回null作为异步任务的执行结果。
 RunnableFuture接口表示一个可以run的Future, run方法的成功执行标识着</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/java%E5%B9%B6%E5%8F%91/">java并发</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/28/java%E5%B9%B6%E5%8F%91/Java%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/">
-        <p class="h4 index-header">Java内存模型</p>
-      </a>
-
-      <a href="/2020/03/28/java%E5%B9%B6%E5%8F%91/Java%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">
-参考：海子的博客Java并发编程：volatile关键字解析
-
-三个重点：
-
-原子性
-可见性
-有序性
-
-讨论这三点之前先说一下计算机的内存模型：
-
-CPU对程序的指令的执行速度远远大于从内存中读写数据的速度所以如果让CPU直接访问内存来读数据再写结果去内存，就会效率非常低下。因此就有了高速缓存——Cache这个东西。
-举个例子看看他们怎么工作的:i=0;单线程运行代码：i=i+1;步骤是：Cache从主存读取i=0， CPU从Cache读取i，CPU运算i=i+1， 将结果i=1写入Cache，Cache再将结果i=1写入主存。
-单线程没问题，但是多线程中*，比如开启两个线程分别执行i=i+</div>
         </div>
       </a>
 
@@ -520,51 +552,6 @@ while(!flag){    doSomethi</div>
     </div>
   </div>
 
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/28/java%E5%B9%B6%E5%8F%91/%E7%AE%80%E6%98%93%E7%BA%BF%E7%A8%8B%E6%B1%A0/">
-        <p class="h4 index-header">简易线程池</p>
-      </a>
-
-      <a href="/2020/03/28/java%E5%B9%B6%E5%8F%91/%E7%AE%80%E6%98%93%E7%BA%BF%E7%A8%8B%E6%B1%A0/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">来自《Java并发编程的艺术》
-一个简易的线程池的实现。三个类：ThreadPool线程池接口DefaultThreadPool线程池接口实现Worker工作线程
-线程池的工作逻辑：
-全部代码
-package ConcurrencyArt;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
-
-interface ThreadPool</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/java%E5%B9%B6%E5%8F%91/">java并发</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
 
 
   <nav aria-label="index posts navigation">
@@ -658,6 +645,8 @@ interface ThreadPool</div>
 
 
 
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
 
 
 

@@ -151,6 +151,85 @@
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2020/03/28/%E6%97%A5%E8%AE%B0%E6%9C%AC/2018-04-21/">
+        <p class="h4 index-header">Sat Apr 21 2018 00:00:00 GMT+0000 (Coordinated Universal Time)</p>
+      </a>
+
+      <a href="/2020/03/28/%E6%97%A5%E8%AE%B0%E6%9C%AC/2018-04-21/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">今天晚上做了虎牙的安卓的线上笔试，前面选择题都还好，问的算法都不算难，也考了一些计算机网络的问题，好在之前也了解过计算机网络的东西，但是了解的不是很详细，也没有自己写总结，导致当时看的东西现在又忘了，回头还是要找机会把网络的知识补回来。第二大题三个算法题全崩了，一个都不会，真是感叹啊，之前学的几个排序算法一个都用不上，真心不喜欢算法这一块的内容，不过以后还是慢慢地想办法补起来吧。今天是4月21号了，还有两个月就要暑假了，目前还不知道暑假我能去哪里去实习，如果我很厉害的话，早就可以找到实习了。唉…我还欠缺好多必要的东西啊。比如数据结构，树的一些算法，java集合也只懂ArrayList和Link</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E6%97%A5%E8%AE%B0%E6%9C%AC/">日记本</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2020/03/28/java%E5%B9%B6%E5%8F%91/Java%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/">
+        <p class="h4 index-header">Java内存模型</p>
+      </a>
+
+      <a href="/2020/03/28/java%E5%B9%B6%E5%8F%91/Java%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">
+参考：海子的博客Java并发编程：volatile关键字解析
+
+三个重点：
+
+原子性
+可见性
+有序性
+
+讨论这三点之前先说一下计算机的内存模型：
+
+CPU对程序的指令的执行速度远远大于从内存中读写数据的速度所以如果让CPU直接访问内存来读数据再写结果去内存，就会效率非常低下。因此就有了高速缓存——Cache这个东西。
+举个例子看看他们怎么工作的:i=0;单线程运行代码：i=i+1;步骤是：Cache从主存读取i=0， CPU从Cache读取i，CPU运算i=i+1， 将结果i=1写入Cache，Cache再将结果i=1写入主存。
+单线程没问题，但是多线程中*，比如开启两个线程分别执行i=i+</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/java%E5%B9%B6%E5%8F%91/">java并发</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
       <a href="/2020/03/28/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%BC%80%E5%8F%91/%E7%90%86%E8%A7%A3ijkplayer%EF%BC%88%E4%BA%8C%EF%BC%89%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84%E5%88%86%E6%9E%90/">
         <p class="h4 index-header">理解ijkplayer（二）项目结构分析</p>
       </a>
@@ -491,89 +570,6 @@ request body的编码方式由头部的Content-Type指定。
     </div>
   </div>
 
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/28/%E7%BD%91%E7%BB%9C/Https%E6%89%AB%E7%9B%B2/">
-        <p class="h4 index-header">Https扫盲</p>
-      </a>
-
-      <a href="/2020/03/28/%E7%BD%91%E7%BB%9C/Https%E6%89%AB%E7%9B%B2/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">理解 HTTPS 前需要理解这些概念：明文、密文、密码、密钥、对称加密、非对称加密、摘要、数字签名、数字证书
-密码cipher密码学中的密码（cipher）和我们日常生活中所说的密码不太一样，计算机术语『密码 cipher』是一种用于加密或者解密的算法，而我们日常所使用的『密码 password』是一种口令，它是用于认证用途的一组文本字符串，这里我们要讨论的是前者：cipher。
-密钥 key密钥是一种参数，它是在使用密码（cipher）算法过程中输入的参数。同一个明文在相同的密码算法和不同的密钥计算下会产生不同的密文。很多知名的密码算法都是公开的，密钥才是决定密文是否安全的重要参数，通常密钥</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/%E7%BD%91%E7%BB%9C/">网络</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/28/%E7%AE%97%E6%B3%95/%E9%93%BE%E8%A1%A8%E5%AE%9E%E7%8E%B0%E9%98%9F%E5%88%97/">
-        <p class="h4 index-header">链表实现队列</p>
-      </a>
-
-      <a href="/2020/03/28/%E7%AE%97%E6%B3%95/%E9%93%BE%E8%A1%A8%E5%AE%9E%E7%8E%B0%E9%98%9F%E5%88%97/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">
-import java.util.NoSuchElementException;
-
-public class LinkedQueue&lt;T&gt; {
-
-    private class Node{
-        private Node next;
-        private T element;
-        Node(Node next, T element) {
-            this.next = next;
-            this.element = element;
-        }
-    }
-
-    private int size;
-</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/%E7%AE%97%E6%B3%95/">算法</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
 
 
   <nav aria-label="index posts navigation">
@@ -667,6 +663,8 @@ public class LinkedQueue&lt;T&gt; {
 
 
 
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
 
 
 

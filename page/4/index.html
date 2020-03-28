@@ -151,6 +151,96 @@
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2020/03/28/%E7%AE%97%E6%B3%95/%E5%8D%95%E9%93%BE%E8%A1%A8%E5%8F%8D%E8%BD%AC/">
+        <p class="h4 index-header">单链表反转</p>
+      </a>
+
+      <a href="/2020/03/28/%E7%AE%97%E6%B3%95/%E5%8D%95%E9%93%BE%E8%A1%A8%E5%8F%8D%E8%BD%AC/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">public class SingleLinkedList {
+    private class Node {
+        private Node next;
+        private int value;
+        Node(Node next, int value) {
+            this.next = next;
+            this.value = value;
+        }
+    }
+
+    private Node head;
+    private Node last;
+    private int size;
+
+    </div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E7%AE%97%E6%B3%95/">算法</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2020/03/28/%E7%AE%97%E6%B3%95/%E4%BA%8C%E5%8F%89%E6%A0%91%E5%89%8D%E5%BA%8F%E3%80%81%E4%B8%AD%E5%BA%8F%E3%80%81%E5%90%8E%E5%BA%8F%E9%81%8D%E5%8E%86%EF%BC%8C%E5%92%8C%E7%9B%B4%E8%A7%82%E6%89%93%E5%8D%B0%E3%80%82/">
+        <p class="h4 index-header">二叉树前序、中序、后序遍历，和直观打印。</p>
+      </a>
+
+      <a href="/2020/03/28/%E7%AE%97%E6%B3%95/%E4%BA%8C%E5%8F%89%E6%A0%91%E5%89%8D%E5%BA%8F%E3%80%81%E4%B8%AD%E5%BA%8F%E3%80%81%E5%90%8E%E5%BA%8F%E9%81%8D%E5%8E%86%EF%BC%8C%E5%92%8C%E7%9B%B4%E8%A7%82%E6%89%93%E5%8D%B0%E3%80%82/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">//前序遍历
+public static void preOrderedPrint(TreeNode root){
+    if (root!=null){
+        System.out.print(root.value);
+        preOrderedPrint(root.leftNode);//删去了多余的if(root.leftNode!=null)的条件判断。
+        preOrderedPrint(root.rightNode);
+    }
+}
+//中序遍历
+public static void inOrderedPrint(TreeNode root){
+</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E7%AE%97%E6%B3%95/">算法</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
       <a href="/2020/03/28/%E7%AE%97%E6%B3%95/%E4%BA%8C%E5%8F%89%E5%A0%86/">
         <p class="h4 index-header">二叉堆</p>
       </a>
@@ -239,240 +329,26 @@ Cache接口中定义</div>
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/28/View/%E8%8E%B7%E5%8F%96Activity%E7%9A%84%E5%B8%83%E5%B1%80%E6%96%87%E4%BB%B6%E7%9A%84root-view/">
-        <p class="h4 index-header">获取Activity的布局文件的root-view</p>
+      <a href="/2020/03/28/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/OkHttp%E6%8B%A6%E6%88%AA%E5%99%A8%E8%A2%96%E7%8F%8D%E9%87%8D%E5%86%99%E7%89%88/">
+        <p class="h4 index-header">OkHttp拦截器袖珍重写版</p>
       </a>
 
-      <a href="/2020/03/28/View/%E8%8E%B7%E5%8F%96Activity%E7%9A%84%E5%B8%83%E5%B1%80%E6%96%87%E4%BB%B6%E7%9A%84root-view/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">两种方式
-在xml文件中的root view上设置id，然后findViewByid(String resId)即可。
-不用设置id，直接在代码里获取：ViewGroup contentView= (ViewGroup) ((ViewGroup) findViewById(android.R.id.content)).getChildAt(0);
-contentView即为所求
-
-
-这是从DecorView开始的view tree，debug得到的。                                                                         </div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/View/">View</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/28/View/%E8%AE%B0%E5%BD%95%E8%87%AA%E5%AE%9A%E4%B9%89Dialog%E7%9A%84%E4%B8%80%E4%B8%AA%E5%A4%A9%E5%9D%91%E5%92%8C%E5%90%AF%E5%8A%A8Dialog%E7%9A%84%E5%B0%8F%E6%B5%81%E7%A8%8B/">
-        <p class="h4 index-header">记录自定义Dialog的一个天坑和启动Dialog的小流程</p>
-      </a>
-
-      <a href="/2020/03/28/View/%E8%AE%B0%E5%BD%95%E8%87%AA%E5%AE%9A%E4%B9%89Dialog%E7%9A%84%E4%B8%80%E4%B8%AA%E5%A4%A9%E5%9D%91%E5%92%8C%E5%90%AF%E5%8A%A8Dialog%E7%9A%84%E5%B0%8F%E6%B5%81%E7%A8%8B/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">记录自定义Dialog的一个天坑。/**
- * Created by 黄伟杰 on 2018/7/17.
- */
-public class MyDialog extends Dialog {
-    private Context context;
-
-    public MyDialog(@NonNull Context context) {
-        super(context);
-        this.context=context;
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceSta</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/View/">View</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/28/View/%E9%98%B2%E6%AD%A2%E8%BF%B7%E8%B7%AF/">
-        <p class="h4 index-header">防止迷路</p>
-      </a>
-
-      <a href="/2020/03/28/View/%E9%98%B2%E6%AD%A2%E8%BF%B7%E8%B7%AF/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">GcsSloop的安卓自定义View教程目录
-HenCoder Android 开发进阶: 自定义 View 
-
-Carson_Ho创作的android动画的超赞的学习博客：Android 属性动画：这是一篇很详细的 属性动画 总结&amp;攻略真的非常的详细和通俗易懂，我的全部的动画知识在这里看的包括：  属性动画    补间动画      帧动画                                                                                                                            </div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/View/">View</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/28/android%E5%9B%BE%E7%89%87/HttpUrlConnection%E7%94%A8%E5%AD%97%E8%8A%82%E4%B8%8B%E8%BD%BD%E5%9B%BE%E7%89%87%EF%BC%8C%E7%94%A8Bitmap%E6%94%BE%E5%85%A5ImageView/">
-        <p class="h4 index-header">HttpUrlConnection用字节下载图片，用Bitmap放入ImageView</p>
-      </a>
-
-      <a href="/2020/03/28/android%E5%9B%BE%E7%89%87/HttpUrlConnection%E7%94%A8%E5%AD%97%E8%8A%82%E4%B8%8B%E8%BD%BD%E5%9B%BE%E7%89%87%EF%BC%8C%E7%94%A8Bitmap%E6%94%BE%E5%85%A5ImageView/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">public class MainActivity extends AppCompatActivity {
-    private ImageView iv_img;
-    private byte[] pics;
-    private MyHandler handler;
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/android%E5%9B%BE%E7%89%87/">android图片</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/28/android%E5%9B%BE%E7%89%87/android%E5%9B%BE%E7%89%87%E4%B8%8B%E8%BD%BD%E8%BF%87%E7%A8%8B%E6%8E%A7%E5%88%B6-%EF%BC%88%E5%BC%80%E5%A7%8B%EF%BC%8C%E6%AD%A3%E5%9C%A8%EF%BC%8C%E7%BB%93%E6%9D%9F%EF%BC%8C%E5%A4%B1%E8%B4%A5%EF%BC%89/">
-        <p class="h4 index-header">android图片下载过程控制-（开始，正在，结束，失败）</p>
-      </a>
-
-      <a href="/2020/03/28/android%E5%9B%BE%E7%89%87/android%E5%9B%BE%E7%89%87%E4%B8%8B%E8%BD%BD%E8%BF%87%E7%A8%8B%E6%8E%A7%E5%88%B6-%EF%BC%88%E5%BC%80%E5%A7%8B%EF%BC%8C%E6%AD%A3%E5%9C%A8%EF%BC%8C%E7%BB%93%E6%9D%9F%EF%BC%8C%E5%A4%B1%E8%B4%A5%EF%BC%89/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">public class ImageDownloadControll {
-
-    private byte[] imageBytes;
-
-    private Handler handler=new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what){
-                case 0:
-                    Log.d(&quot;info&quot;,&quot;开始下载&quot;);
-   </div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/android%E5%9B%BE%E7%89%87/">android图片</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/28/android%E5%9B%BE%E7%89%87/android%E5%9B%BE%E7%89%87%E5%8E%8B%E7%BC%A9/">
-        <p class="h4 index-header">android图片压缩</p>
-      </a>
-
-      <a href="/2020/03/28/android%E5%9B%BE%E7%89%87/android%E5%9B%BE%E7%89%87%E5%8E%8B%E7%BC%A9/">
+      <a href="/2020/03/28/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/OkHttp%E6%8B%A6%E6%88%AA%E5%99%A8%E8%A2%96%E7%8F%8D%E9%87%8D%E5%86%99%E7%89%88/">
         
         
           
         
         <div class="index-excerpt" >
           <div class="index-text mb-1">
-质量压缩
+本篇文章建立在看过一遍OkHttp源码中的拦截器部分的基础上。
 
-尺寸压缩
+OkHttp回顾OkHttp的拦截器工作原理如下图，每一个拦截器都有机会处理上一个拦截器传下来的Request或者下一个拦截器返回上来的Response，即可任意地进行前处理和后处理。在最后一个拦截器CallServerInterceptor中进行真正的网络链接，成功后构造Response对象并发布，一层一层地传递到开发者手上。
 
-缩放法压缩（matrix）
 
-RGB_565法（比ARGB_888少一半）
+仿写拦截器
+在实战开发中，仅就涉及数据处理这一方面，拦截器就有非常好的设计效果，OkHttp这一套是可以照搬到很多地方的，拦截器这一套设计实战性非常高，故在这里动手撸一个简易版。
 
-createScaledBitmapBitmap所占用的内存=图片长度 x 图片宽度 x 一个像素点占用的字节数。
-一些常用的bitmap压缩方法
-public class Utils {
- /**
-  * 采样率压缩
-  *
-  * @param bitmap
-  * @param sampleSize 压缩的倍数 ，要是2的整数倍，否则四舍五入，比如是2，那么压缩后
-  *                   就是1/2
-  * @return
-  */
- public static B</div>
+1. 定义Re</div>
         </div>
       </a>
 
@@ -483,7 +359,7 @@ public class Utils {
         
           <i class="iconfont icon-inbox"></i>
           
-            <a href="/categories/android%E5%9B%BE%E7%89%87/">android图片</a>&nbsp;
+            <a href="/categories/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/">第三方库</a>&nbsp;
           &nbsp;
         
         
@@ -495,30 +371,29 @@ public class Utils {
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/28/android%E5%9B%BE%E7%89%87/android%E7%94%A8%E7%BA%BF%E7%A8%8B%E6%B1%A0%E6%89%8B%E5%8A%A8%E5%AE%9E%E7%8E%B0%E5%A4%9A%E5%9B%BE%E5%8A%A0%E8%BD%BD/">
-        <p class="h4 index-header">android用线程池手动实现多图加载</p>
+      <a href="/2020/03/28/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/JsonDeserializer%E5%92%8CJsonSerializer%E5%8F%AF%E8%83%BD%E5%BC%95%E8%B5%B7%E6%97%A0%E9%99%90%E5%BE%AA%E7%8E%AF%E8%B0%83%E7%94%A8%E5%AF%BC%E8%87%B4StackOverFlow/">
+        <p class="h4 index-header">JsonDeserializer和JsonSerializer可能引起无限循环调用导致StackOverFlow</p>
       </a>
 
-      <a href="/2020/03/28/android%E5%9B%BE%E7%89%87/android%E7%94%A8%E7%BA%BF%E7%A8%8B%E6%B1%A0%E6%89%8B%E5%8A%A8%E5%AE%9E%E7%8E%B0%E5%A4%9A%E5%9B%BE%E5%8A%A0%E8%BD%BD/">
+      <a href="/2020/03/28/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/JsonDeserializer%E5%92%8CJsonSerializer%E5%8F%AF%E8%83%BD%E5%BC%95%E8%B5%B7%E6%97%A0%E9%99%90%E5%BE%AA%E7%8E%AF%E8%B0%83%E7%94%A8%E5%AF%BC%E8%87%B4StackOverFlow/">
         
         
           
         
         <div class="index-excerpt" >
-          <div class="index-text mb-1">用一个固定大小为5的线程池来实现多图加载：
-首先实现Runnble子类，下载图片：
-/**
- * 进行图片下载任务 的线程
- */
-public class ImageTask implements Runnable {
+          <div class="index-text mb-1">1. 两种自定义方式Gson自定义序列化和反序列的方式有两种
 
-    public ImageView imageView;
-    private String url;
-    private byte[] imageBytes;
-    private ImageTaskHandler handler;
+通过GsonBuilder来注册适配器。
+用@JsonAdapter注解来为类型或者属性指定适配器。
 
-    public ImageTask(ImageView imageView, String url) {
-      </div>
+其中，以注解的方式用@JsonAdapter来实现自定义序列化或反序列化，gson的github的wiki页是没有的，但是参照这个类的注释，也很容易就能实现。
+2. 例子场景：
+首先，正常的json字符串是这样的结构：
+{
+    &quot;family&quot;:{
+        &quot;Dad&quot;:&quot;a&quot;,
+        &quot;Mon&quot;:&quot;b&quot;
+  </div>
         </div>
       </a>
 
@@ -529,7 +404,7 @@ public class ImageTask implements Runnable {
         
           <i class="iconfont icon-inbox"></i>
           
-            <a href="/categories/android%E5%9B%BE%E7%89%87/">android图片</a>&nbsp;
+            <a href="/categories/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/">第三方库</a>&nbsp;
           &nbsp;
         
         
@@ -541,24 +416,30 @@ public class ImageTask implements Runnable {
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/28/android%E5%9B%BE%E7%89%87/%E5%9B%BE%E7%89%87%E4%B8%89%E7%BA%A7%E7%BC%93%E5%AD%98%E7%AD%96%E7%95%A5/">
-        <p class="h4 index-header">图片三级缓存策略</p>
+      <a href="/2020/03/28/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/Dagger2%E9%85%8D%E5%90%88Application%E6%8B%93%E5%B1%95%E7%B1%BB%E5%AE%9E%E7%8E%B0%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">
+        <p class="h4 index-header">Dagger2配合Application拓展类实现单例模式</p>
       </a>
 
-      <a href="/2020/03/28/android%E5%9B%BE%E7%89%87/%E5%9B%BE%E7%89%87%E4%B8%89%E7%BA%A7%E7%BC%93%E5%AD%98%E7%AD%96%E7%95%A5/">
+      <a href="/2020/03/28/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/Dagger2%E9%85%8D%E5%90%88Application%E6%8B%93%E5%B1%95%E7%B1%BB%E5%AE%9E%E7%8E%B0%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">
         
         
           
         
         <div class="index-excerpt" >
           <div class="index-text mb-1">
-我们在现实一个图片的时候，按照顺序来是从内存中查找是否有图片缓存，有，直接读取，无，就查找本地文件，有，直接读取，无，通过网络获取。按照这个步骤一个一个来建立相应的类：
-内存缓存
-public class MemoryCacheUtils {
-//    //强引用
-//    private HashMap&lt;String,Bitmap&gt; memoryCache=new HashMap&lt;&gt;();
-//    //软引用
-//    private HashMap&lt;String,SoftReference&lt;Bitmap&gt;&gt; softMemoryC</div>
+需要提前了解Dagger2的@Singleton 和 @Component依赖。
+
+介绍Android中的单例模式，可以通过继承Application类，在onCreate中初始化单例类，然后将单例类的引用通过getXXX()发布出去。Application类提供了天然的单例模式。
+但是，如果我们有10个单例类，那么就需要
+
+在Application类里面写10个引用，
+10个getXXX()方法
+onCreate()中10个单例类的初始化
+
+缺点 
+
+当需求变动，要更换实现类的时候，要在Application里面做修改
+onCreate()中初始化的10个单例类，并不是马上就要用的，更好的</div>
         </div>
       </a>
 
@@ -569,7 +450,127 @@ public class MemoryCacheUtils {
         
           <i class="iconfont icon-inbox"></i>
           
-            <a href="/categories/android%E5%9B%BE%E7%89%87/">android图片</a>&nbsp;
+            <a href="/categories/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/">第三方库</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2020/03/28/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%BC%80%E5%8F%91/%E7%90%86%E8%A7%A3ijkplayer%EF%BC%88%E5%9B%9B%EF%BC%89%E6%8B%89%E6%B5%81/">
+        <p class="h4 index-header">理解ijkplayer（四）拉流</p>
+      </a>
+
+      <a href="/2020/03/28/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%BC%80%E5%8F%91/%E7%90%86%E8%A7%A3ijkplayer%EF%BC%88%E5%9B%9B%EF%BC%89%E6%8B%89%E6%B5%81/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">
+前言
+我是一名打算走音视频路线的android开发者。以此系列文章开始，记录我的音视频开发学习之路
+ijkplayer系列文章目录：理解ijkplayer（一）：开始
+理解ijkplayer（二）项目结构分析
+理解ijkplayer（三）从Java层开始初始化
+理解ijkplayer（四）拉流
+理解ijkplayer（五）解码、播放
+
+
+由于篇幅的原因，因此这一篇文章是接着上一篇继续写的。
+上一篇文章分析完了：
+
+JNI_Onload()
+native_init()
+native_setup()
+_setDataSource()
+_setVideoSurface
+
+1  _prepareAs</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%BC%80%E5%8F%91/">音视频开发</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2020/03/28/%E6%97%A5%E8%AE%B0%E6%9C%AC/%E4%B8%8D%E5%A4%9F%E5%8A%AA%E5%8A%9B%E7%9A%84%E8%87%AA%E5%B7%B1/">
+        <p class="h4 index-header">不够努力的自己</p>
+      </a>
+
+      <a href="/2020/03/28/%E6%97%A5%E8%AE%B0%E6%9C%AC/%E4%B8%8D%E5%A4%9F%E5%8A%AA%E5%8A%9B%E7%9A%84%E8%87%AA%E5%B7%B1/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">今天是2017年11月17日，我正式开始自学编程的日子是2017年5月20日，6个月，也就是半年过去了，到目前为止我的水平还算不上一个合格的开发者，昨天晚上看了一下一个大神的腾讯实习面试经历，觉得自己估计连一面都过不了吧，自己的实力还是没到那个层次。
+需要读的书还有很多，需要了解的知识也有很多，说不定还要学C++，因为android的NDK开发涉及到C++的内容，NDK能很大的加强效率。
+6个月来，有一段时间是非常努力的，但是也有很大一部分时间是浪费掉了，浪费在虚度光阴上面了，觉得自己就是目光短浅，没有看到牛逼的人有多么牛逼，所以才敢那么散漫地浪费时间不去敲代码，从今天开始，做一个努力的程序员</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E6%97%A5%E8%AE%B0%E6%9C%AC/">日记本</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2020/03/28/%E6%97%A5%E8%AE%B0%E6%9C%AC/2018%E6%98%A5%E8%8A%82%E7%9A%84%E6%9C%AB%E5%B0%BE/">
+        <p class="h4 index-header">2018春节的末尾</p>
+      </a>
+
+      <a href="/2020/03/28/%E6%97%A5%E8%AE%B0%E6%9C%AC/2018%E6%98%A5%E8%8A%82%E7%9A%84%E6%9C%AB%E5%B0%BE/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">为了拿科目二的驾照，明日返校。其实我更想在远方的清儿，我与她又隔了快两个月没见面了。                                                                                                                                                                                                                                                                  </div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E6%97%A5%E8%AE%B0%E6%9C%AC/">日记本</a>&nbsp;
           &nbsp;
         
         
@@ -670,6 +671,8 @@ public class MemoryCacheUtils {
 
 
 
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
 
 
 

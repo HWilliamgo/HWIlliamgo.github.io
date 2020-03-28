@@ -151,75 +151,26 @@
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/28/Android/Handler%E5%8F%AF%E8%83%BD%E5%BC%95%E8%B5%B7%E7%9A%84%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/">
-        <p class="h4 index-header">Handler可能引起的内存泄漏</p>
+      <a href="/2020/03/28/Android/RecyclerView%E5%92%8Cglide%E6%90%AD%E9%85%8D%E4%B8%AD%E7%9A%84%E5%9B%BE%E7%89%87%E6%B7%B7%E4%B9%B1/">
+        <p class="h4 index-header">RecyclerView和glide搭配中的图片混乱</p>
       </a>
 
-      <a href="/2020/03/28/Android/Handler%E5%8F%AF%E8%83%BD%E5%BC%95%E8%B5%B7%E7%9A%84%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/">
+      <a href="/2020/03/28/Android/RecyclerView%E5%92%8Cglide%E6%90%AD%E9%85%8D%E4%B8%AD%E7%9A%84%E5%9B%BE%E7%89%87%E6%B7%B7%E4%B9%B1/">
         
         
           
         
         <div class="index-excerpt" >
-          <div class="index-text mb-1">
-参考文章http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2014/1106/1922.html
+          <div class="index-text mb-1">这个bug可以说是折磨了我很久了，问了人，查了博客，最后找到了答案。首先要搞明白RecyclerView中的ViewHolder的复用机制是什么，在，以及由于复用机制和请求网络mix在一起之后会发生哪些可能的事故，强烈推荐一个好文：
+
+RecyclerView中ViewHolder重用机制理解(解决图片错乱和闪烁问题)
 
 
-在用handler的时候如果这么用就一定会发生内存泄漏：
-public class MainActivity extends AppCompatActivity {
 
- private Handler myHandler=new Handler(){
-     @Override
-     public void handleMessage(Message msg) {
-         super.handleMessage(msg</div>
-        </div>
-      </a>
+总结一下就是：
 
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/Android/">Android</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/28/Android/Application%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/">
-        <p class="h4 index-header">Application使用技巧</p>
-      </a>
-
-      <a href="/2020/03/28/Android/Application%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">
-这里简单介绍application类的使用技巧
-
-
-首先，写一个类来继承自Application,然后重写onCreate方法：
-
-
-然后在Manifest文件里面把我们自己写的Application配进去：
-
-
-这里注意了，此前我自己也遇到过这个麻烦，那么就是在用这个MyApplication的时候，是绝对不能这么写的：
-
-MyApplication app=new MyApplication();
-我当时这么写的结果就是，代码都不知道怎么错的，调试了半天，
-还以为是我数据库初始化出了问题。这个很严重。错的原因是，
-Application这个东西是Android系统的一个类，是在应用打开的</div>
+RecyclerView用的是我们自定义的内部类ViewHolder来复用的，也就是复用的是ViewHoler
+当屏幕下滑，item1滑出可视区域，将item1的ViewHolder对象给item8复用，那么此时item1中ViewHolder对象中持有</div>
         </div>
       </a>
 
@@ -430,6 +381,47 @@ JSONArray使用[]来表示的，没有[]不是JSONArray。
 解释一下上图，比如上图，直接出来一个[ ]，[ ]就是数组，数组里有两个元素，也就是两个{}，也就是两个JSONObject。注意这里第二个{}是空的。
 好的，整明白了之后，比如我们要拿到键name4对应的值value2时，怎么操作？
                     JSONArray jsonAr</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Android/">Android</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2020/03/28/Android/AppCompatActivity%E5%92%8CFragment%E5%A6%82%E4%BD%95%E9%80%9A%E8%BF%87Lifecycle%E5%B0%86%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E7%8A%B6%E6%80%81%E8%BD%AC%E5%8F%91%E5%87%BA%E5%8E%BB/">
+        <p class="h4 index-header">AppCompatActivity和Fragment如何通过Lifecycle将生命周期状态转发出去</p>
+      </a>
+
+      <a href="/2020/03/28/Android/AppCompatActivity%E5%92%8CFragment%E5%A6%82%E4%BD%95%E9%80%9A%E8%BF%87Lifecycle%E5%B0%86%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E7%8A%B6%E6%80%81%E8%BD%AC%E5%8F%91%E5%87%BA%E5%8E%BB/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">
+ 关于android的Lifecycle是什么和怎么用就不说了，这篇写的很好了：
+Android官方架构组件:Lifecycle详解&amp;原理分析
+
+概述
+概述：Lifecycle方案其实就是把AppCompatActivity和Fragment(support包下的)的声名周期回调转发出去，本质上是基于一个观察者模式，将观察者注册到有生命周期的组件，然后有生命周期的组件在他们的生命周期回调时，把事件转发给每一个观察者，这样观察者就收到了AppCompatActivity或Fragment的生命周期回调，也就具有了生命周期感知能力。
+需要了解：
+Lifecycle是什么和怎么用
+创建一个</div>
         </div>
       </a>
 
@@ -672,6 +664,8 @@ public class ExampleDaoGenerator {
 
 
 
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
 
 
 
