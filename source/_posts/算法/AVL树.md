@@ -1,5 +1,6 @@
 ---
 title: AVL树
+date: '2018/05/27 23:25:56'
 categories:
   - 算法
 ---

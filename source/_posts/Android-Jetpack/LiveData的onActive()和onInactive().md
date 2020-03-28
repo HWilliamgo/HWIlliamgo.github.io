@@ -1,5 +1,6 @@
 ---
 title: LiveData的onActive()和onInactive()
+date: '2019/06/13 17:42:03'
 categories:
   - Android-Jetpack
 ---

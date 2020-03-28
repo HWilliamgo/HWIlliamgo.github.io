@@ -1,5 +1,6 @@
 ---
 title: Android修改应用包名和ApplicationId：实战和理解
+date: '2019/07/25 15:57:20'
 categories:
   - Android
 ---

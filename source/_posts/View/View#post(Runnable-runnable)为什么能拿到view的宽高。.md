@@ -1,5 +1,6 @@
 ---
 title: 'View#post(Runnable-runnable)为什么能拿到view的宽高。'
+date: '2018.07.19 21:31:58'
 categories:
   - View
 ---

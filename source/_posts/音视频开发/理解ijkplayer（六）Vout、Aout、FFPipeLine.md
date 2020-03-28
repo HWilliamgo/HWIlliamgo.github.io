@@ -1,5 +1,6 @@
 ---
 title: 理解ijkplayer（六）Vout、Aout、FFPipeLine
+date: '2020/03/21 22:01:48'
 categories:
   - 音视频开发
 ---

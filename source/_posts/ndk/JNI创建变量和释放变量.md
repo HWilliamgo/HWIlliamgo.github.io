@@ -1,5 +1,6 @@
 ---
 title: JNI创建变量和释放变量
+date: '2019/12/29 15:03:19'
 categories:
   - ndk
 ---

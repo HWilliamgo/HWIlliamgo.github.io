@@ -1,5 +1,6 @@
 ---
 title: AIDL
+date: '2017/12/03 13:49:37'
 categories:
   - Android
 ---

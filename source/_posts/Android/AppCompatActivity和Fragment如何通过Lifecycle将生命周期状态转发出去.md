@@ -1,5 +1,6 @@
 ---
 title: AppCompatActivity和Fragment如何通过Lifecycle将生命周期状态转发出去
+date: '2018/08/10 14:13:40'
 categories:
   - Android
 ---

@@ -1,5 +1,6 @@
 ---
 title: Gradle构建的生命周期和其对象的理解
+date: '2018/11/11 17:39:09'
 categories:
   - Gradle
 ---
