@@ -151,36 +151,41 @@
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/28/Android/%5B%E8%BD%AC%E8%BD%BD%5DsetFocusable%E3%80%81setEnabled%E3%80%81setClickable%E5%8C%BA%E5%88%AB/">
-        <p class="h4 index-header">转载-&gt;setFocusable、setEnabled、setClickable区别</p>
+      <a href="/2017/12/13/java%E5%B9%B6%E5%8F%91/Java%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/">
+        <p class="h4 index-header">Java内存模型</p>
       </a>
 
-      <a href="/2020/03/28/Android/%5B%E8%BD%AC%E8%BD%BD%5DsetFocusable%E3%80%81setEnabled%E3%80%81setClickable%E5%8C%BA%E5%88%AB/">
+      <a href="/2017/12/13/java%E5%B9%B6%E5%8F%91/Java%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/">
         
         
           
         
         <div class="index-excerpt" >
           <div class="index-text mb-1">
-setClickable:  设置为true时，表明控件可以点击，如果为false，就不能点击；“点击”适用于鼠标、键盘按键、遥控器等；注意，setOnClickListener方法会默认把控件的setClickable设置为true。
+参考：海子的博客Java并发编程：volatile关键字解析
 
+三个重点：
 
-setEnabled:  使能控件，如果设置为false，该控件永远不会活动，不管设置为什么属性，都无效；设置为true，表明激活该控件，控件处于活动状态，处于活动状态，就能响应事件了，比如触摸、点击、按键事件等；
+原子性
+可见性
+有序性
 
-setEnabled就相当于总开关一样，只有总开关打开了，才能使用其他事件。
+讨论这三点之前先说一下计算机的内存模型：
 
-setFocusable 使能控件获得焦点，设置为true</div>
+CPU对程序的指令的执行速度远远大于从内存中读写数据的速度所以如果让CPU直接访问内存来读数据再写结果去内存，就会效率非常低下。因此就有了高速缓存——Cache这个东西。
+举个例子看看他们怎么工作的:i=0;单线程运行代码：i=i+1;步骤是：Cache从主存读取i=0， CPU从Cache读取i，CPU运算i=i+1， 将结果i=1写入Cache，Cache再将结果i=1写入主存。
+单线程没问题，但是多线程中*，比如开启两个线程分别执行i=i+</div>
         </div>
       </a>
 
       <div class="index-btm">
         
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
+          <i class="iconfont icon-riqi2"></i>&nbsp;2017-12-13&nbsp;&nbsp;
         
         
           <i class="iconfont icon-inbox"></i>
           
-            <a href="/categories/Android/">Android</a>&nbsp;
+            <a href="/categories/java%E5%B9%B6%E5%8F%91/">java并发</a>&nbsp;
           &nbsp;
         
         
@@ -192,42 +197,36 @@ setFocusable 使能控件获得焦点，设置为true</div>
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/28/Android/Volley%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C%EF%BC%881%EF%BC%89/">
-        <p class="h4 index-header">Volley使用手册（1）</p>
+      <a href="/2017/12/13/Java/transient%E5%85%B3%E9%94%AE%E5%AD%97/">
+        <p class="h4 index-header">transient关键字</p>
       </a>
 
-      <a href="/2020/03/28/Android/Volley%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C%EF%BC%881%EF%BC%89/">
+      <a href="/2017/12/13/Java/transient%E5%85%B3%E9%94%AE%E5%AD%97/">
         
         
           
         
         <div class="index-excerpt" >
-          <div class="index-text mb-1">#1.最简单的StringRequest和JasonRequest：
-
-1.创建一个RequestQueue对象2.创建一个Request对象3.将Request对象添加到RequestQueue里面。
-
-
-
-StringRequest:GET方法：
-
-StringRequest的构造方法第一个参数是url,第二个参数是onResponse接口实例，第三个参数是onErrorResponse接口实例。
-
-POST方法:
-
-这里的StringRequest是选择四个参数的构造方法，第一个参数传入的是method，然后重写getParams方法，返回要Post上去的Map。
-
-JsonReques</div>
+          <div class="index-text mb-1">###作用：transient关键字可以让实现了Serializable接口的类中的属性不被序列化。就是哪个属性加了transient，他就不能被序列化。代码证明：bean:
+public class User implements Serializable{
+    private  String name;
+    private transient int age;
+    public  String getName() {
+        return name;
+    }
+    public void setName(String tname) {
+        name =</div>
         </div>
       </a>
 
       <div class="index-btm">
         
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
+          <i class="iconfont icon-riqi2"></i>&nbsp;2017-12-13&nbsp;&nbsp;
         
         
           <i class="iconfont icon-inbox"></i>
           
-            <a href="/categories/Android/">Android</a>&nbsp;
+            <a href="/categories/Java/">Java</a>&nbsp;
           &nbsp;
         
         
@@ -239,266 +238,64 @@ JsonReques</div>
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/28/Android/ValueAnimator%E4%BD%BF%E7%94%A8%E6%80%9D%E8%B7%AF/">
-        <p class="h4 index-header">ValueAnimator使用思路</p>
+      <a href="/2017/12/12/JVM/%E5%AF%B9%E8%B1%A1%E4%B8%8E%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/">
+        <p class="h4 index-header">对象与垃圾回收</p>
       </a>
 
-      <a href="/2020/03/28/Android/ValueAnimator%E4%BD%BF%E7%94%A8%E6%80%9D%E8%B7%AF/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">
-ValueAnimator有三个方法来创建动画，分别是：
-
-ofInt();
-ofFloat();
-ofObject();
-
-先看ofInt():效果：
-思路：
-
-通过ValueAnimaotr.ofInt(startValue,endValue)方法返回一个ValueAnimator对象，再给对象设置各种比如duration,repeatCount,repeatMode,StartDelay的参数。
-最关键的是，要设置对象的.addUpdateListener(),该方法只要ValueAnimator传入的那个值在变化，回调方法就会不断地被回调，我们在这里就可以不断地调用更新View或者L</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/Android/">Android</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/28/Android/Toolbar%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/">
-        <p class="h4 index-header">Toolbar使用手册</p>
-      </a>
-
-      <a href="/2020/03/28/Android/Toolbar%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">明确一点：toolbar不要设置setSupportActionBar();
-说三遍！：toolbar不要设置setSupportActionBar();
-         toolbar不要设置setSupportActionBar();
-         toolbar不要设置setSupportActionBar();
-toolbar就是toolbar，不是actionBar~，而且用了setSupportActionBar之后api调用超级杂乱，因此我们就把Toolbar当做一个新的独立的控件就行了
-
-#文章目录：
-
-入门级配置
-进阶设置
-设置popup的背景颜色和字体颜色##1. 入</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/Android/">Android</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/28/Android/Toolbar/">
-        <p class="h4 index-header">Toolbar</p>
-      </a>
-
-      <a href="/2020/03/28/Android/Toolbar/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">在代码里面给toolbar设置背景颜色要用这个方法，不然设置出来的颜色不是原来的颜色。
-这第二个setBackgroundColor用出来不知道为什么颜色都不一样了。                                                                                                                                                                                                                         </div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/Android/">Android</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/28/Android/TextInputLayout/">
-        <p class="h4 index-header">TextInputLayout</p>
-      </a>
-
-      <a href="/2020/03/28/Android/TextInputLayout/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">这个控件的两个优点：
-
-更加友好地显示提示
-更友好地显示错误信息
-
-更加友好地显示提示：
-&lt;RelativeLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
-    xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;
-    xmlns:tools=&quot;http://schemas.android.com/tools&quot;
-    android:id=&quot;@+id/rl&quot;
-    a</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/Android/">Android</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/28/Android/TabLayout%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/">
-        <p class="h4 index-header">TabLayout简单使用</p>
-      </a>
-
-      <a href="/2020/03/28/Android/TabLayout%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">简单的介绍TabLayout的常规用法效果图：
-布局：布局上面就是很简单的采用上面TabLayout下面ViewPager的形式
-代码：在xml中声名的viewPager需要调用viewPager.setAdapter(adapter)，那么TabLayout需要调用tablayout.setUpwithViewPager(viewPager)思路是：
-
-写findViewById（）找到这两个控件。
-写一个类MyViewPagerAdapter继承FragmentPagerAdapter，ViewPager里面展示的内容当然的是用的Fragment.
-那么就要写我们自己的Fragment类，</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/Android/">Android</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/28/Android/Service%E6%98%AF%E5%8D%95%E4%BE%8B/">
-        <p class="h4 index-header">Service是单例</p>
-      </a>
-
-      <a href="/2020/03/28/Android/Service%E6%98%AF%E5%8D%95%E4%BE%8B/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">stackoverflow上的3个问题解答了我的疑惑：Android: When to use Service vs Singleton?Android service isn’t working as a singletonDoes startService() create a new Service instance or using the existing one?
-
-结论：
-
-当多次startService去启动Service，若Service对象存在，就只调用onStartCommand，若Service对象不存在，创建Service对象。
-服务时天然的单例模式，且可以被销毁。 </div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/Android/">Android</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/28/Android/RecyclerView%E8%AE%B0%E4%BA%8B/">
-        <p class="h4 index-header">RecyclerView记事</p>
-      </a>
-
-      <a href="/2020/03/28/Android/RecyclerView%E8%AE%B0%E4%BA%8B/">
+      <a href="/2017/12/12/JVM/%E5%AF%B9%E8%B1%A1%E4%B8%8E%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/">
         
         
           
         
         <div class="index-excerpt" >
           <div class="index-text mb-1">
-当RecyclerView组装完后，立刻去获取Item的高度：int childHeight = recyclerView.getLayoutManager().findViewByPosition(0).getHeight();会报空指针，因为itemView还没有attach到recyclerView中，获取不到itemView，用view.post()解决recyclerView.post(new Runnable){
- int childHeight = recyclerView.getLayoutManager().findViewByPosition(0).getHeight()</div>
+gc只负责回收堆内存中的对象，不会回收任何物力资源（如数据库连接，网络IO等）。
+程序无法精确控制gc的运行，gc会在合适的时候进行。当对象永久失去引用后（=null），系统就会在合适的时候回收它所占的内存。
+在gc回收任何对象之前，总会调用它的finalize方法，该方法可能使对象重新获得引用，导致gc取消回收。
+
+##对象在内存中的状态：
+
+可达状态：对象被创建后，有一个以上的变量引用它，程序可通过引用变量来调用该对象的实例变量和方法。
+可恢复状态：程序中某个对象不再有任何变量引用它，它进入可恢复状态，gc准备回收该对象所占的内存，在回收该对象之前，系统会调用所有可恢复状态对象的fina</div>
         </div>
       </a>
 
       <div class="index-btm">
         
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
+          <i class="iconfont icon-riqi2"></i>&nbsp;2017-12-12&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/JVM/">JVM</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2017/12/11/Android/BroadcastReceiver/">
+        <p class="h4 index-header">BroadcastReceiver</p>
+      </a>
+
+      <a href="/2017/12/11/Android/BroadcastReceiver/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">基础总结篇之五：BroadcastReceiver应用详解                                                                                                                                                                                                                                                                               </div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2017-12-11&nbsp;&nbsp;
         
         
           <i class="iconfont icon-inbox"></i>
@@ -515,30 +312,222 @@ toolbar就是toolbar，不是actionBar~，而且用了setSupportActionBar之后a
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/28/Android/RecyclerView%E7%9A%84%E5%A4%8D%E7%94%A8/">
-        <p class="h4 index-header">RecyclerView的复用</p>
+      <a href="/2017/12/09/java%E5%B9%B6%E5%8F%91/java%E7%BA%BF%E7%A8%8B%E6%B1%A0%E6%80%BB%E7%BB%93/">
+        <p class="h4 index-header">java线程池总结</p>
       </a>
 
-      <a href="/2020/03/28/Android/RecyclerView%E7%9A%84%E5%A4%8D%E7%94%A8/">
+      <a href="/2017/12/09/java%E5%B9%B6%E5%8F%91/java%E7%BA%BF%E7%A8%8B%E6%B1%A0%E6%80%BB%E7%BB%93/">
         
         
           
         
         <div class="index-excerpt" >
-          <div class="index-text mb-1">当有9个不同的Item显示在屏幕上，一定有超过9个的ViewHolder对象，通过onCreateViewHolder(ViewGroup parent, int type)被创建（也就是其引用的View对象被创建）。
-根据官方文档阅读到的资料，大致整理了一下RecyclerView的3个方面：
-创建Item
-从.xml布局文件中inflate出新的View对象.
-上述新建的View对象作为参数传入ViewHolder的构造函数来创建ViewHolder对象。
+          <div class="index-text mb-1">
+我学习线程池的第一篇讲的最好、最明白的文章：java&amp;android线程池-Executor框架之ThreadPoolExcutor&amp;ScheduledThreadPoolExecutor浅析（多线程编程之三）
 
-显示或更新数据
-为每个ViewHolder对象分配一个position，并调用onBindViewHolder(ViewHolder</div>
+
+另外一个是能快速帮你回忆的总结性文章，说的也不错：通俗易懂，各常用线程池执行的-流程图
+
+ThreadPoolExecutor的构造方法的参数：
+    public ThreadPoolExecutor(int corePoolSize,
+                              int maximumPoolSize,
+           </div>
         </div>
       </a>
 
       <div class="index-btm">
         
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
+          <i class="iconfont icon-riqi2"></i>&nbsp;2017-12-09&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/java%E5%B9%B6%E5%8F%91/">java并发</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2017/12/08/Java/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%90%8C%E6%AD%A5/">
+        <p class="h4 index-header">线程的同步</p>
+      </a>
+
+      <a href="/2017/12/08/Java/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%90%8C%E6%AD%A5/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">这个博客讲的非常好java中同步(synchronized)详解                                                                                                                                                                                                                                                                            </div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2017-12-08&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Java/">Java</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2017/12/08/Android/%E5%85%B3%E4%BA%8EHandler,Looper,-Message,-MessageQueue%E7%9A%84%E6%96%87%E7%AB%A0%E6%94%B6%E8%97%8F/">
+        <p class="h4 index-header">关于Handler,Looper,-Message,-MessageQueue的文章收藏</p>
+      </a>
+
+      <a href="/2017/12/08/Android/%E5%85%B3%E4%BA%8EHandler,Looper,-Message,-MessageQueue%E7%9A%84%E6%96%87%E7%AB%A0%E6%94%B6%E8%97%8F/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">Hongyang:Android 异步消息处理机制 让你深入理解 Looper、Handler、Message三者关系
+拭心：Android 进阶14：源码解读 Android 消息机制（ Message MessageQueue Handler Looper）                                                                                                                                                                         </div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2017-12-08&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Android/">Android</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2017/12/04/Android/Handler%E5%8F%AF%E8%83%BD%E5%BC%95%E8%B5%B7%E7%9A%84%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/">
+        <p class="h4 index-header">Handler可能引起的内存泄漏</p>
+      </a>
+
+      <a href="/2017/12/04/Android/Handler%E5%8F%AF%E8%83%BD%E5%BC%95%E8%B5%B7%E7%9A%84%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">
+参考文章http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2014/1106/1922.html
+
+
+在用handler的时候如果这么用就一定会发生内存泄漏：
+public class MainActivity extends AppCompatActivity {
+
+ private Handler myHandler=new Handler(){
+     @Override
+     public void handleMessage(Message msg) {
+         super.handleMessage(msg</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2017-12-04&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Android/">Android</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2017/12/04/Android/%E9%9D%99%E6%80%81%E5%8F%98%E9%87%8F%E4%BD%95%E6%97%B6%E8%A2%ABgc%E5%9B%9E%E6%94%B6%EF%BC%9F/">
+        <p class="h4 index-header">静态变量何时被gc回收？</p>
+      </a>
+
+      <a href="/2017/12/04/Android/%E9%9D%99%E6%80%81%E5%8F%98%E9%87%8F%E4%BD%95%E6%97%B6%E8%A2%ABgc%E5%9B%9E%E6%94%B6%EF%BC%9F/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">
+参考：http://blog.csdn.net/yogkin/article/details/53404855结论：只要静态变量没有被销毁也没有=null，其对象就一直被保持引用，也即引用计数不可能是0，不会被垃圾回收。
+
+文中还有4个关于静态变量的点：
+
+静态变量在类被加载的时候分配内存。类在什么时候被加载？当我们启动一个app的时候，系统会创建一个进程，此进程会加载一个Dalvik VM的实例，然后代码就运行在DVM之上，类的加载和卸载，垃圾回收等事情都由DVM负责。也就是说在进程启动的时候，类被加载，静态变量被分配内存。
+
+静态变量在类被卸载的时候销毁。类在什么时候被卸载？在进程结束的</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2017-12-04&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Android/">Android</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2017/12/03/Android/AIDL/">
+        <p class="h4 index-header">AIDL</p>
+      </a>
+
+      <a href="/2017/12/03/Android/AIDL/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">参考hongyang的博客：
+
+Android aidl Binder框架浅析
+
+#跨应用的进程间通信：首先要有两个应用:1、现在Android Studio里创建两个应用，两个module。2、一个应用做client，一个应用做server。3、实现client应用调用server应用中的服务。
+开始动手：###创建一个server应用：Manifest文件：
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;manifest xmlns:android=&quot;http://schemas.andr</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2017-12-03&nbsp;&nbsp;
         
         
           <i class="iconfont icon-inbox"></i>
@@ -555,7 +544,7 @@ toolbar就是toolbar，不是actionBar~，而且用了setSupportActionBar之后a
 
   <nav aria-label="index posts navigation">
     <span class="pagination pg-blue justify-content-center mt-5" id="pagination">
-      <a class="extend prev" rel="prev" href="/page/17/"><i class="fas fa-angle-double-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="page-number" href="/page/17/">17</a><span class="page-number current">18</span><a class="page-number" href="/page/19/">19</a><a class="page-number" href="/page/20/">20</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><a class="extend next" rel="next" href="/page/19/"><i class="fas fa-angle-double-right"></i></a>
+      <a class="extend prev" rel="prev" href="/page/17/"><i class="fas fa-angle-double-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="page-number" href="/page/17/">17</a><span class="page-number current">18</span><a class="page-number" href="/page/19/">19</a><a class="page-number" href="/page/20/">20</a><a class="page-number" href="/page/21/">21</a><a class="extend next" rel="next" href="/page/19/"><i class="fas fa-angle-double-right"></i></a>
     </span>
   </nav>
   

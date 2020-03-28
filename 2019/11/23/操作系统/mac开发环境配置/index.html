@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="https://s1.ax1x.com/2020/03/28/GkotgK.th.jpg">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="HWilliamgo">
+  <meta name="keywords" content="">
+  <title>mac开发环境配置 - William的小星球</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.12.1/css/all.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/mdbootstrap/4.13.0/css/mdb.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/3.0.1/github-markdown.min.css" />
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+
+
+
+  <link  rel="stylesheet" href="/lib/prettify/tomorrow-night-eighties.min.css" />
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link defer rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+<!-- 自定义样式保持在最底部 -->
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>William的小星球</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">归档</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">分类</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">标签</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">关于</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('https://w.wallhaven.cc/full/39/wallhaven-39joqy.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+                <p class="mt-3 post-meta">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                  星期六, 十一月 23日 2019, 2:51 下午
+                </p>
+              
+
+              <p class="mt-1">
+                
+                  
+                  <span class="post-meta">
+                    <i class="far fa-chart-bar"></i>
+                    956 字
+                  </span>
+                
+
+                
+                  
+                  <span class="post-meta">
+                      <i class="far fa-clock"></i>
+                      3 分钟
+                  </span>
+                
+
+                
+                  <!-- 不蒜子统计文章PV -->
+                  
+                  <span id="busuanzi_container_page_pv" class="post-meta" style="display: none">
+                    <i class="far fa-eye" aria-hidden="true"></i>
+                    <span id="busuanzi_value_page_pv"></span> 次
+                  </span>
+                
+              </p>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5 z-depth-3" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+              <p
+                class="note note-warning">本文最后更新于：星期六, 三月 28日 2020, 5:13 下午</p>
+            
+            <div class="markdown-body">
+              <h1 id="mac开发环境配置"><a href="#mac开发环境配置" class="headerlink" title="mac开发环境配置"></a>mac开发环境配置</h1><h3 id="1-安装Homebrew"><a href="#1-安装Homebrew" class="headerlink" title="1. 安装Homebrew"></a>1. 安装Homebrew</h3><ol>
+<li><p>安装<code>xcode command line tool</code></p>
+<p><a href="https://www.jianshu.com/p/bf6aa6f97fcb" target="_blank" rel="noopener">Xcode-select命令是什么</a></p>
+<pre><code class="shell">xcode command line tool</code></pre>
+</li>
+<li><p>安装homebrew</p>
+<pre><code class="shell">/usr/bin/ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;
+</code></pre>
+<p>注：来自homebrew官网：<a href="https://brew.sh/" target="_blank" rel="noopener">https://brew.sh/</a></p>
+</li>
+<li><p>检查homebrew是否安装完成</p>
+<pre><code class="shell">brew --version</code></pre>
+<p>如果出现如下错误：<code>-bash: brew: command not found</code></p>
+<p>则需要配置环境变量：</p>
+<pre><code class="bash">$ cd ~
+$ ls -a  #查看是否存在.bash_profile文件。
+    #如果不存在-&gt;
+$ touch .bash_profile #创建.bash_profile
+    #如果存在-&gt;
+ #执行下一步</code></pre>
+<p>注意，这里是<code>.bash_profile</code>文件，名字不要输错了，因为unix系统在开机的时候会加载<code>.bash_profile</code>文件。</p>
+</li>
+</ol>
+<hr>
+<p>   <em>题外话，我找了一篇解释<a href="https://www.cnblogs.com/kevingrace/p/8072860.html" target="_blank" rel="noopener">不同的开机脚本的含义</a>的文章，概括如下</em></p>
+<table>
+<thead>
+<tr>
+<th>脚本</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>/etc/profile</td>
+<td>此文件为系统的每个用户设置环境信息,当用户第一次登录时,该文件被执行.并从/etc/profile.d目录的配置文件中搜集shell的设置.</td>
+</tr>
+<tr>
+<td>/etc/bashrc</td>
+<td>为每一个运行bash shell的用户执行此文件.当bash shell被打开时,该文件被读取.</td>
+</tr>
+<tr>
+<td>~/.bash_profile</td>
+<td>每个用户都可使用该文件输入专用于自己使用的shell信息,当用户登录时,该文件仅仅执行一次!默认情况下,他设置一些环境变量,执行用户的.bashrc文件.</td>
+</tr>
+<tr>
+<td>~/.bashrc</td>
+<td>该文件包含专用于你的bash shell的bash信息,当登录时以及每次打开新的shell时,该该文件被读取</td>
+</tr>
+<tr>
+<td>~/.bash_logout</td>
+<td>当每次退出系统(退出bash shell)时,执行该文件.</td>
+</tr>
+</tbody></table>
+<hr>
+<p>   继续编<code>.bash_profile</code></p>
+<pre><code class="shell">   sudo vim .bash_profile  #以root身份来打开并创建.bash.profile</code></pre>
+<p>   输入<code>i</code>进入编辑模式，用方向键移动到文件底部，并输入：</p>
+<pre><code class="shell">   export PATH=/usr/local/bin:$PATH  #为PATH添加/usr/local/bin的路径</code></pre>
+<p>   点击<code>esc</code>按键退出编辑模式，再输入<code>:wq</code>，回车：保存并退出vim</p>
+<pre><code class="shell">   source .bash_profile
+   #更新配置后的环境变量</code></pre>
+<p>   此时再输入<code>brew --version</code>就可以看到版本信息了。</p>
+<ol start="4">
+<li><p>当用brew install 安装软件的时候，会出现brew一直卡在Updating Homebrew的情况，是因为默认homebrew是自动更新的，可以关闭：</p>
+<pre><code class="shell">vim ~/.bash_profile
+
+# 新增一行
+export HOMEBREW_NO_AUTO_UPDATE=true</code></pre>
+<p>或者更换更新地址。</p>
+<p>卡住的时候也可以按<code>controll+c</code>来关闭这一次的更新。</p>
+</li>
+</ol>
+<h3 id="2-安装jdk，配置jdk环境变量"><a href="#2-安装jdk，配置jdk环境变量" class="headerlink" title="2. 安装jdk，配置jdk环境变量"></a>2. 安装jdk，配置jdk环境变量</h3><p><a href="https://www.jianshu.com/p/d26380f47454" target="_blank" rel="noopener">https://www.jianshu.com/p/d26380f47454</a></p>
+<h3 id="3-安装必备软件和工具"><a href="#3-安装必备软件和工具" class="headerlink" title="3. 安装必备软件和工具"></a>3. 安装必备软件和工具</h3><ol>
+<li><p>让鼠标滚轮和windows保持一致</p>
+<p>mac的鼠标和触摸板的方向有点不舒服，用这个可以调整成触摸板默认，而鼠标反向，达到和windows电脑一致的逻辑。</p>
+<p><a href="https://pilotmoon.com/scrollreverser/" target="_blank" rel="noopener">https://pilotmoon.com/scrollreverser/</a></p>
+</li>
+<li><p>搜狗输入法</p>
+<p>默认的输入法切换中英文需要按<code>caps lock</code>，且长按他切换大写。用了这个可以用<code>shift</code>来切换中英文，且点击切换大小写，保持和windows一致。</p>
+<p><a href="https://pinyin.sogou.com/mac/" target="_blank" rel="noopener">https://pinyin.sogou.com/mac/</a></p>
+</li>
+<li><p>状态栏显示实时网速、内存、cpu等信息</p>
+<p>MenuMeters</p>
+</li>
+<li><p>类似于ubuntu的在终端打开：go2shell</p>
+<p><a href="https://zipzapmac.com/Go2Shell" target="_blank" rel="noopener">https://zipzapmac.com/Go2Shell</a></p>
+</li>
+</ol>
+<h3 id="4-修改用户名和主机名"><a href="#4-修改用户名和主机名" class="headerlink" title="4. 修改用户名和主机名"></a>4. 修改用户名和主机名</h3><ol>
+<li><p>修改主机名：</p>
+<p>修改主机名（命令行里面看到的那个）</p>
+<blockquote>
+<p>sudo scutil –set HostName &lt;你的主机名&gt;</p>
+</blockquote>
+<p>修改共享名称（局域网里面看到的那个）</p>
+<blockquote>
+<p>sudo scutil –set ComputerName &lt;你的共享名&gt;</p>
+</blockquote>
+</li>
+<li><p>修改用户名：</p>
+<p>最好是完全按照apple官方文档上的来：</p>
+<p><a href="https://support.apple.com/zh-cn/HT201548" target="_blank" rel="noopener">更改 macOS 用户帐户和个人文件夹的名称</a></p>
+</li>
+</ol>
+<h3 id="5-设置android-ndk和sdk环境变量"><a href="#5-设置android-ndk和sdk环境变量" class="headerlink" title="5. 设置android ndk和sdk环境变量"></a>5. 设置android ndk和sdk环境变量</h3><pre><code class="shell">#设置androidsdk环境变量。 用于终端能够直接使用tools和platform-tools中的工具，如adb
+export PATH=${PATH}:/Users/HWilliam/Library/Android/sdk/platform-tools
+export PATH=${PATH}:/Users/HWilliam/Library/Android/sdk/tools
+
+#设置ndk环境变量
+export ANDROID_NDK=/Users/HWilliam/ndk/android-ndk-r10e
+export PATH=$ANDROID_NDK:$PATH</code></pre>
+<h3 id="6-安装gradle"><a href="#6-安装gradle" class="headerlink" title="6. 安装gradle"></a>6. 安装gradle</h3><p><a href="https://gradle.org/install/" target="_blank" rel="noopener">https://gradle.org/install/</a></p>
+<pre><code class="bash">$ brew install gradle</code></pre>
+<p>安装gradle自动提示工具:<a href="https://github.com/gradle/gradle-completion" target="_blank" rel="noopener">https://github.com/gradle/gradle-completion</a></p>
+<pre><code class="bash">$ brew install gradle-completion</code></pre>
+<p>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </p>
+
+            </div>
+            <hr>
+            <div>
+              <p>
+                
+                  <span>
+                <i class="iconfont icon-inbox"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>
+                      &nbsp;
+                    
+                  </span>&nbsp;&nbsp;
+                
+                
+              </p>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                      <a href="/2019/11/23/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%BC%80%E5%8F%91/%E7%90%86%E8%A7%A3ijkplayer%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E5%BC%80%E5%A7%8B/">
+                        <i class="fa fa-chevron-left"></i>
+                        <span class="hidden-mobile">理解ijkplayer（一）：开始</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/2019/11/09/Kotlin/Kotlin%E5%8D%8F%E7%A8%8B%EF%BC%88%E4%B8%80%EF%BC%89%E7%90%86%E8%A7%A3/">
+                        <span class="hidden-mobile">Kotlin协程（一）理解</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="fa fa-chevron-right"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+              
+                <!-- Comments -->
+                <div class="comments" id="comments">
+                  
+                  
+  <script defer src="https://utteranc.es/client.js"
+          repo="HWilliamgo/HWilliamgo.github.io"
+          issue-term="pathname"
+  
+          label="utterances"
+    
+          theme="github-light"
+          crossorigin="anonymous"
+  >
+  </script>
+
+
+                </div>
+              
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc-start"></div>
+<div id="toc">
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+    </div>
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/popper.js/1.16.1/umd/popper.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="https://cdn.staticfile.org/mdbootstrap/4.13.0/js/mdb.min.js" ></script>
+<script  src="/js/main.js" ></script>
+
+
+  <script  src="/js/lazyload.js" ></script>
+
+
+
+  
+  <script  src="https://cdn.staticfile.org/tocbot/4.10.0/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var navHeight = $('#navbar').height();
+      var toc = $('#toc');
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+      var tocLimMax = 2 * boardTop + boardCtn.height();
+
+      $(window).scroll(function () {
+        var tocLimMin = $('#toc-start').offset().top - navHeight;
+        var scroH = document.body.scrollTop + document.documentElement.scrollTop;
+
+        if (tocLimMin <= scroH && scroH <= tocLimMax) {
+          toc.css({
+            'display': 'block',
+            'position': 'fixed',
+            'top': navHeight,
+          });
+        } else if (scroH <= tocLimMin) {
+          toc.css({
+            'position': '',
+            'top': '',
+          });
+        } else if (scroH > tocLimMax) {
+          toc.css('display', 'none');
+        }
+      });
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '.post-content',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc > p').css('visibility', 'visible');
+      }
+      var offset = boardCtn.css('margin-right')
+      $('#toc-ctn').css({
+        'right': offset
+      })
+    });
+  </script>
+
+
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+<!-- Plugins -->
+
+
+
+  <script  src="https://cdn.staticfile.org/prettify/188.0.0/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  linenums');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "mac开发环境配置&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

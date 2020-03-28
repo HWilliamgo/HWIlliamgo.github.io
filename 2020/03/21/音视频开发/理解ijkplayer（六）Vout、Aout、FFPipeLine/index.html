@@ -1,0 +1,1583 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="https://s1.ax1x.com/2020/03/28/GkotgK.th.jpg">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="HWilliamgo">
+  <meta name="keywords" content="">
+  <title>理解ijkplayer（六）Vout、Aout、FFPipeLine - William的小星球</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.12.1/css/all.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/mdbootstrap/4.13.0/css/mdb.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/3.0.1/github-markdown.min.css" />
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+
+
+
+  <link  rel="stylesheet" href="/lib/prettify/tomorrow-night-eighties.min.css" />
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link defer rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+<!-- 自定义样式保持在最底部 -->
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>William的小星球</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">归档</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">分类</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">标签</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">关于</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('https://w.wallhaven.cc/full/39/wallhaven-39joqy.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+                <p class="mt-3 post-meta">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                  星期六, 三月 21日 2020, 10:01 晚上
+                </p>
+              
+
+              <p class="mt-1">
+                
+                  
+                  <span class="post-meta">
+                    <i class="far fa-chart-bar"></i>
+                    4.7k 字
+                  </span>
+                
+
+                
+                  
+                  <span class="post-meta">
+                      <i class="far fa-clock"></i>
+                      25 分钟
+                  </span>
+                
+
+                
+                  <!-- 不蒜子统计文章PV -->
+                  
+                  <span id="busuanzi_container_page_pv" class="post-meta" style="display: none">
+                    <i class="far fa-eye" aria-hidden="true"></i>
+                    <span id="busuanzi_value_page_pv"></span> 次
+                  </span>
+                
+              </p>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5 z-depth-3" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+              <p
+                class="note note-warning">本文最后更新于：星期六, 三月 28日 2020, 5:13 下午</p>
+            
+            <div class="markdown-body">
+              <pre><code class="c">// ijkmedia/ijkplayer/ff_ffplay_def.h
+typedef struct FFPlayer {
+        //...
+    SDL_Aout *aout;
+    SDL_Vout *vout;
+    struct IJKFF_Pipeline *pipeline;
+    struct IJKFF_Pipenode *node_vdec;
+      //...
+}FFPlayer;</code></pre>
+<p>这篇文章的内容：</p>
+<p>分析<code>FFPlayer</code>结构体中的<code>SDL_Aout</code>、<code>SDL_Vout</code>、<code>IJKFF_Pipeline</code>和<code>IJKFF_Pipenode</code>的作用</p>
+<p>此外，这四个结构体，我认为是为了实现多态，详见IBM教程：<a href="https://www.ibm.com/developerworks/cn/linux/l-cn-cpolym/index.html" target="_blank" rel="noopener">技巧：用 C 语言实现程序的多态性</a></p>
+<p>而这里面还有用到<code>SDL_Vout_Opaque</code>这类的opaque单词的结构体和指针，这是为了实现封装和对外隐藏细节。</p>
+<p>不得不说，ijkplayer用c语言也很好地体现了面向对象的思想。</p>
+<h3 id="SDL-Vout"><a href="#SDL-Vout" class="headerlink" title="SDL_Vout"></a>SDL_Vout</h3><h4 id="1-结构体"><a href="#1-结构体" class="headerlink" title="1. 结构体"></a>1. 结构体</h4><h5 id="1-1-SDL-Vout"><a href="#1-1-SDL-Vout" class="headerlink" title="1.1 SDL_Vout"></a>1.1 SDL_Vout</h5><pre><code class="c">//    ijkmedia/ijksdl/ijksdl_vout.h
+struct SDL_Vout {
+    SDL_mutex *mutex;
+
+    SDL_Class       *opaque_class;
+    SDL_Vout_Opaque *opaque;
+    //创建图层，即SDL_VoutOverlay
+    SDL_VoutOverlay *(*create_overlay)(int width, int height, int frame_format, SDL_Vout *vout);
+    //释放
+    void (*free_l)(SDL_Vout *vout);
+    //展示图层
+    int (*display_overlay)(SDL_Vout *vout, SDL_VoutOverlay *overlay);
+    //图层格式
+    Uint32 overlay_format;
+};</code></pre>
+<h5 id="1-2-SDL-Vout-Opaque"><a href="#1-2-SDL-Vout-Opaque" class="headerlink" title="1.2 SDL_Vout_Opaque"></a>1.2 SDL_Vout_Opaque</h5><p>opaque类似于Java中的内部类，用来向调用者屏蔽该类的内部逻辑</p>
+<p>看下这个<code>SDL_Vout_Opaque</code>的定义：</p>
+<p>用<code>typedef</code>定义了一个抽象，那么他的实现在哪里？</p>
+<pre><code class="c">//    ijkmedia/ijksdl/ijksdl_vout.h
+
+//这里引用的是ffmepg后缀的这个头文件，因此用的是软件的方式去创建的SDL_VoutOverlay_Opaque
+#include &quot;ffmpeg/ijksdl_inc_ffmpeg.h&quot;
+
+//...
+typedef struct SDL_Vout_Opaque SDL_Vout_Opaque;
+//...</code></pre>
+<p>他的实现在两处定义了，分别在硬解和软解的时候使用</p>
+<pre><code class="c">//    硬解
+//    ijkmedia/ijksdl/android/ijksdl_vout_overlay_android_mediacodec.c
+typedef struct SDL_VoutOverlay_Opaque {
+    SDL_mutex *mutex;
+
+    SDL_Vout                   *vout;
+    SDL_AMediaCodec            *acodec;
+
+    SDL_AMediaCodecBufferProxy *buffer_proxy;
+
+    Uint16 pitches[AV_NUM_DATA_POINTERS];
+    Uint8 *pixels[AV_NUM_DATA_POINTERS];
+} SDL_VoutOverlay_Opaque;</code></pre>
+<pre><code class="c">// 软解
+//    ijkmedia/ijksdl/ffmpeg/ijksdl_vout_overlay_ffmpeg.c
+struct SDL_VoutOverlay_Opaque {
+    SDL_mutex *mutex;
+
+    AVFrame *managed_frame;
+    AVBufferRef *frame_buffer;
+    int planes;
+
+    AVFrame *linked_frame;
+
+    Uint16 pitches[AV_NUM_DATA_POINTERS];
+    Uint8 *pixels[AV_NUM_DATA_POINTERS];
+
+    int no_neon_warned;
+
+    struct SwsContext *img_convert_ctx;
+    int sws_flags;
+};</code></pre>
+<p>而实际上硬解的那个是不会使用的，为什么？因为定义<code>SDL_VoutOverlay_Opaque</code>引用的头文件是<code>ffmpeg/ijksdl_inc_ffmpeg.h</code></p>
+<h5 id="1-3-SDL-Class"><a href="#1-3-SDL-Class" class="headerlink" title="1.3 SDL_Class"></a>1.3 SDL_Class</h5><p>暂时也不清楚这个是做什么的，只保存了一个字符串而已。</p>
+<pre><code class="c">typedef struct SDL_Class {
+    const char *name;
+} SDL_Class;</code></pre>
+<h5 id="1-4-SDL-VoutOverlay"><a href="#1-4-SDL-VoutOverlay" class="headerlink" title="1.4 SDL_VoutOverlay"></a>1.4 SDL_VoutOverlay</h5><pre><code class="c">struct SDL_VoutOverlay {
+    int w; /**&lt; Read-only */
+    int h; /**&lt; Read-only */
+    Uint32 format; /**&lt; Read-only */
+    int planes; /**&lt; Read-only */
+    Uint16 *pitches; /**&lt; in bytes, Read-only */
+    Uint8 **pixels; /**&lt; Read-write */
+
+    int is_private;
+
+    int sar_num;
+    int sar_den;
+
+    SDL_Class               *opaque_class;
+    SDL_VoutOverlay_Opaque  *opaque;
+
+    void    (*free_l)(SDL_VoutOverlay *overlay);
+    int     (*lock)(SDL_VoutOverlay *overlay);
+    int     (*unlock)(SDL_VoutOverlay *overlay);
+    void    (*unref)(SDL_VoutOverlay *overlay);
+
+    int     (*func_fill_frame)(SDL_VoutOverlay *overlay, const AVFrame *frame);
+};</code></pre>
+<h5 id="1-5-SDL-VoutOverlay-Opaque"><a href="#1-5-SDL-VoutOverlay-Opaque" class="headerlink" title="1.5 SDL_VoutOverlay_Opaque"></a>1.5 SDL_VoutOverlay_Opaque</h5><pre><code class="c">#include &quot;ffmpeg/ijksdl_inc_ffmpeg.h&quot;
+
+typedef struct SDL_VoutOverlay_Opaque SDL_VoutOverlay_Opaque;</code></pre>
+<p>软解：</p>
+<pre><code class="c">//    ijkmedia/ijksdl/ffmpeg/ijksdl_vout_overlay_ffmpeg.c
+struct SDL_VoutOverlay_Opaque {
+    SDL_mutex *mutex;
+
+    AVFrame *managed_frame;
+    AVBufferRef *frame_buffer;
+    int planes;
+
+    AVFrame *linked_frame;
+
+    Uint16 pitches[AV_NUM_DATA_POINTERS];
+    Uint8 *pixels[AV_NUM_DATA_POINTERS];
+
+    int no_neon_warned;
+
+    struct SwsContext *img_convert_ctx;
+    int sws_flags;
+};</code></pre>
+<p>硬解：</p>
+<pre><code class="c">typedef struct SDL_VoutOverlay_Opaque {
+    SDL_mutex *mutex;
+
+    SDL_Vout                   *vout;
+    SDL_AMediaCodec            *acodec;
+
+    SDL_AMediaCodecBufferProxy *buffer_proxy;
+
+    Uint16 pitches[AV_NUM_DATA_POINTERS];
+    Uint8 *pixels[AV_NUM_DATA_POINTERS];
+} SDL_VoutOverlay_Opaque;</code></pre>
+<p>同样的，这里是用的软解。</p>
+<h4 id="2-初始化"><a href="#2-初始化" class="headerlink" title="2. 初始化"></a>2. 初始化</h4><h4 id="3-使用"><a href="#3-使用" class="headerlink" title="3. 使用"></a>3. 使用</h4><pre><code class="c">IjkMediaPlayer *ijkmp_android_create(int(*msg_loop)(void*))
+{
+    //创建IjkMediaPlayer
+    IjkMediaPlayer *mp = ijkmp_create(msg_loop);
+    if (!mp)
+        goto fail;
+    //创建视频输出设备，会根据根据硬解还是软件，硬解用MediaCodec创建，软解用FFmpeg创建
+mp-&gt;ffplayer-&gt;vout = SDL_VoutAndroid_CreateForAndroidSurface();
+    if (!mp-&gt;ffplayer-&gt;vout)
+        goto fail;
+    //创建管道
+    mp-&gt;ffplayer-&gt;pipeline = ffpipeline_create_from_android(mp-&gt;ffplayer);
+    if (!mp-&gt;ffplayer-&gt;pipeline)
+        goto fail;
+    //将创建的视频输出设备vout，赋值到ffplayer-&gt;pipeline中
+    ffpipeline_set_vout(mp-&gt;ffplayer-&gt;pipeline, mp-&gt;ffplayer-&gt;vout);
+
+    return mp;
+
+fail:
+    ijkmp_dec_ref_p(&amp;mp);
+    return NULL;
+}</code></pre>
+<p><code>mp-&gt;ffplayer-&gt;vout = SDL_VoutAndroid_CreateForAndroidSurface();</code></p>
+<pre><code class="c">SDL_Vout *SDL_VoutAndroid_CreateForAndroidSurface()
+{
+    return SDL_VoutAndroid_CreateForANativeWindow();
+}</code></pre>
+<pre><code class="c">SDL_Vout *SDL_VoutAndroid_CreateForANativeWindow()
+{
+    //创建SDL_Vout
+    SDL_Vout *vout = SDL_Vout_CreateInternal(sizeof(SDL_Vout_Opaque));
+    if (!vout)
+        return NULL;
+
+    SDL_Vout_Opaque *opaque = vout-&gt;opaque;
+    opaque-&gt;native_window = NULL;
+    if (ISDL_Array__init(&amp;opaque-&gt;overlay_manager, 32))
+        goto fail;
+    if (ISDL_Array__init(&amp;opaque-&gt;overlay_pool, 32))
+        goto fail;
+    //创建egl
+    opaque-&gt;egl = IJK_EGL_create();
+    if (!opaque-&gt;egl)
+        goto fail;
+    //为vout的函数赋值
+    vout-&gt;opaque_class    = &amp;g_nativewindow_class;
+    vout-&gt;create_overlay  = func_create_overlay;
+    vout-&gt;free_l          = func_free_l;
+    vout-&gt;display_overlay = func_display_overlay;
+
+    return vout;
+fail:
+    func_free_l(vout);
+    return NULL;
+}</code></pre>
+<pre><code class="c">inline static SDL_Vout *SDL_Vout_CreateInternal(size_t opaque_size)
+{
+    //分配Vout内存
+    SDL_Vout *vout = (SDL_Vout*) calloc(1, sizeof(SDL_Vout));
+    if (!vout)
+        return NULL;
+    //分配Opaue内存
+    vout-&gt;opaque = calloc(1, opaque_size);
+    if (!vout-&gt;opaque) {
+        free(vout);
+        return NULL;
+    }
+    //创建互斥锁
+    vout-&gt;mutex = SDL_CreateMutex();
+    if (vout-&gt;mutex == NULL) {
+        free(vout-&gt;opaque);
+        free(vout);
+        return NULL;
+    }
+
+    return vout;
+}</code></pre>
+<p>接下来一一看下vout的3个函数在这里被赋值的函数</p>
+<pre><code class="c">vout-&gt;create_overlay  = func_create_overlay;
+vout-&gt;free_l          = func_free_l;
+vout-&gt;display_overlay = func_display_overlay;</code></pre>
+<pre><code class="c">static SDL_VoutOverlay *func_create_overlay(int width, int height, int frame_format, SDL_Vout *vout)
+{
+    SDL_LockMutex(vout-&gt;mutex);
+      //创建SDL_VoutOverlay
+    SDL_VoutOverlay *overlay = func_create_overlay_l(width, height, frame_format, vout);
+    SDL_UnlockMutex(vout-&gt;mutex);
+    return overlay;
+}</code></pre>
+<pre><code class="c">static SDL_VoutOverlay *func_create_overlay_l(int width, int height, int frame_format, SDL_Vout *vout)
+{
+    switch (frame_format) {
+    case IJK_AV_PIX_FMT__ANDROID_MEDIACODEC:
+        //如果帧的格式是IJK_AV_PIX_FMT__ANDROID_MEDIACODEC，就用硬解创建
+        return SDL_VoutAMediaCodec_CreateOverlay(width, height, vout);
+    default:
+                //否则用软解创建
+        return SDL_VoutFFmpeg_CreateOverlay(width, height, frame_format, vout);
+    }
+}</code></pre>
+<h3 id="SDL-Aout"><a href="#SDL-Aout" class="headerlink" title="SDL_Aout"></a>SDL_Aout</h3><h4 id="1-结构体-1"><a href="#1-结构体-1" class="headerlink" title="1. 结构体"></a>1. 结构体</h4><pre><code class="c">typedef struct SDL_Aout SDL_Aout;
+struct SDL_Aout {
+    SDL_mutex *mutex;
+    double     minimal_latency_seconds;
+
+    SDL_Class       *opaque_class;
+    SDL_Aout_Opaque *opaque;
+    void (*free_l)(SDL_Aout *vout);
+    int (*open_audio)(SDL_Aout *aout, const SDL_AudioSpec *desired, SDL_AudioSpec *obtained);
+    void (*pause_audio)(SDL_Aout *aout, int pause_on);
+    void (*flush_audio)(SDL_Aout *aout);
+    void (*set_volume)(SDL_Aout *aout, float left, float right);
+    void (*close_audio)(SDL_Aout *aout);
+
+    double (*func_get_latency_seconds)(SDL_Aout *aout);
+    void   (*func_set_default_latency_seconds)(SDL_Aout *aout, double latency);
+
+    // optional
+    void   (*func_set_playback_rate)(SDL_Aout *aout, float playbackRate);
+    void   (*func_set_playback_volume)(SDL_Aout *aout, float playbackVolume);
+    int    (*func_get_audio_persecond_callbacks)(SDL_Aout *aout);
+
+    // Android only
+    int    (*func_get_audio_session_id)(SDL_Aout *aout);
+};</code></pre>
+<h4 id="2-初始化-1"><a href="#2-初始化-1" class="headerlink" title="2. 初始化"></a>2. 初始化</h4><p>在<code>ffp_preapare_async_l()函数中</code></p>
+<pre><code class="c">int ffp_prepare_async_l(FFPlayer *ffp, const char *file_name)
+{
+    assert(ffp);
+    assert(!ffp-&gt;is);
+    assert(file_name);
+    //针对rtmp和rtsp协议，移除选项”timeout“
+    if (av_stristart(file_name, &quot;rtmp&quot;, NULL) ||
+        av_stristart(file_name, &quot;rtsp&quot;, NULL)) {
+        // There is total different meaning for &#39;timeout&#39; option in rtmp
+        av_log(ffp, AV_LOG_WARNING, &quot;remove &#39;timeout&#39; option for rtmp.\n&quot;);
+        av_dict_set(&amp;ffp-&gt;format_opts, &quot;timeout&quot;, NULL, 0);
+    }
+
+    /* there is a length limit in avformat */
+    if (strlen(file_name) + 1 &gt; 1024) {
+        av_log(ffp, AV_LOG_ERROR, &quot;%s too long url\n&quot;, __func__);
+        if (avio_find_protocol_name(&quot;ijklongurl:&quot;)) {
+            av_dict_set(&amp;ffp-&gt;format_opts, &quot;ijklongurl-url&quot;, file_name, 0);
+            file_name = &quot;ijklongurl:&quot;;
+        }
+    }
+    //打印版本信息
+    av_log(NULL, AV_LOG_INFO, &quot;===== versions =====\n&quot;);
+    ffp_show_version_str(ffp, &quot;ijkplayer&quot;,      ijk_version_info());
+    ffp_show_version_str(ffp, &quot;FFmpeg&quot;,         av_version_info());
+    ffp_show_version_int(ffp, &quot;libavutil&quot;,      avutil_version());
+    ffp_show_version_int(ffp, &quot;libavcodec&quot;,     avcodec_version());
+    ffp_show_version_int(ffp, &quot;libavformat&quot;,    avformat_version());
+    ffp_show_version_int(ffp, &quot;libswscale&quot;,     swscale_version());
+    ffp_show_version_int(ffp, &quot;libswresample&quot;,  swresample_version());
+    av_log(NULL, AV_LOG_INFO, &quot;===== options =====\n&quot;);
+    ffp_show_dict(ffp, &quot;player-opts&quot;, ffp-&gt;player_opts);
+    ffp_show_dict(ffp, &quot;format-opts&quot;, ffp-&gt;format_opts);
+    ffp_show_dict(ffp, &quot;codec-opts &quot;, ffp-&gt;codec_opts);
+    ffp_show_dict(ffp, &quot;sws-opts   &quot;, ffp-&gt;sws_dict);
+    ffp_show_dict(ffp, &quot;swr-opts   &quot;, ffp-&gt;swr_opts);
+    av_log(NULL, AV_LOG_INFO, &quot;===================\n&quot;);
+    //设置播放器选项
+    av_opt_set_dict(ffp, &amp;ffp-&gt;player_opts);
+    //如果ffplayer-&gt;aout==null，那么久打开音频输出设备。前面的初始化代码是没有为这个赋值过的，所以第一次调用肯定会返回true.
+    if (!ffp-&gt;aout) {
+        ffp-&gt;aout = ffpipeline_open_audio_output(ffp-&gt;pipeline, ffp);
+        if (!ffp-&gt;aout)
+            return -1;
+    }
+
+#if CONFIG_AVFILTER
+    if (ffp-&gt;vfilter0) {
+        GROW_ARRAY(ffp-&gt;vfilters_list, ffp-&gt;nb_vfilters);
+        ffp-&gt;vfilters_list[ffp-&gt;nb_vfilters - 1] = ffp-&gt;vfilter0;
+    }
+#endif
+
+    VideoState *is = stream_open(ffp, file_name, NULL);
+    if (!is) {
+        av_log(NULL, AV_LOG_WARNING, &quot;ffp_prepare_async_l: stream_open failed OOM&quot;);
+        return EIJK_OUT_OF_MEMORY;
+    }
+
+    ffp-&gt;is = is;
+    ffp-&gt;input_filename = av_strdup(file_name);
+    return 0;
+}</code></pre>
+<p>即这句：</p>
+<pre><code class="c">//如果ffplayer-&gt;aout==null，那么久打开音频输出设备。前面的初始化代码是没有为这个赋值过的，所以第一次调用肯定会返回true.
+    if (!ffp-&gt;aout) {
+        ffp-&gt;aout = ffpipeline_open_audio_output(ffp-&gt;pipeline, ffp);
+        if (!ffp-&gt;aout)
+            return -1;
+    }</code></pre>
+<pre><code class="c">SDL_Aout *ffpipeline_open_audio_output(IJKFF_Pipeline *pipeline, FFPlayer *ffp)
+{
+    //借助pipeline的方法
+    return pipeline-&gt;func_open_audio_output(pipeline, ffp);
+}</code></pre>
+<p>这个地方要使用<code>IJKFF_Pipeline</code>的方法，而<code>IJKFF_Pipeline</code>是在创建播放器的时候创建的。</p>
+<pre><code class="c">static SDL_Aout *func_open_audio_output(IJKFF_Pipeline *pipeline, FFPlayer *ffp)
+{
+    SDL_Aout *aout = NULL;
+    if (ffp-&gt;opensles) {
+        aout = SDL_AoutAndroid_CreateForOpenSLES();
+    } else {
+          //一般不会用opensles，都是默认用的android的AudioTrack来创建Aout
+        aout = SDL_AoutAndroid_CreateForAudioTrack();
+    }
+    if (aout)
+        SDL_AoutSetStereoVolume(aout, pipeline-&gt;opaque-&gt;left_volume, pipeline-&gt;opaque-&gt;right_volume);
+    return aout;
+}</code></pre>
+<pre><code class="c">SDL_Aout *SDL_AoutAndroid_CreateForAudioTrack()
+{
+    SDL_Aout *aout = SDL_Aout_CreateInternal(sizeof(SDL_Aout_Opaque));
+    if (!aout)
+        return NULL;
+
+    SDL_Aout_Opaque *opaque = aout-&gt;opaque;
+    opaque-&gt;wakeup_cond  = SDL_CreateCond();
+    opaque-&gt;wakeup_mutex = SDL_CreateMutex();
+    opaque-&gt;speed        = 1.0f;
+
+    aout-&gt;opaque_class = &amp;g_audiotrack_class;
+    aout-&gt;free_l       = aout_free_l;
+    aout-&gt;open_audio   = aout_open_audio;
+    aout-&gt;pause_audio  = aout_pause_audio;
+    aout-&gt;flush_audio  = aout_flush_audio;
+    aout-&gt;set_volume   = aout_set_volume;
+    aout-&gt;close_audio  = aout_close_audio;
+    aout-&gt;func_get_audio_session_id = aout_get_audio_session_id;
+    aout-&gt;func_set_playback_rate    = func_set_playback_rate;
+
+    return aout;
+}</code></pre>
+<p>那么这里看一下这个<code>aoujt-&gt;open_audio</code>函数：</p>
+<pre><code class="c">static int aout_open_audio(SDL_Aout *aout, const SDL_AudioSpec *desired, SDL_AudioSpec *obtained)
+{
+    // SDL_Aout_Opaque *opaque = aout-&gt;opaque;
+    JNIEnv *env = NULL;
+    if (JNI_OK != SDL_JNI_SetupThreadEnv(&amp;env)) {
+        ALOGE(&quot;aout_open_audio: AttachCurrentThread: failed&quot;);
+        return -1;
+    }
+
+    return aout_open_audio_n(env, aout, desired, obtained);
+}</code></pre>
+<pre><code class="c">static int aout_open_audio_n(JNIEnv *env, SDL_Aout *aout, const SDL_AudioSpec *desired, SDL_AudioSpec *obtained)
+{
+    assert(desired);
+    SDL_Aout_Opaque *opaque = aout-&gt;opaque;
+
+    opaque-&gt;spec = *desired;
+    opaque-&gt;atrack = SDL_Android_AudioTrack_new_from_sdl_spec(env, desired);
+    if (!opaque-&gt;atrack) {
+        ALOGE(&quot;aout_open_audio_n: failed to new AudioTrcak()&quot;);
+        return -1;
+    }
+
+    opaque-&gt;buffer_size = SDL_Android_AudioTrack_get_min_buffer_size(opaque-&gt;atrack);
+    if (opaque-&gt;buffer_size &lt;= 0) {
+        ALOGE(&quot;aout_open_audio_n: failed to getMinBufferSize()&quot;);
+        SDL_Android_AudioTrack_free(env, opaque-&gt;atrack);
+        opaque-&gt;atrack = NULL;
+        return -1;
+    }
+
+    opaque-&gt;buffer = malloc(opaque-&gt;buffer_size);
+    if (!opaque-&gt;buffer) {
+        ALOGE(&quot;aout_open_audio_n: failed to allocate buffer&quot;);
+        SDL_Android_AudioTrack_free(env, opaque-&gt;atrack);
+        opaque-&gt;atrack = NULL;
+        return -1;
+    }
+
+    if (obtained) {
+        SDL_Android_AudioTrack_get_target_spec(opaque-&gt;atrack, obtained);
+        SDLTRACE(&quot;audio target format fmt:0x%x, channel:0x%x&quot;, (int)obtained-&gt;format, (int)obtained-&gt;channels);
+    }
+
+    opaque-&gt;audio_session_id = SDL_Android_AudioTrack_getAudioSessionId(env, opaque-&gt;atrack);
+    ALOGI(&quot;audio_session_id = %d\n&quot;, opaque-&gt;audio_session_id);
+
+    opaque-&gt;pause_on = 1;
+    opaque-&gt;abort_request = 0;
+    //创建音频输出线程
+    opaque-&gt;audio_tid = SDL_CreateThreadEx(&amp;opaque-&gt;_audio_tid, aout_thread, aout, &quot;ff_aout_android&quot;);
+    if (!opaque-&gt;audio_tid) {
+        ALOGE(&quot;aout_open_audio_n: failed to create audio thread&quot;);
+        SDL_Android_AudioTrack_free(env, opaque-&gt;atrack);
+        opaque-&gt;atrack = NULL;
+        return -1;
+    }
+
+    return 0;
+}</code></pre>
+<p>那么这里看下这个音频输出线程做了什么：</p>
+<pre><code class="c">static int aout_thread(void *arg)
+{
+    SDL_Aout *aout = arg;
+    // SDL_Aout_Opaque *opaque = aout-&gt;opaque;
+    JNIEnv *env = NULL;
+
+    if (JNI_OK != SDL_JNI_SetupThreadEnv(&amp;env)) {
+        ALOGE(&quot;aout_thread: SDL_AndroidJni_SetupEnv: failed&quot;);
+        return -1;
+    }
+
+    return aout_thread_n(env, aout);
+}</code></pre>
+<pre><code class="c">static int aout_thread_n(JNIEnv *env, SDL_Aout *aout)
+{
+    SDL_Aout_Opaque *opaque = aout-&gt;opaque;
+    SDL_Android_AudioTrack *atrack = opaque-&gt;atrack;
+    SDL_AudioCallback audio_cblk = opaque-&gt;spec.callback;
+    void *userdata = opaque-&gt;spec.userdata;
+    uint8_t *buffer = opaque-&gt;buffer;
+    int copy_size = 256;
+
+    assert(atrack);
+    assert(buffer);
+
+    SDL_SetThreadPriority(SDL_THREAD_PRIORITY_HIGH);
+
+    if (!opaque-&gt;abort_request &amp;&amp; !opaque-&gt;pause_on)
+        SDL_Android_AudioTrack_play(env, atrack);
+    //只要没有中断请求，就无限循环
+    while (!opaque-&gt;abort_request) {
+        SDL_LockMutex(opaque-&gt;wakeup_mutex);
+        if (!opaque-&gt;abort_request &amp;&amp; opaque-&gt;pause_on) {
+            //暂停
+            SDL_Android_AudioTrack_pause(env, atrack);
+            while (!opaque-&gt;abort_request &amp;&amp; opaque-&gt;pause_on) {
+                SDL_CondWaitTimeout(opaque-&gt;wakeup_cond, opaque-&gt;wakeup_mutex, 1000);
+            }
+            if (!opaque-&gt;abort_request &amp;&amp; !opaque-&gt;pause_on) {
+                if (opaque-&gt;need_flush) {
+                    opaque-&gt;need_flush = 0;
+                    //flush
+                    SDL_Android_AudioTrack_flush(env, atrack);
+                }
+                //播放
+                SDL_Android_AudioTrack_play(env, atrack);
+            }
+        }
+        if (opaque-&gt;need_flush) {
+            opaque-&gt;need_flush = 0;
+            SDL_Android_AudioTrack_flush(env, atrack);
+        }
+        if (opaque-&gt;need_set_volume) {
+            opaque-&gt;need_set_volume = 0;
+            SDL_Android_AudioTrack_set_volume(env, atrack, opaque-&gt;left_volume, opaque-&gt;right_volume);
+        }
+        if (opaque-&gt;speed_changed) {
+            opaque-&gt;speed_changed = 0;
+            SDL_Android_AudioTrack_setSpeed(env, atrack, opaque-&gt;speed);
+        }
+        SDL_UnlockMutex(opaque-&gt;wakeup_mutex);
+
+        audio_cblk(userdata, buffer, copy_size);
+        if (opaque-&gt;need_flush) {
+            SDL_Android_AudioTrack_flush(env, atrack);
+            opaque-&gt;need_flush = false;
+        }
+
+        if (opaque-&gt;need_flush) {
+            opaque-&gt;need_flush = 0;
+            SDL_Android_AudioTrack_flush(env, atrack);
+        } else {
+            int written = SDL_Android_AudioTrack_write(env, atrack, buffer, copy_size);
+            if (written != copy_size) {
+                ALOGW(&quot;AudioTrack: not all data copied %d/%d&quot;, (int)written, (int)copy_size);
+            }
+        }
+
+        // TODO: 1 if callback return -1 or 0
+    }
+
+    SDL_Android_AudioTrack_free(env, atrack);
+    return 0;
+}</code></pre>
+<p>这里看下这个播放是在干嘛：</p>
+<pre><code class="c">void SDL_Android_AudioTrack_play(JNIEnv *env, SDL_Android_AudioTrack *atrack)
+{
+    SDLTRACE(&quot;%s&quot;, __func__);
+    J4AC_AudioTrack__play__catchAll(env, atrack-&gt;thiz);
+}</code></pre>
+<pre><code class="c">// ijkmedia/ijkj4a/j4a/class/android/media/AudioTrack.h
+#define J4AC_AudioTrack__play__catchAll J4AC_android_media_AudioTrack__play__catchAll</code></pre>
+<pre><code class="c">void J4AC_android_media_AudioTrack__play__catchAll(JNIEnv *env, jobject thiz)
+{
+    J4AC_android_media_AudioTrack__play(env, thiz);
+    J4A_ExceptionCheck__catchAll(env);
+}</code></pre>
+<pre><code class="c">void J4AC_android_media_AudioTrack__play(JNIEnv *env, jobject thiz)
+{    
+      //调用了jni方法，即通过c去调用java里的方法了。
+    (*env)-&gt;CallVoidMethod(env, thiz, class_J4AC_android_media_AudioTrack.method_play);
+}</code></pre>
+<p>而这个<code>class_J4AC_android_media_AudioTrack.method_play</code>是：</p>
+<pre><code class="c">//    ijkmedia/ijkj4a/j4a/class/android/media/AudioTrack.c
+int J4A_loadClass__J4AC_android_media_AudioTrack(JNIEnv *env)
+{
+    //...
+    class_id = class_J4AC_android_media_AudioTrack.id;
+    name     = &quot;play&quot;;
+    sign     = &quot;()V&quot;;
+    class_J4AC_android_media_AudioTrack.method_play = J4A_GetMethodID__catchAll(env, class_id, name, sign);
+    //...
+}</code></pre>
+<p>那么的确是调用的java层的<code>AudioTrack#play()</code></p>
+<h4 id="3-使用-1"><a href="#3-使用-1" class="headerlink" title="3. 使用"></a>3. 使用</h4><pre><code class="c">switch (avctx-&gt;codec_type) {
+  case AVMEDIA_TYPE_AUDIO:
+        //audio_open里面会去调用到AudioTrack.java # play()
+      if ((ret = audio_open(ffp, channel_layout, nb_channels, sample_rate, &amp;is-&gt;audio_tgt)) &lt; 0)
+        //decoder初始化
+      decoder_init(&amp;is-&gt;auddec, avctx, &amp;is-&gt;audioq, is-&gt;continue_read_thread);
+      //decoder启动，启动audio_thread线程
+      if ((ret = decoder_start(&amp;is-&gt;auddec, audio_thread, ffp, &quot;ff_audio_dec&quot;)) &lt; 0)
+}</code></pre>
+<h3 id="IJKFF-Pipeline"><a href="#IJKFF-Pipeline" class="headerlink" title="IJKFF_Pipeline"></a>IJKFF_Pipeline</h3><h4 id="1-结构体-2"><a href="#1-结构体-2" class="headerlink" title="1. 结构体"></a>1. 结构体</h4><h5 id="1-1-IJKFF-Pipeline"><a href="#1-1-IJKFF-Pipeline" class="headerlink" title="1.1 IJKFF_Pipeline"></a>1.1 IJKFF_Pipeline</h5><pre><code class="c">typedef struct IJKFF_Pipeline IJKFF_Pipeline;
+struct IJKFF_Pipeline {
+    SDL_Class             *opaque_class;
+    IJKFF_Pipeline_Opaque *opaque;
+        //销毁
+    void            (*func_destroy)             (IJKFF_Pipeline *pipeline);
+      //打开视频解码器
+    IJKFF_Pipenode *(*func_open_video_decoder)  (IJKFF_Pipeline *pipeline, FFPlayer *ffp);
+      //打开音频解码器
+    SDL_Aout       *(*func_open_audio_output)   (IJKFF_Pipeline *pipeline, FFPlayer *ffp);
+      //初始化视频解码器
+    IJKFF_Pipenode *(*func_init_video_decoder)  (IJKFF_Pipeline *pipeline, FFPlayer *ffp);
+      //配置视频解码器
+    int           (*func_config_video_decoder)  (IJKFF_Pipeline *pipeline, FFPlayer *ffp);
+};</code></pre>
+<h5 id="1-2-IJKFF-Pipeline-Opaque"><a href="#1-2-IJKFF-Pipeline-Opaque" class="headerlink" title="1.2 IJKFF_Pipeline_Opaque"></a>1.2 IJKFF_Pipeline_Opaque</h5><pre><code class="c">typedef struct IJKFF_Pipeline_Opaque {
+    FFPlayer      *ffp;
+    SDL_mutex     *surface_mutex;
+    jobject        jsurface;
+    volatile bool  is_surface_need_reconfigure;
+
+    bool         (*mediacodec_select_callback)(void *opaque, ijkmp_mediacodecinfo_context *mcc);
+    void          *mediacodec_select_callback_opaque;
+
+    SDL_Vout      *weak_vout;
+
+    float          left_volume;
+    float          right_volume;
+} IJKFF_Pipeline_Opaque;</code></pre>
+<h4 id="2-初始化-2"><a href="#2-初始化-2" class="headerlink" title="2. 初始化"></a>2. 初始化</h4><pre><code class="c">IjkMediaPlayer *ijkmp_android_create(int(*msg_loop)(void*))
+{
+        //...
+    mp-&gt;ffplayer-&gt;pipeline = ffpipeline_create_from_android(mp-&gt;ffplayer);
+    //...
+}</code></pre>
+<pre><code class="c">IJKFF_Pipeline *ffpipeline_create_from_android(FFPlayer *ffp)
+{
+    ALOGD(&quot;ffpipeline_create_from_android()\n&quot;);
+    //分配内存
+    IJKFF_Pipeline *pipeline = ffpipeline_alloc(&amp;g_pipeline_class, sizeof(IJKFF_Pipeline_Opaque));
+    if (!pipeline)
+        return pipeline;
+    //初始化opaque
+    IJKFF_Pipeline_Opaque *opaque = pipeline-&gt;opaque;
+    opaque-&gt;ffp                   = ffp;
+    opaque-&gt;surface_mutex         = SDL_CreateMutex();
+    opaque-&gt;left_volume           = 1.0f;
+    opaque-&gt;right_volume          = 1.0f;
+    if (!opaque-&gt;surface_mutex) {
+        ALOGE(&quot;ffpipeline-android:create SDL_CreateMutex failed\n&quot;);
+        goto fail;
+    }
+    //初始化pipeline中的每个函数
+    pipeline-&gt;func_destroy              = func_destroy;
+    pipeline-&gt;func_open_video_decoder   = func_open_video_decoder;
+    pipeline-&gt;func_open_audio_output    = func_open_audio_output;
+    pipeline-&gt;func_init_video_decoder   = func_init_video_decoder;
+    pipeline-&gt;func_config_video_decoder = func_config_video_decoder;
+
+    return pipeline;
+fail:
+    ffpipeline_free_p(&amp;pipeline);
+    return NULL;
+}</code></pre>
+<p>一个一个来看一下pipeline中的函数的作用：</p>
+<h5 id="2-1-func-destroy"><a href="#2-1-func-destroy" class="headerlink" title="2.1 func_destroy()"></a>2.1 func_destroy()</h5><pre><code class="c">static void func_destroy(IJKFF_Pipeline *pipeline)
+{
+    IJKFF_Pipeline_Opaque *opaque = pipeline-&gt;opaque;
+    JNIEnv *env = NULL;
+
+    SDL_DestroyMutexP(&amp;opaque-&gt;surface_mutex);
+
+    if (JNI_OK != SDL_JNI_SetupThreadEnv(&amp;env)) {
+        ALOGE(&quot;amediacodec-pipeline:destroy: SetupThreadEnv failed\n&quot;);
+        goto fail;
+    }
+    //变量并释放IJKFF_Pipeline_Opaque.jsurface
+    SDL_JNI_DeleteGlobalRefP(env, &amp;opaque-&gt;jsurface);
+fail:
+    return;
+}</code></pre>
+<pre><code class="c">//用env指针变量，删除obj_ptr的jni全局引用
+void SDL_JNI_DeleteGlobalRefP(JNIEnv *env, jobject *obj_ptr)
+{
+    if (!obj_ptr || !*obj_ptr)
+        return;
+        //jni方法，删除全局引用
+    (*env)-&gt;DeleteGlobalRef(env, *obj_ptr);
+    *obj_ptr = NULL;
+}</code></pre>
+<h5 id="2-2-func-open-video-decoder"><a href="#2-2-func-open-video-decoder" class="headerlink" title="2.2 func_open_video_decoder()"></a>2.2 func_open_video_decoder()</h5><pre><code class="c">static IJKFF_Pipenode *func_open_video_decoder(IJKFF_Pipeline *pipeline, FFPlayer *ffp)
+{
+    IJKFF_Pipeline_Opaque *opaque = pipeline-&gt;opaque;
+    IJKFF_Pipenode        *node = NULL;
+
+    if (ffp-&gt;mediacodec_all_videos || ffp-&gt;mediacodec_avc || ffp-&gt;mediacodec_hevc || ffp-&gt;mediacodec_mpeg2)
+        //从硬解中创建解码器
+        node = ffpipenode_create_video_decoder_from_android_mediacodec(ffp, pipeline, opaque-&gt;weak_vout);
+    if (!node) {
+        //从ffplay中创建解码器，即ffmpeg的解码器
+        node = ffpipenode_create_video_decoder_from_ffplay(ffp);
+    }
+
+    return node;
+}</code></pre>
+<p>这里很有意思，创建解码器，而返回的对象是<code>IJKFF_Pipenode</code>，这是否说明<code>IJKFF_Pipenode</code>就是一个解码器的抽象？</p>
+<h5 id="2-3-func-open-audio-output"><a href="#2-3-func-open-audio-output" class="headerlink" title="2.3 func_open_audio_output"></a>2.3 func_open_audio_output</h5><pre><code class="c">static SDL_Aout *func_open_audio_output(IJKFF_Pipeline *pipeline, FFPlayer *ffp)
+{
+    SDL_Aout *aout = NULL;
+    if (ffp-&gt;opensles) {
+        aout = SDL_AoutAndroid_CreateForOpenSLES();
+    } else {
+          //一般不会用opensles，都是默认用的android的AudioTrack来创建Aout
+        aout = SDL_AoutAndroid_CreateForAudioTrack();
+    }
+    if (aout)
+        SDL_AoutSetStereoVolume(aout, pipeline-&gt;opaque-&gt;left_volume, pipeline-&gt;opaque-&gt;right_volume);
+    return aout;
+}</code></pre>
+<pre><code class="c">SDL_Aout *SDL_AoutAndroid_CreateForAudioTrack()
+{
+      //在这里创建并分配了SDL_Aout结构体
+    SDL_Aout *aout = SDL_Aout_CreateInternal(sizeof(SDL_Aout_Opaque));
+    if (!aout)
+        return NULL;
+
+    SDL_Aout_Opaque *opaque = aout-&gt;opaque;
+    opaque-&gt;wakeup_cond  = SDL_CreateCond();
+    opaque-&gt;wakeup_mutex = SDL_CreateMutex();
+    opaque-&gt;speed        = 1.0f;
+
+    aout-&gt;opaque_class = &amp;g_audiotrack_class;
+    aout-&gt;free_l       = aout_free_l;
+    aout-&gt;open_audio   = aout_open_audio;
+    aout-&gt;pause_audio  = aout_pause_audio;
+    aout-&gt;flush_audio  = aout_flush_audio;
+    aout-&gt;set_volume   = aout_set_volume;
+    aout-&gt;close_audio  = aout_close_audio;
+    aout-&gt;func_get_audio_session_id = aout_get_audio_session_id;
+    aout-&gt;func_set_playback_rate    = func_set_playback_rate;
+
+    return aout;
+}</code></pre>
+<h5 id="2-4-func-init-video-decoder"><a href="#2-4-func-init-video-decoder" class="headerlink" title="2.4 func_init_video_decoder"></a>2.4 func_init_video_decoder</h5><pre><code class="c">static IJKFF_Pipenode *func_init_video_decoder(IJKFF_Pipeline *pipeline, FFPlayer *ffp)
+{
+    IJKFF_Pipeline_Opaque *opaque = pipeline-&gt;opaque;
+    IJKFF_Pipenode        *node = NULL;
+
+    if (ffp-&gt;mediacodec_all_videos || ffp-&gt;mediacodec_avc || ffp-&gt;mediacodec_hevc || ffp-&gt;mediacodec_mpeg2)
+          //如果是硬解，则要再初始化一下，如果是ffmpeg的软解，就不需要了。
+        node = ffpipenode_init_decoder_from_android_mediacodec(ffp, pipeline, opaque-&gt;weak_vout);
+
+    return node;
+}</code></pre>
+<h5 id="2-5-func-config-video-decoder"><a href="#2-5-func-config-video-decoder" class="headerlink" title="2.5 func_config_video_decoder"></a>2.5 func_config_video_decoder</h5><pre><code class="c">static int func_config_video_decoder(IJKFF_Pipeline *pipeline, FFPlayer *ffp)
+{
+    IJKFF_Pipeline_Opaque *opaque = pipeline-&gt;opaque;
+    int                       ret = NULL;
+
+    if (ffp-&gt;node_vdec) {
+        ret = ffpipenode_config_from_android_mediacodec(ffp, pipeline, opaque-&gt;weak_vout, ffp-&gt;node_vdec);
+    }
+
+    return ret;
+}</code></pre>
+<h4 id="3-使用-2"><a href="#3-使用-2" class="headerlink" title="3. 使用"></a>3. 使用</h4><p>视频解码线程开始之前，用<code>ffpipeline_open_video_decoder</code>创建一个解码器。</p>
+<pre><code class="c">static int stream_component_open(FFPlayer *ffp, int stream_index)
+{
+  //...
+  case AVMEDIA_TYPE_VIDEO:
+      //decoder初始化
+        decoder_init(&amp;is-&gt;viddec, avctx, &amp;is-&gt;videoq, is-&gt;continue_read_thread);
+    ffp-&gt;node_vdec = ffpipeline_open_video_decoder(ffp-&gt;pipeline, ffp);
+      //解码器开始
+    if ((ret = decoder_start(&amp;is-&gt;viddec, video_thread, ffp, &quot;ff_video_dec&quot;)) &lt; 0)
+        goto out;
+  //...
+}</code></pre>
+<h3 id="IJKFF-Pipenode"><a href="#IJKFF-Pipenode" class="headerlink" title="IJKFF_Pipenode"></a>IJKFF_Pipenode</h3><p>这个称为管道节点结构体包含的<code>func_run_sync()</code>函数是用来运行解码线程的。因此该结构体对底层ffmpeg来说，也是底层ffmpeg的一层抽象了。</p>
+<h4 id="1-结构体-3"><a href="#1-结构体-3" class="headerlink" title="1. 结构体"></a>1. 结构体</h4><pre><code class="c">typedef struct IJKFF_Pipenode IJKFF_Pipenode;
+struct IJKFF_Pipenode {
+    SDL_mutex *mutex;
+    void *opaque;
+
+    void (*func_destroy) (IJKFF_Pipenode *node);
+    int  (*func_run_sync)(IJKFF_Pipenode *node);
+    int  (*func_flush)   (IJKFF_Pipenode *node); // optional
+};</code></pre>
+<h4 id="2-初始化-3"><a href="#2-初始化-3" class="headerlink" title="2. 初始化"></a>2. 初始化</h4><pre><code class="c">IJKFF_Pipenode *ffpipenode_create_video_decoder_from_ffplay(FFPlayer *ffp)
+{
+    //分配IJKFF_Pipenode的内存
+    IJKFF_Pipenode *node = ffpipenode_alloc(sizeof(IJKFF_Pipenode_Opaque));
+    if (!node)
+        return node;
+
+    IJKFF_Pipenode_Opaque *opaque = node-&gt;opaque;
+    opaque-&gt;ffp         = ffp;
+        //为node的函数赋值
+    node-&gt;func_destroy  = func_destroy;
+    node-&gt;func_run_sync = func_run_sync;
+
+    ffp_set_video_codec_info(ffp, AVCODEC_MODULE_NAME, avcodec_get_name(ffp-&gt;is-&gt;viddec.avctx-&gt;codec_id));
+    ffp-&gt;stat.vdec_type = FFP_PROPV_DECODER_AVCODEC;
+    return node;
+}</code></pre>
+<pre><code class="c">static void func_destroy(IJKFF_Pipenode *node)
+{
+    // do nothing
+}
+static int func_run_sync(IJKFF_Pipenode *node)
+{
+    IJKFF_Pipenode_Opaque *opaque = node-&gt;opaque;
+
+    return ffp_video_thread(opaque-&gt;ffp);
+}</code></pre>
+<pre><code class="c">int ffp_video_thread(FFPlayer *ffp)
+{
+    return ffplay_video_thread(ffp);
+}</code></pre>
+<pre><code class="c">static int ffplay_video_thread(void *arg)
+{
+    FFPlayer *ffp = arg;
+    VideoState *is = ffp-&gt;is;
+    AVFrame *frame = av_frame_alloc();
+    double pts;
+    double duration;
+    int ret;
+    AVRational tb = is-&gt;video_st-&gt;time_base;
+    AVRational frame_rate = av_guess_frame_rate(is-&gt;ic, is-&gt;video_st, NULL);
+    int64_t dst_pts = -1;
+    int64_t last_dst_pts = -1;
+    int retry_convert_image = 0;
+    int convert_frame_count = 0;
+
+    ffp_notify_msg2(ffp, FFP_MSG_VIDEO_ROTATION_CHANGED, ffp_get_video_rotate_degrees(ffp));
+
+    if (!frame) {
+        return AVERROR(ENOMEM);
+    }
+
+    for (;;) {
+          //获取解码后的数据AVFrame数据
+        ret = get_video_frame(ffp, frame);
+        if (ret &lt; 0)
+            goto the_end;
+        if (!ret)
+            continue;
+
+        if (ffp-&gt;get_frame_mode) {
+            if (!ffp-&gt;get_img_info || ffp-&gt;get_img_info-&gt;count &lt;= 0) {
+                av_frame_unref(frame);
+                continue;
+            }
+
+            last_dst_pts = dst_pts;
+
+            if (dst_pts &lt; 0) {
+                dst_pts = ffp-&gt;get_img_info-&gt;start_time;
+            } else {
+                dst_pts += (ffp-&gt;get_img_info-&gt;end_time - ffp-&gt;get_img_info-&gt;start_time) / (ffp-&gt;get_img_info-&gt;num - 1);
+            }
+
+            pts = (frame-&gt;pts == AV_NOPTS_VALUE) ? NAN : frame-&gt;pts * av_q2d(tb);
+            pts = pts * 1000;
+            if (pts &gt;= dst_pts) {
+                while (retry_convert_image &lt;= MAX_RETRY_CONVERT_IMAGE) {
+                    ret = convert_image(ffp, frame, (int64_t)pts, frame-&gt;width, frame-&gt;height);
+                    if (!ret) {
+                        convert_frame_count++;
+                        break;
+                    }
+                    retry_convert_image++;
+                    av_log(NULL, AV_LOG_ERROR, &quot;convert image error retry_convert_image = %d\n&quot;, retry_convert_image);
+                }
+
+                retry_convert_image = 0;
+                if (ret || ffp-&gt;get_img_info-&gt;count &lt;= 0) {
+                    if (ret) {
+                        av_log(NULL, AV_LOG_ERROR, &quot;convert image abort ret = %d\n&quot;, ret);
+                        ffp_notify_msg3(ffp, FFP_MSG_GET_IMG_STATE, 0, ret);
+                    } else {
+                        av_log(NULL, AV_LOG_INFO, &quot;convert image complete convert_frame_count = %d\n&quot;, convert_frame_count);
+                    }
+                    goto the_end;
+                }
+            } else {
+                dst_pts = last_dst_pts;
+            }
+            av_frame_unref(frame);
+            continue;
+        }
+            duration = (frame_rate.num &amp;&amp; frame_rate.den ? av_q2d((AVRational){frame_rate.den, frame_rate.num}) : 0);
+            pts = (frame-&gt;pts == AV_NOPTS_VALUE) ? NAN : frame-&gt;pts * av_q2d(tb);
+                  //将frame数据进入到picture_queue。即渲染队列
+            ret = queue_picture(ffp, frame, pts, duration, frame-&gt;pkt_pos, is-&gt;viddec.pkt_serial);
+            av_frame_unref(frame);
+
+        if (ret &lt; 0)
+            goto the_end;
+    }
+ the_end:
+    av_log(NULL, AV_LOG_INFO, &quot;convert image convert_frame_count = %d\n&quot;, convert_frame_count);
+    av_frame_free(&amp;frame);
+    return 0;
+}</code></pre>
+<h4 id="3-使用-3"><a href="#3-使用-3" class="headerlink" title="3. 使用"></a>3. 使用</h4><p>主要就是他的<code>func_run_sync()</code>方法被用来解码视频帧并入队渲染队列。这个操作发生在：</p>
+<pre><code class="c">static int video_thread(void *arg)
+{
+    FFPlayer *ffp = (FFPlayer *)arg;
+    int       ret = 0;
+        //如果node_vdec不为null。
+    if (ffp-&gt;node_vdec) {
+          //解码操作
+        ret = ffpipenode_run_sync(ffp-&gt;node_vdec);
+    }
+    return ret;
+}</code></pre>
+<p> 那么我们来看一下解码的时候他的逻辑：</p>
+<pre><code class="c">//    ijkmedia/ijkplayer/pipeline/ffpipenode_ffplay_vdec.c
+static int func_run_sync(IJKFF_Pipenode *node)
+{
+    IJKFF_Pipenode_Opaque *opaque = node-&gt;opaque;
+
+    return ffp_video_thread(opaque-&gt;ffp);
+}</code></pre>
+<pre><code class="c">//    ijkmedia/ijkplayer/ff_ffplay.c
+int ffp_video_thread(FFPlayer *ffp)
+{
+    return ffplay_video_thread(ffp);
+}</code></pre>
+<pre><code>    = func_destroy;
+pipeline-&gt;func_open_video_decoder   = func_open_video_decoder;
+pipeline-&gt;func_open_audio_output    = func_open_audio_output;
+pipeline-&gt;func_init_video_decoder   = func_init_video_decoder;
+pipeline-&gt;func_config_video_decoder = func_config_video_decoder;
+
+return pipeline;</code></pre><p>fail:<br>    ffpipeline_free_p(&amp;pipeline);<br>    return NULL;<br>}</p>
+<pre><code>
+
+
+一个一个来看一下pipeline中的函数的作用：
+
+##### 2.1 func_destroy()
+
+``` c
+static void func_destroy(IJKFF_Pipeline *pipeline)
+{
+    IJKFF_Pipeline_Opaque *opaque = pipeline-&gt;opaque;
+    JNIEnv *env = NULL;
+
+    SDL_DestroyMutexP(&amp;opaque-&gt;surface_mutex);
+
+    if (JNI_OK != SDL_JNI_SetupThreadEnv(&amp;env)) {
+        ALOGE(&quot;amediacodec-pipeline:destroy: SetupThreadEnv failed\n&quot;);
+        goto fail;
+    }
+    //变量并释放IJKFF_Pipeline_Opaque.jsurface
+    SDL_JNI_DeleteGlobalRefP(env, &amp;opaque-&gt;jsurface);
+fail:
+    return;
+}</code></pre><pre><code class="c">//用env指针变量，删除obj_ptr的jni全局引用
+void SDL_JNI_DeleteGlobalRefP(JNIEnv *env, jobject *obj_ptr)
+{
+    if (!obj_ptr || !*obj_ptr)
+        return;
+        //jni方法，删除全局引用
+    (*env)-&gt;DeleteGlobalRef(env, *obj_ptr);
+    *obj_ptr = NULL;
+}</code></pre>
+<h5 id="2-2-func-open-video-decoder-1"><a href="#2-2-func-open-video-decoder-1" class="headerlink" title="2.2 func_open_video_decoder()"></a>2.2 func_open_video_decoder()</h5><pre><code class="c">static IJKFF_Pipenode *func_open_video_decoder(IJKFF_Pipeline *pipeline, FFPlayer *ffp)
+{
+    IJKFF_Pipeline_Opaque *opaque = pipeline-&gt;opaque;
+    IJKFF_Pipenode        *node = NULL;
+
+    if (ffp-&gt;mediacodec_all_videos || ffp-&gt;mediacodec_avc || ffp-&gt;mediacodec_hevc || ffp-&gt;mediacodec_mpeg2)
+        //从硬解中创建解码器
+        node = ffpipenode_create_video_decoder_from_android_mediacodec(ffp, pipeline, opaque-&gt;weak_vout);
+    if (!node) {
+        //从ffplay中创建解码器，即ffmpeg的解码器
+        node = ffpipenode_create_video_decoder_from_ffplay(ffp);
+    }
+
+    return node;
+}</code></pre>
+<p>这里很有意思，创建解码器，而返回的对象是<code>IJKFF_Pipenode</code>，这是否说明<code>IJKFF_Pipenode</code>就是一个解码器的抽象？</p>
+<h5 id="2-3-func-open-audio-output-1"><a href="#2-3-func-open-audio-output-1" class="headerlink" title="2.3 func_open_audio_output"></a>2.3 func_open_audio_output</h5><pre><code class="c">static SDL_Aout *func_open_audio_output(IJKFF_Pipeline *pipeline, FFPlayer *ffp)
+{
+    SDL_Aout *aout = NULL;
+    if (ffp-&gt;opensles) {
+        aout = SDL_AoutAndroid_CreateForOpenSLES();
+    } else {
+          //一般不会用opensles，都是默认用的android的AudioTrack来创建Aout
+        aout = SDL_AoutAndroid_CreateForAudioTrack();
+    }
+    if (aout)
+        SDL_AoutSetStereoVolume(aout, pipeline-&gt;opaque-&gt;left_volume, pipeline-&gt;opaque-&gt;right_volume);
+    return aout;
+}</code></pre>
+<pre><code class="c">SDL_Aout *SDL_AoutAndroid_CreateForAudioTrack()
+{
+      //在这里创建并分配了SDL_Aout结构体
+    SDL_Aout *aout = SDL_Aout_CreateInternal(sizeof(SDL_Aout_Opaque));
+    if (!aout)
+        return NULL;
+
+    SDL_Aout_Opaque *opaque = aout-&gt;opaque;
+    opaque-&gt;wakeup_cond  = SDL_CreateCond();
+    opaque-&gt;wakeup_mutex = SDL_CreateMutex();
+    opaque-&gt;speed        = 1.0f;
+
+    aout-&gt;opaque_class = &amp;g_audiotrack_class;
+    aout-&gt;free_l       = aout_free_l;
+    aout-&gt;open_audio   = aout_open_audio;
+    aout-&gt;pause_audio  = aout_pause_audio;
+    aout-&gt;flush_audio  = aout_flush_audio;
+    aout-&gt;set_volume   = aout_set_volume;
+    aout-&gt;close_audio  = aout_close_audio;
+    aout-&gt;func_get_audio_session_id = aout_get_audio_session_id;
+    aout-&gt;func_set_playback_rate    = func_set_playback_rate;
+
+    return aout;
+}</code></pre>
+<h5 id="2-4-func-init-video-decoder-1"><a href="#2-4-func-init-video-decoder-1" class="headerlink" title="2.4 func_init_video_decoder"></a>2.4 func_init_video_decoder</h5><pre><code class="c">static IJKFF_Pipenode *func_init_video_decoder(IJKFF_Pipeline *pipeline, FFPlayer *ffp)
+{
+    IJKFF_Pipeline_Opaque *opaque = pipeline-&gt;opaque;
+    IJKFF_Pipenode        *node = NULL;
+
+    if (ffp-&gt;mediacodec_all_videos || ffp-&gt;mediacodec_avc || ffp-&gt;mediacodec_hevc || ffp-&gt;mediacodec_mpeg2)
+          //如果是硬解，则要再初始化一下，如果是ffmpeg的软解，就不需要了。
+        node = ffpipenode_init_decoder_from_android_mediacodec(ffp, pipeline, opaque-&gt;weak_vout);
+
+    return node;
+}</code></pre>
+<h5 id="2-5-func-config-video-decoder-1"><a href="#2-5-func-config-video-decoder-1" class="headerlink" title="2.5 func_config_video_decoder"></a>2.5 func_config_video_decoder</h5><pre><code class="c">static int func_config_video_decoder(IJKFF_Pipeline *pipeline, FFPlayer *ffp)
+{
+    IJKFF_Pipeline_Opaque *opaque = pipeline-&gt;opaque;
+    int                       ret = NULL;
+
+    if (ffp-&gt;node_vdec) {
+        ret = ffpipenode_config_from_android_mediacodec(ffp, pipeline, opaque-&gt;weak_vout, ffp-&gt;node_vdec);
+    }
+
+    return ret;
+}</code></pre>
+<h4 id="3-使用-4"><a href="#3-使用-4" class="headerlink" title="3. 使用"></a>3. 使用</h4><p>视频解码线程开始之前，用<code>ffpipeline_open_video_decoder</code>创建一个解码器。</p>
+<pre><code class="c">static int stream_component_open(FFPlayer *ffp, int stream_index)
+{
+  //...
+  case AVMEDIA_TYPE_VIDEO:
+      //decoder初始化
+        decoder_init(&amp;is-&gt;viddec, avctx, &amp;is-&gt;videoq, is-&gt;continue_read_thread);
+    ffp-&gt;node_vdec = ffpipeline_open_video_decoder(ffp-&gt;pipeline, ffp);
+      //解码器开始
+    if ((ret = decoder_start(&amp;is-&gt;viddec, video_thread, ffp, &quot;ff_video_dec&quot;)) &lt; 0)
+        goto out;
+  //...
+}</code></pre>
+<h3 id="IJKFF-Pipenode-1"><a href="#IJKFF-Pipenode-1" class="headerlink" title="IJKFF_Pipenode"></a>IJKFF_Pipenode</h3><p>这个称为管道节点结构体包含的<code>func_run_sync()</code>函数是用来运行解码线程的。因此该结构体对底层ffmpeg来说，也是底层ffmpeg的一层抽象了。</p>
+<h4 id="1-结构体-4"><a href="#1-结构体-4" class="headerlink" title="1. 结构体"></a>1. 结构体</h4><pre><code class="c">typedef struct IJKFF_Pipenode IJKFF_Pipenode;
+struct IJKFF_Pipenode {
+    SDL_mutex *mutex;
+    void *opaque;
+
+    void (*func_destroy) (IJKFF_Pipenode *node);
+    int  (*func_run_sync)(IJKFF_Pipenode *node);
+    int  (*func_flush)   (IJKFF_Pipenode *node); // optional
+};</code></pre>
+<h4 id="2-初始化-4"><a href="#2-初始化-4" class="headerlink" title="2. 初始化"></a>2. 初始化</h4><pre><code class="c">IJKFF_Pipenode *ffpipenode_create_video_decoder_from_ffplay(FFPlayer *ffp)
+{
+    //分配IJKFF_Pipenode的内存
+    IJKFF_Pipenode *node = ffpipenode_alloc(sizeof(IJKFF_Pipenode_Opaque));
+    if (!node)
+        return node;
+
+    IJKFF_Pipenode_Opaque *opaque = node-&gt;opaque;
+    opaque-&gt;ffp         = ffp;
+        //为node的函数赋值
+    node-&gt;func_destroy  = func_destroy;
+    node-&gt;func_run_sync = func_run_sync;
+
+    ffp_set_video_codec_info(ffp, AVCODEC_MODULE_NAME, avcodec_get_name(ffp-&gt;is-&gt;viddec.avctx-&gt;codec_id));
+    ffp-&gt;stat.vdec_type = FFP_PROPV_DECODER_AVCODEC;
+    return node;
+}</code></pre>
+<pre><code class="c">static void func_destroy(IJKFF_Pipenode *node)
+{
+    // do nothing
+}
+static int func_run_sync(IJKFF_Pipenode *node)
+{
+    IJKFF_Pipenode_Opaque *opaque = node-&gt;opaque;
+
+    return ffp_video_thread(opaque-&gt;ffp);
+}</code></pre>
+<pre><code class="c">int ffp_video_thread(FFPlayer *ffp)
+{
+    return ffplay_video_thread(ffp);
+}</code></pre>
+<p>``` c<br>static int ffplay_video_thread(void *arg)<br>{<br>    FFPlayer *ffp = arg;<br>    VideoState *is = ffp-&gt;is;<br>    AVFrame *frame = av_frame_alloc();<br>    double pts;<br>    double duration;<br>    int ret;<br>    AVRational tb = is-&gt;video_st-&gt;time_base;<br>    AVRational frame_rate = av_guess_frame_rate(is-&gt;ic, is-&gt;video_st, NULL);<br>    int64_t dst_pts = -1;<br>    int64_t last_dst_pts = -1;<br>    int retry_convert_image = 0;<br>    int convert_frame_count = 0;</p>
+<pre><code>ffp_notify_msg2(ffp, FFP_MSG_VIDEO_ROTATION_CHANGED, ffp_get_video_rotate_degrees(ffp));
+
+if (!frame) {
+    return AVERROR(ENOMEM);
+}
+
+for (;;) {
+      //获取解码后的数据AVFrame数据
+    ret = get_video_frame(ffp, frame);
+    if (ret &lt; 0)
+        goto the_end;
+    if (!ret)
+        continue;
+
+    if (ffp-&gt;get_frame_mode) {
+        if (!ffp-&gt;get_img_info || ffp-&gt;get_img_info-&gt;count &lt;= 0) {
+            av_frame_unref(frame);
+            continue;
+        }
+
+        last_dst_pts = dst_pts;
+
+        if (dst_pts &lt; 0) {
+            dst_pts = ffp-&gt;get_img_info-&gt;start_time;
+        } else {
+            dst_pts += (ffp-&gt;get_img_info-&gt;end_time - ffp-&gt;get_img_info-&gt;start_time) / (ffp-&gt;get_img_info-&gt;num - 1);
+        }
+
+        pts = (frame-&gt;pts == AV_NOPTS_VALUE) ? NAN : frame-&gt;pts * av_q2d(tb);
+        pts = pts * 1000;
+        if (pts &gt;= dst_pts) {
+            while (retry_convert_image &lt;= MAX_RETRY_CONVERT_IMAGE) {
+                ret = convert_image(ffp, frame, (int64_t)pts, frame-&gt;width, frame-&gt;height);
+                if (!ret) {
+                    convert_frame_count++;
+                    break;
+                }
+                retry_convert_image++;
+                av_log(NULL, AV_L</code></pre>
+            </div>
+            <hr>
+            <div>
+              <p>
+                
+                  <span>
+                <i class="iconfont icon-inbox"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%BC%80%E5%8F%91/">音视频开发</a>
+                      &nbsp;
+                    
+                  </span>&nbsp;&nbsp;
+                
+                
+              </p>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/03/21/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%BC%80%E5%8F%91/ffmpeg%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">
+                        <i class="fa fa-chevron-left"></i>
+                        <span class="hidden-mobile">ffmpeg常用命令</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/2020/03/07/ndk/Mac-10-15-AndroidStudio-JNI%E8%B0%83%E8%AF%95%E5%87%BA%E9%94%99/">
+                        <span class="hidden-mobile">Mac-10-15-AndroidStudio-JNI调试出错</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="fa fa-chevron-right"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+              
+                <!-- Comments -->
+                <div class="comments" id="comments">
+                  
+                  
+  <script defer src="https://utteranc.es/client.js"
+          repo="HWilliamgo/HWilliamgo.github.io"
+          issue-term="pathname"
+  
+          label="utterances"
+    
+          theme="github-light"
+          crossorigin="anonymous"
+  >
+  </script>
+
+
+                </div>
+              
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc-start"></div>
+<div id="toc">
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+    </div>
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/popper.js/1.16.1/umd/popper.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="https://cdn.staticfile.org/mdbootstrap/4.13.0/js/mdb.min.js" ></script>
+<script  src="/js/main.js" ></script>
+
+
+  <script  src="/js/lazyload.js" ></script>
+
+
+
+  
+  <script  src="https://cdn.staticfile.org/tocbot/4.10.0/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var navHeight = $('#navbar').height();
+      var toc = $('#toc');
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+      var tocLimMax = 2 * boardTop + boardCtn.height();
+
+      $(window).scroll(function () {
+        var tocLimMin = $('#toc-start').offset().top - navHeight;
+        var scroH = document.body.scrollTop + document.documentElement.scrollTop;
+
+        if (tocLimMin <= scroH && scroH <= tocLimMax) {
+          toc.css({
+            'display': 'block',
+            'position': 'fixed',
+            'top': navHeight,
+          });
+        } else if (scroH <= tocLimMin) {
+          toc.css({
+            'position': '',
+            'top': '',
+          });
+        } else if (scroH > tocLimMax) {
+          toc.css('display', 'none');
+        }
+      });
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '.post-content',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc > p').css('visibility', 'visible');
+      }
+      var offset = boardCtn.css('margin-right')
+      $('#toc-ctn').css({
+        'right': offset
+      })
+    });
+  </script>
+
+
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+<!-- Plugins -->
+
+
+
+  <script  src="https://cdn.staticfile.org/prettify/188.0.0/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  linenums');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "理解ijkplayer（六）Vout、Aout、FFPipeLine&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

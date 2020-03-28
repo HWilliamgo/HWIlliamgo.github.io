@@ -151,35 +151,31 @@
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/28/View/View#onKeyDown%E4%B8%8D%E8%B0%83%E7%94%A8/">
-        <p class="h4 index-header">View#onKeyDown不调用</p>
+      <a href="/2018/04/22/JVM/Java%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F/">
+        <p class="h4 index-header">Java虚拟机是什么？</p>
       </a>
 
-      <a href="/2020/03/28/View/View#onKeyDown%E4%B8%8D%E8%B0%83%E7%94%A8/">
+      <a href="/2018/04/22/JVM/Java%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F/">
         
         
           
         
         <div class="index-excerpt" >
-          <div class="index-text mb-1">原因：当前View没有获得焦点。
-只要当前的View获得了焦点，那么View的onKeyDown()，onKeyUp()，setOnKeyListener()等回调都会发生。
-KeyEvent由操作系统接收用户输入产生，在应用层，到达顺序是：
-ViewRootImpl-&gt;DecorView-&gt;Activity-&gt;ViewGroup-&gt;View
-那么看ViewGroup的dispatchOnKeyEvent()方法：
- @Override
- public boolean dispatchKeyEvent(KeyEvent event) {
-     if (mInputE</div>
+          <div class="index-text mb-1">一句话解释：它是一种基于下层的操作系统和硬件平台并利用软件方法来实现的抽象的计算机，可以在上面执行java的字节码程序。
+JVM是Java程序运行的容器,但是他同时也是操作系统的一个进程,因此他也有他自己的运行的生命周期,也有自己的代码和数据空间。
+JVM在整个jdk中处于最底层,负责与操作系统的交互,用来屏蔽操作系统环境,提供一个完整的Java运行环境,因此也叫虚拟计算机。
+如果把Java原程序想象成我们的C++原程序，Java原程序编译后生成的字节码就相当于C++原程序编译后的80x86的机器码（二进制程序文件），JVM虚拟机相当于80x86计算机系统，Java解释器相当于80x86CPU</div>
         </div>
       </a>
 
       <div class="index-btm">
         
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
+          <i class="iconfont icon-riqi2"></i>&nbsp;2018-04-22&nbsp;&nbsp;
         
         
           <i class="iconfont icon-inbox"></i>
           
-            <a href="/categories/View/">View</a>&nbsp;
+            <a href="/categories/JVM/">JVM</a>&nbsp;
           &nbsp;
         
         
@@ -191,35 +187,28 @@ ViewRootImpl-&gt;DecorView-&gt;Activity-&gt;ViewGroup-&gt;View
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/28/View/View#post(Runnable-runnable)%E4%B8%BA%E4%BB%80%E4%B9%88%E8%83%BD%E6%8B%BF%E5%88%B0view%E7%9A%84%E5%AE%BD%E9%AB%98%E3%80%82/">
-        <p class="h4 index-header">View#post(Runnable-runnable)为什么能拿到view的宽高。</p>
+      <a href="/2018/04/21/%E6%97%A5%E8%AE%B0%E6%9C%AC/2018-04-21/">
+        <p class="h4 index-header">Sat Apr 21 2018 00:00:00 GMT+0000 (Coordinated Universal Time)</p>
       </a>
 
-      <a href="/2020/03/28/View/View#post(Runnable-runnable)%E4%B8%BA%E4%BB%80%E4%B9%88%E8%83%BD%E6%8B%BF%E5%88%B0view%E7%9A%84%E5%AE%BD%E9%AB%98%E3%80%82/">
+      <a href="/2018/04/21/%E6%97%A5%E8%AE%B0%E6%9C%AC/2018-04-21/">
         
         
           
         
         <div class="index-excerpt" >
-          <div class="index-text mb-1">结论：view.post()方法在整个view树的performMeasure, performLayout, performDraw执行完后，才被主线程轮询到，才得到执行。
-
-基于android sdk-23的源码分析，文章分成两个部分，实际上我是先写第二部分了再写第一部分的。
-第一部分看一下view.post的内部。
-public boolean post(Runnable action) {
-    final AttachInfo attachInfo = mAttachInfo;
-    if (attachInfo != null) {
-        return attachI</div>
+          <div class="index-text mb-1">今天晚上做了虎牙的安卓的线上笔试，前面选择题都还好，问的算法都不算难，也考了一些计算机网络的问题，好在之前也了解过计算机网络的东西，但是了解的不是很详细，也没有自己写总结，导致当时看的东西现在又忘了，回头还是要找机会把网络的知识补回来。第二大题三个算法题全崩了，一个都不会，真是感叹啊，之前学的几个排序算法一个都用不上，真心不喜欢算法这一块的内容，不过以后还是慢慢地想办法补起来吧。今天是4月21号了，还有两个月就要暑假了，目前还不知道暑假我能去哪里去实习，如果我很厉害的话，早就可以找到实习了。唉…我还欠缺好多必要的东西啊。比如数据结构，树的一些算法，java集合也只懂ArrayList和Link</div>
         </div>
       </a>
 
       <div class="index-btm">
         
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
+          <i class="iconfont icon-riqi2"></i>&nbsp;2018-04-21&nbsp;&nbsp;
         
         
           <i class="iconfont icon-inbox"></i>
           
-            <a href="/categories/View/">View</a>&nbsp;
+            <a href="/categories/%E6%97%A5%E8%AE%B0%E6%9C%AC/">日记本</a>&nbsp;
           &nbsp;
         
         
@@ -231,38 +220,38 @@ public boolean post(Runnable action) {
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/28/View/View#scrollBy(int-x-,-int-y)%E5%8F%8D%E5%90%91/">
-        <p class="h4 index-header">View#scrollBy(int-x-,-int-y)反向</p>
+      <a href="/2018/04/21/Android/%E5%9F%BA%E6%9C%AC%E7%9A%84sql%E8%AF%AD%E5%8F%A5/">
+        <p class="h4 index-header">基本的sql语句</p>
       </a>
 
-      <a href="/2020/03/28/View/View#scrollBy(int-x-,-int-y)%E5%8F%8D%E5%90%91/">
+      <a href="/2018/04/21/Android/%E5%9F%BA%E6%9C%AC%E7%9A%84sql%E8%AF%AD%E5%8F%A5/">
         
         
           
         
         <div class="index-excerpt" >
-          <div class="index-text mb-1">先看下源码
-public void scrollBy(int x, int y) {
-    scrollTo(mScrollX + x, mScrollY + y);
-}
-public void scrollTo(int x, int y) {
-    if (mScrollX != x || mScrollY != y) {
-        int oldX = mScrollX;
-        int oldY = mScrollY;
-        mScrollX = x;
-        mScrollY = y;
-        invalidateParentCaches()</div>
+          <div class="index-text mb-1">我没学过数据库，但是作为一个程序员得了解一些基本的语句，以下为来自网站https://www.codecademy.com/learn/learn-sql的学习笔记
+数据库4中数据类型：INTEGER(整型), TEXT(字符串类型),DATA(日期),REAL(浮点型)。
+查询整张表：
+SELECT * FROM &lt;表名&gt;;
+创建表：
+CREATE TABLE table_name (
+   (列名) (数据类型), 
+   column_2 data_type &lt;限制符&gt; &lt;限制符&gt; ..., 
+   column_3 data_type
+);
+//**</div>
         </div>
       </a>
 
       <div class="index-btm">
         
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
+          <i class="iconfont icon-riqi2"></i>&nbsp;2018-04-21&nbsp;&nbsp;
         
         
           <i class="iconfont icon-inbox"></i>
           
-            <a href="/categories/View/">View</a>&nbsp;
+            <a href="/categories/Android/">Android</a>&nbsp;
           &nbsp;
         
         
@@ -274,158 +263,117 @@ public void scrollTo(int x, int y) {
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/28/View/ViewGroup%E6%8B%A6%E6%88%AA%E5%AD%90View%E7%82%B9%E5%87%BB%E4%BA%8B%E4%BB%B6%E5%A4%B1%E8%B4%A5/">
-        <p class="h4 index-header">ViewGroup拦截子View点击事件失败</p>
+      <a href="/2018/04/16/Android/Broadcast%E7%9A%84%E7%BB%86%E8%8A%82/">
+        <p class="h4 index-header">Broadcast的细节</p>
       </a>
 
-      <a href="/2020/03/28/View/ViewGroup%E6%8B%A6%E6%88%AA%E5%AD%90View%E7%82%B9%E5%87%BB%E4%BA%8B%E4%BB%B6%E5%A4%B1%E8%B4%A5/">
+      <a href="/2018/04/16/Android/Broadcast%E7%9A%84%E7%BB%86%E8%8A%82/">
         
         
           
         
         <div class="index-excerpt" >
           <div class="index-text mb-1">
-流程图整理自Android 触摸事件机制(四) ViewGroup中触摸事件详解 | skywang
-事情起因：要用RelativeLayout去拦截里面的子View的点击事件，因此直接为
-relativeLayout.setOnTouchListener(new View.OnTouchListener() {
-    @Override
-    public boolean onTouch(View v, MotionEvent event) {
-        return true;
+通过Manifest文件注册的BroadcastReceiver
+当发送广播时，不能用LocalBroadcastManager（接收器会接收不到那条广播）。
+不能在任何地方调用context.unregisterReceiver();否则报异常：java.lang.RuntimeException: Unable to start receiver com.solory.myapplication.MyLocalBroadcastReceiver: java.lang.IllegalArgumentException: Receiver not registered: com.solory</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2018-04-16&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Android/">Android</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2018/04/16/Android/Broadcast%E5%85%A8%E8%A7%A3/">
+        <p class="h4 index-header">Broadcast全解</p>
+      </a>
+
+      <a href="/2018/04/16/Android/Broadcast%E5%85%A8%E8%A7%A3/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">Android系统的app可以从系统或者其他app发送或者接受广播消息。类似于(发布-订阅模式)。
+app可以注册来接收特定的广播。当一条广播被发送时，系统自动地将这条广播引导到已经注册来接收那类广播的app。
+一般来说，广播可以被用作跨应用的和正常用户流程之外的通信系统。
+接收广播app可以通过两种方法来注册接受广播：
+
+manifest文件中注册
+&lt;receiver android:name=&quot;.MyBroadcastReceiver&quot;  android:exported=&quot;true&quot;&gt;
+        &lt;intent-filter</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2018-04-16&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Android/">Android</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2018/04/13/%E7%AE%97%E6%B3%95/%E7%BA%BF%E6%80%A7%E6%9F%A5%E6%89%BE,%E9%80%92%E5%BD%92,%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE,%E9%80%89%E6%8B%A9%E6%8E%92%E5%BA%8F,%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F,%E5%BD%92%E5%B9%B6,%E5%BF%AB%E6%8E%92/">
+        <p class="h4 index-header">线性查找,递归,二分查找,选择排序,插入排序,归并,快排</p>
+      </a>
+
+      <a href="/2018/04/13/%E7%AE%97%E6%B3%95/%E7%BA%BF%E6%80%A7%E6%9F%A5%E6%89%BE,%E9%80%92%E5%BD%92,%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE,%E9%80%89%E6%8B%A9%E6%8E%92%E5%BA%8F,%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F,%E5%BD%92%E5%B9%B6,%E5%BF%AB%E6%8E%92/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">阅读&lt;&lt;算法基础&gt;&gt;做下的笔记
+
+public class Algorithms {
+    private Algorithms() {
+
     }
-});打算通过返回true来将后续的点击事件消费掉，但是失败了。
-在看了源码分析之后，找</div>
-        </div>
-      </a>
 
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/View/">View</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
+    public static Algorithms getInstance() {
+        return SingletonHolder.instance;
+    }
 
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/28/View/View%E4%BA%8B%E4%BB%B6%E5%88%86%E5%8F%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
-        <p class="h4 index-header">View事件分发学习笔记</p>
-      </a>
-
-      <a href="/2020/03/28/View/View%E4%BA%8B%E4%BB%B6%E5%88%86%E5%8F%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">
-首先推荐郭霖的真正的通俗易懂的View的事件分发文章：
-Android事件分发机制完全解析，带你从源码的角度彻底理解(上)
-
-文章中讲述了几个要点：
-
-如果你在执行ACTION_DOWN的时候返回了false，后面一系列其它的action就不会再得到执行了。简单的说，就是当dispatchTouchEvent在进行事件分发的时候，只有前一个action返回true，才会触发后一个action。即消费事件才会继续有事件。
-在dispatchMotionEvent方法中执行到了onTouchEvent中将MotionEvent对象传入switch中做ACTION_DOWN、ACTION_UP等判</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/View/">View</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/28/View/View%E7%AE%80%E8%A6%81%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/">
-        <p class="h4 index-header">View简要工作原理</p>
-      </a>
-
-      <a href="/2020/03/28/View/View%E7%AE%80%E8%A6%81%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">ViewRootImpl对象=&gt;performTraversals()
-private void performTraversals() {
-//上下近800行代码。
-  performMeasure();
-  performLayout();
-  performDraw();
-}private void performMeasure(int childWidthMeasureSpec, int childHeightMeasureSpec) {
-//mView是DecorView对象
-  mView.measure(childWidthMeasureSpec, childHeightM</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/View/">View</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/28/View/android%E7%9A%84PopupWindow%E6%97%A0%E6%B3%95%E6%94%B6%E5%88%B0KeyEvent-KEYCODE_BACK%E7%9A%84%E5%8E%9F%E5%9B%A0-md/">
-        <p class="h4 index-header">android的PopupWindow无法收到KeyEvent-KEYCODE_BACK的原因-md</p>
-      </a>
-
-      <a href="/2020/03/28/View/android%E7%9A%84PopupWindow%E6%97%A0%E6%B3%95%E6%94%B6%E5%88%B0KeyEvent-KEYCODE_BACK%E7%9A%84%E5%8E%9F%E5%9B%A0-md/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">PopupWindow无法收到KeyEvent.KEYCODE_BACK的原因：
-在创建的顶层PopupDecorView的dispatchKeyEvent()回调中，把该事件拦截了。
-1. PopupDecorView创建PopupDecorView代码：
-//PopupWindow#showAtLocation()
-public void showAtLocation(IBinder token, int gravity, int x, int y) {
-    if (isShowing() || mContentView == null) {
-        return;
+    private static class SingletonHolder {
+        private static final Algorithms instance = new Algorithms();
     }</div>
         </div>
       </a>
 
       <div class="index-btm">
         
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
+          <i class="iconfont icon-riqi2"></i>&nbsp;2018-04-13&nbsp;&nbsp;
         
         
           <i class="iconfont icon-inbox"></i>
           
-            <a href="/categories/View/">View</a>&nbsp;
+            <a href="/categories/%E7%AE%97%E6%B3%95/">算法</a>&nbsp;
           &nbsp;
         
         
@@ -437,33 +385,39 @@ public void showAtLocation(IBinder token, int gravity, int x, int y) {
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/28/View/android%E8%87%AA%E5%AE%9A%E4%B9%89View%E4%B8%AD%E7%94%A8NinePatch%E7%B1%BB%E7%94%BB9%E5%9B%BE/">
-        <p class="h4 index-header">android自定义View中用NinePatch类画9图</p>
+      <a href="/2018/04/08/Java/Comparable%E6%8E%A5%E5%8F%A3%E6%98%AF%E4%BB%80%E4%B9%88/">
+        <p class="h4 index-header">Comparable接口是什么</p>
       </a>
 
-      <a href="/2020/03/28/View/android%E8%87%AA%E5%AE%9A%E4%B9%89View%E4%B8%AD%E7%94%A8NinePatch%E7%B1%BB%E7%94%BB9%E5%9B%BE/">
+      <a href="/2018/04/08/Java/Comparable%E6%8E%A5%E5%8F%A3%E6%98%AF%E4%BB%80%E4%B9%88/">
         
         
           
         
         <div class="index-excerpt" >
-          <div class="index-text mb-1">9图的制作在官网和其他博客中都有大量教程，最终可以制作出XXX.9.png文件
-##　没有用NinePatch:在自定义View中，直用Bitmap和画笔而不配合NinePatch类是画不9图的效果的，比如：
-//R.drawable.image9Patch是制作好的9图
-Bitmap bitmap=BitmapFactory.decodeResource(getResources(),R.drawable.image9Patch)@Override
-protected void onDraw(Canvas canvas) {
-   ...创建RectF dst，作为bitmap被画出且自动缩</div>
+          <div class="index-text mb-1">//Comparable接口：
+//实现了Comparable接口的类的对象，
+//可被Collections.sort(List)方法和Arrays.sort(Object[])方法自动地排序。
+
+//实现该接口的方法可以作为SortedMap的key
+//或者SortedSet中的element,但是需要额外地声名一个Comparator
+public interface Comparable&lt;T&gt;{
+  public int compareTo(T o);
+}
+
+Comparable是内部比较器，Comparator是外部比较器。
+以下为Comparable和Comparat</div>
         </div>
       </a>
 
       <div class="index-btm">
         
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
+          <i class="iconfont icon-riqi2"></i>&nbsp;2018-04-08&nbsp;&nbsp;
         
         
           <i class="iconfont icon-inbox"></i>
           
-            <a href="/categories/View/">View</a>&nbsp;
+            <a href="/categories/Java/">Java</a>&nbsp;
           &nbsp;
         
         
@@ -475,28 +429,41 @@ protected void onDraw(Canvas canvas) {
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/28/View/getWidth%E5%92%8CgetHeight%E6%96%B9%E6%B3%95/">
-        <p class="h4 index-header">getWidth和getHeight方法</p>
+      <a href="/2018/04/07/%E7%AE%97%E6%B3%95/%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E6%B1%82%E5%87%BA%E7%8E%B0%E6%AC%A1%E6%95%B0%E6%9C%80%E5%A4%9A%E5%AD%97%E7%AC%A6/">
+        <p class="h4 index-header">字符串中求出现次数最多字符</p>
       </a>
 
-      <a href="/2020/03/28/View/getWidth%E5%92%8CgetHeight%E6%96%B9%E6%B3%95/">
+      <a href="/2018/04/07/%E7%AE%97%E6%B3%95/%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E6%B1%82%E5%87%BA%E7%8E%B0%E6%AC%A1%E6%95%B0%E6%9C%80%E5%A4%9A%E5%AD%97%E7%AC%A6/">
         
         
           
         
         <div class="index-excerpt" >
-          <div class="index-text mb-1">getWidth()和getHeight()方法在onLayout之后才能拿到返回值，因此不要在自定义View的构造函数中调用这两个方法，否则返回0，要在onDraw中去调用这两个方法。                                                                                                                                                                                                               </div>
+          <div class="index-text mb-1">思路：
+
+引入TreeSet：通过集合快速找到所有出现的字符串
+引入ArrayList：为了快速排序，再通过StringBuilder生成排序后的字符串
+通过String api中的基本方法indexOf和lastIndexOf来计算TreeSet中每个字符串的最大值
+如果出现相同的，则把相同的都记录在一个列表中。
+记录第一个出现次数最多的字符（为了计算多个字符串相同情况）
+计算最大字符串列表中哪些才是真正出现次数最多的、
+
+import java.util.*;
+
+public class MainJava {
+
+    public static void main(String[] ar</div>
         </div>
       </a>
 
       <div class="index-btm">
         
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
+          <i class="iconfont icon-riqi2"></i>&nbsp;2018-04-07&nbsp;&nbsp;
         
         
           <i class="iconfont icon-inbox"></i>
           
-            <a href="/categories/View/">View</a>&nbsp;
+            <a href="/categories/%E7%AE%97%E6%B3%95/">算法</a>&nbsp;
           &nbsp;
         
         
@@ -508,38 +475,63 @@ protected void onDraw(Canvas canvas) {
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/28/Kotlin/%E8%A7%A3%E9%87%8AKotlin%E5%8D%8F%E7%A8%8B%E5%AE%98%E6%96%B9%E6%96%87%E6%A1%A3%EF%BC%9A%EF%BC%88%E4%B8%80%EF%BC%89%E5%9F%BA%E7%A1%80%EF%BC%9A/">
-        <p class="h4 index-header">解释Kotlin协程官方文档：（一）基础：</p>
+      <a href="/2018/04/07/Java/hashCode%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%8Chash%E8%A1%A8%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F/">
+        <p class="h4 index-header">hashCode是什么，hash表是什么？</p>
       </a>
 
-      <a href="/2020/03/28/Kotlin/%E8%A7%A3%E9%87%8AKotlin%E5%8D%8F%E7%A8%8B%E5%AE%98%E6%96%B9%E6%96%87%E6%A1%A3%EF%BC%9A%EF%BC%88%E4%B8%80%EF%BC%89%E5%9F%BA%E7%A1%80%EF%BC%9A/">
+      <a href="/2018/04/07/Java/hashCode%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%8Chash%E8%A1%A8%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F/">
         
         
           
         
         <div class="index-excerpt" >
-          <div class="index-text mb-1">本系列文章用于解释kotlin官方文档中的示例代码。希望能帮助到你。
-基础官方文档地址 https://www.kotlincn.net/docs/reference/coroutines/basics.html 
-作用域构建器import kotlinx.coroutines.*
-
-fun main() = runBlocking { // this: CoroutineScope
-    launch { 
-        delay(200L)
-        println(&quot;Task from runBlocking&quot;)
-    }
-
-    coroutineS</div>
+          <div class="index-text mb-1"> 海子：浅谈Java中的hashcode方法                                                                                                                                                                                                                                                                                      </div>
         </div>
       </a>
 
       <div class="index-btm">
         
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
+          <i class="iconfont icon-riqi2"></i>&nbsp;2018-04-07&nbsp;&nbsp;
         
         
           <i class="iconfont icon-inbox"></i>
           
-            <a href="/categories/Kotlin/">Kotlin</a>&nbsp;
+            <a href="/categories/Java/">Java</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2018/03/29/Java/Java%E4%BC%A0%E5%80%BC%E5%92%8C%E4%BC%A0%E5%BC%95%E7%94%A8%E7%9A%84%E7%9C%9F%E7%9B%B8/">
+        <p class="h4 index-header">Java传值和传引用的真相</p>
+      </a>
+
+      <a href="/2018/03/29/Java/Java%E4%BC%A0%E5%80%BC%E5%92%8C%E4%BC%A0%E5%BC%95%E7%94%A8%E7%9A%84%E7%9C%9F%E7%9B%B8/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">JAVA 对象引用，以及对象赋值
+
+上述文章可以作参考，但是最后总结说的，包括《thingking in Java》说的：“不管是基本类型还是对象类型，都是传值”。我认为这句话会引起歧义，真正的真相是：不管Java参数的类型是什么，一律传递参数的副本。《thingking in Java》中：“When you&#39;re passing primitives into a method,you get a distinct copy of the primitive.When you&#39;re passing a reference into a method,you get a co</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2018-03-29&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Java/">Java</a>&nbsp;
           &nbsp;
         
         
@@ -551,7 +543,7 @@ fun main() = runBlocking { // this: CoroutineScope
 
   <nav aria-label="index posts navigation">
     <span class="pagination pg-blue justify-content-center mt-5" id="pagination">
-      <a class="extend prev" rel="prev" href="/page/11/"><i class="fas fa-angle-double-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><a class="page-number" href="/page/14/">14</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><a class="extend next" rel="next" href="/page/13/"><i class="fas fa-angle-double-right"></i></a>
+      <a class="extend prev" rel="prev" href="/page/11/"><i class="fas fa-angle-double-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><a class="page-number" href="/page/14/">14</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><a class="extend next" rel="next" href="/page/13/"><i class="fas fa-angle-double-right"></i></a>
     </span>
   </nav>
   
