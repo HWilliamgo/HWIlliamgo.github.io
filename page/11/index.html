@@ -151,22 +151,22 @@
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/28/View/android%E8%87%AA%E5%AE%9A%E4%B9%89View%E4%B8%AD%E7%94%A8NinePatch%E7%B1%BB%E7%94%BB9%E5%9B%BE/">
-        <p class="h4 index-header">android自定义View中用NinePatch类画9图</p>
+      <a href="/2020/03/28/Java/%E9%80%9A%E8%BF%87%E5%8F%8D%E5%B0%84%E6%9F%A5%E7%9C%8B%E6%B3%9B%E5%9E%8B%E4%BF%A1%E6%81%AF/">
+        <p class="h4 index-header">通过反射查看泛型信息</p>
       </a>
 
-      <a href="/2020/03/28/View/android%E8%87%AA%E5%AE%9A%E4%B9%89View%E4%B8%AD%E7%94%A8NinePatch%E7%B1%BB%E7%94%BB9%E5%9B%BE/">
+      <a href="/2020/03/28/Java/%E9%80%9A%E8%BF%87%E5%8F%8D%E5%B0%84%E6%9F%A5%E7%9C%8B%E6%B3%9B%E5%9E%8B%E4%BF%A1%E6%81%AF/">
         
         
           
         
         <div class="index-excerpt" >
-          <div class="index-text mb-1">9图的制作在官网和其他博客中都有大量教程，最终可以制作出XXX.9.png文件
-##　没有用NinePatch:在自定义View中，直用Bitmap和画笔而不配合NinePatch类是画不9图的效果的，比如：
-//R.drawable.image9Patch是制作好的9图
-Bitmap bitmap=BitmapFactory.decodeResource(getResources(),R.drawable.image9Patch)@Override
-protected void onDraw(Canvas canvas) {
-   ...创建RectF dst，作为bitmap被画出且自动缩</div>
+          <div class="index-text mb-1">#####通过泛型和反射避免强制类型转换：下面这个代码是没问题的。
+Class clazz=Class.forName(&quot;java.util.Date&quot;);
+Date date= (Date) clazz.newInstance();但是这样也没问题，编译器不会报错，但是run肯定会报错。
+String string= (String) clazz.newInstance();结合泛型反射可以避免强制类型转换，让编译器帮我们检查：
+@SuppressWarnings(value = &quot;unchecked&quot;)
+public class MainTest {</div>
         </div>
       </a>
 
@@ -177,7 +177,7 @@ protected void onDraw(Canvas canvas) {
         
           <i class="iconfont icon-inbox"></i>
           
-            <a href="/categories/View/">View</a>&nbsp;
+            <a href="/categories/Java/">Java</a>&nbsp;
           &nbsp;
         
         
@@ -189,24 +189,28 @@ protected void onDraw(Canvas canvas) {
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/28/View/android%E7%9A%84PopupWindow%E6%97%A0%E6%B3%95%E6%94%B6%E5%88%B0KeyEvent-KEYCODE_BACK%E7%9A%84%E5%8E%9F%E5%9B%A0-md/">
-        <p class="h4 index-header">android的PopupWindow无法收到KeyEvent-KEYCODE_BACK的原因-md</p>
+      <a href="/2020/03/28/Kotlin/Java%E4%B8%AD%E8%A2%AB%E9%98%89%E5%89%B2%E7%9A%84%E9%97%AD%E5%8C%85%E5%9C%A8Kotlin%E4%B8%AD%E7%9A%84%E8%A1%A8%E7%8E%B0%E5%A6%82%E4%BD%95%EF%BC%9F/">
+        <p class="h4 index-header">Java中被阉割的闭包在Kotlin中的表现如何？</p>
       </a>
 
-      <a href="/2020/03/28/View/android%E7%9A%84PopupWindow%E6%97%A0%E6%B3%95%E6%94%B6%E5%88%B0KeyEvent-KEYCODE_BACK%E7%9A%84%E5%8E%9F%E5%9B%A0-md/">
+      <a href="/2020/03/28/Kotlin/Java%E4%B8%AD%E8%A2%AB%E9%98%89%E5%89%B2%E7%9A%84%E9%97%AD%E5%8C%85%E5%9C%A8Kotlin%E4%B8%AD%E7%9A%84%E8%A1%A8%E7%8E%B0%E5%A6%82%E4%BD%95%EF%BC%9F/">
         
         
           
         
         <div class="index-excerpt" >
-          <div class="index-text mb-1">PopupWindow无法收到KeyEvent.KEYCODE_BACK的原因：
-在创建的顶层PopupDecorView的dispatchKeyEvent()回调中，把该事件拦截了。
-1. PopupDecorView创建PopupDecorView代码：
-//PopupWindow#showAtLocation()
-public void showAtLocation(IBinder token, int gravity, int x, int y) {
-    if (isShowing() || mContentView == null) {
-        return;
-    }</div>
+          <div class="index-text mb-1">1 闭包概述闭包，Clousure。在Java中表现为Lambda表达式，在Koltin中表现为函数类型变量（或者也叫做Lambda表达式）。
+其定义：java为什么匿名内部类的参数引用时final？ - 胖胖的回答
+
+一个依赖于自由变量的函数 
+
+处在含有这些自由变量的一个外围环境
+
+这个函数能够访问外围环境里的自由变量
+
+
+2 Kotlin和Java的闭包对比在java8中，java中的闭包类型依然不能直接地修改外部环境的变量的引用，因此就有了众所周知的：匿名内部类的实例对外部环境的变量的访问，都需要让外部环境的变量加上final关键字。
+在Kotin中，这一点被改进了，Kotlin中的闭</div>
         </div>
       </a>
 
@@ -217,7 +221,7 @@ public void showAtLocation(IBinder token, int gravity, int x, int y) {
         
           <i class="iconfont icon-inbox"></i>
           
-            <a href="/categories/View/">View</a>&nbsp;
+            <a href="/categories/Kotlin/">Kotlin</a>&nbsp;
           &nbsp;
         
         
@@ -229,25 +233,24 @@ public void showAtLocation(IBinder token, int gravity, int x, int y) {
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/28/View/View%E7%AE%80%E8%A6%81%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/">
-        <p class="h4 index-header">View简要工作原理</p>
+      <a href="/2020/03/28/Kotlin/Kotlin%E5%8D%8F%E7%A8%8B%EF%BC%88%E4%B8%80%EF%BC%89%E7%90%86%E8%A7%A3/">
+        <p class="h4 index-header">Kotlin协程（一）理解</p>
       </a>
 
-      <a href="/2020/03/28/View/View%E7%AE%80%E8%A6%81%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/">
+      <a href="/2020/03/28/Kotlin/Kotlin%E5%8D%8F%E7%A8%8B%EF%BC%88%E4%B8%80%EF%BC%89%E7%90%86%E8%A7%A3/">
         
         
           
         
         <div class="index-excerpt" >
-          <div class="index-text mb-1">ViewRootImpl对象=&gt;performTraversals()
-private void performTraversals() {
-//上下近800行代码。
-  performMeasure();
-  performLayout();
-  performDraw();
-}private void performMeasure(int childWidthMeasureSpec, int childHeightMeasureSpec) {
-//mView是DecorView对象
-  mView.measure(childWidthMeasureSpec, childHeightM</div>
+          <div class="index-text mb-1">
+最近这段时间抽空学习了一下Kotlin协程相关的知识，在此做一个总结和梳理
+
+是什么kotlin协程是什么一个名为kotlinx.coroutines包下的库， 是由 JetBrains 开发的功能丰富的协程库，方便大家利用协程来完成异步处理的开发。
+当我们创建协程（Coroutine）时，我们创建的是什么？一种类似于java.lang.Runnable，但比Runnable功能要强大的多的对象。
+//launch函数是CoroutineScope的拓展函数，即launch{}函数需要该对象才能使用，以下代码不能直接使用
+launch(Dispatchers.IO) {
+    //这段代码</div>
         </div>
       </a>
 
@@ -258,7 +261,7 @@ private void performTraversals() {
         
           <i class="iconfont icon-inbox"></i>
           
-            <a href="/categories/View/">View</a>&nbsp;
+            <a href="/categories/Kotlin/">Kotlin</a>&nbsp;
           &nbsp;
         
         
@@ -366,24 +369,19 @@ List&lt;? extends </div>
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/28/View/View%E4%BA%8B%E4%BB%B6%E5%88%86%E5%8F%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
-        <p class="h4 index-header">View事件分发学习笔记</p>
+      <a href="/2020/03/28/Android/RecyclerView%E8%AE%B0%E4%BA%8B/">
+        <p class="h4 index-header">RecyclerView记事</p>
       </a>
 
-      <a href="/2020/03/28/View/View%E4%BA%8B%E4%BB%B6%E5%88%86%E5%8F%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+      <a href="/2020/03/28/Android/RecyclerView%E8%AE%B0%E4%BA%8B/">
         
         
           
         
         <div class="index-excerpt" >
           <div class="index-text mb-1">
-首先推荐郭霖的真正的通俗易懂的View的事件分发文章：
-Android事件分发机制完全解析，带你从源码的角度彻底理解(上)
-
-文章中讲述了几个要点：
-
-如果你在执行ACTION_DOWN的时候返回了false，后面一系列其它的action就不会再得到执行了。简单的说，就是当dispatchTouchEvent在进行事件分发的时候，只有前一个action返回true，才会触发后一个action。即消费事件才会继续有事件。
-在dispatchMotionEvent方法中执行到了onTouchEvent中将MotionEvent对象传入switch中做ACTION_DOWN、ACTION_UP等判</div>
+当RecyclerView组装完后，立刻去获取Item的高度：int childHeight = recyclerView.getLayoutManager().findViewByPosition(0).getHeight();会报空指针，因为itemView还没有attach到recyclerView中，获取不到itemView，用view.post()解决recyclerView.post(new Runnable){
+ int childHeight = recyclerView.getLayoutManager().findViewByPosition(0).getHeight()</div>
         </div>
       </a>
 
@@ -394,7 +392,7 @@ Android事件分发机制完全解析，带你从源码的角度彻底理解(上
         
           <i class="iconfont icon-inbox"></i>
           
-            <a href="/categories/View/">View</a>&nbsp;
+            <a href="/categories/Android/">Android</a>&nbsp;
           &nbsp;
         
         

@@ -191,29 +191,17 @@
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/28/java%E5%B9%B6%E5%8F%91/%E7%AE%80%E6%98%93%E7%BA%BF%E7%A8%8B%E6%B1%A0/">
-        <p class="h4 index-header">简易线程池</p>
+      <a href="/2020/03/28/java%E5%B9%B6%E5%8F%91/%E7%BA%BF%E7%A8%8B%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E5%92%8C%E5%90%8C%E6%AD%A5%E7%9B%91%E8%A7%86%E5%99%A8%E6%98%AF%E4%BB%80%E4%B9%88/">
+        <p class="h4 index-header">线程生命周期和同步监视器是什么</p>
       </a>
 
-      <a href="/2020/03/28/java%E5%B9%B6%E5%8F%91/%E7%AE%80%E6%98%93%E7%BA%BF%E7%A8%8B%E6%B1%A0/">
+      <a href="/2020/03/28/java%E5%B9%B6%E5%8F%91/%E7%BA%BF%E7%A8%8B%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E5%92%8C%E5%90%8C%E6%AD%A5%E7%9B%91%E8%A7%86%E5%99%A8%E6%98%AF%E4%BB%80%E4%B9%88/">
         
         
           
         
         <div class="index-excerpt" >
-          <div class="index-text mb-1">来自《Java并发编程的艺术》
-一个简易的线程池的实现。三个类：ThreadPool线程池接口DefaultThreadPool线程池接口实现Worker工作线程
-线程池的工作逻辑：
-全部代码
-package ConcurrencyArt;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
-
-interface ThreadPool</div>
+          <div class="index-text mb-1">###线程生命周期新建：Thread thread=new Thread();，用new关键字创建一个线程后，构造方法中将当前thread对象加入ThreadGroup，虚拟机为其分配内存。就绪：调用线程实例的start()，JVM为其创建方法调用栈和程序计数器，线程何时开始运行取决于JVM里线程调度器的调度。阻塞：如果处于就绪状态的线程获得了CPU,开始执行run方法的线程执行体,则该线程处于运行状态,如果计算机只有一个CPU,那么在任何时刻只有一个线程处于运行状态。当然,在一个多处理器的机器上,将会有多个线程并行执行;当线程数大于处理器数时,依然会存在多个线程在同一个CPU上轮换的现象。当</div>
         </div>
       </a>
 
@@ -236,109 +224,31 @@ interface ThreadPool</div>
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/28/java%E5%B9%B6%E5%8F%91/%E3%80%8AJava%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3%E3%80%8B%E4%B8%AD%E5%85%B3%E4%BA%8E%E7%BA%BF%E7%A8%8B%E7%9A%84%E6%8F%8F%E8%BF%B0/">
-        <p class="h4 index-header">《Java编程思想》中关于线程的描述</p>
+      <a href="/2020/03/28/java%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/Android%EF%BC%8CMvp%E6%A8%A1%E5%BC%8F%E5%AD%A6%E4%B9%A0/">
+        <p class="h4 index-header">Android，Mvp模式学习</p>
       </a>
 
-      <a href="/2020/03/28/java%E5%B9%B6%E5%8F%91/%E3%80%8AJava%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3%E3%80%8B%E4%B8%AD%E5%85%B3%E4%BA%8E%E7%BA%BF%E7%A8%8B%E7%9A%84%E6%8F%8F%E8%BF%B0/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">最开始，线程只是用于分配单个处理器的处理时间的一种工具。但假如操作系统本身支持多个处理器，那么每个线程都可分配给一个不同的处理器，真正进入“并行运算”状态。从程序设计语言的角度看，多线程操作最有价值的特性之一就是程序员不必关心到底使用了多少个处理器。程序在逻辑意义上被分割为数个线程；假如机器本身安装了多个处理器，那么程序会运行得更快，毋需作出任何特殊的调校。
-
-利用对象，可将一个程序分割成相互独立的区域。我们通常也需要将一个程序转换成多个独立运行的子任务。象这样的每个子任务都叫作一个“线程”（Thread）。编写程序时，可将每个线程都想象成独立运行，而且都有自己的专用CPU。一些基础机制实际会</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/java%E5%B9%B6%E5%8F%91/">java并发</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/28/java%E5%B9%B6%E5%8F%91/volatile%E5%85%B3%E9%94%AE%E5%AD%97/">
-        <p class="h4 index-header">volatile关键字</p>
-      </a>
-
-      <a href="/2020/03/28/java%E5%B9%B6%E5%8F%91/volatile%E5%85%B3%E9%94%AE%E5%AD%97/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">弄懂volatile之前首先确保弄懂了java内存模型，可参考我的整理Java内存模型
-volatile的作用如下：
-
-保证了不同线程对这个变量进行操作时的可见性，即一个线程修改了某个变量的值，这新值对其他线程来说是立即可见的。
-禁止进行指令重排序。(涉及volatile变量的代码的前面和后面的代码不会进行重排序)。
-
-注意：
-
-volatile不保证被修饰的变量的操作的原子性（要保证操作的原子性建议使用同步:synchronized和Lock）。
-
-使用场景：
-
-标记状态量：volatile boolean flag = false;
-
-
-while(!flag){    doSomethi</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/java%E5%B9%B6%E5%8F%91/">java并发</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/28/java%E5%B9%B6%E5%8F%91/java%E7%BA%BF%E7%A8%8B%E6%B1%A0%E6%80%BB%E7%BB%93/">
-        <p class="h4 index-header">java线程池总结</p>
-      </a>
-
-      <a href="/2020/03/28/java%E5%B9%B6%E5%8F%91/java%E7%BA%BF%E7%A8%8B%E6%B1%A0%E6%80%BB%E7%BB%93/">
+      <a href="/2020/03/28/java%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/Android%EF%BC%8CMvp%E6%A8%A1%E5%BC%8F%E5%AD%A6%E4%B9%A0/">
         
         
           
         
         <div class="index-excerpt" >
           <div class="index-text mb-1">
-我学习线程池的第一篇讲的最好、最明白的文章：java&amp;android线程池-Executor框架之ThreadPoolExcutor&amp;ScheduledThreadPoolExecutor浅析（多线程编程之三）
+title: Mvp项目学习：
+今天用我们用MVP模式来完成一个简单的登录界面的实现。业务需求：
+
+用户输入用户名和密码之后，按下登录按钮，跳转到另一个Activity。
+这里面隐含的一些含义有：检查用户名和密码（网络访问）
+点击登录按钮，对网络返回结果判断并处理（设置监听器）
 
 
-另外一个是能快速帮你回忆的总结性文章，说的也不错：通俗易懂，各常用线程池执行的-流程图
 
-ThreadPoolExecutor的构造方法的参数：
-    public ThreadPoolExecutor(int corePoolSize,
-                              int maximumPoolSize,
-           </div>
+由于我们这里是简化版本的，所以不写网络访问的代码，用一个延时的handler来模拟就行了。
+MVP模式的思路是：
+
+创建Model接口，View接口，Presenter接口。
+View接口：根据业务或者UI设计师给的图片来定制我们的View接口中应该有哪些方法，比如显示进度条，跳转界面，只要用户能操作的或者用户</div>
         </div>
       </a>
 
@@ -349,7 +259,7 @@ ThreadPoolExecutor的构造方法的参数：
         
           <i class="iconfont icon-inbox"></i>
           
-            <a href="/categories/java%E5%B9%B6%E5%8F%91/">java并发</a>&nbsp;
+            <a href="/categories/java%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">java设计模式</a>&nbsp;
           &nbsp;
         
         
@@ -361,194 +271,28 @@ ThreadPoolExecutor的构造方法的参数：
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/28/java%E5%B9%B6%E5%8F%91/Thread%E7%9A%84run%E6%96%B9%E6%B3%95%E5%92%8Cstart%E6%96%B9%E6%B3%95/">
-        <p class="h4 index-header">Thread的run方法和start方法</p>
+      <a href="/2020/03/28/java%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">
+        <p class="h4 index-header">单例模式</p>
       </a>
 
-      <a href="/2020/03/28/java%E5%B9%B6%E5%8F%91/Thread%E7%9A%84run%E6%96%B9%E6%B3%95%E5%92%8Cstart%E6%96%B9%E6%B3%95/">
+      <a href="/2020/03/28/java%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">
         
         
           
         
         <div class="index-excerpt" >
-          <div class="index-text mb-1">结论：
+          <div class="index-text mb-1">public class Singleton {
+    /**
+     * 饿汉模式
+     * 在类加载时就完成了静态对象的初始化，所以类加载较慢，但获取对象的速度较快
+     * 这种方式基于类加载机制，避免了多线程同步问题。
+     * 但是由于在类加载的时候就完成了单例对象的实例化，那么如果至始至终从未使用该实例，就造成了内存的浪费
+     **/
+    private static Singleton instance = new Singleton();
+    private Singleton() {
 
-调用Thread里的run方法的时候，会直接在主线程里通过对象调用该对象的run方法，就是普通的调用，不会开启线程。
-start方法会开启一个新的线程去执行run方法里的代码。
-代码：
-
-
-
-
-
-结果：
-
-                                                                                                                                                                                                </div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/java%E5%B9%B6%E5%8F%91/">java并发</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/28/java%E5%B9%B6%E5%8F%91/Java%E7%BA%BF%E7%A8%8B%E6%B1%A0%E7%9B%B8%E5%85%B3%E7%B1%BB%E8%A7%A3%E9%87%8A%EF%BC%8C%E6%95%B4%E7%90%86%E8%87%AAJava%E6%96%87%E6%A1%A3/">
-        <p class="h4 index-header">Java线程池相关类解释，整理自Java文档</p>
-      </a>
-
-      <a href="/2020/03/28/java%E5%B9%B6%E5%8F%91/Java%E7%BA%BF%E7%A8%8B%E6%B1%A0%E7%9B%B8%E5%85%B3%E7%B1%BB%E8%A7%A3%E9%87%8A%EF%BC%8C%E6%95%B4%E7%90%86%E8%87%AAJava%E6%96%87%E6%A1%A3/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">接口Executor:一个可以执行被提交的Runnable的对象。该接口提供了一种任务提交的解耦方案，体现在每个task如何运行，使用，调度等。Executor接口并不严格要求task的执行过程是异步的，在最简单的情况下，一个Executor可以直接将task放在调用者的线程中执行：
-class DirectExecutor implements Executor{
-  public void execute(Runnable r){
-    r.run();
-  }
-}但更常见的情况一般是：task会被放置在其他线程而非调用者线程执行。许多Executor接口的实现会给task如何以及何时被</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/java%E5%B9%B6%E5%8F%91/">java并发</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/28/java%E5%B9%B6%E5%8F%91/Java%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/">
-        <p class="h4 index-header">Java内存模型</p>
-      </a>
-
-      <a href="/2020/03/28/java%E5%B9%B6%E5%8F%91/Java%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">
-参考：海子的博客Java并发编程：volatile关键字解析
-
-三个重点：
-
-原子性
-可见性
-有序性
-
-讨论这三点之前先说一下计算机的内存模型：
-
-CPU对程序的指令的执行速度远远大于从内存中读写数据的速度所以如果让CPU直接访问内存来读数据再写结果去内存，就会效率非常低下。因此就有了高速缓存——Cache这个东西。
-举个例子看看他们怎么工作的:i=0;单线程运行代码：i=i+1;步骤是：Cache从主存读取i=0， CPU从Cache读取i，CPU运算i=i+1， 将结果i=1写入Cache，Cache再将结果i=1写入主存。
-单线程没问题，但是多线程中*，比如开启两个线程分别执行i=i+</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/java%E5%B9%B6%E5%8F%91/">java并发</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/28/java%E5%B9%B6%E5%8F%91/Future%E7%9B%B8%E5%85%B3%E7%B1%BB%E8%A7%A3%E9%87%8A/">
-        <p class="h4 index-header">Future相关类解释</p>
-      </a>
-
-      <a href="/2020/03/28/java%E5%B9%B6%E5%8F%91/Future%E7%9B%B8%E5%85%B3%E7%B1%BB%E8%A7%A3%E9%87%8A/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">Future接口一个Future代表一个异步计算的结果。他提供了5个方法来确认计算是否完成，来等待异步任务的完成，来获取异步计算的结果。当计算完成，计算结果有且只能有通过get()方法来获取，并且会阻塞调用者线程直到异步计算的任务完成。取消只能通过cancel()方法。他提供了额外的方法来决定任务正常完成还是被取消。一旦一个计算任务完成，他将不再能够被取消。如果你要用Future是为了能够取消异步任务而不要他的返回结果，那么可以使用Future&lt;?&gt;并返回null作为异步任务的执行结果。
-RunnableFuture接口表示一个可以run的Future, run方法的成功执行标识着</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/java%E5%B9%B6%E5%8F%91/">java并发</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/28/java%E5%B9%B6%E5%8F%91/FutureTask%E5%92%8CExecutorService#submit()/">
-        <p class="h4 index-header">FutureTask和ExecutorService#submit()</p>
-      </a>
-
-      <a href="/2020/03/28/java%E5%B9%B6%E5%8F%91/FutureTask%E5%92%8CExecutorService#submit()/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">
-ThreadPoolExecutor对象可以通过Executor的工厂方法(newXXX)或者他自己的构造函数来创建。他是Java线程池的实现类。
-使用：
-//Runnable
-fun main(args: Array&lt;String&gt;) {
-    val pool= Executors.newFixedThreadPool(3)
-    pool.execute{
-        Thread.sleep(2000)
-        println(&quot;无返回值&quot;)
-        pool.shutdown()
     }
-}
-
-//FutureTask
-f</div>
+    public static Single</div>
         </div>
       </a>
 
@@ -559,7 +303,254 @@ f</div>
         
           <i class="iconfont icon-inbox"></i>
           
-            <a href="/categories/java%E5%B9%B6%E5%8F%91/">java并发</a>&nbsp;
+            <a href="/categories/java%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">java设计模式</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2020/03/28/java%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/">
+        <p class="h4 index-header">策略模式</p>
+      </a>
+
+      <a href="/2020/03/28/java%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">定义：策略模式定义了算法族，分别封装起来，让他们之间可以互相替换，此模式让算法的变化独立于使用算法的客户。
+我自己的理解：一个对象的功能应该由组合得来，而非继承得来。在此，组合和继承的意思分别是：
+
+组合：指的是接口的组合，不同的功能应该对应不同的接口，在父类中声名，由多态来控制灵活性。
+继承：指的就是由父类固定死的方法继承下来，不具有灵活性。
+
+例子：比方说我现在创建一个类叫Duck,那么鸭子对象肯定有固定的功能比如：游泳，吃。
+//固定不变的部分写在父类中继承下去，实现代码复用
+protected void swim(){}
+protected abstract void display(</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/java%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">java设计模式</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2020/03/28/java%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F%EF%BC%9A%E5%B0%86%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%8A%B6%E6%80%81%E7%9B%91%E5%90%AC%E5%99%A8%E6%8A%BD%E8%B1%A1/">
+        <p class="h4 index-header">观察者模式：将对象的状态监听器抽象</p>
+      </a>
+
+      <a href="/2020/03/28/java%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F%EF%BC%9A%E5%B0%86%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%8A%B6%E6%80%81%E7%9B%91%E5%90%AC%E5%99%A8%E6%8A%BD%E8%B1%A1/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">回调、监听器、观察者模式。这三个名词描述的都是同一件事物：
+
+ 一个有状态的对象，将自身的状态发布出去，通知到那些订阅了该对象的状态的观察者（们）。
+
+举例子：微信用户关注（或者说订阅）一个公众号，当公众号作者发布一篇推文时，所有订阅了这个公众号的用户都能收到推送。
+被观察者，都是有状态的对象，将自己的某个状态发布给订阅了他的对象们。
+代码举例：
+class Author {
+    private var onPublishEssayListener: ((id: String) -&gt; Unit)? = null
+    private var onUpdateEssayListene</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/java%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">java设计模式</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2020/03/28/java%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E9%9D%99%E6%80%81%E6%96%B9%E6%B3%95%E7%BB%99%E9%9D%9E%E9%9D%99%E6%80%81%E5%8F%98%E9%87%8F%E8%B5%8B%E5%80%BC/">
+        <p class="h4 index-header">静态方法给非静态变量赋值</p>
+      </a>
+
+      <a href="/2020/03/28/java%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E9%9D%99%E6%80%81%E6%96%B9%E6%B3%95%E7%BB%99%E9%9D%9E%E9%9D%99%E6%80%81%E5%8F%98%E9%87%8F%E8%B5%8B%E5%80%BC/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">public class EasyToolbar {
+    //非静态变量
+    private Toolbar toolbar;
+    //私有构造方法
+    private EasyToolbar(Toolbar toolbar){
+        this.toolbar=toolbar;
+    }
+    //静态方法
+    //带返回值的静态方法，返回一个当前类的实例，并给非静态变量赋值
+    @NonNull
+    public static EasyToolbar findToolbarById(AppCompatActivity activity, int to</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/java%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">java设计模式</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2020/03/28/ndk/Android-cmake%E4%BD%BF%E7%94%A8%E5%A4%96%E9%83%A8%E5%8A%A8%E6%80%81%E5%85%B1%E4%BA%AB%E5%BA%93/">
+        <p class="h4 index-header">Android-cmake使用外部动态共享库</p>
+      </a>
+
+      <a href="/2020/03/28/ndk/Android-cmake%E4%BD%BF%E7%94%A8%E5%A4%96%E9%83%A8%E5%8A%A8%E6%80%81%E5%85%B1%E4%BA%AB%E5%BA%93/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">官方文档分享：
+CMake的基本用法参考Android官方文档上的CMake教程：
+https://developer.android.com/studio/projects/configure-cmake
+他的内容有：
+
+创建CMake脚本
+使用NDK中的静态库和动态共享库
+添加其他已经编译过得动态共享库
+如何进行多CMake project的开发
+
+
+本篇文章
+本篇文章主要是分析如何使用第三方的so库进行c层的开发。
+与官方文档不同的是，官方文档在连接第三方动态共享库的时候，用法是：
+# 添加共享库imported-lib
+add_library( imported-lib
+       </div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/ndk/">ndk</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2020/03/28/ndk/Mac-10-15-AndroidStudio-JNI%E8%B0%83%E8%AF%95%E5%87%BA%E9%94%99/">
+        <p class="h4 index-header">Mac-10-15-AndroidStudio-JNI调试出错</p>
+      </a>
+
+      <a href="/2020/03/28/ndk/Mac-10-15-AndroidStudio-JNI%E8%B0%83%E8%AF%95%E5%87%BA%E9%94%99/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">mac升级到10.15后，进行Jni代码调试的时候报错：
+com.intellij.execution.ExecutionFinishedException: Execution finished
+Process finished with exit code 0clean、invalidate cache and restart都没用，最后将host重新配置一下，就能够进行jni调试了：
+127.0.0.1 localhostthanks ：手机和AS中debug环境配置问题小记                                                         </div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/ndk/">ndk</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2020/03/28/ndk/ndk%EF%BC%9A%E8%BF%98%E7%94%A8%E4%B8%8D%E7%94%A8armeabi/">
+        <p class="h4 index-header">ndk：还用不用armeabi</p>
+      </a>
+
+      <a href="/2020/03/28/ndk/ndk%EF%BC%9A%E8%BF%98%E7%94%A8%E4%B8%8D%E7%94%A8armeabi/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">https://stackoverflow.com/questions/28926101/is-it-safe-to-support-only-armeabi-v7a-for-android-4-and-above/28926267#28926267
+https://android.stackexchange.com/questions/34958/what-are-the-minimum-hardware-specifications-for-android
+https://www.reddit.com/r/androiddev/comments/5u64yh/which_abi_shoul</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/ndk/">ndk</a>&nbsp;
           &nbsp;
         
         

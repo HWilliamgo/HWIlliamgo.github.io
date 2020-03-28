@@ -151,6 +151,222 @@
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2020/03/28/%E7%AE%97%E6%B3%95/%E7%BA%A2%E9%BB%91%E6%A0%91/">
+        <p class="h4 index-header">红黑树</p>
+      </a>
+
+      <a href="/2020/03/28/%E7%AE%97%E6%B3%95/%E7%BA%A2%E9%BB%91%E6%A0%91/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">没有删除功能。来自多方网络资料。
+主要参考：https://zh.wikipedia.org/wiki/%E7%BA%A2%E9%BB%91%E6%A0%91如果天空不死：http://www.cnblogs.com/skywang12345/p/3624343.html#top
+package DataStructureAndAlgor;
+
+public class RBTree&lt;T extends Comparable&lt;T&gt;&gt; {
+    private class Node {
+        boolean color;
+        T key;
+     </div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E7%AE%97%E6%B3%95/">算法</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2020/03/28/%E7%AE%97%E6%B3%95/%E6%A3%80%E6%9F%A5%E6%95%B0%E4%B8%AD%E9%87%8D%E5%A4%8D%E5%87%BA%E7%8E%B0%E7%9A%84%E6%95%B0%E5%AD%97/">
+        <p class="h4 index-header">检查数中重复出现的数字</p>
+      </a>
+
+      <a href="/2020/03/28/%E7%AE%97%E6%B3%95/%E6%A3%80%E6%9F%A5%E6%95%B0%E4%B8%AD%E9%87%8D%E5%A4%8D%E5%87%BA%E7%8E%B0%E7%9A%84%E6%95%B0%E5%AD%97/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">java语言实现：定义一个长度为10的int数组并全部赋值为0，对x用while循环求模，并将所得的模作为元素的下标，并将1赋值给该元素，那么下一次循环遇到有元素的下标不为0的时候，说明正好遇到了重复元素，那么出现了重复的数字
+public class MainTest {
+    public static void main(String args[]) throws Exception {
+        checkRepeated(4564);
+    }
+
+    private static void checkRepeated(int x){
+        //初始化一个长度为</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E7%AE%97%E6%B3%95/">算法</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2020/03/28/%E7%AE%97%E6%B3%95/%E6%95%B0%E7%BB%84%E5%AE%9E%E7%8E%B0%E7%9A%84%E4%BC%98%E5%85%88%E9%98%9F%E5%88%97/">
+        <p class="h4 index-header">数组实现的优先队列</p>
+      </a>
+
+      <a href="/2020/03/28/%E7%AE%97%E6%B3%95/%E6%95%B0%E7%BB%84%E5%AE%9E%E7%8E%B0%E7%9A%84%E4%BC%98%E5%85%88%E9%98%9F%E5%88%97/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">MyLoopQueue
+package DataStructure;
+
+import java.util.NoSuchElementException;
+
+/**
+ * 这是一个用数组实现的优先队列。
+ *
+ * 该思路参考《数据结构Java语言描述》的page249。
+ *
+ * 入队时通过指定优先级参数添加到优先队列，出队时，不同优先级之间优先级较高的先出队，
+ * 相同优先级，先入先出。
+ *
+ * 内部维护了一个队列数组，靠队列数组来简单地实现不同优先级队列的读写
+ * 当初始化时指定一个最高优先级，然后用for循环一次性把数组中的对象都new出来。
+ * add方法额外传入一个int</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E7%AE%97%E6%B3%95/">算法</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2020/03/28/%E7%AE%97%E6%B3%95/%E6%95%B0%E7%BB%84%E5%AE%9E%E7%8E%B0%E5%9B%BA%E5%AE%9A%E9%95%BF%E5%BA%A6%E7%9A%84%E5%BE%AA%E7%8E%AF%E9%98%9F%E5%88%97/">
+        <p class="h4 index-header">数组实现固定长度的循环队列</p>
+      </a>
+
+      <a href="/2020/03/28/%E7%AE%97%E6%B3%95/%E6%95%B0%E7%BB%84%E5%AE%9E%E7%8E%B0%E5%9B%BA%E5%AE%9A%E9%95%BF%E5%BA%A6%E7%9A%84%E5%BE%AA%E7%8E%AF%E9%98%9F%E5%88%97/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">只要指定了初始大小之后就都还能用，后进后出，就是不能动态扩容，也不能指定了一次容量之后再变更容量，由于水平原因，在尝试复制数组的时候因为头指针和尾指针不知道如何处理，没能实现循环队列的动态扩容功能。而官方的ArrayDeque是动态扩容的双端队列，可以去看那个的实现方法。
+package DataStructure;
+import java.util.NoSuchElementException;
+
+public class MyLoopQueue&lt;T&gt; {
+    private T[] array;
+
+    private int front;
+
+    private in</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E7%AE%97%E6%B3%95/">算法</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2020/03/28/%E7%AE%97%E6%B3%95/%E6%89%8B%E5%8A%A8%E6%92%B8%E4%B8%80%E4%B8%AA%E5%9F%BA%E4%BA%8E%E6%95%B0%E7%BB%84%E7%9A%84Stack/">
+        <p class="h4 index-header">手动撸一个基于数组的Stack</p>
+      </a>
+
+      <a href="/2020/03/28/%E7%AE%97%E6%B3%95/%E6%89%8B%E5%8A%A8%E6%92%B8%E4%B8%80%E4%B8%AA%E5%9F%BA%E4%BA%8E%E6%95%B0%E7%BB%84%E7%9A%84Stack/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">
+public class MyStack&lt;T&gt; {
+    private T t;
+    private int size;
+    private T[] items;
+    private int current;
+    private static final int DEFAUL_CAPACITY = 10;
+    //构造函数清除并确认stack初始容量为10
+    public MyStack() {
+        clear();
+        ensureCapacity(DEFAUL_CAPACITY);
+    }
+    //将stack的容</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E7%AE%97%E6%B3%95/">算法</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
       <a href="/2020/03/28/%E7%AE%97%E6%B3%95/%E6%89%8B%E5%8A%A8%E5%AE%9E%E7%8E%B0LinkedList/">
         <p class="h4 index-header">手动实现LinkedList</p>
       </a>
@@ -286,253 +502,6 @@ public class MainJava {
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/28/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/RxJava1%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">
-        <p class="h4 index-header">RxJava1源码分析</p>
-      </a>
-
-      <a href="/2020/03/28/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/RxJava1%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">我对于RxJava的异常处理和上抛方式有一些不解，而上网查找的文章都是RxJava的一些用于处理异常的操作符，所以只能自己去源码里面找答案了。
-虽然RxJava1已经过时了，但是鉴于RxJava1的源码会比RxJava2的简洁一些，因此易于分析。所以我在这里对RxJava1的源码进行分析。
-1 构造Observable1.1 create方式Observable.create&lt;String&gt; { it: Subscriber&lt;in String&gt; -&gt;
-    //上游发射数据
-    it.onNext(&quot;123&quot;)
-    it.onCom</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/">第三方库</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/28/Kotlin/%E8%A7%A3%E9%87%8AKotlin%E5%8D%8F%E7%A8%8B%E5%AE%98%E6%96%B9%E6%96%87%E6%A1%A3%EF%BC%9A%EF%BC%88%E4%B8%80%EF%BC%89%E5%9F%BA%E7%A1%80%EF%BC%9A/">
-        <p class="h4 index-header">解释Kotlin协程官方文档：（一）基础：</p>
-      </a>
-
-      <a href="/2020/03/28/Kotlin/%E8%A7%A3%E9%87%8AKotlin%E5%8D%8F%E7%A8%8B%E5%AE%98%E6%96%B9%E6%96%87%E6%A1%A3%EF%BC%9A%EF%BC%88%E4%B8%80%EF%BC%89%E5%9F%BA%E7%A1%80%EF%BC%9A/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">本系列文章用于解释kotlin官方文档中的示例代码。希望能帮助到你。
-基础官方文档地址 https://www.kotlincn.net/docs/reference/coroutines/basics.html 
-作用域构建器import kotlinx.coroutines.*
-
-fun main() = runBlocking { // this: CoroutineScope
-    launch { 
-        delay(200L)
-        println(&quot;Task from runBlocking&quot;)
-    }
-
-    coroutineS</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/Kotlin/">Kotlin</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/28/%E7%AE%97%E6%B3%95/element%E4%B8%BAint%E7%9A%84%E4%BA%8C%E5%8F%89%E6%9F%A5%E6%89%BE%E6%A0%91/">
-        <p class="h4 index-header">element为int的二叉查找树</p>
-      </a>
-
-      <a href="/2020/03/28/%E7%AE%97%E6%B3%95/element%E4%B8%BAint%E7%9A%84%E4%BA%8C%E5%8F%89%E6%9F%A5%E6%89%BE%E6%A0%91/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">参照着《数据结构java语言描述》的伪码，自己实现的方法细节，最复杂的一个方法是remove()
-package DataStructure.Tree;
-
-public class IntTreeBag implements Cloneable {
-
-    private Node root;
-
-    public class Node {
-        Node(int element, Node left, Node right) {
-            this.element = element;
-            this.left = left;
-         </div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/%E7%AE%97%E6%B3%95/">算法</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/28/%E7%AE%97%E6%B3%95/AVL%E6%A0%91/">
-        <p class="h4 index-header">AVL树</p>
-      </a>
-
-      <a href="/2020/03/28/%E7%AE%97%E6%B3%95/AVL%E6%A0%91/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">参考：https://www.cnblogs.com/skywang12345/p/3577479.html
-AVL树本质上还是一棵二叉搜索树，它的特点是：1.本身首先是一棵二叉搜索树。2.带有平衡条件：每个结点的左右子树的高度之差的绝对值（平衡因子）最多为1。也就是说，AVL树，本质上是带了平衡功能的二叉查找树（二叉排序树，二叉搜索树）。
-以下为四种不平衡的临界条件，分别为LL（leftleft）,LR（leftright）,RL,RR。当每次到达这四种不平衡的临界条件时，都进行旋转树操作，那么树就能维持平衡：
-private AVLTreeNode leftLeftRotation(AVL</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/%E7%AE%97%E6%B3%95/">算法</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/28/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/Dagger2/">
-        <p class="h4 index-header">Dagger2</p>
-      </a>
-
-      <a href="/2020/03/28/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/Dagger2/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">
-例子来自https://www.jianshu.com/p/24af4c102f62
-
-只用@Inject和@Component完成依赖注入：
-在gradle添加依赖，用@Inject和@Component为相应的字段和类打上注解
-build project
-Dagger2会在app.build.generated.source.apt.debug.com.text.包名生成代码。
-DaggerXXXComponent.java
-XXX_MembersInjector.java
-XXX_Factory.java
-
-
-
-举一个例子：MainAcitvity对象依赖Pot对象，Pot对象依赖Ro</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/">第三方库</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/28/ndk/JNI%E5%88%9B%E5%BB%BA%E5%8F%98%E9%87%8F%E5%92%8C%E9%87%8A%E6%94%BE%E5%8F%98%E9%87%8F/">
-        <p class="h4 index-header">JNI创建变量和释放变量</p>
-      </a>
-
-      <a href="/2020/03/28/ndk/JNI%E5%88%9B%E5%BB%BA%E5%8F%98%E9%87%8F%E5%92%8C%E9%87%8A%E6%94%BE%E5%8F%98%E9%87%8F/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">jni中的数据传递就两种：c层传到java层；java层传到c层。
-1 当数据从java传递到c1.1 传递基本数据类型在Java层定义jni代码：
-public static native void inputInt(int intData);
-c层实现：
-JNIEXPORT void JNICALL
-Java_com_hwilliam_jnilearncmake_NDKTools_inputInt(JNIEnv *env, jclass clazz, jint int_data) {
-    int data = int_data;
-    LOGD(&quot;input int dat</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/ndk/">ndk</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
       <a href="/2020/03/28/%E7%AE%97%E6%B3%95/%E5%8D%95%E9%93%BE%E8%A1%A8%E5%8F%8D%E8%BD%AC/">
         <p class="h4 index-header">单链表反转</p>
       </a>
@@ -558,6 +527,49 @@ Java_com_hwilliam_jnilearncmake_NDKTools_inputInt(JNIEnv *env, jclass clazz, jin
     private int size;
 
     </div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-28&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E7%AE%97%E6%B3%95/">算法</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2020/03/28/%E7%AE%97%E6%B3%95/%E4%BA%8C%E5%8F%89%E6%A0%91%E5%89%8D%E5%BA%8F%E3%80%81%E4%B8%AD%E5%BA%8F%E3%80%81%E5%90%8E%E5%BA%8F%E9%81%8D%E5%8E%86%EF%BC%8C%E5%92%8C%E7%9B%B4%E8%A7%82%E6%89%93%E5%8D%B0%E3%80%82/">
+        <p class="h4 index-header">二叉树前序、中序、后序遍历，和直观打印。</p>
+      </a>
+
+      <a href="/2020/03/28/%E7%AE%97%E6%B3%95/%E4%BA%8C%E5%8F%89%E6%A0%91%E5%89%8D%E5%BA%8F%E3%80%81%E4%B8%AD%E5%BA%8F%E3%80%81%E5%90%8E%E5%BA%8F%E9%81%8D%E5%8E%86%EF%BC%8C%E5%92%8C%E7%9B%B4%E8%A7%82%E6%89%93%E5%8D%B0%E3%80%82/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">//前序遍历
+public static void preOrderedPrint(TreeNode root){
+    if (root!=null){
+        System.out.print(root.value);
+        preOrderedPrint(root.leftNode);//删去了多余的if(root.leftNode!=null)的条件判断。
+        preOrderedPrint(root.rightNode);
+    }
+}
+//中序遍历
+public static void inOrderedPrint(TreeNode root){
+</div>
         </div>
       </a>
 
