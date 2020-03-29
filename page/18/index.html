@@ -151,6 +151,54 @@
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2017/12/13/java%E5%B9%B6%E5%8F%91/volatile%E5%85%B3%E9%94%AE%E5%AD%97/">
+        <p class="h4 index-header">volatile关键字</p>
+      </a>
+
+      <a href="/2017/12/13/java%E5%B9%B6%E5%8F%91/volatile%E5%85%B3%E9%94%AE%E5%AD%97/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">弄懂volatile之前首先确保弄懂了java内存模型，可参考我的整理Java内存模型
+volatile的作用如下：
+
+保证了不同线程对这个变量进行操作时的可见性，即一个线程修改了某个变量的值，这新值对其他线程来说是立即可见的。
+禁止进行指令重排序。(涉及volatile变量的代码的前面和后面的代码不会进行重排序)。
+
+注意：
+
+volatile不保证被修饰的变量的操作的原子性（要保证操作的原子性建议使用同步:synchronized和Lock）。
+
+使用场景：
+
+标记状态量：volatile boolean flag = false;
+
+
+while(!flag){    doSomethi</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2017-12-13&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/java%E5%B9%B6%E5%8F%91/">java并发</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
       <a href="/2017/12/13/java%E5%B9%B6%E5%8F%91/Java%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/">
         <p class="h4 index-header">Java内存模型</p>
       </a>
@@ -488,46 +536,6 @@ public class MainActivity extends AppCompatActivity {
       <div class="index-btm">
         
           <i class="iconfont icon-riqi2"></i>&nbsp;2017-12-04&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/Android/">Android</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2017/12/03/Android/AIDL/">
-        <p class="h4 index-header">AIDL</p>
-      </a>
-
-      <a href="/2017/12/03/Android/AIDL/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">参考hongyang的博客：
-
-Android aidl Binder框架浅析
-
-#跨应用的进程间通信：首先要有两个应用:1、现在Android Studio里创建两个应用，两个module。2、一个应用做client，一个应用做server。3、实现client应用调用server应用中的服务。
-开始动手：###创建一个server应用：Manifest文件：
-&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
-&lt;manifest xmlns:android=&quot;http://schemas.andr</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2017-12-03&nbsp;&nbsp;
         
         
           <i class="iconfont icon-inbox"></i>

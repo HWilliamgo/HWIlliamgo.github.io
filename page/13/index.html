@@ -151,6 +151,41 @@
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2018/03/29/Java/Java%E4%BC%A0%E5%80%BC%E5%92%8C%E4%BC%A0%E5%BC%95%E7%94%A8%E7%9A%84%E7%9C%9F%E7%9B%B8/">
+        <p class="h4 index-header">Java传值和传引用的真相</p>
+      </a>
+
+      <a href="/2018/03/29/Java/Java%E4%BC%A0%E5%80%BC%E5%92%8C%E4%BC%A0%E5%BC%95%E7%94%A8%E7%9A%84%E7%9C%9F%E7%9B%B8/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">JAVA 对象引用，以及对象赋值
+
+上述文章可以作参考，但是最后总结说的，包括《thingking in Java》说的：“不管是基本类型还是对象类型，都是传值”。我认为这句话会引起歧义，真正的真相是：不管Java参数的类型是什么，一律传递参数的副本。《thingking in Java》中：“When you&#39;re passing primitives into a method,you get a distinct copy of the primitive.When you&#39;re passing a reference into a method,you get a co</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2018-03-29&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Java/">Java</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
       <a href="/2018/03/29/Java/%E5%85%B3%E4%BA%8E++x%E5%92%8Cx++/">
         <p class="h4 index-header">关于++x和x++</p>
       </a>
@@ -511,48 +546,6 @@ Android事件分发机制完全解析，带你从源码的角度彻底理解(上
         
         <div class="index-excerpt" >
           <div class="index-text mb-1">译］Android Activity 和 Fragment 状态保存与恢复的最佳实践                                                                                                                                                                                                                                                                  </div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2018-03-11&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/Android/">Android</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2018/03/11/Android/RecyclerView%E5%92%8Cglide%E6%90%AD%E9%85%8D%E4%B8%AD%E7%9A%84%E5%9B%BE%E7%89%87%E6%B7%B7%E4%B9%B1/">
-        <p class="h4 index-header">RecyclerView和glide搭配中的图片混乱</p>
-      </a>
-
-      <a href="/2018/03/11/Android/RecyclerView%E5%92%8Cglide%E6%90%AD%E9%85%8D%E4%B8%AD%E7%9A%84%E5%9B%BE%E7%89%87%E6%B7%B7%E4%B9%B1/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">这个bug可以说是折磨了我很久了，问了人，查了博客，最后找到了答案。首先要搞明白RecyclerView中的ViewHolder的复用机制是什么，在，以及由于复用机制和请求网络mix在一起之后会发生哪些可能的事故，强烈推荐一个好文：
-
-RecyclerView中ViewHolder重用机制理解(解决图片错乱和闪烁问题)
-
-
-
-总结一下就是：
-
-RecyclerView用的是我们自定义的内部类ViewHolder来复用的，也就是复用的是ViewHoler
-当屏幕下滑，item1滑出可视区域，将item1的ViewHolder对象给item8复用，那么此时item1中ViewHolder对象中持有</div>
         </div>
       </a>
 

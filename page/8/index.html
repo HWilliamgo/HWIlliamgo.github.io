@@ -151,6 +151,44 @@
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2018/07/19/git/%E4%B8%BAgit%E8%AE%BE%E7%BD%AE%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%99%A8%E3%80%82/">
+        <p class="h4 index-header">为git设置文本编辑器。</p>
+      </a>
+
+      <a href="/2018/07/19/git/%E4%B8%BAgit%E8%AE%BE%E7%BD%AE%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%99%A8%E3%80%82/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">直接输入git commit的时候，或者git rebase -i来压缩的时候，都会进入git默认的文本编辑器，根本不会用，然后只能被迫关闭。后得知可以更改文本编辑器，配置如下：
+git config --global core.editor &quot;\&quot;D:\应用程序\Sublime Text3\sublime_text.exe\&quot;&quot;更改后，当git要进入文本编辑器的时候，就会直接打开路径下的sublime text了。
+配制后的C:\Users\admin\.gitconfig如下:
+//...略
+[core]
+    editor = \&quot;D:</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2018-07-19&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/git/">git</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
       <a href="/2018/07/17/View/%E8%AE%B0%E5%BD%95%E8%87%AA%E5%AE%9A%E4%B9%89Dialog%E7%9A%84%E4%B8%80%E4%B8%AA%E5%A4%A9%E5%9D%91%E5%92%8C%E5%90%AF%E5%8A%A8Dialog%E7%9A%84%E5%B0%8F%E6%B5%81%E7%A8%8B/">
         <p class="h4 index-header">记录自定义Dialog的一个天坑和启动Dialog的小流程</p>
       </a>
@@ -507,52 +545,6 @@ git自动将整个代码仓库包括.git文件夹下</div>
           <i class="iconfont icon-inbox"></i>
           
             <a href="/categories/git/">git</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2018/06/30/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/Dagger2/">
-        <p class="h4 index-header">Dagger2</p>
-      </a>
-
-      <a href="/2018/06/30/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/Dagger2/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">
-例子来自https://www.jianshu.com/p/24af4c102f62
-
-只用@Inject和@Component完成依赖注入：
-在gradle添加依赖，用@Inject和@Component为相应的字段和类打上注解
-build project
-Dagger2会在app.build.generated.source.apt.debug.com.text.包名生成代码。
-DaggerXXXComponent.java
-XXX_MembersInjector.java
-XXX_Factory.java
-
-
-
-举一个例子：MainAcitvity对象依赖Pot对象，Pot对象依赖Ro</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2018-06-30&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/">第三方库</a>&nbsp;
           &nbsp;
         
         

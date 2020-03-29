@@ -151,6 +151,48 @@
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2018/03/11/Android/RecyclerView%E5%92%8Cglide%E6%90%AD%E9%85%8D%E4%B8%AD%E7%9A%84%E5%9B%BE%E7%89%87%E6%B7%B7%E4%B9%B1/">
+        <p class="h4 index-header">RecyclerView和glide搭配中的图片混乱</p>
+      </a>
+
+      <a href="/2018/03/11/Android/RecyclerView%E5%92%8Cglide%E6%90%AD%E9%85%8D%E4%B8%AD%E7%9A%84%E5%9B%BE%E7%89%87%E6%B7%B7%E4%B9%B1/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">这个bug可以说是折磨了我很久了，问了人，查了博客，最后找到了答案。首先要搞明白RecyclerView中的ViewHolder的复用机制是什么，在，以及由于复用机制和请求网络mix在一起之后会发生哪些可能的事故，强烈推荐一个好文：
+
+RecyclerView中ViewHolder重用机制理解(解决图片错乱和闪烁问题)
+
+
+
+总结一下就是：
+
+RecyclerView用的是我们自定义的内部类ViewHolder来复用的，也就是复用的是ViewHoler
+当屏幕下滑，item1滑出可视区域，将item1的ViewHolder对象给item8复用，那么此时item1中ViewHolder对象中持有</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2018-03-11&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Android/">Android</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
       <a href="/2018/03/09/Android/2018-02-08T08-13-24-479Z%E6%A0%BC%E5%BC%8F%E7%9A%84%E6%97%B6%E9%97%B4%E8%A7%A3%E6%9E%90/">
         <p class="h4 index-header">2018-02-08T08-13-24-479Z格式的时间解析</p>
       </a>
@@ -525,48 +567,6 @@ View接口：根据业务或者UI设计师给的图片来定制我们的View接�
           <i class="iconfont icon-inbox"></i>
           
             <a href="/categories/java%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">java设计模式</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2018/02/09/Android/%E5%86%8D%E6%AC%A1%E7%90%86%E8%A7%A3%E5%9B%9E%E8%B0%83%E7%9A%84%E5%90%AB%E4%B9%89/">
-        <p class="h4 index-header">再次理解回调的含义</p>
-      </a>
-
-      <a href="/2018/02/09/Android/%E5%86%8D%E6%AC%A1%E7%90%86%E8%A7%A3%E5%9B%9E%E8%B0%83%E7%9A%84%E5%90%AB%E4%B9%89/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">哪个类实现了回调监听接口中的方法，就回去调用哪个类中的对应的方法。主函数中调用HttpUtils的get方法，第二个参数传入View的实例，那么当get方法内部执行到listener调用方法的地方的时候，就会去回调View中的方法。这就是回调方法例子：
-//回调接口
-public interface Listener {
-    void onSucceed(String info);
-    void onFailed(String info);
-}
-//模仿网络访问类
-public class HttpUtils {
-    //参数是url和对应的监听器
-    public void </div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2018-02-09&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/Android/">Android</a>&nbsp;
           &nbsp;
         
         

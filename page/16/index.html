@@ -151,6 +151,41 @@
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2018/01/17/Android/CoodinatorLayout%E9%87%8C%E6%94%BE%E5%B8%83%E5%B1%80%E9%97%AE%E9%A2%98/">
+        <p class="h4 index-header">CoodinatorLayout里放布局问题</p>
+      </a>
+
+      <a href="/2018/01/17/Android/CoodinatorLayout%E9%87%8C%E6%94%BE%E5%B8%83%E5%B1%80%E9%97%AE%E9%A2%98/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">CoordinatorLayout是一个FrameLayout，也就是说如果不做特殊处理，里面的子布局是无法控制的，超过一个，就会糊在一起，但是CoordiatorLayout又很特殊，只有在作为layout.xml的顶层布局才能发挥他协调子view的作用。因此要控制他的多个子View，比如除了AppBarLayout之外，要在下面加一个TabLayout或者RecyclerView,就要在他们里面加上app:layout_behavior=&quot;&quot;属性
+&lt;android.support.v7.widget.RecyclerView
+    android:id=&quo</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2018-01-17&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Android/">Android</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
       <a href="/2018/01/16/Android/%E5%85%BC%E5%AE%B9%E9%97%AE%E9%A2%98/">
         <p class="h4 index-header">兼容问题</p>
       </a>
@@ -492,55 +527,6 @@ Carson_Ho创作的android动画的超赞的学习博客：Android 属性动画�
           <div class="index-text mb-1">程序中每个变量在内存中占有一个或多个字节，比如int占有4Bytes，那么把第一个字节的地址称为变量的地址，而指针记录的值就是第一个字节的地址。
 
                                                                                                                                                                                                                                   </div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2018-01-07&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/C/">C</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2018/01/07/C/%E6%96%B9%E6%B3%95%EF%BC%88%E5%87%BD%E6%95%B0%EF%BC%89%E4%B8%AD%E4%BC%A0%E5%85%A5%E7%9A%84%E5%8F%82%E6%95%B0%E6%9C%89%E6%96%B0%E7%9A%84%E5%86%85%E5%AD%98%E5%9C%B0%E5%9D%80/">
-        <p class="h4 index-header">方法（函数）中传入的参数有新的内存地址</p>
-      </a>
-
-      <a href="/2018/01/07/C/%E6%96%B9%E6%B3%95%EF%BC%88%E5%87%BD%E6%95%B0%EF%BC%89%E4%B8%AD%E4%BC%A0%E5%85%A5%E7%9A%84%E5%8F%82%E6%95%B0%E6%9C%89%E6%96%B0%E7%9A%84%E5%86%85%E5%AD%98%E5%9C%B0%E5%9D%80/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">局部变量（在方法或函数中声名的变量）：
-
-自动存储期限：当方法返回后，将自动回收局部变量的内存地址。
-程序块作用域：局部变量的作用域是从方法的开始到方法的结束。
-
-现实是：对传入的参数进行修改，如果不return的话是拿不到修改后的参数的，也就是对参数的修改是没有意义的。
-代码证明：
-#include&lt;stdio.h&gt;
-void method(int i,int j){
-    i=999;
-    j=999;
-}
-int main() {
-    //声名两个变量并赋值。
-    int i=100;
-    int j=1;
-    //调用method方法并为i和j赋上新的</div>
         </div>
       </a>
 

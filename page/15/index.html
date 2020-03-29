@@ -151,6 +151,48 @@
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2018/02/09/Android/%E5%86%8D%E6%AC%A1%E7%90%86%E8%A7%A3%E5%9B%9E%E8%B0%83%E7%9A%84%E5%90%AB%E4%B9%89/">
+        <p class="h4 index-header">再次理解回调的含义</p>
+      </a>
+
+      <a href="/2018/02/09/Android/%E5%86%8D%E6%AC%A1%E7%90%86%E8%A7%A3%E5%9B%9E%E8%B0%83%E7%9A%84%E5%90%AB%E4%B9%89/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">哪个类实现了回调监听接口中的方法，就回去调用哪个类中的对应的方法。主函数中调用HttpUtils的get方法，第二个参数传入View的实例，那么当get方法内部执行到listener调用方法的地方的时候，就会去回调View中的方法。这就是回调方法例子：
+//回调接口
+public interface Listener {
+    void onSucceed(String info);
+    void onFailed(String info);
+}
+//模仿网络访问类
+public class HttpUtils {
+    //参数是url和对应的监听器
+    public void </div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2018-02-09&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Android/">Android</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
       <a href="/2018/02/05/%E7%AE%97%E6%B3%95/%E6%89%8B%E5%8A%A8%E6%92%B8%E4%B8%80%E4%B8%AA%E5%9F%BA%E4%BA%8E%E6%95%B0%E7%BB%84%E7%9A%84Stack/">
         <p class="h4 index-header">手动撸一个基于数组的Stack</p>
       </a>
@@ -511,41 +553,6 @@ AppBarLayout：
       <div class="index-btm">
         
           <i class="iconfont icon-riqi2"></i>&nbsp;2018-01-21&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/Android/">Android</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2018/01/17/Android/CoodinatorLayout%E9%87%8C%E6%94%BE%E5%B8%83%E5%B1%80%E9%97%AE%E9%A2%98/">
-        <p class="h4 index-header">CoodinatorLayout里放布局问题</p>
-      </a>
-
-      <a href="/2018/01/17/Android/CoodinatorLayout%E9%87%8C%E6%94%BE%E5%B8%83%E5%B1%80%E9%97%AE%E9%A2%98/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">CoordinatorLayout是一个FrameLayout，也就是说如果不做特殊处理，里面的子布局是无法控制的，超过一个，就会糊在一起，但是CoordiatorLayout又很特殊，只有在作为layout.xml的顶层布局才能发挥他协调子view的作用。因此要控制他的多个子View，比如除了AppBarLayout之外，要在下面加一个TabLayout或者RecyclerView,就要在他们里面加上app:layout_behavior=&quot;&quot;属性
-&lt;android.support.v7.widget.RecyclerView
-    android:id=&quo</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2018-01-17&nbsp;&nbsp;
         
         
           <i class="iconfont icon-inbox"></i>
