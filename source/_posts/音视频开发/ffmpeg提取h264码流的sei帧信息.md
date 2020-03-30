@@ -1,11 +1,13 @@
 ---
 title: ffmpeg提取h264码流的sei帧信息
-date: 2020-03-30 20:46:43
 tags:
--ffmpeg
--音视频
-index_img: https://w.wallhaven.cc/full/lm/wallhaven-lmo76p.jpg
-banner_img: https://w.wallhaven.cc/full/lm/wallhaven-lmo76p.jpg
+  - ffmpeg
+  - 音视频
+index_img: 'https://w.wallhaven.cc/full/lm/wallhaven-lmo76p.jpg'
+banner_img: 'https://w.wallhaven.cc/full/lm/wallhaven-lmo76p.jpg'
+categories:
+  - 音视频开发
+date: 2020-03-30 20:46:43
 ---
 
 码流中的sei帧信息了解建议文章：

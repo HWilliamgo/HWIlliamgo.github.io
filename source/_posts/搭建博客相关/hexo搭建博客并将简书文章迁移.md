@@ -1,10 +1,12 @@
 ---
 title: hexo搭建博客并将简书文章迁移
+tags:
+  - 博客
+index_img: 'https://s1.ax1x.com/2020/03/29/GVGaOe.md.jpg'
+banner_img: 'https://s1.ax1x.com/2020/03/29/GVGaOe.jpg'
+categories:
+  - 搭建博客相关
 date: 2020-03-29 14:31:21
-tags: 
-- 博客
-index_img: https://s1.ax1x.com/2020/03/29/GVGaOe.md.jpg
-banner_img: https://s1.ax1x.com/2020/03/29/GVGaOe.jpg
 ---
 
 在经过多次的考虑后，我还是打算将所有的博客的数据由自己维护。因此找了一种比较简单的方式：hexo + github pages
