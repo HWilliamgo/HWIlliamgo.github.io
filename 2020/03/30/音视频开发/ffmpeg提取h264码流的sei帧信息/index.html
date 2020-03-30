@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="https://s1.ax1x.com/2020/03/28/GkotgK.th.jpg">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="HWilliamgo">
+  <meta name="keywords" content="">
+  <title>ffmpeg提取h264码流的sei帧信息 - William的小星球</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.12.1/css/all.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/mdbootstrap/4.13.0/css/mdb.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/3.0.1/github-markdown.min.css" />
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+
+
+
+  <link  rel="stylesheet" href="/lib/prettify/tomorrow-night-eighties.min.css" />
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link defer rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+<!-- 自定义样式保持在最底部 -->
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>William的小星球</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">归档</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">分类</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">标签</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">关于</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('https://w.wallhaven.cc/full/lm/wallhaven-lmo76p.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+                <p class="mt-3 post-meta">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                  星期一, 三月 30日 2020, 8:46 晚上
+                </p>
+              
+
+              <p class="mt-1">
+                
+                  
+                  <span class="post-meta">
+                    <i class="far fa-chart-bar"></i>
+                    2.6k 字
+                  </span>
+                
+
+                
+                  
+                  <span class="post-meta">
+                      <i class="far fa-clock"></i>
+                      12 分钟
+                  </span>
+                
+
+                
+                  <!-- 不蒜子统计文章PV -->
+                  
+                  <span id="busuanzi_container_page_pv" class="post-meta" style="display: none">
+                    <i class="far fa-eye" aria-hidden="true"></i>
+                    <span id="busuanzi_value_page_pv"></span> 次
+                  </span>
+                
+              </p>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5 z-depth-3" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+              <p
+                class="note note-warning">本文最后更新于：星期一, 三月 30日 2020, 4:18 下午</p>
+            
+            <div class="markdown-body">
+              <p>码流中的sei帧信息了解建议文章：</p>
+<p><a href="https://www.jianshu.com/p/4d9120dfcd69" target="_blank" rel="noopener">FFmpeg代码导读系列(二)—-SEI的那些事</a></p>
+<p>从ffmpeg中提取h264码流中的sei信息的方式分为两种：</p>
+<ol>
+<li>不需要修改ffmpeg源码</li>
+<li>需要修改ffmpeg源码</li>
+</ol>
+<p>本文对这两种方式提取sei信息的方式做一个总结。</p>
+<h3 id="1-不修改ffmpeg源码"><a href="#1-不修改ffmpeg源码" class="headerlink" title="1 不修改ffmpeg源码"></a>1 不修改ffmpeg源码</h3><h4 id="1-借助av-read-frame"><a href="#1-借助av-read-frame" class="headerlink" title="1 借助av_read_frame"></a>1 借助av_read_frame</h4><p>这是侵入性最小，最简单的方式。</p>
+<p><img src="https://s1.ax1x.com/2020/03/30/GuRmpn.png" srcset="/img/loading.gif" alt="GuRmpn.png"></p>
+<p>如这张图，这是将视频提取出h264码流后，用16进制文本查看器看到的内容。</p>
+<p>其中00,00,01,06 就表示当前遇到了sei数据。（这不是标准的seiType=5的数据，从后面的的64看出，这是seiType=100的数据，因此制定他的厂商并不是完全按照标准来的）</p>
+<p>由于恰好地，00,00,01,06这种，由两位16进制组成的数字，刚好是16x16=256，8bit也能表示256种数据，即2^8=256。而8bit=1byte。即每两个16位的数字可以用一个byte表示。</p>
+<p>而刚好，av_read_frame()方法提取出来的码流数据，就是字节数组。那么将提取出的AVPacket中的data来遍历，找到匹配sei规则的数据，再去解析，也是可以的了。例如：</p>
+<pre><code class="c">ret = av_read_frame(ic, pkt);
+if (ret == 0 &amp;&amp; pkt != NULL &amp;&amp; pkt-&gt;data != NULL &amp;&amp; pkt-&gt;size &gt; 0 &amp;&amp; (pkt-&gt;flags &amp; AV_PKT_FLAG_KEY)) {
+    for (int k = 0; k &lt; pkt-&gt;size; k++) {
+        uint8_t nalType = pkt-&gt;data[k + 4];
+        uint8_t seiType = pkt-&gt;data[k + 5];
+        if (pkt-&gt;data[k] == 0 &amp;&amp; pkt-&gt;data[k + 1] == 0 &amp;&amp; pkt-&gt;data[k + 2] == 1 &amp;&amp; nalType == 6 ) {
+            if(seiType==要解析的seiType)
+            //...
+        }
+    }
+}</code></pre>
+<p>这种方法是一种比较简单的，没有侵入性的方法。但是效率会低一点，因为最坏的情况是要遍历整个AVPacket中的数据才能找到sei数据。</p>
+<h3 id="2-修改ffmpeg源码"><a href="#2-修改ffmpeg源码" class="headerlink" title="2 修改ffmpeg源码"></a>2 修改ffmpeg源码</h3><p>ffmpeg源码中本身是对sei帧信息有做处理的。我们需要找到ffmpeg源码中对sei帧做处理的位置。</p>
+<pre><code class="c">// h264_parser.c
+/**
+ * Parse NAL units of found picture and decode some basic information.
+ *
+ * @param s parser context.
+ * @param avctx codec context.
+ * @param buf buffer with field/frame data.
+ * @param buf_size size of the buffer.
+ */
+static inline int parse_nal_units(AVCodecParserContext *s,
+                                  AVCodecContext *avctx,
+                                  const uint8_t * const buf, int buf_size)
+{
+    H264ParseContext *p = s-&gt;priv_data;
+    H2645RBSP rbsp = { NULL };
+    H2645NAL nal = { NULL };
+    int buf_index, next_avc;
+    unsigned int pps_id;
+    unsigned int slice_type;
+    int state = -1, got_reset = 0;
+    int q264 = buf_size &gt;=4 &amp;&amp; !memcmp(&quot;Q264&quot;, buf, 4);
+    int field_poc[2];
+    int ret;
+
+    /* set some sane default values */
+    s-&gt;pict_type         = AV_PICTURE_TYPE_I;
+    s-&gt;key_frame         = 0;
+    s-&gt;picture_structure = AV_PICTURE_STRUCTURE_UNKNOWN;
+
+    ff_h264_sei_uninit(&amp;p-&gt;sei);
+    p-&gt;sei.frame_packing.arrangement_cancel_flag = -1;
+
+    if (!buf_size)
+        return 0;
+
+    av_fast_padded_malloc(&amp;rbsp.rbsp_buffer, &amp;rbsp.rbsp_buffer_alloc_size, buf_size);
+    if (!rbsp.rbsp_buffer)
+        return AVERROR(ENOMEM);
+
+    buf_index     = 0;
+    next_avc      = p-&gt;is_avc ? 0 : buf_size;
+    for (;;) {
+        const SPS *sps;
+        int src_length, consumed, nalsize = 0;
+
+        if (buf_index &gt;= next_avc) {
+            nalsize = get_nalsize(p-&gt;nal_length_size, buf, buf_size, &amp;buf_index, avctx);
+            if (nalsize &lt; 0)
+                break;
+            next_avc = buf_index + nalsize;
+        } else {
+            buf_index = find_start_code(buf, buf_size, buf_index, next_avc);
+            if (buf_index &gt;= buf_size)
+                break;
+            if (buf_index &gt;= next_avc)
+                continue;
+        }
+        src_length = next_avc - buf_index;
+
+        state = buf[buf_index];
+        switch (state &amp; 0x1f) {
+        case H264_NAL_SLICE:
+        case H264_NAL_IDR_SLICE:
+            // Do not walk the whole buffer just to decode slice header
+            if ((state &amp; 0x1f) == H264_NAL_IDR_SLICE || ((state &gt;&gt; 5) &amp; 0x3) == 0) {
+                /* IDR or disposable slice
+                 * No need to decode many bytes because MMCOs shall not be present. */
+                if (src_length &gt; 60)
+                    src_length = 60;
+            } else {
+                /* To decode up to MMCOs */
+                if (src_length &gt; 1000)
+                    src_length = 1000;
+            }
+            break;
+        }
+        consumed = ff_h2645_extract_rbsp(buf + buf_index, src_length, &amp;rbsp, &amp;nal, 1);
+        if (consumed &lt; 0)
+            break;
+
+        buf_index += consumed;
+
+        ret = init_get_bits8(&amp;nal.gb, nal.data, nal.size);
+        if (ret &lt; 0)
+            goto fail;
+        get_bits1(&amp;nal.gb);
+        nal.ref_idc = get_bits(&amp;nal.gb, 2);
+        nal.type    = get_bits(&amp;nal.gb, 5);
+
+        switch (nal.type) {
+        case H264_NAL_SPS:
+            ff_h264_decode_seq_parameter_set(&amp;nal.gb, avctx, &amp;p-&gt;ps, 0);
+            break;
+        case H264_NAL_PPS:
+            ff_h264_decode_picture_parameter_set(&amp;nal.gb, avctx, &amp;p-&gt;ps,
+                                                 nal.size_bits);
+            break;
+        case H264_NAL_SEI:
+            ff_h264_sei_decode(&amp;p-&gt;sei, &amp;nal.gb, &amp;p-&gt;ps, avctx);
+            break;
+        }
+        //...
+    }
+    //...
+}</code></pre>
+<p>以上保留了nal unit type 为 6，7，8的解码调用方法，分别是类型：SEI, PPS, SPS</p>
+<p>其他的类型定义在 h264.h中：</p>
+<pre><code class="c">/* NAL unit types */
+enum {
+    H264_NAL_SLICE           = 1,
+    H264_NAL_DPA             = 2,
+    H264_NAL_DPB             = 3,
+    H264_NAL_DPC             = 4,
+    H264_NAL_IDR_SLICE       = 5,
+    H264_NAL_SEI             = 6,
+    H264_NAL_SPS             = 7,
+    H264_NAL_PPS             = 8,
+    H264_NAL_AUD             = 9,
+    H264_NAL_END_SEQUENCE    = 10,
+    H264_NAL_END_STREAM      = 11,
+    H264_NAL_FILLER_DATA     = 12,
+    H264_NAL_SPS_EXT         = 13,
+    H264_NAL_AUXILIARY_SLICE = 19,
+};</code></pre>
+<p>回到代码的调用流程是：</p>
+<p><code>parse_nal_units</code> -&gt;  <code>ff_h264_sei_decode</code></p>
+<pre><code class="c">int ff_h264_sei_decode(H264SEIContext *h, GetBitContext *gb,
+                       const H264ParamSets *ps, void *logctx)
+{
+    int master_ret = 0;
+
+    while (get_bits_left(gb) &gt; 16 &amp;&amp; show_bits(gb, 16)) {
+        int type = 0;
+        unsigned size = 0;
+        unsigned next;
+        int ret  = 0;
+
+        do {
+            if (get_bits_left(gb) &lt; 8)
+                return AVERROR_INVALIDDATA;
+            type += show_bits(gb, 8);
+        } while (get_bits(gb, 8) == 255);
+
+        do {
+            if (get_bits_left(gb) &lt; 8)
+                return AVERROR_INVALIDDATA;
+            size += show_bits(gb, 8);
+        } while (get_bits(gb, 8) == 255);
+
+        if (size &gt; get_bits_left(gb) / 8) {
+            av_log(logctx, AV_LOG_ERROR, &quot;SEI type %d size %d truncated at %d\n&quot;,
+                   type, 8*size, get_bits_left(gb));
+            return AVERROR_INVALIDDATA;
+        }
+        next = get_bits_count(gb) + 8 * size;
+
+        h-&gt;type = type;
+        switch (type) {
+        // 解析SEI TYPE = 5                 
+        case H264_SEI_TYPE_USER_DATA_UNREGISTERED:
+            ret = decode_unregistered_user_data(&amp;h-&gt;unregistered, gb, logctx, size);
+            break;
+        default:
+            av_log(logctx, AV_LOG_DEBUG, &quot;unknown SEI type %d\n&quot;, type);
+        }
+        if (ret &lt; 0 &amp;&amp; ret != AVERROR_PS_NOT_FOUND)
+            return ret;
+        if (ret &lt; 0)
+            master_ret = ret;
+
+        skip_bits_long(gb, next - get_bits_count(gb));
+
+        // FIXME check bits here
+        align_get_bits(gb);
+    }
+
+    return master_ret;
+}</code></pre>
+<p>这里我只列出了一个SEI TYPE，其余的类型在：h264_sei.h中</p>
+<pre><code class="c">/**
+ * SEI message types
+ */
+typedef enum {
+    H264_SEI_TYPE_BUFFERING_PERIOD       = 0,   ///&lt; buffering period (H.264, D.1.1)
+    H264_SEI_TYPE_PIC_TIMING             = 1,   ///&lt; picture timing
+    H264_SEI_TYPE_FILLER_PAYLOAD         = 3,   ///&lt; filler data
+    H264_SEI_TYPE_USER_DATA_REGISTERED   = 4,   ///&lt; registered user data as specified by Rec. ITU-T T.35
+    H264_SEI_TYPE_USER_DATA_UNREGISTERED = 5,   ///&lt; unregistered user data
+    H264_SEI_TYPE_RECOVERY_POINT         = 6,   ///&lt; recovery point (frame # to decoder sync)
+    H264_SEI_TYPE_FRAME_PACKING          = 45,  ///&lt; frame packing arrangement
+    H264_SEI_TYPE_DISPLAY_ORIENTATION    = 47,  ///&lt; display orientation
+    H264_SEI_TYPE_GREEN_METADATA         = 56,  ///&lt; GreenMPEG information
+    H264_SEI_TYPE_ALTERNATIVE_TRANSFER   = 147, ///&lt; alternative transfer
+} H264_SEI_Type;</code></pre>
+<p>一般来说，seiType=5的这个类型就是留给用户自定义的类型，因为其他类型都被h264规范中的其他信息占用了，而seiType=5是他留给用户的未注册的类型，因此叫user_data_unregistered。</p>
+<p>我们继续回到这个方法：</p>
+<pre><code class="c">static int decode_unregistered_user_data(H264SEIUnregistered *h, GetBitContext *gb,
+                                         void *logctx, int size)
+{   
+    //字符数组，也就是字符串
+    uint8_t *user_data;
+    int e, build, i;
+    //这个16是什么意思?是uuid，因为seiType=5的时候，数据中会包含16位的uuid。这里做了个判断
+    if (size &lt; 16 || size &gt;= INT_MAX - 16)
+        return AVERROR_INVALIDDATA;
+    //分配一个内存大小，规则：uuid大小+数据长度+字符串末尾空字符0
+    user_data = av_malloc(16 + size + 1);
+    if (!user_data)
+        return AVERROR(ENOMEM);
+    //i&lt;size+16，是因为要把uuid和用户数据全部读取到这个user_data数组中
+    for (i = 0; i &lt; size + 16; i++)
+        //get_bits(gb,8)的意思是一次读取8bit数据并赋值给数组。为什么是8bit？因为字符串是char[] ，而char占8位，因此一次读取8位。而2^8=256=16x16。刚好一个字节可以保存一两个16进制的数据。
+        user_data[i] = get_bits(gb, 8);
+    //设置末尾空字符
+    user_data[i] = 0;
+    e = sscanf(user_data + 16, &quot;x264 - core %d&quot;, &amp;build);
+    if (e == 1 &amp;&amp; build &gt; 0)
+        h-&gt;x264_build = build;
+    if (e == 1 &amp;&amp; build == 1 &amp;&amp; !strncmp(user_data+16, &quot;x264 - core 0000&quot;, 16))
+        h-&gt;x264_build = 67;
+    //释放手动分配的数组
+    av_free(user_data);
+    return 0;
+}</code></pre>
+<p>方法中带了注释，看着还是比较简单了。我们注意到这里解析到的user_data数组，并没有对uuid和sei content做任何的处理，就直接释放掉了。那么我们自己在这里加一个处理就好了，我们的方案是：</p>
+<ol>
+<li>将这个user_data数组中的数据取出来。</li>
+<li>借助回调的方式上抛到外层。</li>
+<li>外层使用。</li>
+</ol>
+<p>那么一步一步来。首先将数据取出来，很简单，我们把user_data中的数据再copy一份就好了，是否保留uuid看业务需要，content肯定是要取出来的。取出来之后要怎么上抛出去呢？注意看这里有一个结构体<code>H264SEIUnregistered</code>，我们往他那边保存这个字符串，在外面就可以取出来了。</p>
+<pre><code class="c">typedef struct H264SEIUnregistered {
+    int x264_build;
+    //我们增加的，用来保存sei数据的数组。
+    uint8_t *user_data;
+} H264SEIUnregistered;</code></pre>
+<p>然后这样：</p>
+<pre><code class="c">static int decode_unregistered_user_data(H264SEIUnregistered *h, GetBitContext *gb,
+                                         void *logctx, int size)
+{   
+    //字符数组，也就是字符串
+    uint8_t *user_data;
+    int e, build, i;
+    //这个16是什么意思?是uuid，因为seiType=5的时候，数据中会包含16位的uuid。这里做了个判断
+    if (size &lt; 16 || size &gt;= INT_MAX - 16)
+        return AVERROR_INVALIDDATA;
+    //分配一个内存大小，规则：uuid大小+数据长度+字符串末尾空字符0
+    user_data = av_malloc(16 + size + 1);
+    if (!user_data)
+        return AVERROR(ENOMEM);
+    //i&lt;size+16，是因为要把uuid和用户数据全部读取到这个user_data数组中
+    for (i = 0; i &lt; size + 16; i++)
+        user_data[i] = get_bits(gb, 8);
+    //设置末尾空字符
+    user_data[i] = 0;
+    e = sscanf(user_data + 16, &quot;x264 - core %d&quot;, &amp;build);
+    if (e == 1 &amp;&amp; build &gt; 0)
+        h-&gt;x264_build = build;
+    if (e == 1 &amp;&amp; build == 1 &amp;&amp; !strncmp(user_data+16, &quot;x264 - core 0000&quot;, 16))
+        h-&gt;x264_build = 67;
+    //从数组开始，跳过uuid的16bit的长度后，字符串长度大于0，则提取数据
+    if (strlen(user_data + 16) &gt; 0){
+        //打印出来
+        av_log(logctx, AV_LOG_DEBUG, &quot;user data:\&quot;%s\&quot;\n&quot;, user_data + 16);
+
+        //提取数据，+1是为了字符串末尾空字符0
+        int ret = av_reallocp(&amp;h-&gt;user_data, size + 1);
+        if (ret &gt;= 0){
+            //跳过uuid
+            strcpy(h-&gt;user_data, user_data + 16);
+            //末尾置0
+            h-&gt;user_data[size - 16] = 0;
+        }
+    }
+    //释放手动分配的数组
+    av_free(user_data);
+    return 0;
+}</code></pre>
+<p>然后H264SEIContext中加一个seiType的变量。外部上抛的时候要把seiType一起抛出去。</p>
+<pre><code class="c">// h264_sei.h
+typedef struct H264SEIContext {
+    //sei类型
+    int type;
+    H264SEIPictureTiming picture_timing;
+    H264SEIAFD afd;
+    H264SEIA53Caption a53_caption;
+    H264SEIUnregistered unregistered;
+    H264SEIRecoveryPoint recovery_point;
+    H264SEIBufferingPeriod buffering_period;
+    H264SEIFramePacking frame_packing;
+    H264SEIDisplayOrientation display_orientation;
+    H264SEIGreenMetaData green_metadata;
+    H264SEIAlternativeTransfer alternative_transfer;
+} H264SEIContext;</code></pre>
+<p>而这个seiType在这里赋值：</p>
+<pre><code class="c">// h264_parser.c
+int ff_h264_sei_decode(H264SEIContext *h, GetBitContext *gb,
+                       const H264ParamSets *ps, void *logctx)
+{
+    int master_ret = 0;
+
+    while (get_bits_left(gb) &gt; 16 &amp;&amp; show_bits(gb, 16)) {
+        int type = 0;
+        unsigned size = 0;
+        unsigned next;
+        int ret  = 0;
+
+        do {
+            if (get_bits_left(gb) &lt; 8)
+                return AVERROR_INVALIDDATA;
+            type += show_bits(gb, 8);
+        } while (get_bits(gb, 8) == 255);
+
+        do {
+            if (get_bits_left(gb) &lt; 8)
+                return AVERROR_INVALIDDATA;
+            size += show_bits(gb, 8);
+        } while (get_bits(gb, 8) == 255);
+
+        if (size &gt; get_bits_left(gb) / 8) {
+            av_log(logctx, AV_LOG_ERROR, &quot;SEI type %d size %d truncated at %d\n&quot;,
+                   type, 8*size, get_bits_left(gb));
+            return AVERROR_INVALIDDATA;
+        }
+        next = get_bits_count(gb) + 8 * size;
+        //赋值type
+        h-&gt;type = type;
+        switch (type) {
+        case H264_SEI_TYPE_PIC_TIMING: // Picture timing SEI
+            ret = decode_picture_timing(&amp;h-&gt;picture_timing, gb, ps, logctx);
+            break;</code></pre>
+<p>那么在解析处上抛：</p>
+<pre><code class="c">// h264_parser.c
+static inline int parse_nal_units(AVCodecParserContext *s,
+                                  AVCodecContext *avctx,
+                                  const uint8_t * const buf, int buf_size)
+{
+    //...
+    for (;;) {
+        //...
+        case H264_NAL_SEI:
+            //解析数据
+            ff_h264_sei_decode(&amp;p-&gt;sei, &amp;nal.gb, &amp;p-&gt;ps, avctx);
+            //上抛数据
+            if (p-&gt;sei.type == H264_SEI_TYPE_USER_DATA_UNREGISTERED &amp;&amp; p-&gt;sei.unregistered.user_data != NULL){
+                av_post_h264_sei(H264_SEI_TYPE_USER_DATA_UNREGISTERED, p-&gt;sei.unregistered.user_data);
+            }
+            break;
+    }
+}</code></pre>
+<p>这个<code>post_h264_sei(int seiType,const char* user_data)</code>方法就是我们定义的，用来上抛数据的。</p>
+<p>定义位置：avcodec.h</p>
+<pre><code class="c">//内部使用，用来上抛数据
+void av_post_h264_sei(int seiType, const char* user_data);
+
+//外部使用，用来设置回调
+void av_set_sei_data_listener(void (*listener)(int, const char*));
+</code></pre>
+<p>实现位置:</p>
+<pre><code class="c">//保存外部设置进来的监听器
+static void (*av_h264_sei_listener)(int, const char*) = NULL;
+
+void av_set_sei_data_listener(void (*listener)(int, const char*))
+{
+    av_h264_sei_listener = listener;
+}
+
+void av_post_h264_sei(int seiType, const char* user_data)
+{
+    void (*av_h264_sei_listener)(int, const char*) = av_h264_sei_listener;
+    if (av_h264_sei_listener)
+        av_h264_sei_listener(seiType, user_data);
+}
+</code></pre>
+<p>上面是解析标准的seiType=5的场景。</p>
+<p>有的视频厂商也不用seiType=5，他们会自己另设置一种seiType，并且解析的规范可能也与seiType=5的情况不同，例如数据中完全不规定uuid，只有内容。当然这要按照视频厂商的协议来开发了，不过总体的思路是类似的，在上述的函数对应的位置，进行对应的解析即可。</p>
+
+            </div>
+            <hr>
+            <div>
+              <p>
+                
+                  <span>
+                <i class="iconfont icon-inbox"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%BC%80%E5%8F%91/">音视频开发</a>
+                      &nbsp;
+                    
+                  </span>&nbsp;&nbsp;
+                
+                
+                  <span>
+                <i class="iconfont icon-tag"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/ffmpeg/">ffmpeg</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E9%9F%B3%E8%A7%86%E9%A2%91/">音视频</a>
+                    
+                  </span>
+                
+              </p>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/2020/03/29/%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2%E7%9B%B8%E5%85%B3/hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2%E5%B9%B6%E5%B0%86%E7%AE%80%E4%B9%A6%E6%96%87%E7%AB%A0%E8%BF%81%E7%A7%BB/">
+                        <span class="hidden-mobile">hexo搭建博客并将简书文章迁移</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="fa fa-chevron-right"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+              
+                <!-- Comments -->
+                <div class="comments" id="comments">
+                  
+                  
+  <script defer src="https://utteranc.es/client.js"
+          repo="HWilliamgo/HWilliamgo.github.io"
+          issue-term="pathname"
+  
+          label="utterances"
+    
+          theme="github-light"
+          crossorigin="anonymous"
+  >
+  </script>
+
+
+                </div>
+              
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc-start"></div>
+<div id="toc">
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+    </div>
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/popper.js/1.16.1/umd/popper.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="https://cdn.staticfile.org/mdbootstrap/4.13.0/js/mdb.min.js" ></script>
+<script  src="/js/main.js" ></script>
+
+
+  <script  src="/js/lazyload.js" ></script>
+
+
+
+  
+  <script  src="https://cdn.staticfile.org/tocbot/4.10.0/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var navHeight = $('#navbar').height();
+      var toc = $('#toc');
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+      var tocLimMax = 2 * boardTop + boardCtn.height();
+
+      $(window).scroll(function () {
+        var tocLimMin = $('#toc-start').offset().top - navHeight;
+        var scroH = document.body.scrollTop + document.documentElement.scrollTop;
+
+        if (tocLimMin <= scroH && scroH <= tocLimMax) {
+          toc.css({
+            'display': 'block',
+            'position': 'fixed',
+            'top': navHeight,
+          });
+        } else if (scroH <= tocLimMin) {
+          toc.css({
+            'position': '',
+            'top': '',
+          });
+        } else if (scroH > tocLimMax) {
+          toc.css('display', 'none');
+        }
+      });
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '.post-content',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc > p').css('visibility', 'visible');
+      }
+      var offset = boardCtn.css('margin-right')
+      $('#toc-ctn').css({
+        'right': offset
+      })
+    });
+  </script>
+
+
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+<!-- Plugins -->
+
+
+
+  <script  src="https://cdn.staticfile.org/prettify/188.0.0/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  linenums');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "ffmpeg提取h264码流的sei帧信息&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

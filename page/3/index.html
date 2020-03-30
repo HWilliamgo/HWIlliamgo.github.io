@@ -151,6 +151,51 @@
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2019/10/26/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/JsonDeserializer%E5%92%8CJsonSerializer%E5%8F%AF%E8%83%BD%E5%BC%95%E8%B5%B7%E6%97%A0%E9%99%90%E5%BE%AA%E7%8E%AF%E8%B0%83%E7%94%A8%E5%AF%BC%E8%87%B4StackOverFlow/">
+        <p class="h4 index-header">JsonDeserializer和JsonSerializer可能引起无限循环调用导致StackOverFlow</p>
+      </a>
+
+      <a href="/2019/10/26/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/JsonDeserializer%E5%92%8CJsonSerializer%E5%8F%AF%E8%83%BD%E5%BC%95%E8%B5%B7%E6%97%A0%E9%99%90%E5%BE%AA%E7%8E%AF%E8%B0%83%E7%94%A8%E5%AF%BC%E8%87%B4StackOverFlow/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">1. 两种自定义方式Gson自定义序列化和反序列的方式有两种
+
+通过GsonBuilder来注册适配器。
+用@JsonAdapter注解来为类型或者属性指定适配器。
+
+其中，以注解的方式用@JsonAdapter来实现自定义序列化或反序列化，gson的github的wiki页是没有的，但是参照这个类的注释，也很容易就能实现。
+2. 例子场景：
+首先，正常的json字符串是这样的结构：
+{
+    &quot;family&quot;:{
+        &quot;Dad&quot;:&quot;a&quot;,
+        &quot;Mon&quot;:&quot;b&quot;
+  </div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2019-10-26&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/">第三方库</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
       <a href="/2019/10/20/ndk/%E7%94%A8javah%E5%91%BD%E4%BB%A4%E7%94%9F%E6%88%90-h%E5%A4%B4%E6%96%87%E4%BB%B6/">
         <p class="h4 index-header">用javah命令生成-h头文件</p>
       </a>
@@ -500,64 +545,6 @@ https:abc.flv
           <i class="iconfont icon-inbox"></i>
           
             <a href="/categories/%E7%BD%91%E7%BB%9C/">网络</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2019/07/30/Kotlin/Kotlin%E6%B3%9B%E5%9E%8B/">
-        <p class="h4 index-header">Kotlin泛型</p>
-      </a>
-
-      <a href="/2019/07/30/Kotlin/Kotlin%E6%B3%9B%E5%9E%8B/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">
-Kotlin的泛型比Java更加强大，保障虚拟机运行安全的基础上，功能更加完善。我看了几次泛型都没有记住，回过头来重新梳理总结一番。
-
-定义父类和子类package william
-
-interface Parent {
-
-}
-
-interface Parent2 {
-
-}
-
-open class Person : Parent, Parent2 {
-
-}
-
-class Child : Person() {
-
-}
-
-class Child2 : Person() {
-
-}
-用Java演示//list1中的元素是Person的子类，但是具体是哪一种不好说。
-List&lt;? extends </div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2019-07-30&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/Kotlin/">Kotlin</a>&nbsp;
           &nbsp;
         
         
