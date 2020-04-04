@@ -3,8 +3,8 @@ title: ffmpeg提取h264码流的sei帧信息
 tags:
   - ffmpeg
   - 音视频
-index_img: 'https://w.wallhaven.cc/full/lm/wallhaven-lmo76p.jpg'
-banner_img: 'https://w.wallhaven.cc/full/lm/wallhaven-lmo76p.jpg'
+index_img: 'https://s1.ax1x.com/2020/04/04/G0w37j.md.jpg'
+banner_img: 'https://s1.ax1x.com/2020/04/04/G0w37j.jpg'
 categories:
   - 音视频开发
 date: 2020-03-30 20:46:43
