@@ -271,12 +271,9 @@ FFmpeg代码导读系列(二)—-SEI的那些事
         <div class="index-excerpt" >
           <div class="index-text mb-1">用来表示视频文件的地址。
 
-查看关键帧数据：
-ffprobe -show_frames -select_streams v:0 -print_format csv &lt;url&gt; | grep &quot;,I,&quot;
-查看流信息：
-ffprobe -v quiet -print_format json -show_format -show_streams &lt;url&gt;
-查看分辨率：
-ffprobe -v debug -select_streams v -skip_frame nokey -count_frames &lt;url&gt; 2&gt;&amp;1|gre</div>
+查看关键帧数据：ffprobe -show_frames -select_streams v:0 -print_format csv &lt;url&gt; | grep &quot;,I,&quot;
+查看流信息：ffprobe -v quiet -print_format json -show_format -show_streams &lt;url&gt;
+查看分辨率：ffprobe -v debug -select_streams v -skip_frame nokey -count_frames &lt;url&gt; 2&gt;&amp;1|grep R</div>
         </div>
       </a>
 
