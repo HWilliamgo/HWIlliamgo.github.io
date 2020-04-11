@@ -151,46 +151,6 @@
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2017/12/04/Android/%E9%9D%99%E6%80%81%E5%8F%98%E9%87%8F%E4%BD%95%E6%97%B6%E8%A2%ABgc%E5%9B%9E%E6%94%B6%EF%BC%9F/">
-        <p class="h4 index-header">静态变量何时被gc回收？</p>
-      </a>
-
-      <a href="/2017/12/04/Android/%E9%9D%99%E6%80%81%E5%8F%98%E9%87%8F%E4%BD%95%E6%97%B6%E8%A2%ABgc%E5%9B%9E%E6%94%B6%EF%BC%9F/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">
-参考：http://blog.csdn.net/yogkin/article/details/53404855结论：只要静态变量没有被销毁也没有=null，其对象就一直被保持引用，也即引用计数不可能是0，不会被垃圾回收。
-
-文中还有4个关于静态变量的点：
-
-静态变量在类被加载的时候分配内存。类在什么时候被加载？当我们启动一个app的时候，系统会创建一个进程，此进程会加载一个Dalvik VM的实例，然后代码就运行在DVM之上，类的加载和卸载，垃圾回收等事情都由DVM负责。也就是说在进程启动的时候，类被加载，静态变量被分配内存。
-
-静态变量在类被卸载的时候销毁。类在什么时候被卸载？在进程结束的</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2017-12-04&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/Android/">Android</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
       <a href="/2017/12/03/Android/AIDL/">
         <p class="h4 index-header">AIDL</p>
       </a>
@@ -531,6 +491,45 @@ View.findViewById行不通是因为当前的view没有和activity绑定，少了
       <div class="index-btm">
         
           <i class="iconfont icon-riqi2"></i>&nbsp;2017-11-06&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Android/">Android</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2017/10/21/Android/DialogFragment%E8%87%AA%E5%B7%B1%E7%88%AC%E8%BF%87%E7%9A%84%E5%9D%91/">
+        <p class="h4 index-header">DialogFragment自己爬过的坑</p>
+      </a>
+
+      <a href="/2017/10/21/Android/DialogFragment%E8%87%AA%E5%B7%B1%E7%88%AC%E8%BF%87%E7%9A%84%E5%9D%91/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">DialogFragment在显示之后如何从屏幕消除？
+
+直接按手机的返回键
+自己的代码里处理 ，调用DialogFragment的对象的dismiss()；
+从外部处理MyDialogFragment dialog=(MyDialogFragment)getFragmentManager.findFragmentByTag();
+dialog.dismiss();
+//摸索了我好久好久，各种查资料，最后自己试出来了，妈的                                                                                       </div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2017-10-21&nbsp;&nbsp;
         
         
           <i class="iconfont icon-inbox"></i>

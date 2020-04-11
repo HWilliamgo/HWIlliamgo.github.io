@@ -151,46 +151,6 @@
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2017/12/23/Java/%E6%B3%9B%E5%9E%8B%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E7%9A%84%E9%97%AE%E9%A2%98/">
-        <p class="h4 index-header">泛型类型转换的问题</p>
-      </a>
-
-      <a href="/2017/12/23/Java/%E6%B3%9B%E5%9E%8B%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E7%9A%84%E9%97%AE%E9%A2%98/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">String[] strings = new String[5];
-Object[] objects=strings;
-
-String a=new String();
-Object obj=a;这两段代码说明的是：如果A是B的子类，那么A可以直接转换成B类型，A类数组也可以直接转换成B类数组。
-List&lt;String&gt; list=new ArrayList&lt;&gt;();
-List&lt;Object&gt; objectList=list;但是这段代码是错误的，不同的泛型对象，就算A是B的子类，A泛型的类也不能转换成B泛型的相同的类。编译器在编译阶段就可以报错：
-总结：如果</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2017-12-23&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/Java/">Java</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
       <a href="/2017/12/13/java%E5%B9%B6%E5%8F%91/volatile%E5%85%B3%E9%94%AE%E5%AD%97/">
         <p class="h4 index-header">volatile关键字</p>
       </a>
@@ -530,6 +490,46 @@ public class MainActivity extends AppCompatActivity {
      @Override
      public void handleMessage(Message msg) {
          super.handleMessage(msg</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2017-12-04&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Android/">Android</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2017/12/04/Android/%E9%9D%99%E6%80%81%E5%8F%98%E9%87%8F%E4%BD%95%E6%97%B6%E8%A2%ABgc%E5%9B%9E%E6%94%B6%EF%BC%9F/">
+        <p class="h4 index-header">静态变量何时被gc回收？</p>
+      </a>
+
+      <a href="/2017/12/04/Android/%E9%9D%99%E6%80%81%E5%8F%98%E9%87%8F%E4%BD%95%E6%97%B6%E8%A2%ABgc%E5%9B%9E%E6%94%B6%EF%BC%9F/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">
+参考：http://blog.csdn.net/yogkin/article/details/53404855结论：只要静态变量没有被销毁也没有=null，其对象就一直被保持引用，也即引用计数不可能是0，不会被垃圾回收。
+
+文中还有4个关于静态变量的点：
+
+静态变量在类被加载的时候分配内存。类在什么时候被加载？当我们启动一个app的时候，系统会创建一个进程，此进程会加载一个Dalvik VM的实例，然后代码就运行在DVM之上，类的加载和卸载，垃圾回收等事情都由DVM负责。也就是说在进程启动的时候，类被加载，静态变量被分配内存。
+
+静态变量在类被卸载的时候销毁。类在什么时候被卸载？在进程结束的</div>
         </div>
       </a>
 
