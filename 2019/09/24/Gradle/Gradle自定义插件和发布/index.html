@@ -178,7 +178,7 @@
           <div class="post-content mx-auto" id="post">
             
               <p
-                class="note note-warning">本文最后更新于：星期六, 四月 11日 2020, 1:28 下午</p>
+                class="note note-warning">本文最后更新于：星期日, 四月 12日 2020, 4:30 凌晨</p>
             
             <div class="markdown-body">
               <h1 id="Gradle自定义插件和发布"><a href="#Gradle自定义插件和发布" class="headerlink" title="Gradle自定义插件和发布"></a>Gradle自定义插件和发布</h1><p>这篇文章讲解的是如何自定义gradle插件，并以本地依赖和远程依赖的方式来集成。</p>
@@ -374,7 +374,7 @@ BUILD SUCCESSFUL in 4s
 │                          customPlugin-1.0.jar.sha1
 │                          customPlugin-1.0.pom
 │                          customPlugin-1.0.pom.md5
-│                          customPlugin-1.0.pom.sha1</code></pre><p>输出的整个包多了很多东西<del>，我们用普通的<code>build</code>命令打出来的jar包，只有一个单独的jar包，而用<code>maven-publish</code>插件打出来的包，囊括了完整的全路径名，带有pom文件用于描述依赖，带有maven元数据等等，这是一个完整的、可用于分发的软件了</del></p>
+│                          customPlugin-1.0.pom.sha1</code></pre><p>输出的整个包多了很多东西。我们用普通的<code>build</code>命令打出来的jar包，只有一个单独的jar包，而用<code>maven-publish</code>插件打出来的包，囊括了完整的全路径名，带有pom文件用于描述依赖，带有maven元数据等等，这是一个完整的、可用于分发的软件了~</p>
 <h4 id="2-3-在插件消费者项目中使用插件"><a href="#2-3-在插件消费者项目中使用插件" class="headerlink" title="2.3 在插件消费者项目中使用插件"></a>2.3 在插件消费者项目中使用插件</h4><h5 id="2-3-1-直接使用本地的jar包中的插件。"><a href="#2-3-1-直接使用本地的jar包中的插件。" class="headerlink" title="2.3.1 直接使用本地的jar包中的插件。"></a>2.3.1 直接使用本地的jar包中的插件。</h5><p>拿到jar包后，把他放在一个可以被找到的路径，我把他放在了插件消费者项目的根目录的<code>gradle_plugin_libs/</code>目录下。</p>
 <pre><code>└─gradle_plugin_libs
         customPlugin.jar</code></pre><p>一般来说，安卓项目都采用的是gradle的multi-project-build组织类型，所以我打算在根目录下让gradle对我的脚本进行一个依赖，以便子项目不需要再自己去声明对脚本的依赖。</p>
@@ -427,7 +427,7 @@ BUILD SUCCESSFUL in 4s
 </ol>
 <p>他们本质上都是一样的，只是那3个中央仓库是用的人最多的。</p>
 <p>我们现在通过<code>bintray</code>这个软件包发行平台，来上传并管理我们的软件包。</p>
-<p><code>bintray</code>用于上传maven类型的软件包有3种方式，我们的其中一种是通过gradle的方式：<a href="https://github.com/bintray/gradle-bintray-plugin。这是bintray官方开发的上传插件，专门用于打包和上传maven类型的软件包到bintray上面，选项多，可自定义程度高，使用复杂。" target="_blank" rel="noopener">https://github.com/bintray/gradle-bintray-plugin。这是bintray官方开发的上传插件，专门用于打包和上传maven类型的软件包到bintray上面，选项多，可自定义程度高，使用复杂。</a></p>
+<p><code>bintray</code>用于上传maven类型的软件包有3种方式，我们的其中一种是通过gradle的方式：<a href="https://github.com/bintray/gradle-bintray-plugin。" target="_blank" rel="noopener">https://github.com/bintray/gradle-bintray-plugin。</a><br>这是bintray官方开发的上传插件，专门用于打包和上传maven类型的软件包到bintray上面，选项多，可自定义程度高，使用复杂。</p>
 <p>在github上有一个快捷方便的第三方开发者开发的插件：<a href="https://github.com/novoda/bintray-release" target="_blank" rel="noopener">https://github.com/novoda/bintray-release</a></p>
 <p>只需要一个代码块就能完成bintray上传的配置，这里我们用这个简单的插件来做演示，当然大家可以根据自己业务的需求选择负责度和功能性更高的官方插件。</p>
 <h5 id="3-2-1-创建bintray账号"><a href="#3-2-1-创建bintray账号" class="headerlink" title="3.2.1 创建bintray账号"></a>3.2.1 创建bintray账号</h5><p>在这一步，要完成的事项如下：</p>
