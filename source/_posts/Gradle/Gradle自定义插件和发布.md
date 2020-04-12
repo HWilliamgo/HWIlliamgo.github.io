@@ -292,7 +292,7 @@ OK，现在跑去`./build/repo`下面找我们的软件包吧。
 │                          customPlugin-1.0.pom.sha1
 ```
 
-输出的整个包多了很多东西~，我们用普通的`build`命令打出来的jar包，只有一个单独的jar包，而用`maven-publish`插件打出来的包，囊括了完整的全路径名，带有pom文件用于描述依赖，带有maven元数据等等，这是一个完整的、可用于分发的软件了~
+输出的整个包多了很多东西。我们用普通的`build`命令打出来的jar包，只有一个单独的jar包，而用`maven-publish`插件打出来的包，囊括了完整的全路径名，带有pom文件用于描述依赖，带有maven元数据等等，这是一个完整的、可用于分发的软件了~
 
 
 
@@ -395,7 +395,8 @@ buildscript{
 
 我们现在通过`bintray`这个软件包发行平台，来上传并管理我们的软件包。
 
-`bintray`用于上传maven类型的软件包有3种方式，我们的其中一种是通过gradle的方式：https://github.com/bintray/gradle-bintray-plugin。这是bintray官方开发的上传插件，专门用于打包和上传maven类型的软件包到bintray上面，选项多，可自定义程度高，使用复杂。
+`bintray`用于上传maven类型的软件包有3种方式，我们的其中一种是通过gradle的方式：https://github.com/bintray/gradle-bintray-plugin。
+这是bintray官方开发的上传插件，专门用于打包和上传maven类型的软件包到bintray上面，选项多，可自定义程度高，使用复杂。
 
 
 
