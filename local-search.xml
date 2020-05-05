@@ -11,6 +11,12 @@
     <content type="html"><![CDATA[<h3 id="AndroidStudio自带的LayoutInspector"><a href="#AndroidStudio自带的LayoutInspector" class="headerlink" title="AndroidStudio自带的LayoutInspector"></a>AndroidStudio自带的LayoutInspector</h3><p>在Android开发的时候，我们在调试复杂的UI界面上的问题的时候，有时希望借助AndroidStudio自带的调试工具：LayoutInspector来查看当前界面的View Tree。</p><p><img src="https://s1.ax1x.com/2020/05/05/YiUNAH.png" srcset="/img/loading.gif" alt="YiUNAH.png"></p><p>没有遇到问题的话，他能出现这样的调试效果：</p><p><a href="https://imgchr.com/i/YiUDjf" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/05/05/YiUDjf.png" srcset="/img/loading.gif" alt="YiUDjf.png"></a></p><h3 id="调试UI遇到的问题"><a href="#调试UI遇到的问题" class="headerlink" title="调试UI遇到的问题"></a>调试UI遇到的问题</h3><p>但是，当你的Activity的界面非常复杂，例如存在大量的View，存在视频，存在View动画等情况。这时这个调试工具就不生效了。</p><p>这时会遇到：</p><p><img src="https://s1.ax1x.com/2020/05/05/YiGoRK.png" srcset="/img/loading.gif" alt=""></p><p>Error obtaining view hierarchy : There was a timeout error capturing the layout data from the devices.</p><p>The device may be too slow , the captured view may be too complex, or the view may contain animations.</p><p>Please retry with a simplified view and ensure the device is responsive.</p><h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><ol><li>去代码里找答案，去代码里找线索，并在关键的代码行中添加调试日志，通过日志来调试和解决问题。</li><li>用别的View tree调试工具。</li></ol><h3 id="FastViewTree"><a href="#FastViewTree" class="headerlink" title="FastViewTree"></a>FastViewTree</h3><p>用上述的第一种方式，去代码里加调试日志或者阅读代码能不能解决问题？能。但是很耗时。比如有一种情况是：你去调试或者接管他人写的代码中出现的问题，或者是你自己写的比较久远的问题，去阅读代码来模拟想象出UI表现，是要花比较长的时间的。</p><p>我没有找到已经发出来的其他合适的调试工具能够满足我的需要：打印view tree，打印每个view的可见度和宽高。</p><p>因此我自己写了一个满足上述需求的调试工具：<a href="https://github.com/HWilliamgo/FastViewTree" target="_blank" rel="noopener">FastViewTree</a></p><p>代码是用kotlin写的，只有一个文件，非常简单。不过这个工具很实用。欢迎大家提意见和start 。</p>]]></content>
     
     
+    <categories>
+      
+      <category>个人开源项目</category>
+      
+    </categories>
+    
     
     <tags>
       
@@ -33,6 +39,12 @@
     
     <content type="html"><![CDATA[<h3 id="1-追踪某个View的方法调用。"><a href="#1-追踪某个View的方法调用。" class="headerlink" title="1. 追踪某个View的方法调用。"></a>1. 追踪某个View的方法调用。</h3><p>如果某个View的尺寸错乱，有可能是这个View的关于设置尺寸的某个方法在某个你没有找到的地方被调用了。</p><p>例如<code>setLayoutParams()</code>方法被意外地调用了。</p><p>如何找出调用堆栈？</p><p>需要重写<code>setLayoutParams()</code>方法，然后筛选传递进来的错误的参数，然后在重写了的方法中加个断点，然后开启debug，就能找出调用处了。</p><p>对于别的方法，例如<code>setVisibility()</code>。都采用类似的方式，就可以马上排查出错误的地方的堆栈从而解决问题。</p><h3 id="通过view-tree来排查问题。"><a href="#通过view-tree来排查问题。" class="headerlink" title="通过view tree来排查问题。"></a>通过view tree来排查问题。</h3>]]></content>
     
+    
+    <categories>
+      
+      <category>View</category>
+      
+    </categories>
     
     
   </entry>
