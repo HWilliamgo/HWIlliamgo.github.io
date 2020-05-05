@@ -1,5 +1,7 @@
 ---
 title: Android视图调试技巧
+categories:
+  - View
 date: 2020-04-14 22:42:59
 tags:
 index_img:

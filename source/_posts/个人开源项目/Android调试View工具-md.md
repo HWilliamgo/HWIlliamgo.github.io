@@ -1,12 +1,14 @@
 ---
 title: Android调试View工具.md
+tags:
+  - Android
+  - 开源
+  - 调试工具
+index_img: 'https://s1.ax1x.com/2020/05/05/YiGoRK.png'
+banner_img: 'https://s1.ax1x.com/2020/05/05/Yil2NV.png'
+categories:
+  - 个人开源项目
 date: 2020-05-05 14:09:50
-tags: 
-- Android
-- 开源
-- 调试工具
-index_img: https://s1.ax1x.com/2020/05/05/YiGoRK.png
-banner_img: https://s1.ax1x.com/2020/05/05/Yil2NV.png
 ---
 
 
