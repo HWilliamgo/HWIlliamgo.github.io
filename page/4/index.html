@@ -151,6 +151,99 @@
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2019/08/08/%E7%BD%91%E7%BB%9C/Https%E6%89%AB%E7%9B%B2/">
+        <p class="h4 index-header">Https扫盲</p>
+      </a>
+
+      <a href="/2019/08/08/%E7%BD%91%E7%BB%9C/Https%E6%89%AB%E7%9B%B2/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">理解 HTTPS 前需要理解这些概念：明文、密文、密码、密钥、对称加密、非对称加密、摘要、数字签名、数字证书
+密码cipher密码学中的密码（cipher）和我们日常生活中所说的密码不太一样，计算机术语『密码 cipher』是一种用于加密或者解密的算法，而我们日常所使用的『密码 password』是一种口令，它是用于认证用途的一组文本字符串，这里我们要讨论的是前者：cipher。
+密钥 key密钥是一种参数，它是在使用密码（cipher）算法过程中输入的参数。同一个明文在相同的密码算法和不同的密钥计算下会产生不同的密文。很多知名的密码算法都是公开的，密钥才是决定密文是否安全的重要参数，通常密钥</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2019-08-08&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E7%BD%91%E7%BB%9C/">网络</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2019/07/30/Kotlin/Kotlin%E6%B3%9B%E5%9E%8B/">
+        <p class="h4 index-header">Kotlin泛型</p>
+      </a>
+
+      <a href="/2019/07/30/Kotlin/Kotlin%E6%B3%9B%E5%9E%8B/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">
+Kotlin的泛型比Java更加强大，保障虚拟机运行安全的基础上，功能更加完善。我看了几次泛型都没有记住，回过头来重新梳理总结一番。
+
+定义父类和子类package william
+
+interface Parent {
+
+}
+
+interface Parent2 {
+
+}
+
+open class Person : Parent, Parent2 {
+
+}
+
+class Child : Person() {
+
+}
+
+class Child2 : Person() {
+
+}
+用Java演示//list1中的元素是Person的子类，但是具体是哪一种不好说。
+List&lt;? extends </div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2019-07-30&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Kotlin/">Kotlin</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
       <a href="/2019/07/25/Android/Android%E4%BF%AE%E6%94%B9%E5%BA%94%E7%94%A8%E5%8C%85%E5%90%8D%E5%92%8CApplicationId%EF%BC%9A%E5%AE%9E%E6%88%98%E5%92%8C%E7%90%86%E8%A7%A3/">
         <p class="h4 index-header">Android修改应用包名和ApplicationId：实战和理解</p>
       </a>
@@ -453,84 +546,6 @@ ext {
           <i class="iconfont icon-inbox"></i>
           
             <a href="/categories/Gradle/">Gradle</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2019/03/29/java%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F%EF%BC%9A%E5%B0%86%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%8A%B6%E6%80%81%E7%9B%91%E5%90%AC%E5%99%A8%E6%8A%BD%E8%B1%A1/">
-        <p class="h4 index-header">观察者模式：将对象的状态监听器抽象</p>
-      </a>
-
-      <a href="/2019/03/29/java%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F%EF%BC%9A%E5%B0%86%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%8A%B6%E6%80%81%E7%9B%91%E5%90%AC%E5%99%A8%E6%8A%BD%E8%B1%A1/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">回调、监听器、观察者模式。这三个名词描述的都是同一件事物：
-
- 一个有状态的对象，将自身的状态发布出去，通知到那些订阅了该对象的状态的观察者（们）。
-
-举例子：微信用户关注（或者说订阅）一个公众号，当公众号作者发布一篇推文时，所有订阅了这个公众号的用户都能收到推送。
-被观察者，都是有状态的对象，将自己的某个状态发布给订阅了他的对象们。
-代码举例：
-class Author {
-    private var onPublishEssayListener: ((id: String) -&gt; Unit)? = null
-    private var onUpdateEssayListene</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2019-03-29&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/java%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">java设计模式</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2019/03/28/git/git%E6%96%B0%E5%BB%BA%E8%BF%9C%E7%A8%8B%E5%88%86%E6%94%AF%EF%BC%8C%E5%88%9B%E5%BB%BA%E8%B7%9F%E8%B8%AA%E8%BF%9C%E7%A8%8B%E5%88%86%E6%94%AF%E7%9A%84%E6%9C%AC%E5%9C%B0%E5%89%AF%E6%9C%AC/">
-        <p class="h4 index-header">git新建远程分支，创建跟踪远程分支的本地副本</p>
-      </a>
-
-      <a href="/2019/03/28/git/git%E6%96%B0%E5%BB%BA%E8%BF%9C%E7%A8%8B%E5%88%86%E6%94%AF%EF%BC%8C%E5%88%9B%E5%BB%BA%E8%B7%9F%E8%B8%AA%E8%BF%9C%E7%A8%8B%E5%88%86%E6%94%AF%E7%9A%84%E6%9C%AC%E5%9C%B0%E5%89%AF%E6%9C%AC/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">新建远程分支：git push -u origin 远程分支名
-新建远程分支，并将本地分支的commit信息push到远程分支。注意要加-u，表示当前追踪远程指定分支，如果不加，也无法建立远程分支。
-创建跟踪远程分支的本地副本：$ git branch 本地分支名 origin/远程分支名
-建议本地分支名=远程分支名，否则在push的时候，git会提醒你，并让你明确指定那一次push的远程分支名。                                                                                                    </div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2019-03-28&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/git/">git</a>&nbsp;
           &nbsp;
         
         
