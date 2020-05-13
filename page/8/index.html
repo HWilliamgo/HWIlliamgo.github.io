@@ -151,6 +151,46 @@
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2018/07/19/View/View#post(Runnable-runnable)%E4%B8%BA%E4%BB%80%E4%B9%88%E8%83%BD%E6%8B%BF%E5%88%B0view%E7%9A%84%E5%AE%BD%E9%AB%98%E3%80%82/">
+        <p class="h4 index-header">View#post(Runnable-runnable)为什么能拿到view的宽高。</p>
+      </a>
+
+      <a href="/2018/07/19/View/View#post(Runnable-runnable)%E4%B8%BA%E4%BB%80%E4%B9%88%E8%83%BD%E6%8B%BF%E5%88%B0view%E7%9A%84%E5%AE%BD%E9%AB%98%E3%80%82/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">结论：view.post()方法在整个view树的performMeasure, performLayout, performDraw执行完后，才被主线程轮询到，才得到执行。
+
+基于android sdk-23的源码分析，文章分成两个部分，实际上我是先写第二部分了再写第一部分的。
+第一部分看一下view.post的内部。
+public boolean post(Runnable action) {
+    final AttachInfo attachInfo = mAttachInfo;
+    if (attachInfo != null) {
+        return attachI</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2018-07-19&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/View/">View</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
       <a href="/2018/07/19/Android/RecyclerView%E8%AE%B0%E4%BA%8B/">
         <p class="h4 index-header">RecyclerView记事</p>
       </a>
@@ -502,47 +542,6 @@ onCreate()中初始化的10个单例类，并不是马上就要用的，更好�
           <i class="iconfont icon-inbox"></i>
           
             <a href="/categories/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/">第三方库</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2018/07/01/git/git%EF%BC%8C%E4%B8%BA%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%93%E5%BA%93%E5%BB%BA%E7%AB%8B%E6%96%B0%E7%9A%84%E5%88%86%E6%94%AF%E3%80%82/">
-        <p class="h4 index-header">git，为服务器仓库建立新的分支。</p>
-      </a>
-
-      <a href="/2018/07/01/git/git%EF%BC%8C%E4%B8%BA%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%93%E5%BA%93%E5%BB%BA%E7%AB%8B%E6%96%B0%E7%9A%84%E5%88%86%E6%94%AF%E3%80%82/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">
-直接在github页面上面
-
-当前切换到了master分支，如果文本框输入后一个新的分支名字后，确认，就会创建一个分支指向master分支。要创建一个分支指向develop分支，就将当前分支切换到develop上面。
-这一切都用鼠标可以完成，很直观简洁。
-
-通过git bash。如果我要在服务器创建一个新的分支bugfix指向develop，这做不到。只能通过push命令，让这一次push跟踪到develop，在develop分支上面生成新的快照，并将新的bugfix指向新的版本快照。
-
-在本地的develop分支chekout -b一个bugfix分支，然后执行git branch -u </div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2018-07-01&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/git/">git</a>&nbsp;
           &nbsp;
         
         

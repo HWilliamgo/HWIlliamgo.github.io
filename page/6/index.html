@@ -151,6 +151,41 @@
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2018/12/16/%E7%BD%91%E7%BB%9C/Socket%E3%80%81%E6%8F%8F%E8%BF%B0%E7%AC%A6%E3%80%81%E7%AB%AF%E5%8F%A3%E5%8F%B7/">
+        <p class="h4 index-header">Socket、描述符、端口号</p>
+      </a>
+
+      <a href="/2018/12/16/%E7%BD%91%E7%BB%9C/Socket%E3%80%81%E6%8F%8F%E8%BF%B0%E7%AC%A6%E3%80%81%E7%AB%AF%E5%8F%A3%E5%8F%B7/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">Socket、描述符、端口号端口：端口与进程对应：TCP 的包是不包含 IP 地址信息的，那是 IP 层上的事，但是有源端口和目的端口。就是说，端口这一东西，是属于 TCP 知识范畴的。
+我们知道两个进程，在计算机内部进行通信，可以有管道、内存共享、信号量、消息队列等方法。而两个进程如果需要进行通讯最基本的一个前提是能够唯一的标识一个进程，在本地进程通讯中我们可以使用 「PID(进程标识符)」 来唯一标识一个进程。但 PID 只在本地唯一，如果把两个进程放到了不同的两台计算机，然后他们要通信的话，PID 就不够用了，这样就需要另外一种手段了。
+解决这个问题的方法就是在运输层使用 「协议端口号 </div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2018-12-16&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E7%BD%91%E7%BB%9C/">网络</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
       <a href="/2018/12/02/Android/Android%E6%96%87%E4%BB%B6api%E8%8E%B7%E5%BE%97%E7%9A%84%E8%B7%AF%E5%BE%84/">
         <p class="h4 index-header">Android文件api获得的路径</p>
       </a>
@@ -507,48 +542,6 @@ Integer中表示值的变量value本身就是一个final类型的，即不可变
       <div class="index-btm">
         
           <i class="iconfont icon-riqi2"></i>&nbsp;2018-08-18&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/Java/">Java</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2018/08/16/Java/ThreadLocal/">
-        <p class="h4 index-header">ThreadLocal</p>
-      </a>
-
-      <a href="/2018/08/16/Java/ThreadLocal/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">ThreadLocal
-ThreadLocal是一个线程独立存储类，通过他的get和set方法，在不同的线程中，可以独立地存取不同的value。
-每次回顾Looper源码的时候，都会忘了ThreadLocal是如何实现和工作的，故这次记录下来。
-
-[TOC]
-工作原理图
-ThreadLocal中的ThreadLocalMap
-首先观察ThreadLocal的结构，有两个静态内部类，其中第二个ThreadLocalMap是他工作原理的最重要的类。
-此时点开Thread类源码：
-/* ThreadLocal values pertaining to this thread. This map is</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2018-08-16&nbsp;&nbsp;
         
         
           <i class="iconfont icon-inbox"></i>

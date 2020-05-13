@@ -151,6 +151,47 @@
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2018/07/01/git/git%EF%BC%8C%E4%B8%BA%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%93%E5%BA%93%E5%BB%BA%E7%AB%8B%E6%96%B0%E7%9A%84%E5%88%86%E6%94%AF%E3%80%82/">
+        <p class="h4 index-header">git，为服务器仓库建立新的分支。</p>
+      </a>
+
+      <a href="/2018/07/01/git/git%EF%BC%8C%E4%B8%BA%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%93%E5%BA%93%E5%BB%BA%E7%AB%8B%E6%96%B0%E7%9A%84%E5%88%86%E6%94%AF%E3%80%82/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">
+直接在github页面上面
+
+当前切换到了master分支，如果文本框输入后一个新的分支名字后，确认，就会创建一个分支指向master分支。要创建一个分支指向develop分支，就将当前分支切换到develop上面。
+这一切都用鼠标可以完成，很直观简洁。
+
+通过git bash。如果我要在服务器创建一个新的分支bugfix指向develop，这做不到。只能通过push命令，让这一次push跟踪到develop，在develop分支上面生成新的快照，并将新的bugfix指向新的版本快照。
+
+在本地的develop分支chekout -b一个bugfix分支，然后执行git branch -u </div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2018-07-01&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/git/">git</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
       <a href="/2018/07/01/git/git%E8%B7%9F%E8%B8%AA%E8%BF%9C%E7%A8%8B%E5%88%86%E6%94%AF%EF%BC%8C%E6%9F%A5%E7%9C%8B%E6%9C%AC%E5%9C%B0%E5%88%86%E6%94%AF%E8%BF%BD%E8%B8%AA%E5%92%8C%E8%BF%9C%E7%A8%8B%E5%88%86%E6%94%AF%E7%9A%84%E5%85%B3%E7%B3%BB/">
         <p class="h4 index-header">git跟踪远程分支，查看本地分支追踪和远程分支的关系</p>
       </a>
@@ -491,47 +532,6 @@ class DirectExecutor implements Executor{
           <i class="iconfont icon-inbox"></i>
           
             <a href="/categories/Android/">Android</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2018/06/11/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/Volley%E5%85%B7%E4%BD%93%E6%B5%81%E7%A8%8B%E5%9B%BE%EF%BC%88%E9%85%8D%E4%BB%A3%E7%A0%81%EF%BC%89/">
-        <p class="h4 index-header">Volley具体流程图（配代码）</p>
-      </a>
-
-      <a href="/2018/06/11/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/Volley%E5%85%B7%E4%BD%93%E6%B5%81%E7%A8%8B%E5%9B%BE%EF%BC%88%E9%85%8D%E4%BB%A3%E7%A0%81%EF%BC%89/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">只简要分析Volley大体原理，无细节，无Volley使用教程。
-
-使用Volley时必要的两步：
-RequestQueue queue= Volley.newRequestQueue(context);1
-queue.add(request);  //request可以是StringRequest,ImageRequest,JsonRequestd等。第一步通过Volley.newRequestQueue(Context)初始化queue，第二步往queue中添加具体请求。
-第一步
-第二步
-本地磁盘缓存==&gt;Cache接口的实现类：DiskBasedCache  
-Cache接口中定义</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2018-06-11&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/">第三方库</a>&nbsp;
           &nbsp;
         
         

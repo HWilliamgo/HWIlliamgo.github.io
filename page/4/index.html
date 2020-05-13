@@ -151,6 +151,48 @@
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2019/08/12/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%BC%80%E5%8F%91/IjkPlayer%E7%9A%84-%22dns_cache_clear%22/">
+        <p class="h4 index-header">IjkPlayer的-&#34;dns_cache_clear&#34;</p>
+      </a>
+
+      <a href="/2019/08/12/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%BC%80%E5%8F%91/IjkPlayer%E7%9A%84-%22dns_cache_clear%22/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">今天遇到了一个在IjkPlayer播放中途切换拉流协议播放失败的问题。
+http-flv协议的拉流地址切换到rtmp协议的拉流地址，播放失败，并报-10000的错误。
+而销毁再重建播放器，则可以播放成功。
+上ijkplayer的issue上面查了同样的几个问题，发现开启如下的选项可以解决问题：
+ijkPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, &quot;dns_cache_clear&quot;, 1);
+大致原因是：
+rtmp的url为：
+rtmp://abchttp-flv的url为：
+https:abc.flv
+这两个url</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2019-08-12&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%BC%80%E5%8F%91/">音视频开发</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
       <a href="/2019/08/08/%E7%BD%91%E7%BB%9C/Https%E6%89%AB%E7%9B%B2/">
         <p class="h4 index-header">Https扫盲</p>
       </a>
@@ -505,47 +547,6 @@ FileProviderFileProvider在Manifest里面的生命的块不需要用包名，只
           <i class="iconfont icon-inbox"></i>
           
             <a href="/categories/Kotlin/">Kotlin</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2019/05/20/Gradle/gradle%E7%9A%84ext%E5%B1%9E%E6%80%A7/">
-        <p class="h4 index-header">gradle的ext属性</p>
-      </a>
-
-      <a href="/2019/05/20/Gradle/gradle%E7%9A%84ext%E5%B1%9E%E6%80%A7/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">1. 常见用法1. 在ext这个map中放字符串或者基本数据类型在android的rootProject的build.gradle中，定义如下代码块
-ext {
-    compileSdkVersion = 25
-    buildToolsVersion = &quot;26.0.0&quot;
-    minSdkVersion = 14
-    targetSdkVersion = 22
-    appcompatV7 = &quot;com.android.support:appcompat-v7:$androidSupportVersion&quot;
-}
-然后在app模块下，通过</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2019-05-20&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/Gradle/">Gradle</a>&nbsp;
           &nbsp;
         
         

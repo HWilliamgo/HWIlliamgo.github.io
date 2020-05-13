@@ -151,6 +151,44 @@
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2017/12/27/Java/%E9%80%9A%E8%BF%87%E5%8F%8D%E5%B0%84%E6%9F%A5%E7%9C%8B%E6%B3%9B%E5%9E%8B%E4%BF%A1%E6%81%AF/">
+        <p class="h4 index-header">通过反射查看泛型信息</p>
+      </a>
+
+      <a href="/2017/12/27/Java/%E9%80%9A%E8%BF%87%E5%8F%8D%E5%B0%84%E6%9F%A5%E7%9C%8B%E6%B3%9B%E5%9E%8B%E4%BF%A1%E6%81%AF/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">#####通过泛型和反射避免强制类型转换：下面这个代码是没问题的。
+Class clazz=Class.forName(&quot;java.util.Date&quot;);
+Date date= (Date) clazz.newInstance();但是这样也没问题，编译器不会报错，但是run肯定会报错。
+String string= (String) clazz.newInstance();结合泛型反射可以避免强制类型转换，让编译器帮我们检查：
+@SuppressWarnings(value = &quot;unchecked&quot;)
+public class MainTest {</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2017-12-27&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Java/">Java</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
       <a href="/2017/12/27/Java/Proxy%E5%92%8CInvocation%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E5%92%8CAOP%E4%BB%A3%E7%90%86/">
         <p class="h4 index-header">Proxy和Invocation动态代理和AOP代理</p>
       </a>
@@ -501,40 +539,6 @@ ThreadPoolExecutor的构造方法的参数：
           <i class="iconfont icon-inbox"></i>
           
             <a href="/categories/Java/">Java</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2017/12/08/Android/%E5%85%B3%E4%BA%8EHandler,Looper,-Message,-MessageQueue%E7%9A%84%E6%96%87%E7%AB%A0%E6%94%B6%E8%97%8F/">
-        <p class="h4 index-header">关于Handler,Looper,-Message,-MessageQueue的文章收藏</p>
-      </a>
-
-      <a href="/2017/12/08/Android/%E5%85%B3%E4%BA%8EHandler,Looper,-Message,-MessageQueue%E7%9A%84%E6%96%87%E7%AB%A0%E6%94%B6%E8%97%8F/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">Hongyang:Android 异步消息处理机制 让你深入理解 Looper、Handler、Message三者关系
-拭心：Android 进阶14：源码解读 Android 消息机制（ Message MessageQueue Handler Looper）                                                                                                                                                                         </div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2017-12-08&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/Android/">Android</a>&nbsp;
           &nbsp;
         
         

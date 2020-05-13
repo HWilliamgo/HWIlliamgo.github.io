@@ -151,6 +151,47 @@
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2019/11/05/Gradle/Gradle-%E5%B8%B8%E7%94%A8%E5%B7%A5%E5%85%B7%E8%84%9A%E6%9C%AC/">
+        <p class="h4 index-header">Gradle-常用工具脚本</p>
+      </a>
+
+      <a href="/2019/11/05/Gradle/Gradle-%E5%B8%B8%E7%94%A8%E5%B7%A5%E5%85%B7%E8%84%9A%E6%9C%AC/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">
+基于gradle 4.6
+
+本文记录一些常用的gradle工具脚本的写法，基于gradle4.6，不同版本的gradle应对照官方文档不同版本的DSL Reference参考对应的api的接口的使用。
+1. clean整个项目有的时候有一些操作需要对root project和其下面所有的child project进行一个clean，那么可以参考如下的脚本实现：
+//该task定义在root Project下。
+task cleanAllProject(){
+    it.dependsOn(&quot;clean&quot;)
+    rootProject.subprojects{sub-</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2019-11-05&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Gradle/">Gradle</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
       <a href="/2019/11/02/View/View#onKeyDown%E4%B8%8D%E8%B0%83%E7%94%A8/">
         <p class="h4 index-header">View#onKeyDown不调用</p>
       </a>
@@ -508,48 +549,6 @@ int main(void){
           <i class="iconfont icon-inbox"></i>
           
             <a href="/categories/C/">C</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2019/08/12/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%BC%80%E5%8F%91/IjkPlayer%E7%9A%84-%22dns_cache_clear%22/">
-        <p class="h4 index-header">IjkPlayer的-&#34;dns_cache_clear&#34;</p>
-      </a>
-
-      <a href="/2019/08/12/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%BC%80%E5%8F%91/IjkPlayer%E7%9A%84-%22dns_cache_clear%22/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">今天遇到了一个在IjkPlayer播放中途切换拉流协议播放失败的问题。
-http-flv协议的拉流地址切换到rtmp协议的拉流地址，播放失败，并报-10000的错误。
-而销毁再重建播放器，则可以播放成功。
-上ijkplayer的issue上面查了同样的几个问题，发现开启如下的选项可以解决问题：
-ijkPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, &quot;dns_cache_clear&quot;, 1);
-大致原因是：
-rtmp的url为：
-rtmp://abchttp-flv的url为：
-https:abc.flv
-这两个url</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2019-08-12&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%BC%80%E5%8F%91/">音视频开发</a>&nbsp;
           &nbsp;
         
         
