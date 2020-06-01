@@ -3,10 +3,12 @@ title: 重新理解MeasureSpec
 categories:
   - View
 date: 2020-05-28 17:44:03
-tags:
-index_img:
-banner_img:
-layout: false
+tags: 
+  - View
+  - 自定义View
+  - 重新理解系列
+index_img: https://s1.ax1x.com/2020/05/28/tekaEF.png
+banner_img: https://gitee.com/HWilliamgo/pictures/raw/master/img/wallhaven-6krllx.png
 ---
 
 
