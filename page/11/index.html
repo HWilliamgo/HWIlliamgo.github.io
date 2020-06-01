@@ -151,6 +151,55 @@
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2018/05/29/Java/Java%E4%B8%8D%E5%8F%AF%E5%8F%98%E5%AF%B9%E8%B1%A1/">
+        <p class="h4 index-header">Java不可变对象</p>
+      </a>
+
+      <a href="/2018/05/29/Java/Java%E4%B8%8D%E5%8F%AF%E5%8F%98%E5%AF%B9%E8%B1%A1/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">
+定义：如果某个对象在被创建后，其状态（实例变量）不能被修改，那么这个对象就称为不可变对象。
+优点： 
+不可变对象一定是线程安全的（不可变，别的线程修改不了）。
+可作为Map的键值和Set的元素。
+
+
+编写不可变类：
+所有字段都是private final。
+没有任何public的方法来修改字段。
+不依赖外部可变对象的引用。（如果依赖外部可变对象，那么当外部可变对象修改时，引用变量会指向新的对象，违反不可变对象的定义）
+不能逸出任何可变对象的引用变量。（逸出引用变量后，外部可以通过引用变量修改对象）。import java.util.Date;
+
+
+
+
+public final class I</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2018-05-29&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Java/">Java</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
       <a href="/2018/05/27/%E7%AE%97%E6%B3%95/AVL%E6%A0%91/">
         <p class="h4 index-header">AVL树</p>
       </a>
@@ -482,50 +531,6 @@ SimpleEntry&lt;K,V&gt;:实现Entry接口，Entry的英文单词是条目的意�
           <i class="iconfont icon-inbox"></i>
           
             <a href="/categories/java%E5%B9%B6%E5%8F%91/">java并发</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2018/05/06/%E7%AE%97%E6%B3%95/element%E4%B8%BAint%E7%9A%84%E4%BA%8C%E5%8F%89%E6%9F%A5%E6%89%BE%E6%A0%91/">
-        <p class="h4 index-header">element为int的二叉查找树</p>
-      </a>
-
-      <a href="/2018/05/06/%E7%AE%97%E6%B3%95/element%E4%B8%BAint%E7%9A%84%E4%BA%8C%E5%8F%89%E6%9F%A5%E6%89%BE%E6%A0%91/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">参照着《数据结构java语言描述》的伪码，自己实现的方法细节，最复杂的一个方法是remove()
-package DataStructure.Tree;
-
-public class IntTreeBag implements Cloneable {
-
-    private Node root;
-
-    public class Node {
-        Node(int element, Node left, Node right) {
-            this.element = element;
-            this.left = left;
-         </div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2018-05-06&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/%E7%AE%97%E6%B3%95/">算法</a>&nbsp;
           &nbsp;
         
         

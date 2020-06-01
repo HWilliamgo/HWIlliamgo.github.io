@@ -151,6 +151,50 @@
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2018/02/03/%E7%AE%97%E6%B3%95/%E6%89%8B%E5%8A%A8%E5%AE%9E%E7%8E%B0ArrayList/">
+        <p class="h4 index-header">手动实现ArrayList</p>
+      </a>
+
+      <a href="/2018/02/03/%E7%AE%97%E6%B3%95/%E6%89%8B%E5%8A%A8%E5%AE%9E%E7%8E%B0ArrayList/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">import java.util.Iterator;
+
+/**
+ * 手动实现的一个ArrayList，封装了数组的一些常用操作**/
+public class MyArrayList&lt;T&gt; implements Iterable&lt;T&gt; {
+    //数组默认的长度为10
+    private static final int DEFAULT_CAPACITY=10;
+    //数组的大小
+    private int size;
+    //泛型T类型所代表的数组
+    private T[] theItems;
+    //构造方法用clear()来初始化</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2018-02-03&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E7%AE%97%E6%B3%95/">算法</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
       <a href="/2018/01/30/java%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">
         <p class="h4 index-header">单例模式</p>
       </a>
@@ -489,52 +533,6 @@ setEnabled:  使能控件，如果设置为false，该控件永远不会活动�
 setEnabled就相当于总开关一样，只有总开关打开了，才能使用其他事件。
 
 setFocusable 使能控件获得焦点，设置为true</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2018-01-15&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/Android/">Android</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2018/01/15/Android/JitPack%E6%9E%81%E9%80%9F%E5%8F%91%E5%B8%83Library%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/">
-        <p class="h4 index-header">JitPack极速发布Library使用手册</p>
-      </a>
-
-      <a href="/2018/01/15/Android/JitPack%E6%9E%81%E9%80%9F%E5%8F%91%E5%B8%83Library%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">
-新建一个library
-添加项目android-maven插件
-
-
-在project的gradle文件中
-buildscript { 
-dependencies {
-  classpath &#39;com.github.dcendents:android-maven-gradle-plugin:2.0&#39; // Add this line
-
-在Library的gradle文件中
-apply plugin: &#39;com.github.dcendents.android-maven&#39;  
-
-group=&#39;com.github.YourUsername&#39;这里的</div>
         </div>
       </a>
 

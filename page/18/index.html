@@ -151,6 +151,90 @@
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2018/01/06/C/%E6%A0%BC%E5%BC%8F%E6%8E%A7%E5%88%B6%E7%AC%A6/">
+        <p class="h4 index-header">格式控制符</p>
+      </a>
+
+      <a href="/2018/01/06/C/%E6%A0%BC%E5%BC%8F%E6%8E%A7%E5%88%B6%E7%AC%A6/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">格式控制符：%d：用来输出int，d表示decimal，整数%hd：用来输出short，short integer。%ld：用来输出long%s：用来输出String字符串%c：用来输出char字符%f：用来输出float浮点型
+
+
+
+
+short
+int
+long
+unsigned short
+unsigned int
+unsigned long
+
+
+
+八进制
+–
+–
+–
+%ho
+%o
+%lo
+
+
+十进制
+%hd
+%d
+%ld
+%hu
+%u
+%lu
+
+
+十六进制
+–
+–
+–
+%hx 或者 %hX
+%x 或者 %X
+%lx 或者 %lX
+
+
+—
+
+
+
+
+
+
+
+
+二进制，八进制，十六进制：
+//</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2018-01-06&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/C/">C</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
       <a href="/2018/01/06/Java/%E6%9F%A5%E7%9C%8B%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E6%89%80%E5%8D%A0%E7%9A%84%E5%AD%97%E8%8A%82/">
         <p class="h4 index-header">查看基本数据类型所占的字节</p>
       </a>
@@ -511,47 +595,6 @@ public class User implements Serializable{
           <i class="iconfont icon-inbox"></i>
           
             <a href="/categories/Java/">Java</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2017/12/12/JVM/%E5%AF%B9%E8%B1%A1%E4%B8%8E%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/">
-        <p class="h4 index-header">对象与垃圾回收</p>
-      </a>
-
-      <a href="/2017/12/12/JVM/%E5%AF%B9%E8%B1%A1%E4%B8%8E%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">
-gc只负责回收堆内存中的对象，不会回收任何物力资源（如数据库连接，网络IO等）。
-程序无法精确控制gc的运行，gc会在合适的时候进行。当对象永久失去引用后（=null），系统就会在合适的时候回收它所占的内存。
-在gc回收任何对象之前，总会调用它的finalize方法，该方法可能使对象重新获得引用，导致gc取消回收。
-
-##对象在内存中的状态：
-
-可达状态：对象被创建后，有一个以上的变量引用它，程序可通过引用变量来调用该对象的实例变量和方法。
-可恢复状态：程序中某个对象不再有任何变量引用它，它进入可恢复状态，gc准备回收该对象所占的内存，在回收该对象之前，系统会调用所有可恢复状态对象的fina</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2017-12-12&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/JVM/">JVM</a>&nbsp;
           &nbsp;
         
         

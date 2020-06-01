@@ -151,6 +151,49 @@
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2018/04/21/Android/%E5%9F%BA%E6%9C%AC%E7%9A%84sql%E8%AF%AD%E5%8F%A5/">
+        <p class="h4 index-header">基本的sql语句</p>
+      </a>
+
+      <a href="/2018/04/21/Android/%E5%9F%BA%E6%9C%AC%E7%9A%84sql%E8%AF%AD%E5%8F%A5/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">我没学过数据库，但是作为一个程序员得了解一些基本的语句，以下为来自网站https://www.codecademy.com/learn/learn-sql的学习笔记
+数据库4中数据类型：INTEGER(整型), TEXT(字符串类型),DATA(日期),REAL(浮点型)。
+查询整张表：
+SELECT * FROM &lt;表名&gt;;
+创建表：
+CREATE TABLE table_name (
+   (列名) (数据类型), 
+   column_2 data_type &lt;限制符&gt; &lt;限制符&gt; ..., 
+   column_3 data_type
+);
+//**</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2018-04-21&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Android/">Android</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
       <a href="/2018/04/16/Android/Broadcast%E7%9A%84%E7%BB%86%E8%8A%82/">
         <p class="h4 index-header">Broadcast的细节</p>
       </a>
@@ -498,52 +541,6 @@ public class MainJava {
                 case 0:
                     Log.d(&quot;info&quot;,&quot;开始下载&quot;);
    </div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2018-03-22&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/android%E5%9B%BE%E7%89%87/">android图片</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2018/03/22/android%E5%9B%BE%E7%89%87/android%E7%94%A8%E7%BA%BF%E7%A8%8B%E6%B1%A0%E6%89%8B%E5%8A%A8%E5%AE%9E%E7%8E%B0%E5%A4%9A%E5%9B%BE%E5%8A%A0%E8%BD%BD/">
-        <p class="h4 index-header">android用线程池手动实现多图加载</p>
-      </a>
-
-      <a href="/2018/03/22/android%E5%9B%BE%E7%89%87/android%E7%94%A8%E7%BA%BF%E7%A8%8B%E6%B1%A0%E6%89%8B%E5%8A%A8%E5%AE%9E%E7%8E%B0%E5%A4%9A%E5%9B%BE%E5%8A%A0%E8%BD%BD/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">用一个固定大小为5的线程池来实现多图加载：
-首先实现Runnble子类，下载图片：
-/**
- * 进行图片下载任务 的线程
- */
-public class ImageTask implements Runnable {
-
-    public ImageView imageView;
-    private String url;
-    private byte[] imageBytes;
-    private ImageTaskHandler handler;
-
-    public ImageTask(ImageView imageView, String url) {
-      </div>
         </div>
       </a>
 
