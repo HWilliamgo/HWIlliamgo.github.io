@@ -151,6 +151,132 @@
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2020/02/07/ndk/Android-cmake%E4%BD%BF%E7%94%A8%E5%A4%96%E9%83%A8%E5%8A%A8%E6%80%81%E5%85%B1%E4%BA%AB%E5%BA%93/">
+        <p class="h4 index-header">Android-cmake使用外部动态共享库</p>
+      </a>
+
+      <a href="/2020/02/07/ndk/Android-cmake%E4%BD%BF%E7%94%A8%E5%A4%96%E9%83%A8%E5%8A%A8%E6%80%81%E5%85%B1%E4%BA%AB%E5%BA%93/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">官方文档分享：
+CMake的基本用法参考Android官方文档上的CMake教程：
+https://developer.android.com/studio/projects/configure-cmake
+他的内容有：
+
+创建CMake脚本
+使用NDK中的静态库和动态共享库
+添加其他已经编译过得动态共享库
+如何进行多CMake project的开发
+
+
+本篇文章
+本篇文章主要是分析如何使用第三方的so库进行c层的开发。
+与官方文档不同的是，官方文档在连接第三方动态共享库的时候，用法是：
+# 添加共享库imported-lib
+add_library( imported-lib
+       </div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-02-07&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/ndk/">ndk</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2020/01/26/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/RxJava1%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">
+        <p class="h4 index-header">RxJava1源码分析</p>
+      </a>
+
+      <a href="/2020/01/26/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/RxJava1%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">我对于RxJava的异常处理和上抛方式有一些不解，而上网查找的文章都是RxJava的一些用于处理异常的操作符，所以只能自己去源码里面找答案了。
+虽然RxJava1已经过时了，但是鉴于RxJava1的源码会比RxJava2的简洁一些，因此易于分析。所以我在这里对RxJava1的源码进行分析。
+1 构造Observable1.1 create方式Observable.create&lt;String&gt; { it: Subscriber&lt;in String&gt; -&gt;
+    //上游发射数据
+    it.onNext(&quot;123&quot;)
+    it.onCom</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-01-26&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/">第三方库</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2020/01/09/Java/Throwable%E7%9A%84%E4%BD%BF%E7%94%A8/">
+        <p class="h4 index-header">Throwable的使用</p>
+      </a>
+
+      <a href="/2020/01/09/Java/Throwable%E7%9A%84%E4%BD%BF%E7%94%A8/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">1 取出Throwable的堆栈信息使用Throwable一个很大的好处在于，他能保存他被实例化的方法的堆栈信息，通过方法：
+Throwable#printStackTrace()
+可以将他和他的cause Throwable和他的cause的cause…( 递归 ) 的堆栈信息都打印出来。
+而例如我们要将一个Throwable对象的堆栈信息不仅仅是输出到控制台，还要保存到本地日志或者发送到服务器呢？那么就要将Throwable的堆栈信息提取出来。
+令人开心的是，android.util.Log类提供了这么一个工具方法：
+/**
+ * Handy function to get a logga</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-01-09&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Java/">Java</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
       <a href="/2019/12/30/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%BC%80%E5%8F%91/%E7%90%86%E8%A7%A3ijkplayer%EF%BC%88%E4%BA%94%EF%BC%89%E8%A7%A3%E7%A0%81%E3%80%81%E6%92%AD%E6%94%BE/">
         <p class="h4 index-header">理解ijkplayer（五）解码、播放</p>
       </a>
@@ -463,134 +589,6 @@ linux或mac开发环境（windows环境下的</div>
           <i class="iconfont icon-inbox"></i>
           
             <a href="/categories/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%BC%80%E5%8F%91/">音视频开发</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2019/11/23/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/mac%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/">
-        <p class="h4 index-header">mac开发环境配置</p>
-      </a>
-
-      <a href="/2019/11/23/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/mac%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">mac开发环境配置1. 安装Homebrew
-安装xcode command line tool
-Xcode-select命令是什么
-xcode command line tool
-
-安装homebrew
-/usr/bin/ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;
-
-注：来自homebrew官网：https://brew.sh/
-
-检查homebrew是否安装完成
-brew --version
-如果出现如下错误：-bash: brew: </div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2019-11-23&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2019/11/09/Kotlin/Kotlin%E5%8D%8F%E7%A8%8B%EF%BC%88%E4%B8%80%EF%BC%89%E7%90%86%E8%A7%A3/">
-        <p class="h4 index-header">Kotlin协程（一）理解</p>
-      </a>
-
-      <a href="/2019/11/09/Kotlin/Kotlin%E5%8D%8F%E7%A8%8B%EF%BC%88%E4%B8%80%EF%BC%89%E7%90%86%E8%A7%A3/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">
-最近这段时间抽空学习了一下Kotlin协程相关的知识，在此做一个总结和梳理
-
-是什么kotlin协程是什么一个名为kotlinx.coroutines包下的库， 是由 JetBrains 开发的功能丰富的协程库，方便大家利用协程来完成异步处理的开发。
-当我们创建协程（Coroutine）时，我们创建的是什么？一种类似于java.lang.Runnable，但比Runnable功能要强大的多的对象。
-//launch函数是CoroutineScope的拓展函数，即launch{}函数需要该对象才能使用，以下代码不能直接使用
-launch(Dispatchers.IO) {
-    //这段代码</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2019-11-09&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/Kotlin/">Kotlin</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2019/11/05/Kotlin/%E8%A7%A3%E9%87%8AKotlin%E5%8D%8F%E7%A8%8B%E5%AE%98%E6%96%B9%E6%96%87%E6%A1%A3%EF%BC%9A%EF%BC%88%E4%B8%80%EF%BC%89%E5%9F%BA%E7%A1%80%EF%BC%9A/">
-        <p class="h4 index-header">解释Kotlin协程官方文档：（一）基础：</p>
-      </a>
-
-      <a href="/2019/11/05/Kotlin/%E8%A7%A3%E9%87%8AKotlin%E5%8D%8F%E7%A8%8B%E5%AE%98%E6%96%B9%E6%96%87%E6%A1%A3%EF%BC%9A%EF%BC%88%E4%B8%80%EF%BC%89%E5%9F%BA%E7%A1%80%EF%BC%9A/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">本系列文章用于解释kotlin官方文档中的示例代码。希望能帮助到你。
-基础官方文档地址 https://www.kotlincn.net/docs/reference/coroutines/basics.html 
-作用域构建器import kotlinx.coroutines.*
-
-fun main() = runBlocking { // this: CoroutineScope
-    launch { 
-        delay(200L)
-        println(&quot;Task from runBlocking&quot;)
-    }
-
-    coroutineS</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2019-11-05&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/Kotlin/">Kotlin</a>&nbsp;
           &nbsp;
         
         

@@ -151,6 +151,127 @@
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2018/01/06/Java/%E6%9F%A5%E7%9C%8B%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E6%89%80%E5%8D%A0%E7%9A%84%E5%AD%97%E8%8A%82/">
+        <p class="h4 index-header">查看基本数据类型所占的字节</p>
+      </a>
+
+      <a href="/2018/01/06/Java/%E6%9F%A5%E7%9C%8B%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E6%89%80%E5%8D%A0%E7%9A%84%E5%AD%97%E8%8A%82/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">public class MainTest {
+    public static void main(String args[]) throws Exception {
+        System.out.println(&quot;int占的字节：&quot;+Integer.BYTES);
+        System.out.println(&quot;long占的字节：&quot;+Long.BYTES);
+        System.out.println(&quot;short占的字节：&quot;+Short.BYTES);
+        System.out.print</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2018-01-06&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Java/">Java</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2018/01/05/Android/MediaMetadataRetriever%E8%8E%B7%E5%8F%96mp3%E6%96%87%E4%BB%B6%E4%BF%A1%E6%81%AF/">
+        <p class="h4 index-header">MediaMetadataRetriever获取mp3文件信息</p>
+      </a>
+
+      <a href="/2018/01/05/Android/MediaMetadataRetriever%E8%8E%B7%E5%8F%96mp3%E6%96%87%E4%BB%B6%E4%BF%A1%E6%81%AF/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">转发：http://blog.csdn.net/xiao5678yun/article/details/53838362
+MediaMetadataRetriever mmr = new MediaMetadataRetriever();  
+String str = getExternalStorageDirectory() + &quot;1.mp3&quot;;  
+Log.d(TAG, &quot;str:&quot; + str);  
+try 
+{  
+    mmr.setDataSource(str);  
+    String title = mmr.extractMetad</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2018-01-05&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Android/">Android</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2017/12/28/Java/%E9%80%9A%E8%BF%87Annotation%E4%B8%BA%E6%8C%89%E9%92%AE%E8%AE%BE%E7%BD%AE%E7%9B%91%E5%90%AC%EF%BC%88ButterKnife%E7%9A%84%E5%8E%9F%E7%90%86%EF%BC%89/">
+        <p class="h4 index-header">通过Annotation为按钮设置监听（ButterKnife的原理）</p>
+      </a>
+
+      <a href="/2017/12/28/Java/%E9%80%9A%E8%BF%87Annotation%E4%B8%BA%E6%8C%89%E9%92%AE%E8%AE%BE%E7%BD%AE%E7%9B%91%E5%90%AC%EF%BC%88ButterKnife%E7%9A%84%E5%8E%9F%E7%90%86%EF%BC%89/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">通过注解来为按钮设置监听，类似于黄油匕首（butterknife）。
+###步骤：
+①
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.FIELD)
+//注意这里两个元注解，RUNTIME保证运行时，保证可以被反射，FIELD表示目标是成员变量
+public @interface ListenerFor {
+    Class&lt;?extends ActionListener&gt; listener();
+}②
+public class ActionListenerInstaller {
+    public static </div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2017-12-28&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Java/">Java</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
       <a href="/2017/12/27/Java/%E9%80%9A%E8%BF%87%E5%8F%8D%E5%B0%84%E6%9F%A5%E7%9C%8B%E6%B3%9B%E5%9E%8B%E4%BF%A1%E6%81%AF/">
         <p class="h4 index-header">通过反射查看泛型信息</p>
       </a>
@@ -431,114 +552,6 @@ gc只负责回收堆内存中的对象，不会回收任何物力资源（如数
           <i class="iconfont icon-inbox"></i>
           
             <a href="/categories/JVM/">JVM</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2017/12/11/Android/BroadcastReceiver/">
-        <p class="h4 index-header">BroadcastReceiver</p>
-      </a>
-
-      <a href="/2017/12/11/Android/BroadcastReceiver/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">基础总结篇之五：BroadcastReceiver应用详解                                                                                                                                                                                                                                                                               </div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2017-12-11&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/Android/">Android</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2017/12/09/java%E5%B9%B6%E5%8F%91/java%E7%BA%BF%E7%A8%8B%E6%B1%A0%E6%80%BB%E7%BB%93/">
-        <p class="h4 index-header">java线程池总结</p>
-      </a>
-
-      <a href="/2017/12/09/java%E5%B9%B6%E5%8F%91/java%E7%BA%BF%E7%A8%8B%E6%B1%A0%E6%80%BB%E7%BB%93/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">
-我学习线程池的第一篇讲的最好、最明白的文章：java&amp;android线程池-Executor框架之ThreadPoolExcutor&amp;ScheduledThreadPoolExecutor浅析（多线程编程之三）
-
-
-另外一个是能快速帮你回忆的总结性文章，说的也不错：通俗易懂，各常用线程池执行的-流程图
-
-ThreadPoolExecutor的构造方法的参数：
-    public ThreadPoolExecutor(int corePoolSize,
-                              int maximumPoolSize,
-           </div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2017-12-09&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/java%E5%B9%B6%E5%8F%91/">java并发</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2017/12/08/Java/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%90%8C%E6%AD%A5/">
-        <p class="h4 index-header">线程的同步</p>
-      </a>
-
-      <a href="/2017/12/08/Java/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%90%8C%E6%AD%A5/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">这个博客讲的非常好java中同步(synchronized)详解                                                                                                                                                                                                                                                                            </div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2017-12-08&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/Java/">Java</a>&nbsp;
           &nbsp;
         
         

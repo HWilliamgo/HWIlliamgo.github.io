@@ -151,6 +151,134 @@
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2019/11/23/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/mac%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/">
+        <p class="h4 index-header">mac开发环境配置</p>
+      </a>
+
+      <a href="/2019/11/23/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/mac%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">mac开发环境配置1. 安装Homebrew
+安装xcode command line tool
+Xcode-select命令是什么
+xcode command line tool
+
+安装homebrew
+/usr/bin/ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;
+
+注：来自homebrew官网：https://brew.sh/
+
+检查homebrew是否安装完成
+brew --version
+如果出现如下错误：-bash: brew: </div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2019-11-23&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2019/11/09/Kotlin/Kotlin%E5%8D%8F%E7%A8%8B%EF%BC%88%E4%B8%80%EF%BC%89%E7%90%86%E8%A7%A3/">
+        <p class="h4 index-header">Kotlin协程（一）理解</p>
+      </a>
+
+      <a href="/2019/11/09/Kotlin/Kotlin%E5%8D%8F%E7%A8%8B%EF%BC%88%E4%B8%80%EF%BC%89%E7%90%86%E8%A7%A3/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">
+最近这段时间抽空学习了一下Kotlin协程相关的知识，在此做一个总结和梳理
+
+是什么kotlin协程是什么一个名为kotlinx.coroutines包下的库， 是由 JetBrains 开发的功能丰富的协程库，方便大家利用协程来完成异步处理的开发。
+当我们创建协程（Coroutine）时，我们创建的是什么？一种类似于java.lang.Runnable，但比Runnable功能要强大的多的对象。
+//launch函数是CoroutineScope的拓展函数，即launch{}函数需要该对象才能使用，以下代码不能直接使用
+launch(Dispatchers.IO) {
+    //这段代码</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2019-11-09&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Kotlin/">Kotlin</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2019/11/05/Kotlin/%E8%A7%A3%E9%87%8AKotlin%E5%8D%8F%E7%A8%8B%E5%AE%98%E6%96%B9%E6%96%87%E6%A1%A3%EF%BC%9A%EF%BC%88%E4%B8%80%EF%BC%89%E5%9F%BA%E7%A1%80%EF%BC%9A/">
+        <p class="h4 index-header">解释Kotlin协程官方文档：（一）基础：</p>
+      </a>
+
+      <a href="/2019/11/05/Kotlin/%E8%A7%A3%E9%87%8AKotlin%E5%8D%8F%E7%A8%8B%E5%AE%98%E6%96%B9%E6%96%87%E6%A1%A3%EF%BC%9A%EF%BC%88%E4%B8%80%EF%BC%89%E5%9F%BA%E7%A1%80%EF%BC%9A/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">本系列文章用于解释kotlin官方文档中的示例代码。希望能帮助到你。
+基础官方文档地址 https://www.kotlincn.net/docs/reference/coroutines/basics.html 
+作用域构建器import kotlinx.coroutines.*
+
+fun main() = runBlocking { // this: CoroutineScope
+    launch { 
+        delay(200L)
+        println(&quot;Task from runBlocking&quot;)
+    }
+
+    coroutineS</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2019-11-05&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Kotlin/">Kotlin</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
       <a href="/2019/11/05/Gradle/Gradle-%E5%B8%B8%E7%94%A8%E5%B7%A5%E5%85%B7%E8%84%9A%E6%9C%AC/">
         <p class="h4 index-header">Gradle-常用工具脚本</p>
       </a>
@@ -437,118 +565,6 @@ implementation &quot;com.hwilliamgo:fastpermission-x:1.0.0&quot;
           <i class="iconfont icon-inbox"></i>
           
             <a href="/categories/Gradle/">Gradle</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2019/09/24/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/ubuntu-%E6%89%93%E5%BC%80%E7%AE%A1%E7%90%86%E5%91%98%E6%9D%83%E9%99%90%E7%9A%84%E6%96%87%E4%BB%B6%E6%B5%8F%E8%A7%88%E5%99%A8/">
-        <p class="h4 index-header">ubuntu-打开管理员权限的文件浏览器</p>
-      </a>
-
-      <a href="/2019/09/24/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/ubuntu-%E6%89%93%E5%BC%80%E7%AE%A1%E7%90%86%E5%91%98%E6%9D%83%E9%99%90%E7%9A%84%E6%96%87%E4%BB%B6%E6%B5%8F%E8%A7%88%E5%99%A8/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">我用在使用VMWare创建ubuntu16的虚拟机的时候，配置AndroidStudio环境时，遇到了无法写入/~/.android的错误，我用文件浏览器打开，发现该文件居然没有访问权限。（我以前装转系统的16和18没遇到过），因此我需要修改该文件的读写权限，但是当前模式无法修改，因为该文件属于root用户。因此我需要以root身份打开文件浏览器修改该文件的读写权限。执行：
-$ sudo nautilus
-弹出的文件浏览器可以执行最高权限的读写操作。                                                                         </div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2019-09-24&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2019/08/27/ndk/ndk%EF%BC%9A%E8%BF%98%E7%94%A8%E4%B8%8D%E7%94%A8armeabi/">
-        <p class="h4 index-header">ndk：还用不用armeabi</p>
-      </a>
-
-      <a href="/2019/08/27/ndk/ndk%EF%BC%9A%E8%BF%98%E7%94%A8%E4%B8%8D%E7%94%A8armeabi/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">https://stackoverflow.com/questions/28926101/is-it-safe-to-support-only-armeabi-v7a-for-android-4-and-above/28926267#28926267
-https://android.stackexchange.com/questions/34958/what-are-the-minimum-hardware-specifications-for-android
-https://www.reddit.com/r/androiddev/comments/5u64yh/which_abi_shoul</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2019-08-27&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/ndk/">ndk</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2019/08/12/C/C%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
-        <p class="h4 index-header">C语言学习笔记</p>
-      </a>
-
-      <a href="/2019/08/12/C/C%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">1. C的预处理器.h头文件//文件名：main.c
-
-#include &lt;stdio.h&gt;
-int main(void){
-    ...
-}
-#include是C语言的预处理指令，C语言编译器在编译前会对源码进行预处理工作。他的作用就是把所有头文件中的内容，完全copy进入当前的.c文件中。
-一般头文件中定义一些常量或者函数，而其函数实现在另一个文件中。那么，编译完成之后，C的连接器就会将这个main.c文件中用到的其他库中的文件给提取出来，一起和当前的main.c文件组合成一个二进制的可执行文件xxx.exe。
-
-#defin定义常量通用格式：#define NAME val</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2019-08-12&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/C/">C</a>&nbsp;
           &nbsp;
         
         

@@ -151,6 +151,121 @@
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2018/05/27/%E7%AE%97%E6%B3%95/AVL%E6%A0%91/">
+        <p class="h4 index-header">AVL树</p>
+      </a>
+
+      <a href="/2018/05/27/%E7%AE%97%E6%B3%95/AVL%E6%A0%91/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">参考：https://www.cnblogs.com/skywang12345/p/3577479.html
+AVL树本质上还是一棵二叉搜索树，它的特点是：1.本身首先是一棵二叉搜索树。2.带有平衡条件：每个结点的左右子树的高度之差的绝对值（平衡因子）最多为1。也就是说，AVL树，本质上是带了平衡功能的二叉查找树（二叉排序树，二叉搜索树）。
+以下为四种不平衡的临界条件，分别为LL（leftleft）,LR（leftright）,RL,RR。当每次到达这四种不平衡的临界条件时，都进行旋转树操作，那么树就能维持平衡：
+private AVLTreeNode leftLeftRotation(AVL</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2018-05-27&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E7%AE%97%E6%B3%95/">算法</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2018/05/27/%E7%AE%97%E6%B3%95/%E4%BA%8C%E5%8F%89%E6%A0%91%E5%89%8D%E5%BA%8F%E3%80%81%E4%B8%AD%E5%BA%8F%E3%80%81%E5%90%8E%E5%BA%8F%E9%81%8D%E5%8E%86%EF%BC%8C%E5%92%8C%E7%9B%B4%E8%A7%82%E6%89%93%E5%8D%B0%E3%80%82/">
+        <p class="h4 index-header">二叉树前序、中序、后序遍历，和直观打印。</p>
+      </a>
+
+      <a href="/2018/05/27/%E7%AE%97%E6%B3%95/%E4%BA%8C%E5%8F%89%E6%A0%91%E5%89%8D%E5%BA%8F%E3%80%81%E4%B8%AD%E5%BA%8F%E3%80%81%E5%90%8E%E5%BA%8F%E9%81%8D%E5%8E%86%EF%BC%8C%E5%92%8C%E7%9B%B4%E8%A7%82%E6%89%93%E5%8D%B0%E3%80%82/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">//前序遍历
+public static void preOrderedPrint(TreeNode root){
+    if (root!=null){
+        System.out.print(root.value);
+        preOrderedPrint(root.leftNode);//删去了多余的if(root.leftNode!=null)的条件判断。
+        preOrderedPrint(root.rightNode);
+    }
+}
+//中序遍历
+public static void inOrderedPrint(TreeNode root){
+</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2018-05-27&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E7%AE%97%E6%B3%95/">算法</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2018/05/27/Java/HashMap%E5%8D%8A%E8%A7%A3%E6%9E%90/">
+        <p class="h4 index-header">HashMap半解析</p>
+      </a>
+
+      <a href="/2018/05/27/Java/HashMap%E5%8D%8A%E8%A7%A3%E6%9E%90/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">此篇文章是对源码的分析，但并没有贴大量源码。3个接口前两个就不用多说了，Map&lt;K,V&gt;接口也应该对着中文版api文档看一下就明白了。
+先看直接父类AbstractMap&lt;K,V&gt;：
+AbstractMap&lt;K,V&gt;内部类：
+SimpleEntry&lt;K,V&gt;:实现Entry接口，Entry的英文单词是条目的意思，接口里面都是一些对规定好的操作方法，看文档就行了。在类中只有final key和value两个字段，其中由于key是final的，因此初始化之后就不可变。实例方法都是对这两个变量的基本操作，没什么特别的。简单来说就是对key和value的</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2018-05-27&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Java/">Java</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
       <a href="/2018/05/23/JVM/Java%EF%BC%8C%E9%87%8D%E8%BD%BD%E7%9A%84%E9%99%B7%E9%98%B1%EF%BC%8C%E9%9D%99%E6%80%81%E5%88%86%E6%B4%BE%EF%BC%8C%E9%87%8D%E5%86%99%EF%BC%8C%E5%8A%A8%E6%80%81%E5%88%86%E6%B4%BE%E3%80%82/">
         <p class="h4 index-header">Java，重载的陷阱，静态分派，重写，动态分派。</p>
       </a>
@@ -406,138 +521,6 @@ public class IntTreeBag implements Cloneable {
       <div class="index-btm">
         
           <i class="iconfont icon-riqi2"></i>&nbsp;2018-05-06&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/%E7%AE%97%E6%B3%95/">算法</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2018/05/02/Android/Activity%E5%90%AF%E5%8A%A8%E6%A8%A1%E5%BC%8F%E8%84%91%E5%9B%BE/">
-        <p class="h4 index-header">Activity启动模式脑图</p>
-      </a>
-
-      <a href="/2018/05/02/Android/Activity%E5%90%AF%E5%8A%A8%E6%A8%A1%E5%BC%8F%E8%84%91%E5%9B%BE/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">总结于Android开发艺术探索》
-
-我发现书上的内容和官网的内容还是有点出入，从介绍顺序和介绍task，back stack的思想方面和书上有很大的不同，在次放google的这部分内容的连接：https://developer.android.com/guide/components/activities/tasks-and-back-stack
-郭霖：Android任务和返回栈完全解析，细数那些你所不知道的细节                                                                                           </div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2018-05-02&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/Android/">Android</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2018/04/28/%E7%AE%97%E6%B3%95/%E6%95%B0%E7%BB%84%E5%AE%9E%E7%8E%B0%E7%9A%84%E4%BC%98%E5%85%88%E9%98%9F%E5%88%97/">
-        <p class="h4 index-header">数组实现的优先队列</p>
-      </a>
-
-      <a href="/2018/04/28/%E7%AE%97%E6%B3%95/%E6%95%B0%E7%BB%84%E5%AE%9E%E7%8E%B0%E7%9A%84%E4%BC%98%E5%85%88%E9%98%9F%E5%88%97/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">MyLoopQueue
-package DataStructure;
-
-import java.util.NoSuchElementException;
-
-/**
- * 这是一个用数组实现的优先队列。
- *
- * 该思路参考《数据结构Java语言描述》的page249。
- *
- * 入队时通过指定优先级参数添加到优先队列，出队时，不同优先级之间优先级较高的先出队，
- * 相同优先级，先入先出。
- *
- * 内部维护了一个队列数组，靠队列数组来简单地实现不同优先级队列的读写
- * 当初始化时指定一个最高优先级，然后用for循环一次性把数组中的对象都new出来。
- * add方法额外传入一个int</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2018-04-28&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/%E7%AE%97%E6%B3%95/">算法</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2018/04/27/%E7%AE%97%E6%B3%95/%E9%93%BE%E8%A1%A8%E5%AE%9E%E7%8E%B0%E9%98%9F%E5%88%97/">
-        <p class="h4 index-header">链表实现队列</p>
-      </a>
-
-      <a href="/2018/04/27/%E7%AE%97%E6%B3%95/%E9%93%BE%E8%A1%A8%E5%AE%9E%E7%8E%B0%E9%98%9F%E5%88%97/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">
-import java.util.NoSuchElementException;
-
-public class LinkedQueue&lt;T&gt; {
-
-    private class Node{
-        private Node next;
-        private T element;
-        Node(Node next, T element) {
-            this.next = next;
-            this.element = element;
-        }
-    }
-
-    private int size;
-</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2018-04-27&nbsp;&nbsp;
         
         
           <i class="iconfont icon-inbox"></i>

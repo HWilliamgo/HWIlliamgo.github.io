@@ -151,6 +151,130 @@
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2019/02/17/Java/Java%E6%B3%9B%E5%9E%8B%E9%80%9A%E9%85%8D%E7%AC%A6%EF%BC%8C%E4%B8%8A%E4%B8%8B%E7%95%8C%E3%80%82/">
+        <p class="h4 index-header">Java泛型通配符，上下界。</p>
+      </a>
+
+      <a href="/2019/02/17/Java/Java%E6%B3%9B%E5%9E%8B%E9%80%9A%E9%85%8D%E7%AC%A6%EF%BC%8C%E4%B8%8A%E4%B8%8B%E7%95%8C%E3%80%82/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">
+为了理清楚泛型的通配符和上下界的作用，并为了Kotlin的泛型中的关键字in和out的理解，在此用小demo重新梳理一遍对泛型的理解。
+
+demopublic class Example {
+    //程序入口
+    public static void main(String[] args) {
+        Source&lt;? extends Number&gt; sourceOfNumber = new Source&lt;&gt;();
+        Number params = sourceOfNumber.getParams();//get()方法，通过编译
+   </div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2019-02-17&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Java/">Java</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2019/01/18/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/OkHttp%E6%8B%A6%E6%88%AA%E5%99%A8%E8%A2%96%E7%8F%8D%E9%87%8D%E5%86%99%E7%89%88/">
+        <p class="h4 index-header">OkHttp拦截器袖珍重写版</p>
+      </a>
+
+      <a href="/2019/01/18/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/OkHttp%E6%8B%A6%E6%88%AA%E5%99%A8%E8%A2%96%E7%8F%8D%E9%87%8D%E5%86%99%E7%89%88/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">
+本篇文章建立在看过一遍OkHttp源码中的拦截器部分的基础上。
+
+OkHttp回顾OkHttp的拦截器工作原理如下图，每一个拦截器都有机会处理上一个拦截器传下来的Request或者下一个拦截器返回上来的Response，即可任意地进行前处理和后处理。在最后一个拦截器CallServerInterceptor中进行真正的网络链接，成功后构造Response对象并发布，一层一层地传递到开发者手上。
+
+
+仿写拦截器
+在实战开发中，仅就涉及数据处理这一方面，拦截器就有非常好的设计效果，OkHttp这一套是可以照搬到很多地方的，拦截器这一套设计实战性非常高，故在这里动手撸一个简易版。
+
+1. 定义Re</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2019-01-18&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/">第三方库</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2019/01/16/Android/Message-obtain()%E4%B8%AD%E7%9A%84%E5%8D%95%E9%93%BE%E8%A1%A8%E6%A0%88%E7%BC%93%E5%AD%98/">
+        <p class="h4 index-header">Message-obtain()中的单链表栈缓存</p>
+      </a>
+
+      <a href="/2019/01/16/Android/Message-obtain()%E4%B8%AD%E7%9A%84%E5%8D%95%E9%93%BE%E8%A1%A8%E6%A0%88%E7%BC%93%E5%AD%98/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">Message.obtain()中的单链表栈缓存Android中的Message.java用单链表实现了一个size=50的栈，用作缓存。以下结合源码和图分析存取过程。
+存void recycleUnchecked() {
+    // Mark the message as in use while it remains in the recycled object pool.
+    // Clear out all other details.
+    flags = FLAG_IN_USE;
+    what = 0;
+    arg1 = 0;
+    arg2 = 0;
+    o</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2019-01-16&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Android/">Android</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
       <a href="/2018/12/16/%E7%BD%91%E7%BB%9C/Socket%E3%80%81%E6%8F%8F%E8%BF%B0%E7%AC%A6%E3%80%81%E7%AB%AF%E5%8F%A3%E5%8F%B7/">
         <p class="h4 index-header">Socket、描述符、端口号</p>
       </a>
@@ -420,133 +544,6 @@ Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
           <i class="iconfont icon-inbox"></i>
           
             <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2018/08/31/View/requestLayout()%E5%BC%95%E8%B5%B7%E7%9A%84%E9%97%AE%E9%A2%98/">
-        <p class="h4 index-header">requestLayout()引起的问题</p>
-      </a>
-
-      <a href="/2018/08/31/View/requestLayout()%E5%BC%95%E8%B5%B7%E7%9A%84%E9%97%AE%E9%A2%98/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">requestLayout()引起的问题
-网上有大量写的很深入的requestLayout()源码分析的文章。故这里不再写了，只做一个实际情况下遇到的问题的分析。
-起因：
-自定义了一个CircleImageView，功能是调用setImage(Bitmap bitmap)后可以将图片以圆形加载。
-本以为直接在setImage(Bitmap)的结尾直接调用requestLayout()即可。
-
-这里从两个方面写：
-xml中定义为wrap_content当LayoutParams是wrap_content时，我处理的逻辑是：在onMeasure()中根据宽高的MeasureSpec是否等于Meas</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2018-08-31&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/View/">View</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2018/08/21/git/2018-08-21/">
-        <p class="h4 index-header">Tue Aug 21 2018 00:00:00 GMT+0000 (Coordinated Universal Time)</p>
-      </a>
-
-      <a href="/2018/08/21/git/2018-08-21/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">git push失败时：
-git fetch
-git rebase origin/XXX
-git pushgit要压缩历史
-git merge -squash &lt;name&gt;
-或者
-git rebase -i HEAD~n撤销工作区某个文件的改动
-git checkout -- 文件名撤销工作区所有文件的改动
-git checkout .
-//当暂存区为空，回到当前的版本快照。暂存区不为空，回到上个暂存区。                                                                                          </div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2018-08-21&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/git/">git</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2018/08/18/Java/Integer++/">
-        <p class="h4 index-header">Integer++</p>
-      </a>
-
-      <a href="/2018/08/18/Java/Integer++/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">Integer++
-在写一个线程同步的demo的时候，想用Integer作为对象传入各个Runnable中作为flag，自增，然后发现失败，探究原因后记录如下：
-
-public class Main {
-    public static void main(String[] args) {
-        Integer i = 10;
-        Integer j = i++;
-        System.out.println(i == j);
-    }
-}
-输出：false
-原因：
-Integer中表示值的变量value本身就是一个final类型的，即不可变类型，不可重新赋值</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2018-08-18&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/Java/">Java</a>&nbsp;
           &nbsp;
         
         
