@@ -1,5 +1,7 @@
 ---
 title: gradle的properties文件
+categories:
+  - Gradle
 date: 2020-05-11 11:32:46
 tags:
 index_img:
