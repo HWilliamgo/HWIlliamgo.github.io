@@ -1,10 +1,12 @@
 ---
 title: android的Jni方法单元测试
+tags:
+  - android单元测试
+index_img: 'https://gitee.com/HWilliamgo/pictures/raw/master/img/wallhaven-2eq3gg.jpg'
+banner_img: 'https://gitee.com/HWilliamgo/pictures/raw/master/img/wallhaven-2eq3gg.jpg'
+categories:
+  - 单元测试
 date: 2020-06-06 17:23:25
-tags: 
-- android单元测试
-index_img: https://gitee.com/HWilliamgo/pictures/raw/master/img/wallhaven-2eq3gg.jpg
-banner_img: https://gitee.com/HWilliamgo/pictures/raw/master/img/wallhaven-2eq3gg.jpg
 ---
 
 > 本文记录：
