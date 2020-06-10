@@ -150,6 +150,55 @@
   <div class="row mx-auto index-card">
     
     
+      <div class="col-12 col-md-4 m-auto">
+        <a href="/2020/06/06/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/android%E7%9A%84Jni%E6%96%B9%E6%B3%95%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/" target="_self">
+          <img src="https://gitee.com/HWilliamgo/pictures/raw/master/img/wallhaven-2eq3gg.jpg" srcset="/img/loading.gif" alt="android的Jni方法单元测试"
+               class="index-img img-fluid rounded index-thumbnails">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/2020/06/06/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/android%E7%9A%84Jni%E6%96%B9%E6%B3%95%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/">
+        <p class="h4 index-header">android的Jni方法单元测试</p>
+      </a>
+
+      <a href="/2020/06/06/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/android%E7%9A%84Jni%E6%96%B9%E6%B3%95%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">
+本文记录：
+使用cmake来构建android jni的c层代码。并使用android instrumented unit test 来测试jni方法和c层方法。
+
+1 概述
+jni方法为什么要用单元测试？
+有的jni方法在项目里触发条件复杂，作为开发者需要像普通用户那样去操作触发对应逻辑才能测试到Jni方法，效率低下。而使用单元测试则可以比较高效率地测试比较难触发到调用jni的场景。
+
+什么场景下用单元测试来测试jni方法？
+理论上来说所有的代码都能够在单元测试的环境下被测试到，但是有时需要一些比较复杂的上下文，或者代码的上下文搭建不容易，而直接运行项目测试更简单，所以，不是所有的jni方</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-06-06&nbsp;&nbsp;
+        
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/android%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/">android单元测试</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
     <div class="col-12 col-md-12 mx-auto index-info">
       <a href="/2020/06/01/Java/%E9%87%8D%E6%96%B0%E7%90%86%E8%A7%A3Java%E6%B3%9B%E5%9E%8B/">
         <p class="h4 index-header">重新理解Java泛型</p>
@@ -161,7 +210,19 @@
           
         
         <div class="index-excerpt" >
-          <div class="index-text mb-1"></div>
+          <div class="index-text mb-1">介于我在写业务代码的时候时，想用泛型来实现代码复用，但是由于接口较多，抽象程度较复杂，导致没有理清楚泛型的关系，因此重新学习理解Java泛型。
+
+
+
+
+1 作用对象1.1 泛型类当泛型作用在类上，即一个类是一个泛型类的时候。泛型是类的参数。
+例如：
+我们创建一个有Id标志的数据类。无论类中的泛型参数T是什么类型的，这个类都有一个id。
+public class IdData&lt;T&gt; {
+    String id;
+    T data;
+}
+当我们作为这个泛型类的客户时，我们要用泛型类。使用泛型类的时候，我们需要指定类的泛型参数，从而让这个泛型类因为泛型参数的不同而变成不同的类（虽</div>
         </div>
       </a>
 
@@ -514,50 +575,6 @@ Error obtaining view hierarchy : There was a timeout error capturin</div>
 查看关键帧数据：ffprobe -show_frames -select_streams v:0 -print_format csv &lt;url&gt; | grep &quot;,I,&quot;
 查看流信息：ffprobe -v quiet -print_format json -show_format -show_streams &lt;url&gt;
 查看分辨率：ffprobe -v debug -select_streams v -skip_frame nokey -count_frames &lt;url&gt; 2&gt;&amp;1|grep R</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-21&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%BC%80%E5%8F%91/">音视频开发</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2020/03/21/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%BC%80%E5%8F%91/%E7%90%86%E8%A7%A3ijkplayer%EF%BC%88%E5%85%AD%EF%BC%89Vout%E3%80%81Aout%E3%80%81FFPipeLine/">
-        <p class="h4 index-header">理解ijkplayer（六）Vout、Aout、FFPipeLine</p>
-      </a>
-
-      <a href="/2020/03/21/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%BC%80%E5%8F%91/%E7%90%86%E8%A7%A3ijkplayer%EF%BC%88%E5%85%AD%EF%BC%89Vout%E3%80%81Aout%E3%80%81FFPipeLine/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">// ijkmedia/ijkplayer/ff_ffplay_def.h
-typedef struct FFPlayer {
-        //...
-    SDL_Aout *aout;
-    SDL_Vout *vout;
-    struct IJKFF_Pipeline *pipeline;
-    struct IJKFF_Pipenode *node_vdec;
-      //...
-}FFPlayer;
-这篇文章的内容：
-分析FFPlayer结构体中的SDL_Aout、SDL_Vout、IJKFF_Pipeline和IJKFF_Pipenode的作用
-此外，这四个结构体</div>
         </div>
       </a>
 

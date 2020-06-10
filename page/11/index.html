@@ -151,6 +151,46 @@
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2018/05/31/java%E5%B9%B6%E5%8F%91/%E7%BA%BF%E7%A8%8B%E4%B8%AD%E6%96%ADinterrupt/">
+        <p class="h4 index-header">线程中断interrupt</p>
+      </a>
+
+      <a href="/2018/05/31/java%E5%B9%B6%E5%8F%91/%E7%BA%BF%E7%A8%8B%E4%B8%AD%E6%96%ADinterrupt/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">
+
+以下内容完全来自于《java核心技术卷Ⅰ 》
+
+当线程的run方法执行方法体中最后一条语句后,并经由执行return语句返回时,或者出现了在方法中没有捕获的异常时,线程将终止。在Java的早期版本中,还有一个stop方法,其他线程可以调用它终止线程。但是,这个方法现在已经被弃用了。
+有一种可以强制线程终止的方法。然而, interrupt方法可以用来请求终止线程。
+当对一个线程调用interrupt方法时线程的中断状态将被置位。这是每一个线程都具有的boolean标志。每个线程都应该不时地检查这个标志,以判断线程是否被中断。
+要想弄清中断状态是否被置位，首先调用静态的Thread.curr</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2018-05-31&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/java%E5%B9%B6%E5%8F%91/">java并发</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
       <a href="/2018/05/29/Java/Java%E4%B8%8D%E5%8F%AF%E5%8F%98%E5%AF%B9%E8%B1%A1/">
         <p class="h4 index-header">Java不可变对象</p>
       </a>
@@ -496,41 +536,6 @@ SimpleEntry&lt;K,V&gt;:实现Entry接口，Entry的英文单词是条目的意�
           <i class="iconfont icon-inbox"></i>
           
             <a href="/categories/JVM/">JVM</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2018/05/14/java%E5%B9%B6%E5%8F%91/%E3%80%8AJava%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3%E3%80%8B%E4%B8%AD%E5%85%B3%E4%BA%8E%E7%BA%BF%E7%A8%8B%E7%9A%84%E6%8F%8F%E8%BF%B0/">
-        <p class="h4 index-header">《Java编程思想》中关于线程的描述</p>
-      </a>
-
-      <a href="/2018/05/14/java%E5%B9%B6%E5%8F%91/%E3%80%8AJava%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3%E3%80%8B%E4%B8%AD%E5%85%B3%E4%BA%8E%E7%BA%BF%E7%A8%8B%E7%9A%84%E6%8F%8F%E8%BF%B0/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">最开始，线程只是用于分配单个处理器的处理时间的一种工具。但假如操作系统本身支持多个处理器，那么每个线程都可分配给一个不同的处理器，真正进入“并行运算”状态。从程序设计语言的角度看，多线程操作最有价值的特性之一就是程序员不必关心到底使用了多少个处理器。程序在逻辑意义上被分割为数个线程；假如机器本身安装了多个处理器，那么程序会运行得更快，毋需作出任何特殊的调校。
-
-利用对象，可将一个程序分割成相互独立的区域。我们通常也需要将一个程序转换成多个独立运行的子任务。象这样的每个子任务都叫作一个“线程”（Thread）。编写程序时，可将每个线程都想象成独立运行，而且都有自己的专用CPU。一些基础机制实际会</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2018-05-14&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/java%E5%B9%B6%E5%8F%91/">java并发</a>&nbsp;
           &nbsp;
         
         

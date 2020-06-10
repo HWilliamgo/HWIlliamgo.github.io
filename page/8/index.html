@@ -151,6 +151,49 @@
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/2018/07/27/View/View#scrollBy(int-x-,-int-y)%E5%8F%8D%E5%90%91/">
+        <p class="h4 index-header">View#scrollBy(int-x-,-int-y)反向</p>
+      </a>
+
+      <a href="/2018/07/27/View/View#scrollBy(int-x-,-int-y)%E5%8F%8D%E5%90%91/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">先看下源码
+public void scrollBy(int x, int y) {
+    scrollTo(mScrollX + x, mScrollY + y);
+}
+public void scrollTo(int x, int y) {
+    if (mScrollX != x || mScrollY != y) {
+        int oldX = mScrollX;
+        int oldY = mScrollY;
+        mScrollX = x;
+        mScrollY = y;
+        invalidateParentCaches()</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2018-07-27&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/View/">View</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
       <a href="/2018/07/26/Android/android%E6%A8%A1%E6%8B%9F%E7%AE%80%E5%8D%95%E8%B7%A8%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1/">
         <p class="h4 index-header">android模拟简单跨进程通信</p>
       </a>
@@ -515,46 +558,6 @@ public class MyDialog extends Dialog {
           <i class="iconfont icon-inbox"></i>
           
             <a href="/categories/View/">View</a>&nbsp;
-          &nbsp;
-        
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/2018/07/12/Android/RecyclerView%E7%9A%84%E5%A4%8D%E7%94%A8/">
-        <p class="h4 index-header">RecyclerView的复用</p>
-      </a>
-
-      <a href="/2018/07/12/Android/RecyclerView%E7%9A%84%E5%A4%8D%E7%94%A8/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">当有9个不同的Item显示在屏幕上，一定有超过9个的ViewHolder对象，通过onCreateViewHolder(ViewGroup parent, int type)被创建（也就是其引用的View对象被创建）。
-根据官方文档阅读到的资料，大致整理了一下RecyclerView的3个方面：
-创建Item
-从.xml布局文件中inflate出新的View对象.
-上述新建的View对象作为参数传入ViewHolder的构造函数来创建ViewHolder对象。
-
-显示或更新数据
-为每个ViewHolder对象分配一个position，并调用onBindViewHolder(ViewHolder</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2018-07-12&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/Android/">Android</a>&nbsp;
           &nbsp;
         
         

@@ -1,0 +1,31 @@
+<p>介于我在写业务代码的时候时，想用泛型来实现代码复用，但是由于接口较多，抽象程度较复杂，导致没有理清楚泛型的关系，因此重新学习理解Java泛型。</p>
+<img src="https://gitee.com/HWilliamgo/pictures/raw/master/img/image-20200602002631822.png" srcset="/img/loading.gif" alt="image-20200602002631822" style="zoom: 33%;" />
+
+
+
+<h3 id="1-作用对象"><a href="#1-作用对象" class="headerlink" title="1 作用对象"></a>1 作用对象</h3><h4 id="1-1-泛型类"><a href="#1-1-泛型类" class="headerlink" title="1.1 泛型类"></a>1.1 泛型类</h4><p>当泛型作用在类上，即一个类是一个泛型类的时候。泛型是类的参数。</p>
+<p>例如：</p>
+<p>我们创建一个有Id标志的数据类。无论类中的泛型参数T是什么类型的，这个类都有一个id。</p>
+<pre><code class="java">public class IdData&lt;T&gt; {
+    String id;
+    T data;
+}</code></pre>
+<p>当我们作为这个泛型类的客户时，我们要用泛型类。使用泛型类的时候，我们需要指定类的泛型参数，从而让这个泛型类因为泛型参数的不同而变成不同的类（虽然在运行时泛型参数被擦除了）。即一个泛型类，在被使用的时候，可以因为泛型参数的不同，而变的不同，如：</p>
+<pre><code class="java">IdData&lt;String&gt; stringIdData = new IdData&lt;&gt;();
+IdData&lt;Integer&gt; integerIdData = new IdData&lt;&gt;();
+IdData&lt;Thread&gt; threadIdData = new IdData&lt;&gt;();</code></pre>
+<p>设计泛型类的目的一般是：</p>
+<ol>
+<li>这个类中的某个属性具有可变性，因此这个类在运行时具有通用性。</li>
+<li>这个类是一个容器类，通过泛型可以让这个容器类容纳不同类型的对象。</li>
+<li>设计泛型类，是因为类在实例化时，会因为泛型参数的不同，而表现不同，如果类的实例化的地方总是只有一种泛型参数，则这个类不需要设计成泛型类。</li>
+</ol>
+<h4 id="1-2-泛型方法"><a href="#1-2-泛型方法" class="headerlink" title="1.2 泛型方法"></a>1.2 泛型方法</h4><p>在泛型方法中，泛型通常作用于方法的：</p>
+<ol>
+<li>参数</li>
+<li>返回值</li>
+</ol>
+<h3 id="2-边界"><a href="#2-边界" class="headerlink" title="2 边界"></a>2 边界</h3><h3 id="3-泛型通配符？"><a href="#3-泛型通配符？" class="headerlink" title="3 泛型通配符？"></a>3 泛型通配符？</h3><p>普通类是对一组对象的抽象。</p>
+<p>泛型类是对一组具有共性（例如两个类除了一两个属性不同外，其余代码都相同，那么这一两个属性应做成泛型）的普通类的抽象。</p>
+<p>泛型通配符类是对泛型类的抽象。</p>
+<h3 id="4-使用泛型的目的"><a href="#4-使用泛型的目的" class="headerlink" title="4 使用泛型的目的"></a>4 使用泛型的目的</h3>
