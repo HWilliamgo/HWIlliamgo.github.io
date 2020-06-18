@@ -250,19 +250,18 @@ linux或mac开发环境（windows环境下的</div>
           
         
         <div class="index-excerpt" >
-          <div class="index-text mb-1">mac开发环境配置1. 安装Homebrew
+          <div class="index-text mb-1">mac开发环境配置1. 安装zsh参考文章：
+https://juejin.im/post/5d773da76fb9a06aff5e9a99
+当zsh安装完后，用户目录的脚本.bash_profile不再被自动执行，需要放到zsh的脚本里一起执行：
+打开.zshrc，并追加一行：
+source ~/.bash_profile
+2. 安装Homebrew
 安装xcode command line tool
 Xcode-select命令是什么
 xcode command line tool
 
 安装homebrew
-/usr/bin/ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;
-
-注：来自homebrew官网：https://brew.sh/
-
-检查homebrew是否安装完成
-brew --version
-如果出现如下错误：-bash: brew: </div>
+/usr/bin/ruby -e &quot;$(curl -fsSL https:</div>
         </div>
       </a>
 
